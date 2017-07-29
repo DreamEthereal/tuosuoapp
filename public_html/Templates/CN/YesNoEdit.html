@@ -1,0 +1,167 @@
+<html>
+<head>
+<meta http-equiv=content-language content=zh-cn>
+<meta http-equiv=content-type content="text/html; charset=gbk">
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7">
+<style>
+ td { padding:2px 5px 2px 5px;}
+ select,img {vertical-align: middle;}
+</style>
+<link href="../CSS/Base.css" rel=stylesheet>
+<LINK href="../CSS/Window.css" type=text/css rel=stylesheet>
+<script type="text/javascript" src="../JS/Common.js.php"></script>
+<script type="text/javascript" src="../JS/Window.js.php"></script>
+<script language=javascript src="../JS/Textarea.js.php"></script>
+<script language=javascript src="../JS/HighLight.js.php"></script>
+<script type="text/javascript" src="../JS/Jquery.min.js.php"></script>
+<script type="text/javascript" src="../JS/Jquery.notification.js.php"></script>
+<link type="text/css" rel="stylesheet" href="../CSS/Notification.css" />
+<script language=javascript src="../JS/CheckQuestion.js.php"></script>
+<script language=javascript src="../JS/CheckAlias.js.php"></script>
+<script language=javascript src="../JS/TheEditor.js.php"></script>
+<script language=javascript>
+var editTextRange;
+function Check_Form_Validator()
+{
+	if (!CheckNotNull(document.Check_Form.questionName, "题目文字")) {return false;}
+}
+function submitForm(actionName)
+{
+	if( Check_Form_Validator() != false )
+	{
+		document.getElementById('AddYesNoSubmit').disabled = true;
+		disabledStyle(document.getElementById('AddYesNoSubmit'));
+		document.getElementById('AddYesNoOver').disabled = true;
+		disabledStyle(document.getElementById('AddYesNoOver'));
+		document.getElementById('close').disabled = true;
+		disabledStyle(document.getElementById('close'));
+		document.getElementById('Action').value = actionName;
+		document.Check_Form.submit();
+	}
+}
+</script>
+
+<meta content="mshtml 6.00.3790.0" name=generator></head>
+<body oncontextmenu="return false">
+   <form method="post" action="" style="margin:0px;padding:0px" name="Check_Form" id="Check_Form" onsubmit="return false;">
+  <table class=datatable style="line-height: 150%;border-collapse:collapse;" cellspacing=0 cellpadding=0 bordercolor=#cacaca border=1 width=100%>
+   <div class=position>位置：&nbsp; 我的问卷 &raquo; 编辑问卷问题 &raquo; 是非题</div>
+   <tr><td bgcolor="#e9e9e9"><b>编辑问卷问题</b></td></tr>
+   <tr><td>&nbsp;<span style="font-size:14px;font-weight:bold;">是非题</span>&nbsp;
+     <a onmouseover="this.T_WIDTH=446;this.T_PADDING=0;this.T_BGCOLOR='#ffffff'; return escape('<img src=../Images/Example/example_yesno.jpg width=446 align=center>')" href="javascript:void(0);"><font color=red>图例</font></a></td></tr>
+   <tr bgcolor="#f9f9f9" height=25><td><b>&nbsp;题目文字</b>&nbsp;<img src="../Images/info.gif" border=0>
+     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascript:void(0);" onclick="javascript:{var textEditor = document.getElementById('questionName');textEditor.focus();editTextRange = textEditor.document.selection.createRange();showPopWin('../System/ShowInsertImage.php', 590, 250, null, null,'插入图片或视频');}"><font color=red><b>插入图片或视频</font></b></a><img src="../Images/list_menu_arrow.gif" border=0>
+	 &nbsp;&nbsp;&nbsp;<a href="javascript:void(0);" onclick="javascript:{var textEditor = document.getElementById('questionName');textEditor.focus();editTextRange = textEditor.document.selection.createRange();showPopWin('../System/ShowInsertAnswer.php?&surveyID={surveyID}&orderByID={orderByID}', 700, 160, null, null,'插入前述问题的答案');}"><font color=red><b>插入前述问题答案</font></b></a><img src="../Images/list_menu_arrow.gif" border=0>
+	 &nbsp;&nbsp;&nbsp;<a href="javascript:void(0);" onclick="javascript:{var textEditor = document.getElementById('questionName');textEditor.focus();editTextRange = textEditor.document.selection.createRange();showPopWin('../System/ShowInsertKish.php?&surveyID={surveyID}&orderByID={orderByID}', 700, 160, null, null,'插入针对前述问题的Kish抽样结果');}"><font color=red><b>插入Kish抽样结果</font></b></a><img src="../Images/list_menu_arrow.gif" border=0>
+   </td></tr>
+   <tr><td>
+	  <a href="javascript:void(0)" onclick="doMyExecCommand('Bold')"><img src="../Images/Editor/bold.gif" WIDTH="20" HEIGHT="20" title="Bold"></a>
+	  <a href="javascript:void(0)" onclick="doMyExecCommand('Italic')"><img src="../Images/Editor/italic.gif" WIDTH="20" HEIGHT="20" title="Italic"></a>
+	  <a href="javascript:void(0)" onclick="doMyExecCommand('Underline')"><img src="../Images/Editor/underline.gif" WIDTH="20" HEIGHT="20" title="Underline"></a>
+	  <img src="../Images/Editor/separator.gif" WIDTH="5" HEIGHT="20">
+ 	  <select onchange="doMySelectClick('FontSize',this);" style="width: 75px;margin-bottom:4px;">
+          <option>字体大小</option>
+          <option VALUE="12">12</option>
+          <option VALUE="14">14</option>
+          <option VALUE="16">16</option>
+          <option VALUE="18">18</option>
+          <option VALUE="20">20</option>
+          <option VALUE="22">22</option>
+          <option VALUE="24">24</option>
+          <option VALUE="30">30</option>
+          <option VALUE="36">36</option>
+      </select>
+      <select name="ForeColor" onChange="doMyFormat('ForeColor',this[this.selectedIndex].style.color); this.selectedIndex=0" style="width: 80px;margin-bottom:4px;">
+		  <option selected>文字颜色
+		  <option style="BACKGROUND: #000000; Color: #000000">Black</option>
+		  <option style="BACKGROUND: #FFFFFF; Color: #FFFFFF">White</option>
+		  <option style="BACKGROUND: #0000FF; Color: #0000FF">Blue 1</option>
+		  <option style="BACKGROUND: #2222FF; Color: #2222FF">Blue 2</option>
+		  <option style="BACKGROUND: #4444FF; Color: #4444FF">Blue 3</option>
+		  <option style="BACKGROUND: #6666FF; Color: #6666FF">Blue 4</option>
+		  <option style="BACKGROUND: #333333; Color: #333333">Gray 1</option>
+		  <option style="BACKGROUND: #666666; Color: #666666">Gray 2</option>
+		  <option style="BACKGROUND: #999999; Color: #999999">Gray 3</option>
+		  <option style="BACKGROUND: #EEEEEE; Color: #EEEEEE">Gray 4</option>
+		  <option style="BACKGROUND: #004000; Color: #004000">Green 1</option>
+		  <option style="BACKGROUND: #006000; Color: #006000">Green 2</option>
+		  <option style="BACKGROUND: #008000; Color: #008000">Green 3</option>
+		  <option style="BACKGROUND: #00A000; Color: #00A000">Green 4</option>
+		  <option style="BACKGROUND: #FF0000; Color: #FF0000">Red 1</option>
+		  <option style="BACKGROUND: #FF2222; Color: #FF2222">Red 2</option>
+		  <option style="BACKGROUND: #FF4444; Color: #FF4444">Red 3</option>
+		  <option style="BACKGROUND: #FF6666; Color: #FF6666">Red 4</option>
+		  <option style="BACKGROUND: #FFFF00; Color: #FFFF00">Yellow 1</option>
+		  <option style="BACKGROUND: #FFFF33; Color: #FFFF33">Yellow 2</option>
+		  <option style="BACKGROUND: #FFFF66; Color: #FFFF66">Yellow 3</option>
+		  <option style="BACKGROUND: #FFFF99; Color: #FFFF99">Yellow 4</option>
+	  </select>
+	  <select name="fontbackground" onChange="doMyFormat('BackColor',this[this.selectedIndex].style.color); this.selectedIndex=0" style="width: 80px;margin-bottom:4px;">
+		  <option selected>文字底色</option>
+		  <option style="BACKGROUND: #000000; Color: #000000">Black</option>
+		  <option style="BACKGROUND: #FFFFFF; Color: #FFFFFF">White</option>
+		  <option style="BACKGROUND: #0000FF; Color: #0000FF">Blue 1</option>
+		  <option style="BACKGROUND: #2222FF; Color: #2222FF">Blue 2</option>
+		  <option style="BACKGROUND: #4444FF; Color: #4444FF">Blue 3</option>
+		  <option style="BACKGROUND: #6666FF; Color: #6666FF">Blue 4</option>
+		  <option style="BACKGROUND: #333333; Color: #333333">Gray 1</option>
+		  <option style="BACKGROUND: #666666; Color: #666666">Gray 2</option>
+		  <option style="BACKGROUND: #999999; Color: #999999">Gray 3</option>
+		  <option style="BACKGROUND: #EEEEEE; Color: #EEEEEE">Gray 4</option>
+		  <option style="BACKGROUND: #004000; Color: #004000">Green 1</option>
+		  <option style="BACKGROUND: #006000; Color: #006000">Green 2</option>
+		  <option style="BACKGROUND: #008000; Color: #008000">Green 3</option>
+		  <option style="BACKGROUND: #00A000; Color: #00A000">Green 4</option>
+		  <option style="BACKGROUND: #FF0000; Color: #FF0000">Red 1</option>
+		  <option style="BACKGROUND: #FF2222; Color: #FF2222">Red 2</option>
+		  <option style="BACKGROUND: #FF4444; Color: #FF4444">Red 3</option>
+		  <option style="BACKGROUND: #FF6666; Color: #FF6666">Red 4</option>
+		  <option style="BACKGROUND: #FFFF00; Color: #FFFF00">Yellow 1</option>
+		  <option style="BACKGROUND: #FFFF33; Color: #FFFF33">Yellow 2</option>
+		  <option style="BACKGROUND: #FFFF66; Color: #FFFF66">Yellow 3</option>
+		  <option style="BACKGROUND: #FFFF99; Color: #FFFF99">Yellow 4</option>
+	  </select>
+   <textarea rows=5 cols=125 name="questionName" id="questionName" tabIndex=1>{questionName}</textarea><a href="javascript:resizeTextHeight('questionName',1);"><img src="../Images/jia.gif"></a><a href="javascript:resizeTextHeight('questionName',-1);"><img src="../Images/jian.gif"></a>
+   </td></tr>
+
+   <tr height="28"><td valign=center>&nbsp;问题别名&nbsp;<img src="../Images/info.gif" border=0>&nbsp;&nbsp;<input class="textInput" name="alias" id="alias" type="text" id="alias" size="20" onkeypress="checkAliasValid()"  style="ime-mode:disabled" onPaste="return false;" onKeyUp="AliasAjaxRequest('AjaxCheckQtnAlias.php?alias='+this.value+'&oldName={alias}&surveyID={surveyID}');" value="{alias}">&nbsp;* 使用汉语拼音或者英文名称&nbsp;&nbsp;<span id="alias_info"></span></td></tr>
+   <tr bgcolor="#f9f9f9" height=25><td>&nbsp;有关问题的说明或问题回复提示&nbsp;<img src="../Images/info.gif" border=0></td></tr>
+   <tr><td><textarea rows=4 cols=125 name="questionNotes" id="questionNotes" tabIndex=1>{questionNotes}</textarea><a href="javascript:resizeTextHeight('questionNotes',1);"><img src="../Images/jia.gif"></a><a href="javascript:resizeTextHeight('questionNotes',-1);"><img src="../Images/jian.gif"></a></td></tr>
+   <tr bgcolor="#f9f9f9" height=25><td><b>&nbsp;问题选项</b>&nbsp;<img src="../Images/info.gif" border=0></td></tr>
+   <tr><td>
+	    &nbsp;&nbsp;<input type="radio" value="1" name="radioType" {radioType1}> 是/否
+	    &nbsp;&nbsp;<input type="radio" value="3" name="radioType" {radioType3}> 满意/不满意
+	    &nbsp;&nbsp;<input type="radio" value="4" name="radioType" {radioType4}> 正确/错误 <br/>
+	    &nbsp;&nbsp;<input type="radio" value="2" name="radioType" {radioType2}> 对/错
+	    &nbsp;&nbsp;<input type="radio" value="6" name="radioType" {radioType6}> 同意/不同意
+	    &nbsp;&nbsp;<input type="radio" value="5" name="radioType" {radioType5}> 支持/反对 <br/>
+	    &nbsp;&nbsp;<input type="radio" value="7" name="radioType" {radioType7}> Ture/False
+	    &nbsp;&nbsp;<input type="radio" value="8" name="radioType" {radioType8}> Yes/No <br/>
+	  </td>
+   </tr>
+   <tr bgcolor="#f9f9f9" height=25><td><b>&nbsp;显示设置</b>&nbsp;<img src="../Images/info.gif" border=0></td></tr>
+   <tr><td>
+	    &nbsp;&nbsp;<input type="checkbox" value="1" name="isColArrange" id="isColArrange" {isColArrange}> 选项横向排列
+	  </td>
+   </tr>
+   <tr bgcolor="#f9f9f9" height=25><td><b>&nbsp;控制设置</b>&nbsp;<img src="../Images/info.gif" border=0></td></tr>
+   <tr><td>
+	    &nbsp;&nbsp;<input type="checkbox" value="1" name="isRequired" id="isRequired" {isRequired}> 此题为必答题 <br/>
+	  </td>
+   </tr></table><table width=100% style="margin-bottom:15px">
+   <tr> 
+  	 <td><input name="radioType_ori" type="hidden" id="radioType_ori" value="{radioType}"> 
+         <input name="surveyID" type="hidden" id="surveyID" value="{surveyID}"> 
+         <input name="questionID" type="hidden" id="questionID" value="{questionID}"> 
+         <input name="orderByID" type="hidden" id="orderByID" value="{orderByID}"> 
+         <input name="Action" type="hidden" id="Action"> 
+         <input class=inputsubmit name="AddYesNoSubmit" type="button" id="AddYesNoSubmit" value="保存，下一个" onclick="javascript:submitForm('AddYesNoSubmit');"> 
+         <input class=inputsubmit name="AddYesNoOver" type="button" id="AddYesNoOver" value="保存，结束" onclick="javascript:submitForm('AddYesNoOver');"> 
+         <input class=inputsubmit type="button" name="close" id="close" value="  关闭  " onClick="javascript:parent.hidePopWin();">
+	 </td>
+    </tr>
+  </form>
+ </table>
+  <script type="text/javascript">initInputHighlightScript();</script> 
+  <script language=javascript src="../JS/Example.js.php"></script>
+</body></html>

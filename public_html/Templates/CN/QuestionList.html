@@ -1,0 +1,100 @@
+	<div class="content_tit">
+		<div class="clearfix">
+		<h1><span class=redtitle>[{surveyTitle}]</span>问题列表</h1>
+		<span class="total ml10">[{totalPageNum}页{totalRecNum}问题]</span>
+		</div>
+		<p class="fc_grey">列出调查问卷中所有的问题以及对应问题题型</p>
+	</div>
+	<div class="content_main" style="font-size:12px;margin-bottom:5px;margin-top:8px;">
+	<a href="../d.php?qname={surveyName}&qlang={qlang}" target=_blank><div class=inputsubmit style="width:55px;height:16px;float:left;display:{isHaveSite};position:relative;;margin-right:4px;*margin-right:0px" onmousedown="this.style.left='1px';this.style.top='1px';" onmouseup="this.style.left='0px';this.style.top='0px';" id="preSurvey" name="preSurvey">预览问卷</div></a>
+	<input class=inputsubmit style="display:{isHaveSite}" name="deploySurvey" type="button" id="deploySurvey" value="执行问卷" onclick="if(window.confirm('您确定把设计好的问卷开始发布执行？该问卷将不能再执行问卷设计操作！？')){gId('deploySurvey').disabled=true;gId('deploySurvey').style.border='1px solid #DDD';gId('deploySurvey').style.backgroundColor='#F5F5F5';gId('deploySurvey').style.color='#3b5888';window.location.href='ShowSurveyList.php?Action=ChangeStatus&surveyID={surveyID}&status=1&surveyTitle={surveyTitle}';}">
+	<input class=inputsubmit style="display:{isHaveSite}" name="exportNew" type="button" id="exportNew" value="导出问题" onclick="gId('exportNew').disabled=true;gId('exportNew').style.border='1px solid #DDD';gId('exportNew').style.backgroundColor='#F5F5F5';gId('exportNew').style.color='#3b5888';window.location.href='../Export/Export.text.inc.php?surveyID={surveyID}'">
+	<input class=inputsubmit name="importNew" type="button" id="importNew" value="导入问题" onclick="javascript:showPopWin('{importURL}', 720, 320, refreshParent, null,'自TXT文件导入问卷问题')">
+	<input class=inputsubmit name="indexNew" type="button" id="indexNew" value="指标复制" onclick="javascript:showPopWin('{copySurveyIndexURL}', 720, 480, refreshParent, null,'从现有问卷指标体系复制问题新增')">
+	<input class=inputsubmit name="copyNew" type="button" id="copyNew" value="复制问题" onclick="javascript:showPopWin('{copySurveyURL}', 720, 450, refreshParent, null,'自现有问卷中复制问题新增')">
+	<input class=inputsubmit name="createNew" type="button" id="createNew" value="新增问题" onclick="javascript:qtnAddAction();"></div>
+
+	<div class="content_main" style="margin-top:8px;display:{noneSite}">
+	     <table class="d_table">
+			   <tr><th align=left>问卷中尚不存在任一调查问题？</th></tr>
+			   <tr><td style="background:#EAEAEA">为调查问卷新增调查问题，才有完整的调查问卷设计，才能利用Eclear强大功能对其进行数据收集与分析，问卷设计完成后别忘了将其转成“执行”状态<br/>
+			   <a href="javascript:void(0);" onclick="javascript:qtnAddAction();"><img src="../Images/create_qtn.png" border=0></a>&nbsp;</td></tr>
+	     </table>
+    </div>
+	<div class="content_main" style="margin-top:8px;display:{isHaveSite}">
+	<table class="d_table">
+	     <tr class=coltitle>
+		  <th width=2% noWrap align=center>&nbsp;</th>
+		  <th width=4% noWrap align=center>ID</th>
+		  <th width=* align=left>&nbsp;<B>题目文字</B></th>
+		  <th width=8% noWrap align=center><B>题型</B></th>
+		  <th width=8% noWrap align=center><b>排序</b></th>
+		  <th width=5% noWrap align=center><b>操 作</b> </th>
+		</tr>
+		<!-- BEGIN QUESTION -->
+		<tr>
+		  <td width=2% noWrap align=center><input name="questionID[]" type="checkbox" id="questionID" value="{questionID}"><input name="isRequired[{ID}]" type="hidden" id="isRequired[{ID}]" value="{isRequired}"></td>
+		  <td noWrap align=center style="{logic_color}">{questionID}</td>
+		  <td style="line-height:25px">{questionName}</td>
+		  <td align=center nowrap style="{qtn_color}">{questionType}<input name="questionType[{ID}]" type="hidden" id="questionType[{ID}]" value="{qtnType}"></td>
+		  <td align=right nowrap>{orderAction}<input name="orderByID[{ID}]" type="text" id="orderByID[{ID}]" value="{orderByID}" size="5" maxlength="15" readonly></td>
+		  <td align=center nowrap><a href="javascript:void(0);" onclick="_ShowQtnActionBox(700,50,'{actionStr}');">操作</a></td>
+		</tr>
+		<!-- END QUESTION -->
+		<tr>
+		   <td width=2% noWrap align=center><input name="all" type="checkbox" id="all" value="all" onclick="checkall(this.form)" style="background-color:#f9f9f9"></td>
+		   <td style="border:0px;background-color: #f9f9f9;" colspan=5>				
+				<input name="surveyID" type="hidden" id="surveyID" value="{surveyID}"> 
+				<select name="newQuestionType" id="newQuestionType" onchange="newChangeQtn();">
+				  <option value=''>在当前选中问题前插入合适题型...</option>
+				  <option value='1'>是非题</option>
+				  <option value='2'>单选题</option>
+				  <option value='24'>复合单选题</option>
+				  <option value='3'>多选题</option>
+				  <option value='25'>复合多选题</option>
+				  <option value='4'>填空题</option>
+				  <option value='5'>多行填空题</option>
+				  <option value='23'>组合填空题</option>
+				  <option value='27'>矩阵填空题</option>
+				  <option value='29'>自动矩阵填空题</option>
+				  <option value='9'>段落小节</option>
+				  <option value='14'>枚举题</option>
+				  <option value='6'>矩阵单选题</option>
+				  <option value='19'>自动矩阵单选题</option>
+				  <option value='26'>复合矩阵单选题</option>
+				  <option value='7'>矩阵多选题</option>
+				  <option value='28'>自动矩阵多选题</option>
+				  <option value='10'>排序题</option>
+				  <option value='20'>自动排序题</option>
+				  <option value='15'>评分题</option>
+				  <option value='21'>自动评分题</option>
+				  <option value='16'>比重题</option>
+				  <option value='22'>自动比重题</option>
+				  <option value='11'>文件上传题</option>
+				  <option value='17'>自动选项题</option>
+				  <option value='18'>条件选项题</option>
+				  <option value='12'>隐藏变量</option>
+				  <option value='30'>空题</option>
+				</select>&nbsp;<span id="baseQtnList"><select name="baseID" id="baseID" style="width:520px;*width:530px">
+				<option value=''>选择掩蔽问题题型的来源问题...</option>
+				</select></span>
+				<input name="formAction" id="formAction" type="hidden">
+				<input name="InsertNewQtnSubmit" class=inputsubmit type="button" id="InsertNewQtnSubmit" value="插入问题" onclick="javascript:checkInsertNewQtn();">
+		    </td></tr>
+		    </table><table width=100%>
+			<tr><td width=2% noWrap align=center></td>
+			    <td style="border:0px">
+				<input name="InsertPageBreakSubmit" class=inputsubmit type="button" id="InsertPageBreakSubmit" value="插入分页" onclick="javascript:checkQtnAction('InsertPageBreakSubmit');">
+				<input name="DeleteQuestionSubmit" class=inputsubmit type="button" id="DeleteQuestionSubmit" value="删除问题" onclick="if( window.confirm('您真的想删除当前选中的问题吗？本操作不可恢复！')) {checkQtnAction('DeleteQuestionSubmit');}">
+				<input name="UpdateIsRequireSubmit" class=inputsubmit type="button" id="UpdateIsRequireSubmit" value="开闭必答" onclick="javascript:checkQtnAction('UpdateIsRequireSubmit');">
+				<input class=inputsubmit name="createNew0" type="button" id="createNew0" value="新增问题" onclick="javascript:qtnAddAction();">
+		    </td></tr>
+		</table>
+		<table style="border:0px;margin-top:15px;margin-bottom:15px" class="n_table" style="display:{isHaveSite}">
+		   <tr style="display:{isHaveSite}"> 
+			<td style="border:0px;padding-left:0px;display:{isHaveSite}"><B><IMG src="../Images/notes.gif" alt=已封存 border=0></B><b>：</b>点击<IMG src="../Images/arrow_up.gif">或<IMG src="../Images/arrow_down.gif">可调整问题在问卷中的显示顺序<br>
+			<B><IMG src="../Images/notes.gif" alt=已封存 border=0></B><b>：</b><span class=red>*</span>表示该问题为必答题；背景为黄色的问题表明该题存在逻辑关系。
+			</td>
+		   </tr>
+		</table>
+	</div>

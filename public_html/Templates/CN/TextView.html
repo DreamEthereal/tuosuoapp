@@ -1,0 +1,26 @@
+<tr>
+    <td height=25 class="question" valign=center>{questionName}</td>
+</tr>
+<tr>
+   <td>
+	 <table style="border:1px solid #cacaca;">
+		<tr style="color:white;">
+			<td bgcolor=#cf1100 align=center>&nbsp;<b>回复</b></td>
+			<td bgcolor=#cf1100 align=center>&nbsp;<b>回复百分比</b></td>
+			<td bgcolor=#cf1100 align=left>&nbsp;<b>百分比图示</b></td>
+			<td bgcolor=#cf1100 align=center>&nbsp;<b>缺失</b></td>
+			<td bgcolor=#cf1100 align=center>&nbsp;<b>缺失百分比</b></td>
+			<td bgcolor=#cf1100 align=left>&nbsp;<b>百分比图示</b></td>
+		</tr>
+		<tr style="background-color:#e4e0ea;border-bottom:1px solid #cacaca">
+			<td nowrap align=center>&nbsp;<b>{answerNum}</b></td>
+			<td nowrap align=center>&nbsp;{optionPercent} %</td>
+			<td nowrap width=192><img height=10 src="{imagePath}Images/bar.gif" width="{optionPercent}%"></td>
+			<td nowrap align=center>&nbsp;<b>{skip_answerNum}</b></td>			
+			<td align=center>&nbsp;{skip_optionPercent} %</td>
+			<td nowrap width=192><img height=10 src="{imagePath}Images/bar.gif" width="{skip_optionPercent}%"></td>
+		</tr>
+		<tr><td colspan=6>&nbsp;<a href="ShowUserDefine.php?type=text&surveyID={surveyID}&questionID={questionID}&surveyTitle={surveyName}&isComb={isComb}&pageNum={pageID}&dataSourceId={dataSourceId}"><b>显示回复的值</b></a></td></tr>
+	  </table>
+  </td>
+</tr>

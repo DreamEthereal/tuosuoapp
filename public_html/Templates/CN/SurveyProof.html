@@ -1,0 +1,101 @@
+<html>
+<head>
+<meta http-equiv=content-language content=zh-cn>
+<meta http-equiv=content-type content="text/html; charset=gbk">
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7">
+<style>
+td { padding:2px 5px 2px 5px;}
+table {margin-bottom:4px;}
+</style>
+<link href="../CSS/Base.css" rel=stylesheet>
+<LINK href="../CSS/Window.css" type=text/css rel=stylesheet>
+<script type="text/javascript" src="../JS/Common.js.php"></script>
+<script type="text/javascript" src="../JS/Window.js.php"></script>
+<script type="text/javascript" src="../JS/Jquery.min.js.php"></script>
+<script type="text/javascript" src="../JS/Jquery.notification.js.php"></script>
+<link type="text/css" rel="stylesheet" href="../CSS/Notification.css" />
+<script language=javascript src="../JS/CheckQuestion.js.php"></script>
+<script language="javascript"> 
+function Check_Form_Validator()
+{
+	if (!CheckNotNull(document.Check_Form.csvFile, "上传完成凭证的导入文件")) {return false;}
+}
+function CheckExt(obj)
+{
+   	var AllowExt = ".csv|";
+	FileExt = obj.value.substr(obj.value.lastIndexOf(".")).toLowerCase();
+	if( AllowExt.indexOf(FileExt + "|") == -1) 
+	{
+		document.getElementById("submitBtn").disabled = true;
+	    $.notification("上传的文件扩展名仅支持csv格式");
+		return false;
+	}
+	else
+	{
+		document.getElementById("submitBtn").disabled = false;
+		return true;
+    }    
+}
+function refreshWindow() {
+   self.location.href = '{thisURL}';
+}
+function submitForm()
+{
+	if( Check_Form_Validator() != false )
+	{
+		document.getElementById('submitBtn').disabled = true;
+		disabledStyle(document.getElementById('submitBtn'));
+		document.getElementById('close').disabled = true;
+		disabledStyle(document.getElementById('close'));
+		document.Check_Form.submit();
+	}
+}
+</script> 
+<META content="MSHTML 6.00.3790.0" name=GENERATOR></HEAD>
+<body oncontextmenu="return false">
+
+<form name="Search_Form" id="Search_Form" style="margin:0;padding:0" method="POST" action="">
+<table style="LINE-HEIGHT: 150%;border-collapse:collapse;" cellSpacing=0 cellPadding=0 width="100%" borderColor=#cacaca border=1>
+   <div class=position>位置：&nbsp; 我的问卷 &raquo; 预定义问卷回复完成凭证</div>
+   <tr bgcolor="#f9f9f9" height=25><td colspan=7><b>&nbsp;关于...</b>&nbsp;<img src="../Images/info.gif" border=0></td></tr>
+   <tr><td colspan=7>&nbsp;完成凭证用来奖励用户的问卷回复行为，在问卷正常完成后给予的兑现奖励，可以是移动电话充值卡、购物卡或者优惠卡等。</td></tr>
+   <tr><td bgcolor="#f9f9f9" colspan=7>
+		<span style="float:left"><b>完成凭证</b></span>
+		<span style="float:right"><img src="../Images/excel.gif">&nbsp;<a href="../Export/Export.proof.inc.php?surveyID={surveyID}">导出数据</a></span></td></tr>
+   <tr><td colspan=7><img src="../Images/search.gif">&nbsp;凭证号中包含：<input type=text name="t_proofNum" id="t_proofNum" size=20 value="{t_proofNum}">&nbsp;<input name="Action" type="hidden" id="Action" value="querySubmit"><input type="submit" class=inputsubmit name="Submit" value="查询"></td></tr>
+   <tr><td width=30% align=left noWrap><b>凭证名称</b></td>
+	   <td width=15% align=left noWrap><b>凭证号</b></td>
+	   <td width=15% align=left noWrap><b>凭证密码</b></td>
+	   <td width=10% align=center noWrap><b>数据</b></td>
+	   <td width=10% align=center noWrap><b>审核状态</b></td>
+	   <td width=10% align=center noWrap><b>状态</b></td>
+	   <td width=10% noWrap align=center><b>操 作</b> </td>
+   </tr>
+  <!-- BEGIN LIST -->
+  <tr onmouseover="this.style.backgroundColor='#f9f9f9'" onmouseout="this.style.backgroundColor='#ffffff'"> 
+	  <td>{proofName}</td>
+	  <td nowrap>{proofNum}</td>
+	  <td nowrap>{proofPass}</td>
+	  <td nowrap align=center>{dataID}</td>
+	  <td nowrap align=center style="background:{authColor};text-align:center;" nowrap>{dataStat}</td>
+	  <td noWrap align=center style="background-color:{statusColor};">{status}</td>
+	  <td nowrap align=center>
+		   <a href="{deleteURL}" style="display:{isHaveData}" onclick="return window.confirm('您真的想删除该条完成凭证吗？本操作不可恢复！')">删除</A>
+	  </td>
+  </tr>
+ <!-- END LIST -->
+ </table>
+ </form>
+
+ <form name="Check_Form" method="post" action="" id="Check_Form" enctype="multipart/form-data" onsubmit="return false;" style="margin:0px;padding:0px">
+  <table style="LINE-HEIGHT: 150%;border-collapse:collapse;" cellSpacing=0 cellPadding=0 width="100%" borderColor=#cacaca border=1>
+   <tr><td bgcolor="#f9f9f9"><b>导入完成凭证数据</b></td></tr>
+   <tr><td>选择导入文件(.csv)：<input type="file" name="csvFile" id="csvFile" size=60 onchange="CheckExt(this);"><br/>批量导入文件模板：<a href="../WebAPI/Down.php?path=Li4vSGVscC8=&file={csvFileName}"><b><font color=red>下载示例文件</font></b></a></td></tr>
+  </table><table width=100%><tr><td>
+	     <input name="surveyID" type="hidden" id="surveyID" value="{surveyID}"> 
+    	 <input name="Action" type="hidden" id="Action" value="ImportProofSumbit"> 
+		 <input class=inputsubmit type="button" name="submitBtn" id="submitBtn" value="确定" onclick="javascript:submitForm();"> 
+		 <input class=inputsubmit type="button" name="close" id="close" value="关闭" onClick="javascript:parent.hidePopWin();">
+      </td></tr></table>
+  </form>
+</body></html>

@@ -1,0 +1,34 @@
+<tr>
+    <td height=25 class="question" valign=center>{questionName}</td>
+</tr>
+<tr style="border:1px #cacaca solid"><td>
+	<b>计分模式：</b><input name="coeffMode_{questionID}" id="coeffMode_{questionID}" value="1" type=radio {coeffMode_1}>得分&nbsp;<input name="coeffMode_{questionID}" id="coeffMode_{questionID}" value="2" type=radio {coeffMode_2}>扣分&nbsp;&nbsp;&nbsp;
+	<b>满分：</b><input type="text" name="coeffTotal_{questionID}" id="coeffTotal_{questionID}" value="{coeffTotal}">&nbsp;&nbsp;&nbsp;
+	<b>分值阀值：</b><input name="coeffZeroMargin_{questionID}" id="coeffZeroMargin_{questionID}" value="1" type=checkbox {coeffZeroMargin}>最低为零&nbsp;<input name="coeffFullMargin_{questionID}" id="coeffFullMargin_{questionID}" value="1" type=checkbox {coeffFullMargin}>最高为满分&nbsp;&nbsp;&nbsp;
+	<b>空值填充：</b><input name="skipMode_{questionID}" id="skipMode_{questionID}" value="1" type=radio {skipMode_1}>零&nbsp;<input name="skipMode_{questionID}" id="skipMode_{questionID}" value="2" type=radio {skipMode_2}>满分&nbsp;<input name="skipMode_{questionID}" id="skipMode_{questionID}" value="3" type=radio {skipMode_3}>不适用
+</td></tr>
+<tr>
+   <td>
+	  <table cellSpacing=0 cellPadding=0>
+		<!-- BEGIN OPTION -->
+		<tr class="answer">
+			<td nowrap>&nbsp;{optionName}</td>
+			<td width=15></td>
+			<td nowrap align=right>分值：<input size=10 name="option_3_{questionID}_{optionID}" value="{optionCoeff}"></td>
+		</tr>
+		<!-- END OPTION -->
+		<tr style="display:{isHaveOther}" class="answer">
+			<td nowrap>&nbsp;{other_optionName}</td>
+			<td width=15></td>
+			<td nowrap align=right>分值：<input size=10 name="option_3_{questionID}_0" value="{otherCoeff}"></td>
+		</tr>
+		<tr class="answer" style="display:{isHaveNeg}">
+			<td nowrap>&nbsp;{neg_optionName}</td>
+			<td width=15></td>
+			<td nowrap align=right>分值：<input size=10 name="option_3_{questionID}_99999" id="option_3_{questionID}_99999" value="{negCoeff}"></td>
+			<td width=15></td>
+			<td><input type="checkbox" value="1" name="na_3_{questionID}_99999" id="na_3_{questionID}_99999" {isNA} onclick="checkNaChecked(3,{questionID},0,99999);">&nbsp;"不适用"选项</td>
+		</tr>
+	  </table>
+  </td>
+</tr>

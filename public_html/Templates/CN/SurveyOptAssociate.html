@@ -1,0 +1,225 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gbk" />
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" />
+<title>选项关联逻辑关系 - Eclear在线问卷调查引擎</title>
+<link rel="shortcut icon" href="../Images/enableq.ico" type="image/x-icon" />
+<link rel="stylesheet" type="text/css" href="../CSS/UIBase.css" />
+<link rel="stylesheet" type="text/css" href="../CSS/Index.css" />
+<link href="../CSS/Window.css" type="text/css" rel=stylesheet>
+<script type="text/javascript" src="../JS/Common.js.php"></script>
+<script type="text/javascript" src="../JS/Window.js.php"></script>
+<script type="text/javascript" src="../JS/Jquery.min.js.php"></script>
+<script>
+function refreshParent() {
+   self.location.href = '{optAssURL}';
+}
+function checkall(form) 
+{
+	if( form.all.checked)
+	{
+		for(var i = 0;i < form.elements.length-1; i++) 
+		{
+			var e = form.elements[i];
+			if(e.type == 'checkbox'){e.checked = true;}
+		}
+	}
+	else
+	{
+		for(var i = 0;i < form.elements.length-1; i++) 
+		{
+			var e = form.elements[i];
+			if(e.type == 'checkbox'){e.checked = false;}
+		}
+    }
+}
+var ajax_request = false;
+function HttpRequest(questionID,optionID,questionType,isLogicAnd)
+{
+    var url = "../System/AjaxShowOptAssociate.php?Action=SetQtnLogicRel&surveyID={surveyID}&questionID="+questionID+"&optionID="+optionID+"&questionType="+questionType+"&isLogicAnd=" + isLogicAnd +"&randid="+Math.random();
+	if(window.ActiveXObject){
+		try{
+			ajax_request = new ActiveXObject("Msxml2.XMLHTTP");
+		}
+		catch (e){
+			try{
+				ajax_request = new ActiveXObject("Microsoft.XMLHTTP");
+			}
+			catch (e) {}
+		}
+	}
+	else if(window.XMLHttpRequest){
+		ajax_request = new XMLHttpRequest();
+		if (ajax_request.overrideMimeType){
+			ajax_request.overrideMimeType('text/xml');
+		}
+	}
+	
+	if (!ajax_request){
+		alert("Cannot create an XMLHTTP instance");
+		return false;
+	}
+	ajax_request.onreadystatechange = function() {
+	  if( ajax_request.readyState == 4 && ajax_request.status == 200) {
+			AjaxRequest(questionID,questionType);
+	   }	
+	};
+	ajax_request.open('GET', url, true);
+	ajax_request.send(null);
+}
+
+var http_request = false;
+function AjaxRequest(questionID,questionType)
+{
+	var theLogicObj = eval("document.getElementById('conList_"+questionID+"')");
+	theLogicObj.innerHTML = "<div id=\"preloading\" style=\"background-color:#f0f0f0;width:160px;overflow:hidden;white-space:nowrap;color:black;font-weight:bold;-moz-border-radius-bottomright:5px;-webkit-border-bottom-right-radius:5px;-khtml-border-bottom-right-radius:5px;border-bottom-right-radius:5px;\">&nbsp;<img src=\"..\/Images\/wait.gif\" width=\"16px\" height=\"16px\">&nbsp;正在加载数据&nbsp;<\/div>";
+    var url = "../System/AjaxShowOptAssociate.php?surveyID={surveyID}&questionID=" + questionID + "&questionType=" + questionType + "&randid="+Math.random();
+	if(window.ActiveXObject){
+		try{
+			http_request = new ActiveXObject("Msxml2.XMLHTTP");
+		}
+		catch (e){
+			try{
+				http_request = new ActiveXObject("Microsoft.XMLHTTP");
+			}
+			catch (e) {}
+		}
+	}
+	else if(window.XMLHttpRequest){
+		http_request = new XMLHttpRequest();
+		if (http_request.overrideMimeType){
+			http_request.overrideMimeType('text/xml');
+		}
+	}
+	
+	if (!http_request){
+		alert("Cannot create an XMLHTTP instance");
+		return false;
+	}
+	http_request.onreadystatechange = function() {
+	  if( http_request.readyState == 4 && http_request.status == 200) {
+			theLogicObj.innerHTML = http_request.responseText;
+	   }	
+	};
+	http_request.open('GET', url, true);
+	http_request.send(null);
+}
+function gId(_sId){
+	return document.getElementById(_sId);
+}
+</script>
+<style>
+	input[type=radio] {vertical-align: middle;}
+	input[type=checkbox] {vertical-align: middle;}
+</style>
+
+</head>
+
+<body oncontextmenu="return false" onload="javascript:fnLoad(10);" onunload="javascript:fnUnload(10);">
+ 	<div class="header">
+		<h1 class="logo">Eclear</h1>
+		<div class="header_menu">
+			<div class="header_m_1">
+				<a href="../System/ShowMain.php">欢迎您，<font color="#e45857" id="nick_Name_cont"></font></a>
+				<span class="head_menu_icon"></span>
+				<ul class="head_menu_list">
+					<span class="head_menu_top"></span>
+					<li><a href="../System/MyProfile.php">我的账户信息</a></li>
+					<li class="last"><a href="../System/ChangePass.php">修改我的密码</a></li>
+				</ul>
+			</div>
+			<div class="header_m_6" style="margin-left:50px">
+				<a href="../System/ShowMain.php">首页</a>
+			</div>
+			<div class="header_m_2" id="mySetting">
+			</div>
+			<div class="header_m_3" style="margin-left:50px">
+				<a href="../Help/Downs.php">帮助</a>
+				<span class="head_menu_icon"></span>
+				<ul class="head_menu_list">
+					<span class="head_menu_top"></span>
+					<li><a href="../Help/Downs.php">帮助文件下载</a></li>
+					<li><a href="http://doc.itenable.com.cn" target=_blank>在线帮助文档</a></li>
+					<li><a href="http://i.enableq.com" target=_blank>在线讨论社区</a></li>
+					<li class="last"><a href="../System/AdministratorsLogs.php">系统操作日志</a></li>
+				</ul>
+			</div>
+			<div class="header_m_4" style="margin-left:50px">
+				<a href="javascript:void(0);" onclick="javascript:showPopWin('../License/AboutEnableQ.php', 500, 400, null, null,'关于...')">关于</a>
+			</div>
+			<div class="header_m_5">
+				<a href="../System/Logout.php?loginOutURL=../index.php" target=_top>退出</a>
+			</div>
+		</div>
+	</div><!--end of header-->
+	<script type="text/javascript" src="../JS/MySetting.js.php"></script>
+
+	<div class="container clearfix">
+	   <div class="main">
+			<div class="nav">
+					<a href="{questionListURL}">调查问题</a>
+					<a href="{logicURL}" class="cur">逻辑关系</a>
+					<a href="{relationURL}">数值关联</a>
+					<a href="{quotaURL}">问卷配额</a>
+					<a href="../System/AjaxEditSurveyCode.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">基础数据</a>
+			</div>
+
+			<div class="sub_nav clearfix">
+				<p class="sub_nav_top clearfix">
+					<a href="{logicURL}">问题关联</a>
+					<a href="{optAssURL}" class="cur">选项关联</a>
+					<a href="{qtnAssURL}">矩阵行关联</a>
+				</p>
+			</div>
+			
+		    <div class="content">
+			<div class="content_tit">
+				<div class="clearfix">
+				<h1><span class=redtitle>[{surveyTitle}]</span>选项关联</h1>
+				<span class="total ml10">[{recNum}组关系]</span>
+				<span class="btn ml10"></span>
+				</div>
+				<p class="fc_grey">所谓逻辑关系的问题选项关联指问题的选项与其他问题中的变量之间的依赖关系。存在逻辑关系的问题选项是先在问卷上显示的，只有等定义的逻辑条件成立时该选项才隐藏&nbsp;<a onmouseover="this.T_WIDTH=595;this.T_PADDING=0;this.T_BGCOLOR='#ffffff'; return escape('&nbsp;举例：若您的问卷在第3题选择1000-2000元的前提下需要过滤第8题的选项1和选项2<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;您可以在第8题的选项1和选项2上创建一个依赖于第3题的选项关联关系<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;在新增关联关系的界面中<问卷中此问题>选择第8题，<选项>选择选项1和选项2<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<依赖于此问题>选择第3题，<运算关系与回复值>选择“选择”和“1000-2000元”<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;这样第8题的选项1和选项2在第3题选择1000-2000元答案时会自动隐藏')" href="javascript:void(0);"><font color=red><b>[帮助]</font></a></b></p>
+			</div>
+
+			<div class="content_main" style="font-size:12px;margin-bottom:5px;margin-top:8px;"><input class=inputsubmit name="createNew" type="button" id="createNew" value="新增定义" onclick="javascript:showPopWin('{newLogicURL}', 900, 540, refreshParent, null,'新增选项关联关系')">&nbsp;<input class=inputsubmit name="importNew" type="button" id="importNew" value="导入定义" onclick="javascript:showPopWin('{importLogicURL}', 730, 260, refreshParent, null,'导入选项关联关系')">&nbsp;<input class=stnsubmit name="exportLogicData" type="button" id="exportLogicData" value="导出定义"  onclick="gId('exportLogicData').disabled=true;gId('exportLogicData').style.border='1px solid #DDD';gId('exportLogicData').style.backgroundColor='#F5F5F5';gId('exportLogicData').style.color='#3b5888';window.location.href='../Export/Export.optass.inc.php?surveyID={surveyID}';"></div>
+
+			<form name="form" id="form" method="post" action="">
+			<input name="surveyID" type="hidden" id="surveyID" value="{surveyID}"> 
+			<div class="content_main" style="margin-top:10px">
+
+  			 <table class="d_table">
+			   <tr class=coltitle>
+				  <th width=2% noWrap align=center>&nbsp;</th>
+				  <th width=86% align=left>&nbsp;<B>问题选项隐藏依赖</B></th>
+				  <th width=8% noWrap align=center><b>操 作</b></th>
+			   </tr>
+			   <!-- BEGIN LOGIC -->
+			   <tr>
+				 <td width=2% noWrap align=center><input name="questionID[]" type="checkbox" id="questionID[]" value="{questionID}"></td>
+				 <td valign=middle style="line-height:25px;color:#555"><b>{questionName}</b></td>
+				 <td noWrap align=center valign=center><A href="{editURL}">修改</A>&nbsp;&nbsp;<A href="{deleteURL}" onclick="return window.confirm('您真的想删除该条逻辑关系吗？本操作不可恢复！')">删除</A></td>
+			   </tr>
+			   <tr>
+				 <td bgcolor="#f5fafe">&nbsp;</td>
+				 <td colspan=2 align=left bgcolor="#f5fafe" height=25><div id="conList_{questionID}" style="line-height:25px">{conList}</div></td>
+			   </tr>
+			   <!-- END LOGIC -->
+			</table>
+			<table width=100% style="border:0px;margin:0px;padding:0px;margin-bottom:15px">
+				<tr>
+				  <td width=2% style="border:0px;margin:0px;padding:0px;" nowrap align=center><input name="all" type="checkbox" id="all" value="all" onclick="checkall(this.form)" style="background-color:#ffffff"></td>
+				  <td style="border:0px;margin:0px;padding:0px;">
+				  <input name="DeleteSurveyLogicSubmit" class=inputsubmit type="submit" id="DeleteSurveyLogicSubmit" value="删除定义" onclick="return window.confirm('您真的想删除当前选中的逻辑关系定义吗？本操作不可恢复！')">
+				</td></tr></table>
+			</div><!--end of content_main-->
+		   </div><!--end of content-->
+	   </div><!--end of main-->
+    </div><!--end of container-->
+	</form>
+	<!--popmenu -->
+	<script type="text/javascript" src="../JS/PopMenu.js.php"></script>
+	<script language=javascript src="../JS/Example.js.php"></script>
+	<script type="text/javascript" src="../JS/Position.js.php"></script>
+</body></html>

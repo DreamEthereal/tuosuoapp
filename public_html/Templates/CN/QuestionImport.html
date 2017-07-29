@@ -1,0 +1,88 @@
+<html>
+<head>
+<meta http-equiv=content-language content=zh-cn>
+<meta http-equiv=content-type content="text/html; charset=gbk">
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7">
+<style>
+ td { padding:2px 5px 2px 5px;}
+</style>
+<link href="../CSS/Base.css" rel=stylesheet>
+<script type="text/javascript" src="../JS/Jquery.min.js.php"></script>
+<script type="text/javascript" src="../JS/Jquery.notification.js.php"></script>
+<link type="text/css" rel="stylesheet" href="../CSS/Notification.css" />
+<script language=javascript src="../JS/CheckQuestion.js.php"></script>
+<script language=javascript>
+function File_Form_Validator(){
+	if (!CheckNotNull(document.File_Form.localFile, "上传本地文本文件")) {return false;}
+	if (!CheckNotNull(document.File_Form.theBaseId, "选定问题导入在当前问卷的插入位置")) {return false;}
+}
+
+function CheckExt(obj)
+{
+   	var AllowExt = ".txt|";
+	FileExt = obj.value.substr(obj.value.lastIndexOf(".")).toLowerCase();
+	if( AllowExt.indexOf(FileExt + "|") == -1) 
+	{
+		document.getElementById("submitBtn").disabled = true;
+	    $.notification("上传的文件扩展名仅支持txt格式");
+		return false;
+	}
+	else
+	{
+		document.getElementById("submitBtn").disabled = false;
+		return true;
+    }    
+}
+function submitForm()
+{
+	if( File_Form_Validator() != false )
+	{
+		document.getElementById('submitBtn').disabled = true;
+		disabledStyle(document.getElementById('submitBtn'));
+		document.getElementById('close').disabled = true;
+		disabledStyle(document.getElementById('close'));
+		document.File_Form.submit();
+	}
+}
+</script>
+<meta content="mshtml 6.00.3790.0" name=generator></head>
+<body oncontextmenu="return false">
+   <form name="File_Form" method="post" action="" id="File_Form" onsubmit="return false;" enctype="multipart/form-data">
+  <table class=datatable style="line-height: 150%;border-collapse:collapse;" cellspacing=0 cellpadding=0 bordercolor=#cacaca border=1 width=100%>
+     <div class=position>位置：&nbsp; 我的问卷 &raquo; 新增问题 &raquo; 自TXT文件导入问卷问题</div>
+     <tr><td colspan="2" bgcolor="#f9f9f9" height="25"><b>上传本地格式文件(.txt)</b></td></tr>
+   <tr>
+      <td width=14% nowrap>&nbsp;选择导入文件</td>
+	  <td><input type="file" name="localFile" size=82 onchange="CheckExt(this);"></td>
+   </tr>
+   <tr>
+	   <td nowrap>&nbsp;在此问题后插入</td>
+	   <td nowrap><select name="theBaseId" id="theBaseId" style="width:578px;">
+		   <option value='' selected>请选择...</option>
+		   <option value='afterOfAll'>所有问题之后</option>
+		   {questionList}
+		  </select>
+	</td></tr>
+   </table><table width=100%>
+   <tr><td width=14%>
+  	   <td height="15">
+	   	 <input name="Action" type="hidden" value="FileUploadSubmit">
+		 <input name="surveyID" type="hidden" value="{surveyID}">
+		 <input name="surveyTitle" type="hidden" value="{surveyTitle}">
+		 <input class=inputsubmit type="button" name="submitBtn" id="submitBtn" value="确定" onclick="javascript:submitForm();"> 
+		 <input class=inputsubmit type="button" name="close" id="close" value="关闭" onClick="javascript:parent.hidePopWin();">
+      </td>
+    </tr>
+  </form>
+ </table>
+ <table width=100%>
+   <tr><td style="padding-left:0px">
+   <b>1)</b> 关于导入文件的说明：<br/>
+   &nbsp;&nbsp;&nbsp;&nbsp;<b>(1)</b> 导入的文本文件编码设置必须是ANSI<br/>
+   &nbsp;&nbsp;&nbsp;&nbsp;<b>(2)</b> 题目文字与问题选项要求一行一个；每道问题由题目文字与问题选项构成，要求问题题目文字以识别标记打头<br/>
+   &nbsp;&nbsp;&nbsp;&nbsp;<b>(3)</b> 识别标记中间不允许出现其他任意字符，包含空格；识别标记由<font color=red><b>中括号</b></font>包含问题题型名称组成<br/>
+   &nbsp;&nbsp;&nbsp;&nbsp;<b>(4)</b> 注意矩阵题中对于矩阵行和列的特殊标记<font color=red><b>大括号</b></font><br/>
+   &nbsp;&nbsp;&nbsp;&nbsp;<b>(5)</b> 导入的问题题型不支持所有自动题型、隐藏变量、以及外部数据源<br/>   
+   <b>2)</b> 点击<a href="{listURL}&Action=DownloadFile&txtFileName=TXT_Sample_Question.txt"><font color=red><b>下载导入示例文件</b></font></a><br/>
+</td></tr></table>
+</body></html>

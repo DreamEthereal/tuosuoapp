@@ -1,0 +1,48 @@
+	<div class="content_tit">
+		<div class="clearfix">
+		<h1><span class=redtitle>[{surveyTitle}]</span>问卷指标体系</h1>
+		<span class="total ml10">[{totalRecNum}指标]</span>
+		<span class="btn ml10"><input class=inputsubmit name="createNew" type="button" id="createNew" value="新增指标" onclick="javascript:showPopWin('{addURL}', 700, 400, Init, null,'新增问卷评估指标')">&nbsp;</span>
+		</div>
+		<p class="fc_grey">基于项目需要，组合问卷内一个或多个问题为一个评估指标，用以需要观察单个样本在不同指标维度上的分值表现</p>
+	</div>
+   <div class="content_main" style="margin-top:10px;">
+	 <table class="d_table">
+	 <tr class=coltitle>
+	  <th width=3% align=center noWrap><input name="all" type="checkbox" id="all" value="all" onclick="checkall(this.form)" style="background-color:#f9f9f9"> </th>
+	  <th width=20% align=left><B>指标名称</B></th>
+	  <th width=* noWrap align=left><B>指标描述</B></th>
+	  <th width=6% align=center nowrap><B>满分</B></th>
+	  <th width=6% align=center nowrap><B>最低为零</B></th>
+	  <th width=6% align=center nowrap><B>最高为满分</B></th>
+	  <th width=6% noWrap align=center><b>问题数</b></th>
+	  <th width=7% noWrap align=center><b>操 作</b> </th>
+	</tr>
+	<!-- BEGIN LIST -->
+	<tr> 
+	  <td width=3% align=center noWrap><input name="indexID[]" type="checkbox" id="indexID[]" value="{indexIDF}"></td>
+	  <td><b>{indexNameF}</b></td>
+	  <td align=left>{indexDescF}</td>
+	  <td align=center>{fullValueF}</td>
+	  <td align=center>{isMinZeroF}</td>
+	  <td align=center>{isMaxFullF}</td>
+	  <td align=center>{qtnNumF}</td>
+	  <td align=center><a href="javascript:void(0);" onclick="javascript:showPopWin('{editURLF}', 700, 400, Init, null,'修订问卷评估指标')">修改</a></td>
+	</tr>
+	<!-- BEGIN INDEX -->
+	<tr> 
+	  <td width=3% align=center noWrap><input name="indexID[]" type="checkbox" id="indexID[]" value="{indexID}"></td>
+	  <td>&nbsp;&nbsp;-&nbsp;&nbsp;{indexName}</td>
+	  <td align=left>{indexDesc}</td>
+	  <td align=center>{fullValue}</td>
+	  <td align=center>{isMinZero}</td>
+	  <td align=center>{isMaxFull}</td>
+	  <td align=center>{qtnNum}</td>
+	  <td align=center><a href="javascript:void(0);" onclick="javascript:showPopWin('{editURL}', 700, 400, Init, null,'修订问卷评估指标')">修改</a></td>
+	</tr>
+	<!-- END INDEX -->
+	<!-- END LIST -->
+	</table>
+	<table width=100% style="border:0px;margin-bottom:15px">
+	   <tr><td style="border:0px"><input name="DeleteIndexSubmit" class=inputsubmit type="submit" id="DeleteIndexSubmit" value="删除指标" onclick="return window.confirm('您真的想删除当前选中的指标吗？本操作不可恢复！')"></td></tr>
+	</table>

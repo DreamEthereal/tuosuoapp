@@ -1,0 +1,35 @@
+<div class=actionsTitle>问卷<img src=../Images/arrow_down.gif align=absmiddle>&nbsp;&nbsp;<span class=surveynum style="font-size:12px;color:#000;font-weight:normal;">已有[ <span class=red>{pagesNum}</span> ]页&nbsp;[ <span class=red>{qtnNum}</span> ]问题</span>&nbsp;&nbsp;<input class=stnsubmit name="dbSize" type="button" id="dbSize" value="存储尺寸" onclick="javascript:isIE6();showPopWin('../System/ShowSurveySize.php?surveyID={surveyID}', 800, 410,null, null,'定义数据库存储尺寸')">&nbsp;<input class=stnsubmit name="exportNew" type="button" id="exportNew" value="导出问题" onclick="gId('exportNew').disabled=true;gId('exportNew').style.border='1px solid #DDD';gId('exportNew').style.backgroundColor='#F5F5F5';gId('exportNew').style.color='#3b5888';window.location.href='../Export/Export.text.inc.php?surveyID={surveyID}'"></div><div class=actionsInner style="line-height:130%"> 
+     <div>标题：{survey_Title} [ <span style="color:#0099cc">{survey_Name}</span> ]</div>
+     <div>项目类型：{projectType}&nbsp;&nbsp;|&nbsp;&nbsp;语言：{surveyLang}&nbsp;&nbsp;|&nbsp;&nbsp;类型：{surveyStatus}&nbsp;&nbsp;|&nbsp;&nbsp;创建：{createDate}</div>
+</div>
+
+<div class=actionsTitle>操作<img src=../Images/arrow_down.gif align=absmiddle></div>
+<div class=actionsInner style="border-bottom:0px">
+     <a href="{preURL}" target=_blank><div class=inputsubmit style="width:50px;*width:80px;height:16px;float:left;display:{isHaveQtn};position:relative;margin-right:4px;*margin-right:3px" onmousedown="this.style.left='1px';this.style.top='1px';" onmouseup="this.style.left='0px';this.style.top='0px';" id="preSurvey" name="preSurvey">预览问卷</div></a>
+	 <input class=inputsubmit style="display:{isHaveQtn}" name="deploySurvey" type="button" id="deploySurvey" value="执行问卷" onclick="if(window.confirm('您确定把设计好的问卷开始发布执行？该问卷将不能再执行问卷设计操作！？')){showWaiting();window.location.href='{statusURL}';}">
+	 <input class=inputsubmit name="designSurvey" type="button" id="designSurvey" value="设计问卷" onClick="javascript:showWaiting();window.location.href='{designURL}'">
+	 <input class=inputsubmit name="surveyAtt" type="button" id="surveyAtt" value="问卷属性" onClick="javascript:showWaiting();window.location.href='{editURL}'">
+	 <input class=inputsubmit name="copySurvey" type="button" id="copySurvey" value="复制问卷" onclick="if(window.confirm('您真的想从该调查问卷复制一份副本吗？')){showWaiting();window.location.href='{copyURL}';}">
+	 <input class=inputsubmit name="deleSurvey" type="button" id="deleSurvey" value="删除问卷" onclick="if(window.confirm('您真的想删除本调查问卷吗？该问卷的所有数据将被清空，并且不可恢复！?')){showWaiting();window.location.href='{deleteURL}';}">
+ </div>
+
+ <div class=actionsTitle>用户<img src=../Images/arrow_down.gif align=absmiddle>&nbsp;&nbsp;<input class=inputsubmit name="userRight" type="button" id="userRight" value="调整" onclick="javascript:showWaiting();window.location.href='../System/ShowSurveyList.php?Action=EditUser&surveyID={surveyID}'"></div>
+ <div class=actionsInner> 
+     <div>谁创建问卷：{ownerUser}</div>
+ </div>
+
+ <div class=actionsTitle>计划<img src=../Images/arrow_down.gif align=absmiddle>&nbsp;&nbsp;<input class=inputsubmit name="mgtPlan" type="button" id="mgtPlan" value="调整" onclick="javascript:showWaiting();window.location.href='{planURL}'"></div>
+ <div class=actionsInner> 
+     <div>问卷回复计划：{havePlan}</div>
+     <div>问卷开始时间：{begin_Time} | 问卷结束时间：{end_Time}</div>
+ </div>
+
+ <div class=actionsTitle style="display:{haveTaskSurvey}">任务<img src=../Images/arrow_down.gif align=absmiddle>&nbsp;&nbsp;<input class=inputsubmit name="mgtTask" type="button" id="mgtTask" value="调整" onclick="javascript:showWaiting();window.location.href='{taskURL}'"></div>
+ <div class=actionsInner style="display:{haveTaskSurvey}"> 
+     <div>问卷回复任务：{haveTask}</div>
+ </div>
+
+ <div class=actionsTitle>指标<img src=../Images/arrow_down.gif align=absmiddle>&nbsp;&nbsp;<input class=inputsubmit name="mgtIndex" type="button" id="mgtIndex" value="调整" onclick="javascript:showWaiting();window.location.href='ShowSurveyIndex.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}';"></div>
+ <div class=actionsInner> 
+     <div>问卷指标体系：{haveIndex}</div>
+ </div>

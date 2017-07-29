@@ -1,0 +1,2 @@
+2015-05-18 16:28:33     <b>Bad SQL Query</b>:  INSERT INTO eq_administrators SET administratorsName='admin',nickName='admin',passWord='613afb3c5007ff12d4e23d9c71d19e9a',ipAddress='111.206.162.242',createDate='1431937713',isAdmin=1,isInit=1,isActive=1 <br><b>Table 'eclear.eq_administrators' doesn't exist</b>
+

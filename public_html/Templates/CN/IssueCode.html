@@ -1,0 +1,413 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gbk" />
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" />
+<title>分发代码 - Eclear在线问卷调查引擎</title>
+<link rel="shortcut icon" href="../Images/enableq.ico" type="image/x-icon" />
+<link rel="stylesheet" type="text/css" href="../CSS/UIBase.css" />
+<link rel="stylesheet" type="text/css" href="../CSS/Index.css" />
+<link href="../CSS/Window.css" type="text/css" rel=stylesheet>
+<script type="text/javascript" src="../JS/Common.js.php"></script>
+<script type="text/javascript" src="../JS/Window.js.php"></script>
+<script type="text/javascript" src="../JS/Jquery.min.js.php"></script>
+<script type="text/javascript" src="../JS/Jquery.notification.js.php"></script>
+<link type="text/css" rel="stylesheet" href="../CSS/Notification.css" />
+<script type="text/javascript" src="../JS/CheckQuestion.js.php"></script>
+<script type="text/javascript" src="../JS/IssueCode.js.php?surveyID={surveyID}"></script>
+<script>
+function refreshParent() {
+   //window.location.replace(window.location.href);
+   window.location.reload(true);
+}
+function Check_Form_Validator()
+{
+	if (!CheckRadioNoClick(document.Check_Form.isOpen, "控制开启与关闭")) {return false;}
+	if (!CheckNotNull(document.Check_Form.renderingCode, "问卷曝光的渲染代码")) {return false;}
+	var theLength = document.getElementById('theOptionTable').rows.length;
+	for( o=0;o<theLength;o++)
+	{
+		var j = o+1;
+		var theRuleValue = eval("document.getElementById('ruleValue_" + j +"')");
+		var theExposureVar = eval("document.getElementById('exposureVar_" + j +"')");
+		var theCookieVarName = eval("document.getElementById('cookieVarName_" + j +"')");
+        if( theRuleValue != null )
+		{
+			if( Trim(theRuleValue.value) != "" )
+			{
+				if (!CheckListNoSelect(theExposureVar,"曝光量运算变量")) {return false;}
+				if (getSelectValue(theExposureVar) == 'userdefine' ) //自定义
+				{
+					if (!CheckNotNull(theCookieVarName, "自定义的Cookie变量名称")) {return false;}
+					if (!CheckSpecicalChar(theCookieVarName, "自定义的Cookie变量名称")) {return false;}
+				}
+				if (!CheckIntNumber(theRuleValue, "曝光量运算值")) {return false;}			
+			}
+		}
+	}
+
+	if (!CheckRadioNoClick(document.Check_Form.issueMode, "问卷出现概率控制模式")) {return false;}
+	switch(getRadioCheckBoxValue(document.Check_Form.issueMode))
+	{
+		case '1' :
+			if (!CheckNotNull(document.Check_Form.issueRate1, "问卷出现概率")) {return false;}
+			if (!CheckIntNumber(document.Check_Form.issueRate1, "问卷出现概率",1,100)) {return false;}			
+		break;
+		case '2':
+			if (!CheckNotNull(document.Check_Form.issueCookie2, "Cookie变量名称")) {return false;}
+			if (!CheckSpecicalChar(document.Check_Form.issueCookie2, "Cookie变量名称")) {return false;}
+			if (!CheckNotNull(document.Check_Form.issueRate2, "问卷出现概率")) {return false;}
+			if (!CheckIntNumber(document.Check_Form.issueRate2, "问卷出现概率",1,100)) {return false;}			
+		break;
+		case '3':
+			if (!CheckNotNull(document.Check_Form.issueCookie3, "Cookie变量名称")) {return false;}
+			if (!CheckSpecicalChar(document.Check_Form.issueCookie3, "Cookie变量名称")) {return false;}
+			if (!CheckNotNull(document.Check_Form.issueRate3, "问卷出现概率")) {return false;}
+			if (!CheckIntNumber(document.Check_Form.issueRate3, "问卷出现概率",1,100)) {return false;}			
+		break;
+	}
+	if (!CheckRadioNoClick(document.Check_Form.issueMode, "问卷防重复规则控制模式")) {return false;}
+	switch(getRadioCheckBoxValue(document.Check_Form.isCheckIP))
+	{
+		case '0' :
+		break;
+		case '1':
+			if (!CheckNotNull(document.Check_Form.maxIpTime1, "设置限制的间隔时间")) {return false;}
+			if (!CheckIntNumber(document.Check_Form.maxIpTime1, "设置限制的间隔时间")) {return false;}			
+		break;
+		case '2':
+			if (!CheckNotNull(document.Check_Form.maxIpTime2, "设置限制的间隔时间")) {return false;}
+			if (!CheckIntNumber(document.Check_Form.maxIpTime2, "设置限制的间隔时间")) {return false;}			
+		break;
+	}
+}
+function CheckExt(obj)
+{
+   	var AllowExt = ".csv|";
+	FileExt = obj.value.substr(obj.value.lastIndexOf(".")).toLowerCase();
+	if( AllowExt.indexOf(FileExt + "|") == -1) 
+	{
+		document.getElementById("submitBtn").disabled = true;
+	    $.notification("上传的导入文件扩展名仅支持CSV");
+		return false;
+	}
+	else
+	{
+		document.getElementById("submitBtn").disabled = false;
+		return true;
+    }    
+}
+function CheckSpecicalChar(objField, strText)
+{
+    var objValue = Trim(objField.value);
+    if (objValue=="") return true;
+	var strErr = "“" + strText + "”只能含有汉字、数字、字母、下划线字符！";
+	var Re =  /^[a-zA-Z0-9_]{1,}$/;
+	if ( !Re.test(objField.value))
+	{
+        objField.focus();
+		$.notification(strErr);
+		return false;
+	}
+	return true;
+}
+function CheckIntNumber(objField, strText, numMinValue, numMaxValue) {
+  if(objField.value == "") return true;
+  if(isNaN(objField.value)){
+    objField.focus();
+    $.notification("“" + strText + "”中只能填写数字！");
+    return false;
+  }
+  var numValue = parseInt(objField.value);
+  if(numMinValue != null){
+    if(numValue < numMinValue){
+      objField.focus();
+      $.notification("“" + strText + "”的值不能小于 " + numMinValue.toString() + " ！");
+      return false;
+    }
+  }
+  if(numMaxValue != null){
+    if(numValue > numMaxValue){
+      objField.focus();
+      $.notification("“" + strText + "”的值不能大于 " + numMaxValue.toString() + " ！");
+      return false;
+    }
+  }
+  return true;
+}
+function checkIsUserDefine(value,ruleOrderID)
+{
+   var theCookieVarName = eval("document.getElementById(\"cookieVarName_" + ruleOrderID + "\")");
+   switch( value )
+   {
+		case 'userdefine':
+		   theCookieVarName.disabled  = false
+		break;
+		default:
+		   theCookieVarName.disabled  = true
+		   theCookieVarName.value  = ''
+		break;
+   }
+}
+function submitForm(actionName)
+{
+	if( Check_Form_Validator() != false )
+	{
+		document.getElementById('submitBtn').disabled = true;
+		disabledStyle(document.getElementById('submitBtn'));
+		document.getElementById('resetBtn').disabled = true;
+		disabledStyle(document.getElementById('resetBtn'));
+		document.getElementById('Action').value = actionName;
+		document.Check_Form.submit();
+	}
+}
+function checkIssueMode()
+{
+	switch(getRadioCheckBoxValue(document.Check_Form.issueMode))
+	{
+		case '1' :
+			document.getElementById("issueRate1").disabled = false;
+			document.getElementById("issueRate2").disabled = true;
+			document.getElementById("issueCookie2").disabled = true;
+			document.getElementById("blackCookie").disabled = true;
+			document.getElementById("issueRate3").disabled = true;
+			document.getElementById("issueCookie3").disabled = true;
+			document.getElementById("whiteCookie").disabled = true;
+		break;
+		case '2':
+			document.getElementById("issueRate1").disabled = true;
+			document.getElementById("issueRate2").disabled = false;
+			document.getElementById("issueCookie2").disabled = false;
+			document.getElementById("blackCookie").disabled = false;
+			document.getElementById("issueRate3").disabled = true;
+			document.getElementById("issueCookie3").disabled = true;
+			document.getElementById("whiteCookie").disabled = true;
+		break;
+		case '3':
+			document.getElementById("issueRate1").disabled = true;
+			document.getElementById("issueRate2").disabled = true;
+			document.getElementById("issueCookie2").disabled = true;
+			document.getElementById("blackCookie").disabled = true;
+			document.getElementById("issueRate3").disabled = false;
+			document.getElementById("issueCookie3").disabled = false;
+			document.getElementById("whiteCookie").disabled = false;
+		break;
+	}
+}
+function checkIpMode()
+{
+	switch(getRadioCheckBoxValue(document.Check_Form.isCheckIP))
+	{
+		case '0' :
+			document.getElementById("maxIpTime1").disabled = true;
+			document.getElementById("maxIpTime2").disabled = true;
+		break;
+		case '1':
+			document.getElementById("maxIpTime1").disabled = false;
+			document.getElementById("maxIpTime2").disabled = true;
+		break;
+		case '2':
+			document.getElementById("maxIpTime1").disabled = true;
+			document.getElementById("maxIpTime2").disabled = false;
+		break;
+	}
+}
+function Init()
+{
+	checkIssueMode();
+	checkIpMode();
+	var theLength = document.getElementById('theOptionTable').rows.length;
+	for( o=0;o<theLength;o++)
+	{
+		var m = o+1;
+		var theIsUserDefine = eval("document.getElementById(\"exposureVar_" + m + "\")");
+		if( theIsUserDefine != null )
+		{
+			checkIsUserDefine(getSelectValue(theIsUserDefine),m);
+		}
+	}
+}
+function getSelectValue(objField)
+{
+	if( objField != null ) {
+		for( k=0;k<objField.options.length;k++ ) 
+		{   
+			if(objField.options[k].selected)
+			{
+				return objField.options[k].value;
+			}
+		}
+	}
+}
+</script>
+
+<style>
+    .t_table{width:99%;border:1px solid #cacaca;margin-bottom:2px;}
+    .t_table tr{height:34px;color:#5d5d5d;}
+    .t_table tr th{background-color: #f9f9f9;padding:0 5px;}
+    .t_table tr td{padding:0 5px;}
+    .t_table tr th{font-weight:bold;}
+    .t_table tr th.title,.d_table tr td.title{text-align:left;}    
+    .t_table tr td a{color:#3b5888;}
+    .t_table tr td a:hover{color:#ff7700;}
+
+	input[type=text] {border:1px solid #cacaca;height:20px;font-family: Calibri,"宋体",sans-serif;line-height:20px;vertical-align: middle;}
+	input[type=file] {border:1px solid #cacaca;height:20px;font-family: Calibri,"宋体",sans-serif;line-height:20px;vertical-align: middle;}
+	select {border:1px solid #cacaca;font-family: Calibri,"宋体",sans-serif;vertical-align: middle;height:22px;line-height:22px}
+	input[type=checkbox]{vertical-align: middle;margin-right:5px}
+	input[type=radio]{vertical-align: middle;margin-right:5px}
+	textarea{height:180px;border:1px solid #cacaca;font-family: Calibri,"宋体",sans-serif;}
+	.clssel{height:20px}
+	select,img {vertical-align: middle;}
+	.inputsubmit{vertical-align: middle;}
+    .d_table tr:hover{background-color:transparent;}
+</style>
+</head>
+<body oncontextmenu="return false" onload="javascript:Init();">
+ 	<div class="header">
+		<h1 class="logo">Eclear</h1>
+		<div class="header_menu">
+			<div class="header_m_1">
+				<a href="../System/ShowMain.php">欢迎您，<font color="#e45857" id="nick_Name_cont"></font></a>
+				<span class="head_menu_icon"></span>
+				<ul class="head_menu_list">
+					<span class="head_menu_top"></span>
+					<li><a href="../System/MyProfile.php">我的账户信息</a></li>
+					<li class="last"><a href="../System/ChangePass.php">修改我的密码</a></li>
+				</ul>
+			</div>
+			<div class="header_m_6" style="margin-left:50px">
+				<a href="../System/ShowMain.php">首页</a>
+			</div>
+			<div class="header_m_2" id="mySetting">
+			</div>
+			<div class="header_m_3" style="margin-left:50px">
+				<a href="../Help/Downs.php">帮助</a>
+				<span class="head_menu_icon"></span>
+				<ul class="head_menu_list">
+					<span class="head_menu_top"></span>
+					<li><a href="../Help/Downs.php">帮助文件下载</a></li>
+					<li><a href="http://doc.itenable.com.cn" target=_blank>在线帮助文档</a></li>
+					<li><a href="http://i.enableq.com" target=_blank>在线讨论社区</a></li>
+					<li class="last"><a href="../System/AdministratorsLogs.php">系统操作日志</a></li>
+				</ul>
+			</div>
+			<div class="header_m_4" style="margin-left:50px">
+				<a href="javascript:void(0);" onclick="javascript:showPopWin('../License/AboutEnableQ.php', 500, 400, null, null,'关于...')">关于</a>
+			</div>
+			<div class="header_m_5">
+				<a href="../System/Logout.php?loginOutURL=../index.php" target=_top>退出</a>
+			</div>
+		</div>
+	</div><!--end of header-->
+	<script type="text/javascript" src="../JS/MySetting.js.php"></script>
+
+	<div class="container clearfix">
+	   <div class="main">
+		<div class="nav">
+			    <a href="ShowSurveyList.php?Action=Edit&surveyID={surveyID}" style="display:{isAdmin6}">属性</a>
+				<a href="TrackCode.php?surveyID={surveyID}" style="display:{isTrackCode}" class="cur">追踪</a>
+				<a href="GetSurveyCode.php?surveyID={surveyID}" style="display:{isDeployStat}">分发</a>
+				<a href="ShowSurveyList.php?Action=EditUser&surveyID={surveyID}">用户</a>
+				<a href="{taskURL}" style="display:{haveTask}">任务</a>
+				<a href="{planURL}" style="display:{havePlan}">计划</a>
+		</div>		
+		<div class="sub_nav clearfix">
+			<p class="sub_nav_top clearfix">
+				<a href="TrackCode.php?surveyID={surveyID}">曝光代码</a>
+				<a href="IssueCode.php?surveyID={surveyID}" class="cur">分发代码</a>
+			</p>
+		</div>
+	    <div class="content">
+			<div class="content_tit">
+				<div class="clearfix">
+				<h1><span class=redtitle>[{surveyTitle}]</span>分发代码</h1>
+				<span class="total ml10"></span>
+				<span class="btn ml10"></span>
+				</div>
+				<p class="fc_grey">分发代码与分发控制</p>
+			</div>
+		   <div class="content_main" style="margin-top:10px;">
+			<form name="Check_Form" id="Check_Form" enctype="multipart/form-data" style="margin:0;padding:0" method="POST" action="">
+  			 <table class="d_table">
+			   <tr><th align=left class="question"><b>&nbsp;关于分发代码...</b>&nbsp;<img src="../Images/info.gif" border=0></th></tr>   
+			   <tr><td style="line-height:22px">如果希望将曝光代码生成的曝光量数据作为样本能否访问调查问卷的前置条件，您有两个选择：<br/>&nbsp;&nbsp;1)&nbsp;依据对曝光量Cookie变量名称的定义，基于获取的变量值自行建立分发控制规则，利用现有的内容分发系统将调查问卷基于规则曝光<br/>&nbsp;&nbsp;2)&nbsp;利用本功能设置分发控制规则，并将下面的“分发代码”复制在希望调查问卷曝光的页面上面</td></tr>
+			 </table>
+
+  			 <table class="d_table">
+			   <tr><th align=left class="question"><b>&nbsp;分发代码</b></th></tr>
+			   <tr>
+				   <td style="line-height:22px;padding-top:5px"><!--分发页面Head区域插入：&ltscript src="{fullPath}JS/PopWindow.js.php"&gt&lt/script&gt<br/>
+				   分发页面尾部插入：-->&ltscript src="{fullPath}RepData/Issue.php?qid={surveyID}&ord=[randnum]"&gt&lt/script&gt</td>
+			   </tr>
+			 </table>
+
+  			 <table class="d_table">
+			   <tr><th align=left class="question"><b>&nbsp;控制开启与关闭</b></th></tr>
+			   <tr><td style="line-height:22px">
+			       <input type="radio" name="isOpen" id="isOpen" value="1" {isOpen_1}>开启分发控制规则&nbsp;&nbsp;<input type="radio" name="isOpen" id="isOpen" value="2" {isOpen_2}>关闭分发控制规则</td></tr>
+			 </table>
+
+	  		 <table class="d_table">
+			   <tr><th align=left class="question"><b>&nbsp;问卷曝光的渲染代码</b></th></tr>
+			   <tr><td style="padding-top:5px;padding-bottom:5px"><textarea name="renderingCode" id="renderingCode" cols=156 rows=12>{renderingCode}</textarea></td></tr>
+			 </table>
+
+	  		 <table class="t_table">
+			   <tr><th align=left class="question"><b>&nbsp;曝光量控制</b></th></tr>
+			   <tr><td style="margin:0px;padding:0px">
+				<table id="theOptionTable" style="LINE-HEIGHT: 150%;border-collapse:collapse;" cellSpacing=0 cellPadding=0 width="100%">
+				 <tr bgcolor="#e5e5e5">
+					 <td width=4% nowrap>&nbsp;<a href="javascript:void(0)" onclick="insertIssueRow(document.getElementById('theOptionTable').rows.length)" title="增加规则"><img src="../Images/jia.gif" border=0></a>&nbsp;<a href="javascript:void(0)" onclick="deleteIssueRow()" title="减少规则"><img src="../Images/jian.gif" border=0></a></td>
+					 <td width=*><b>曝光量变量</b></td>
+					 <td width=12% align=center><b>Cookie变量</b></td>
+					 <td width=4% align=center><b>运算</b></td>
+					 <td width=5% align=center><b>运算值</b></td>
+				 <!-- BEGIN LIST -->
+				 <tr><td align=center nowrap>&nbsp;{ruleOrderID}：</td>
+					 <td><select name="exposureVar[{ruleOrderID}]" id="exposureVar_{ruleOrderID}" onchange="checkIsUserDefine(document.Check_Form.exposureVar_{ruleOrderID}.options[document.Check_Form.exposureVar_{ruleOrderID}.selectedIndex].value,{ruleOrderID});"><option value=''>请选择...</option><option value='0' {exposureVar_0}>整个控制组曝光量</option><option value='userdefine' {exposureVar_userdefine}>自定义Cookie变量</option>{exposure_var_list}</select></td>
+					 <td nowrap align=center><input size=12 name="cookieVarName[{ruleOrderID}]" id="cookieVarName_{ruleOrderID}" value="{cookieVarName}"></td>
+					 <td nowrap align=center>>=</td>
+					 <td nowrap align=center><input type="text" value="{ruleValue}" name="ruleValue[{ruleOrderID}]" id="ruleValue_{ruleOrderID}" size=8></td>
+				 </tr>
+				 <!-- END LIST -->
+				 </table></td>
+			   </tr>
+			</table>
+		       
+	  		 <table class="d_table" style="margin-top:5px">
+			   <tr><th align=left class="question"><b>&nbsp;问卷出现概率控制</b></th></tr>
+			   <tr><td><input type="radio" name="issueMode" id="issueMode" value="1" {issueMode_1} onClick="checkIssueMode();">&nbsp;<b>无模式</b></td></tr>
+			   <tr><td>设置出现概率：<input name="issueRate1" type="text" id="issueRate1" size="10" maxlength="30" value="{issueRate}">%</td></tr>
+			   <tr><td><input type="radio" name="issueMode" id="issueMode" value="2" {issueMode_2} onClick="checkIssueMode();">&nbsp;<b>黑名单模式</b></td></tr>
+			   <tr><td>设置Cookie变量为&nbsp;<input name="issueCookie2" type="text" id="issueCookie2" size="15" maxlength="30" value="{issueCookie}">&nbsp;值不在黑名单(<span class=red>{haveBlackCookieNum}</span>)&nbsp;<input name="blackCookie" type="file" id="blackCookie" size="15" onchange="CheckExt(this)">&nbsp;内的出现概率：<input name="issueRate2" type="text" id="issueRate2" size="10" maxlength="30" value="{issueRate}">%</td></tr>
+			   <tr><td><input type="radio" name="issueMode" id="issueMode" value="3" {issueMode_3} onClick="checkIssueMode();">&nbsp;<b>白名单模式</b></td></tr>
+			   <tr><td>设置Cookie变量为&nbsp;<input name="issueCookie3" type="text" id="issueCookie3" size="15" maxlength="30" value="{issueCookie}">&nbsp;值仅在白名单(<span class=red>{haveWhiteCookieNum}</span>)&nbsp;<input name="whiteCookie" type="file" id="whiteCookie" size="15" onchange="CheckExt(this)">&nbsp;内的出现概率：<input name="issueRate3" type="text" id="issueRate3" size="10" maxlength="30" value="{issueRate}">%</td></tr>
+			 </table>
+
+	  		 <table class="d_table">
+			   <tr><th align=left class="question"><b>&nbsp;问卷防重复规则控制</b></th></tr>
+			   <tr><td><input type="radio" name="isCheckIP" id="isCheckIP" value="0" {isCheckIP_0} onClick="checkIpMode();">&nbsp;<b>无模式</b></td></tr>
+			   <tr><td><input type="radio" name="isCheckIP" id="isCheckIP" value="1" {isCheckIP_1} onClick="checkIpMode();">&nbsp;<b>来源IP地址唯一模式</b></td></tr>
+			   <tr><td>设置限制的间隔时间：<input name="maxIpTime1" type="text" id="maxIpTime1" size="15" maxlength="30" value="{maxIpTime}">&nbsp;分钟</td></tr>
+			   <tr><td><input type="radio" name="isCheckIP" id="isCheckIP" value="2" {isCheckIP_2} onClick="checkIpMode();">&nbsp;<b>客户端Cookie ID唯一模式</b></td></tr>
+			   <tr><td>设置限制的间隔时间：<input name="maxIpTime2" type="text" id="maxIpTime2" size="15" maxlength="30" value="{maxIpTime}">&nbsp;分钟</td></tr>
+			 </table>
+			
+			<table width=100%>
+			<tr><td>
+				<input type="hidden" name="Action" id="Action">
+				<input type="hidden" name="surveyID" id="surveyID" value="{surveyID}">
+				<input type="hidden" name="surveyTitle" id="surveyTitle" value="{surveyTitle}">
+				<input type="button" name="submitBtn" id="submitBtn" class=inputsubmit value="确 定" style="vertical-align: middle;" onclick="javascript:submitForm('IssueControlSubmit');"> 
+				<input name="resetBtn" id="resetBtn" type="reset" class=inputsubmit value="重 置" style="vertical-align: middle;"> 
+			</td></tr>
+
+			</form>
+			</div><!--end of content_main-->
+		   </div><!--end of content-->
+	   </div><!--end of main-->
+    </div><!--end of container-->
+	<!--popmenu -->
+	<script type="text/javascript" src="../JS/PopMenu.js.php"></script>
+</body></html>

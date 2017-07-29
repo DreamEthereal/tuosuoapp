@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-type" content="text/html; charset=gbk" />
+<title>百度地图GPS轨迹</title>
+<script src="../JS/Jquery.min.js.php"></script>
+<style>
+#load_map { width:690px; height:447px;overflow:hidden; border:1px solid #999; background:#f5f3f0;margin:0px;padding:0px }
+#load_map .loading { text-align:center; font-size:12px; }
+</style>
+</head>
+<body style="margin:0px;padding:0px">
+<div id="load_map">
+	<div class="loading">Loading...</div>
+</div>
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=1.4&services=false"></script>
+<script type="text/javascript" src="ChangeMore.js.php"></script>
+<script>
+// 地图轨迹（百度地图API）
+function mapTrack() {
+	var obj = this;
+	// 待转换的坐标组总数
+	var total_xy_group = 0;
+	// 20个为一组（批量转换的api限制每秒只能转换一次，每次20个）
+	var group_xy_num = 20;
+	// 坐标总数
+	var data_length = 0;
+	// 转换前的坐标,2014-01-18修改
+	var points_group = [];
+	//数据类型标记
+	var is_gps = 1;
+	//发送的次数顺序
+	var send_order = 0;
+	// 转换后的坐标
+	var xy_arr = [];
+	// 所有坐标合成的字符串
+	var xy_text = "";
+	// 返回坐标
+	var xyResult = null;	
+
+	// 坐标转换成功后回调（百度 API 回调的 callback 必须为全局函数）
+	window.callback = function (xyResults) {
+		for(var tmp in xyResults){
+			xyResult = xyResults[tmp];
+			if (xyResult.error != 0) {
+				continue;
+			}
+			var point = '["' + xyResult.x + '", "' + xyResult.y + '"],';
+			xy_text = xy_text + point;
+		}
+		var str = xy_text.slice(0, -1);
+		var str_length = str.split("],[").length;
+		$("#trans_all_points").text(str);
+
+		// 坐标转换完成后执行绘图
+		//if (str_length >= data_length) {
+		if( send_order == points_group.length ) {
+			obj.track();
+		}
+		else
+		{
+			//发送新的转换坐标
+			send_order++;
+			reSendPoint();
+		}
+	}
+	
+	// 绘制轨迹
+	this.track = function() {
+		// 把字符串转成数组
+		var str = $("#trans_all_points").text();
+		var arr_str = "[" + str + "]";
+		eval("xy_arr = " + arr_str + ";");
+		// 地图控件及功能
+		var map = new BMap.Map("load_map");
+		map.addControl(new BMap.NavigationControl());
+		map.addControl(new BMap.MapTypeControl());
+		map.enableScrollWheelZoom();
+		map.enableContinuousZoom();
+		// 轨迹
+		var xy_result = null;
+		var trans_points = [];
+		for(var tmp in xy_arr){
+			xy_result = xy_arr[tmp];
+			var point = new BMap.Point(xy_result[0], xy_result[1]);
+			trans_points.push(point);
+			// 添加起始点标注
+			if (tmp == 0 )
+			{
+				var myIcon = new BMap.Icon("../Images/markers.png", new BMap.Size(23, 25), {
+					offset: new BMap.Size(10, 25),
+					imageOffset: new BMap.Size(0,0)
+				});			
+				var marker = new BMap.Marker(point, {icon: myIcon});
+				map.addOverlay(marker);
+				marker.setAnimation(BMAP_ANIMATION_BOUNCE);
+			}
+			//添加结束点标注
+			if( tmp == xy_arr.length-1) {
+				var myIcon = new BMap.Icon("../Images/markers.png", new BMap.Size(23, 25), {
+					offset: new BMap.Size(10, 25),
+					imageOffset: new BMap.Size(0,-25)
+				});			
+				var marker = new BMap.Marker(point, {icon: myIcon});
+				map.addOverlay(marker);
+				marker.setAnimation(BMAP_ANIMATION_BOUNCE);
+			}
+		}
+		var polyline = new BMap.Polyline(trans_points, {strokeColor:"blue", strokeWeight:6, strokeOpacity:0.5});
+		map.addOverlay(polyline);
+		// 按视野范围把地图缩放至最佳级别，加这个方法后可以不加 centerAndZoom()
+		map.setViewport(trans_points);
+		// 监听缩放
+		var centerPosition = point;
+		map.addEventListener("zoomstart", function(){
+			centerPosition = map.getCenter();
+		});
+		map.addEventListener("zoomend", function(){
+			// 缩放完成后重置中心点
+			map.setCenter(centerPosition);
+		});
+	}
+	
+	// 发送再次转换的坐标
+	function reSendPoint()
+	{
+		//setTimeout(function(){xyTrans(points_group[send_order-1], is_gps)},1200);
+		xyTrans(points_group[send_order-1], is_gps);
+	}
+
+	// 转换坐标
+	function xyTrans(data, is_gps) {
+		var gps_points = [];
+		$.each(data, function(i, n) {
+			gps_points.push(new BMap.Point(n[0], n[1]));
+		})
+		// 坐标转换成功后回调
+		if (is_gps == 1) {
+			// GPS 经纬度
+			BMap.Convertor.transMore(gps_points, 0, callback);
+		} else if (is_gps == 0) {
+			// google 地图经纬度
+			BMap.Convertor.transMore(gps_points, 2, callback);
+		}
+	}
+	
+	// 获取坐标
+	function transPoints(data) {
+		$("body").append('<span id="trans_all_points" style="display:none;"></span>');
+		//var points_group = [];
+		data_length = data.points.length;
+		total_xy_group = Math.floor(data_length/group_xy_num);
+
+		var tmp = 0;
+		points_group[tmp] = [];
+		 // 添加经纬度
+		$.each(data.points, function(i, n) {
+			
+			if (points_group[tmp].length >= group_xy_num) {
+				tmp ++;
+				points_group[tmp] = [];
+				points_group[tmp].push([n.lng, n.lat]);
+			}
+			else
+			{
+				points_group[tmp].push([n.lng, n.lat]);
+			}
+		})
+		// 无论有几组坐标，默认都执行一次
+		send_order ++;
+		xyTrans(points_group[0], is_gps);
+		// 如果不止一组，则每隔 1 秒继续执行
+		/*var length = points_group.length-1;
+		if (length > 0) {
+			/*var i = 0;
+			nextTrans = function() {  
+				i++;
+				if (i <= points_group.length-1) {
+					setTimeout(function(){
+						xyTrans(points_group[i], is_gps);
+						nextTrans();
+					},1000);
+				};
+			}
+			nextTrans();
+			//2013-0-18自己编写
+			for( var i=1;i<=length;i++)
+			{
+				setTimeout(xyTrans(points_group[i], is_gps),1000);
+			}//2013-0-18自己编写
+		}*/
+	}
+	
+	// 原始坐标
+	this.getPoints = function () {
+		// 待转换坐标
+		var data = {
+			"points" : [{gpsPoints}],
+			"is_gps" : 1
+		}
+		is_gps = data.is_gps;
+		// 执行
+		transPoints(data);
+		/*
+		// 调用后端 ajax
+		var view_id = $("#view_id").val();
+		$.ajax({
+			url: "",
+			data: {view_id: view_id},
+			success: function(data){
+				transPoints(data);
+			}
+		})
+		*/
+	}
+};
+$(function () {
+	var map = new mapTrack();
+	var trans_points = $("#trans_all_points");
+	if (trans_points.size() == 0) {
+		map.getPoints();
+	} else {
+		// 如果坐标已经转换（用于“切换显示地图选项卡”），则直接从 text 里读已经转换好的坐标
+		map.track();
+	}
+})
+</script>
+</body>
+</html>
+

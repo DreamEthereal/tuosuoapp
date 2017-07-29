@@ -1,0 +1,222 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gbk" />
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" />
+<title>系统登录允许 - Eclear在线问卷调查引擎</title>
+<link rel="shortcut icon" href="../Images/enableq.ico" type="image/x-icon" />
+<link rel="stylesheet" type="text/css" href="../CSS/UIBase.css" />
+<link rel="stylesheet" type="text/css" href="../CSS/Index.css" />
+<link href="../CSS/Window.css" type="text/css" rel=stylesheet>
+<script type="text/javascript" src="../JS/Common.js.php"></script>
+<script type="text/javascript" src="../JS/Window.js.php"></script>
+<script type="text/javascript" src="../JS/Jquery.min.js.php"></script>
+<script type="text/javascript" src="../JS/Jquery.notification.js.php"></script>
+<link type="text/css" rel="stylesheet" href="../CSS/Notification.css" />
+<script language="javascript"> 
+function checkall(form) 
+{
+	if( form.all.checked)
+	{
+		for(var i = 0;i < form.elements.length-1; i++) 
+		{
+			var e = form.elements[i];
+			e.checked = true;
+		}
+	}
+	else
+	{
+		for(var i = 0;i < form.elements.length-1; i++) 
+		{
+			var e = form.elements[i];
+			e.checked = false;
+		}
+    }
+}
+function Check_Form_Validator()
+{
+	if( !isIP(document.Check_Form.startIP_new.value) )
+	{
+		document.Check_Form.startIP_new.focus();
+		$.notification('请输入合法的开始IP地址!');
+		return false;
+	}
+	if( !isIP(document.Check_Form.endIP_new.value) )
+	{
+		document.Check_Form.endIP_new.focus();
+		$.notification('请输入合法的结束IP地址!');
+		return false;
+	}
+}
+function isIP(strIP) 
+{ 
+	if (Trim(strIP) == '' ) return true;
+	var re=/^(\d+)\.(\d+)\.(\d+)\.(\d+)$/g //匹配IP地址的正则表达式
+	if(re.test(strIP))
+	{
+		if( RegExp.$1 <256 && RegExp.$2<256 && RegExp.$3<256 && RegExp.$4<256) return true;
+	}
+	return false; 
+} 
+//去除字符串左端空格
+function LTrim(str) {
+  return str.replace(/^\s*/, '');
+}
+
+//去除字符串右端空格
+function RTrim(str) {
+  return str.replace(/\s*$/, '');
+}
+
+//去除字符串两端空格
+function Trim(str) {
+  return LTrim(RTrim(str));
+}
+</script> 
+<style>
+input[type=text] {border:1px solid #cacaca;height:18px;font-family: Calibri,"宋体",sans-serif;line-height:18px;vertical-align: middle;}
+select {border:1px solid #cacaca;height:20px;font-family: Calibri,"宋体",sans-serif;vertical-align: middle;}
+input[type=checkbox]{vertical-align: middle;}
+</style>
+</head>
+
+<body oncontextmenu="return false">
+ 	<div class="header">
+		<h1 class="logo">Eclear</h1>
+		<div class="sidebar_show"></div>
+		<div class="header_menu">
+			<div class="header_m_1">
+				<a href="../System/ShowMain.php">欢迎您，<font color="#e45857" id="nick_Name_cont"></font></a>
+				<span class="head_menu_icon"></span>
+				<ul class="head_menu_list">
+					<span class="head_menu_top"></span>
+					<li><a href="../System/MyProfile.php">我的账户信息</a></li>
+					<li class="last"><a href="../System/ChangePass.php">修改我的密码</a></li>
+				</ul>
+			</div>
+			<div class="header_m_6" style="margin-left:50px">
+				<a href="../System/ShowMain.php">首页</a>
+			</div>
+			<div class="header_m_2" id="mySetting">
+			</div>
+			<div class="header_m_3" style="margin-left:50px">
+				<a href="../Help/Downs.php">帮助</a>
+				<span class="head_menu_icon"></span>
+				<ul class="head_menu_list">
+					<span class="head_menu_top"></span>
+					<li><a href="../Help/Downs.php">帮助文件下载</a></li>
+					<li><a href="http://doc.itenable.com.cn" target=_blank>在线帮助文档</a></li>
+					<li><a href="http://i.enableq.com" target=_blank>在线讨论社区</a></li>
+					<li class="last"><a href="../System/AdministratorsLogs.php">系统操作日志</a></li>
+				</ul>
+			</div>
+			<div class="header_m_4" style="margin-left:50px">
+				<a href="javascript:void(0);" onclick="javascript:showPopWin('../License/AboutEnableQ.php', 500, 400, null, null,'关于...')">关于</a>
+			</div>
+			<div class="header_m_5">
+				<a href="../System/Logout.php?loginOutURL=../index.php" target=_top>退出</a>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript" src="../JS/MySetting.js.php"></script>
+
+	<div class="container clearfix">
+		<div class="sider_bar">
+			<div class="sider_menu">
+				<a class="sider_menu_title cur" href="javascript:void(0);" onclick="menuToggle('sider_menu_list_1')">系统基础设置</a>
+				<ul class="sider_menu_list" id="sider_menu_list_1">
+					<li><a href="../System/BaseSetting.php">系统基本设置</a></li>
+					<li><a href="../System/MgtIpAllow.php" class="sel">系统登录允许</a></li>
+					<li><a href="../System/MgtIpLock.php">系统黑白名单</a></li>
+					<li><a href="../System/MgtIpTable.php">维护IP对应表</a></li>
+				</ul>
+			</div>
+			<div class="sider_menu">
+				<a class="sider_menu_title" href="javascript:void(0);" onclick="menuToggle('sider_menu_list_2')">辅助系统管理</a>
+				<ul class="sider_menu_list" id="sider_menu_list_2">
+					<li><a class="window-700-450" title="系统运行信息" href="../System/SystemInfo.php">系统运行检测</a></li>
+					<li><a class="window-700-280" title="安全通信标识" href="../License/SecurityFlag.php">安全通信标识</a></li>
+					<li><a class="window-700-450" title="软件版本历史" href="../ReleaseNotes/Release.txt">系统版本历史</a></li>
+					<li><a class="window-700-300" title="检查最新版本" href="../ReleaseNotes/CheckNewVersion.php">检查最新版本</a></li>
+					<li><a class="window-700-300" title="软件许可文件" href="../License/License.php">软件许可文件</a></li>
+				</ul>
+			</div>
+		</div>
+		
+		<div class="main">
+		   <div class="content">
+			<div class="content_tit">
+				<div class="clearfix">
+				<h1>选定IP地址段登录Eclear</h1>
+				<span class="total ml10"></span>
+				<span class="btn ml10"></span>
+				</div>
+				<p class="fc_grey">开启或者关闭仅允许设定的IP地址段来源登录Eclear系统</p>
+			</div>
+			<div class="content_main" style="margin-top:10px">
+			<form name="Check_Form" id="Check_Form" method="post" action="" onsubmit="return Check_Form_Validator()" style="margin:0px;">
+  			 <table class="d_table">
+				   <tr class=coltitle><th colspan=3 align=left><b>仅允许设定的IP地址段登录Eclear系统</b></th></tr>
+				   <tr><td colspan=3>&nbsp;&nbsp;&nbsp;&nbsp;关闭/开启：
+					  <SELECT name=isAllowIP onChange="checkLoginSelectIP();">
+					   <OPTION value="0">否</OPTION>
+					   <OPTION value="1" {isAllowIP}>是</OPTION>
+					</td></tr>
+					<script LANGUAGE="JAVASCRIPT">		
+						function checkLoginSelectIP()
+						{ 
+							if (document.Check_Form.isAllowIP.value == "0")
+							{
+								document.getElementById('SettingIP_ID').style.display  =  'none';
+							} 
+							else
+							{
+								document.getElementById('SettingIP_ID').style.display  =  '';
+							}	
+						}
+					</script>
+			</table>
+			<div id="SettingIP_ID" style="display:{isAllowIP_Add}">
+				<table class="d_table">
+					<tr class=coltitle><th colspan=3 align=left>&nbsp;<b>IP地址段设置</b>&nbsp;&nbsp;<span class=red>[{recNum}记录]</span></th></tr>
+					<tr style="background-color: #fff;"> 
+						 <td width=10% align=center noWrap><input name="all" type="checkbox" id="all" value="all" onclick="checkall(this.form)" style="background:#fff">&nbsp;<b>删除</b>&nbsp;</td>
+						 <td width=40% noWrap><b>&nbsp;IP地址段开始</b></td>
+						 <td><b>&nbsp;IP地址段结束</b></td>
+					</tr>
+					 <!-- BEGIN LOGINIP -->
+					 <tr> 
+						  <td align=center><input name="ID[]" type="checkbox" id="ID[]" value="{ID}"></td>
+						  <td>&nbsp;<input name="startIP[{ID}]" type="text" id="startIP[{ID}]" value="{startIP}" size=40></td>
+						  <td width=*>&nbsp;<input name="endIP[{ID}]" type="text" id="endIP[{ID}]" value="{endIP}" size=40></td>
+					  </tr>
+					  <!-- END LOGINIP -->
+				   
+					  <tr> 
+						 <td width=10% noWrap align=center><b>新增</b></td>
+						 <td width=40% noWrap>&nbsp;<input name="startIP_new" id="startIP_new" type="text" size=40></td>
+						 <td>&nbsp;<input name="endIP_new" id="endIP_new" type="text" size=40></td>
+					  </tr>
+					  </table></div><table width=100% style="border:0px;">
+					  <tr align="center"> 
+						  <td height="15" style="border:0px;"> 
+							<input name="UpdateSubmit" type="submit" id="UpdateSubmit" class=inputsubmit value="数据提交"></td>
+					  </tr>
+			  </table></form>
+
+			  <table style="border:0px;margin-top:15px;margin-bottom:15px" class="n_table">
+				<tr> 
+				 <td style="border:0px;padding-left:0px;">
+					<img src="../Images/clerk.gif">：<font color=red>请谨慎采用此设置，或咨询网络管理员与软件开发商</font><br/>
+					<img src="../Images/clerk.gif">：指定IP地址段后，不在系统允许登录的地址段内的IP地址将不能登录<br>
+					<IMG SRC="../Images/notes.gif">：注意“IP地址段开始”前的选择框，选中后点击“数据提交”表明删除该条记录<br>
+					<IMG SRC="../Images/notes.gif">：数据的修改和新增只需要在对应的输入框直接修改或输入，完毕后点击“数据提交”即可</td>
+				  </tr>
+			  </table>
+			</div><!--end of content_main-->
+		   </div><!--end of content-->
+	   </div><!--end of main-->
+    </div><!--end of container-->
+	<!--popmenu -->
+	<script type="text/javascript" src="../JS/PopMenu.js.php"></script>
+</body></html>

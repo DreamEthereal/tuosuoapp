@@ -1,0 +1,35 @@
+<form name="Ajax_Form" id="Ajax_Form" method="post" action="">
+ <table class="d_table" style="margin-top:5px">
+   <tr><td colspan="8" align=left style="border:1px #cacaca solid;height:30px;">符合条件的数据数量：<span class=red>{totalRepNum}</span>，其中：完成 <span class=red>{overFlagNum1}</span>，未完成 <span class=red>{overFlagNum0}</span>，导入 <span class=red>{overFlagNum3}</span></td></tr>
+   <tr class=coltitle> 
+      <th width=3% align=center noWrap class="classtd"><input name="all" type="checkbox" id="all" value="all" onclick="checkall(this.form)" style="background:#f9f9f9"></th>
+	  <th width=11% noWrap class="classtd" align="left">&nbsp;<b>时间</b></th>
+      <th width=6%  noWrap class="classtd" style="text-align:center;"><b>审核</b></th>
+      <th noWrap class="classtd" align="left" style="display:{t2_show}">&nbsp;<b>样本标识</b></th>
+      <th noWrap class="classtd" align="left">&nbsp;<b>地址标识</b></th>
+      <th noWrap class="classtd" style="display:{t1_show}" align="left">&nbsp;<b>来源</b></th>
+      <th id="main_show_fileds" noWrap class="classtd" style="display:{isMainShowQtn};" align="left">{qtnNameList}</th>
+	  <script>document.getElementById("main_show_fileds").style.display = "{isMainShowQtn}";</script>
+	  <th width=4% align=center nowrap class="classtd"><b>&nbsp;操作</b></th>
+   </tr>
+   <!-- BEGIN LIST -->
+   <tr> 
+      <td align=center class="classtd"><input name="responseID[]" type="checkbox" id="responseID" value="{responseID}" {isDeleAllowed}></td>
+      <td class="classtd" style="background:{noHaveAll};" nowrap>{joinTime}<input name="createDate[{responseID}]" type="hidden" id="createDate_{responseID}" value="{createDate}"><input name="overFlag[{responseID}]" type="hidden" id="overFlag_{responseID}" value="{overFlag}"><input name="overFlag0[{responseID}]" type="hidden" id="overFlag0_{responseID}" value="{overFlag0}"></td>
+	  <td class="classtd" style="background:{authColor};text-align:center;" nowrap>{authStat}</td>
+      <td class="classtd" style="display:{t2_show}">&nbsp;{administratorsName}</td>
+      <td class="classtd">&nbsp;{ipAddress}</td>
+      <td class="classtd" style="display:{t1_show}">&nbsp;{area}</td>
+      <td class="classtd" id="show_{responseID}" style="display:{isMainShowQtnValue};white-space:normal;word-break:break-all;">&nbsp;{qtnValue}</td>
+ 	  <script>document.getElementById("show_{responseID}").style.display = "{isMainShowQtnValue}";</script>
+      <td class="classtd" align=center>{action}</td>
+   </tr>
+   <!-- END LIST -->
+   </table>
+   <table width=100% style="border:0px">
+   <tr>
+      <td width=3% style="border:0px" class="classtd"></td>
+      <td class="classtd" colspan="7" style="border:0px;padding:0px;margin:0px"><input class=stnsubmit name="OverFlagSubmitButton" type="button" id="OverFlagSubmitButton" value="设为无效回复" onclick="if(window.confirm('您真的想对选中的数据进行设为无效回复操作？!对数据设为无效回复将使其不参与数据分析和统计!')) {overFlagSubmit();}" {allowDeleted}></td>
+   </tr>
+   </form>
+  </table>

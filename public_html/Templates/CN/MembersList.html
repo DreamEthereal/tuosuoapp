@@ -1,0 +1,260 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gbk" />
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" />
+<title>管理调查样本 - Eclear在线问卷调查引擎</title>
+<link rel="shortcut icon" href="../Images/enableq.ico" type="image/x-icon" />
+<link rel="stylesheet" type="text/css" href="../CSS/UIBase.css" />
+<link rel="stylesheet" type="text/css" href="../CSS/Index.css" />
+<link href="../CSS/Window.css" type="text/css" rel=stylesheet>
+<script type="text/javascript" src="../JS/Common.js.php"></script>
+<script type="text/javascript" src="../JS/Window.js.php"></script>
+<script type="text/javascript" src="../JS/Jquery.min.js.php"></script>
+<script type="text/javascript" src="../JS/Jquery.notification.js.php"></script>
+<link type="text/css" rel="stylesheet" href="../CSS/Notification.css" />
+<script type="text/javascript" src="../JS/Actions.js.php"></script>
+<script language="javascript"> 
+function checkall(form) 
+{
+	if( form.all.checked )
+	{
+		for(var i = 0;i < form.elements.length-1; i++) 
+		{
+			var e = form.elements[i];
+			if( ! e.disabled )	e.checked = true;
+		}
+	}
+	else
+	{
+		for(var i = 0;i < form.elements.length-1; i++) 
+		{
+			var e = form.elements[i];
+			if( ! e.disabled )	e.checked = false;
+		}
+    }
+}
+function refreshParent() {
+   self.location.reload(true);
+}
+function checkSelectUser()
+{
+	var strErr = "操作要求必须先选择一个或多个样本！";
+	objField = document.Check_Form.administratorsID;
+	if( typeof objField != 'undefined' )
+	{
+		if( objField.length == null )
+		{
+			if (! objField.disabled && objField.checked) return true;
+			else
+			{
+				document.Check_Form.all.focus();
+				$.notification(strErr);
+				return false;
+			}
+		}
+		else
+		{
+			for (i=0;i<objField.length;i++){
+				if ( ! objField[i].disabled && objField[i].checked) return true;
+			}
+			document.Check_Form.all.focus();
+			$.notification(strErr);
+			return false;
+		}
+	}
+	else
+	{
+		$.notification(strErr);
+		return false;
+	}
+}
+function checkUserAction( actionValue )
+{
+	if ( checkSelectUser()) 
+	{
+		document.getElementById('TranMembersSubmit').disabled = true;
+		disabledStyle(document.getElementById('TranMembersSubmit'));
+		document.getElementById('DeleMembersSubmit').disabled = true;
+		disabledStyle(document.getElementById('DeleMembersSubmit'));
+		gId('formAction').value = actionValue;
+		gId('Check_Form').submit();
+	}
+}
+function disabledStyle(obj)
+{
+	obj.style.border = '1px solid #DDD';
+	obj.style.backgroundColor = '#F5F5F5';
+	obj.style.color = '#3b5888';
+}
+</script>
+<style>
+	input[type=text] {border:1px solid #cacaca;height:18px;font-family: Calibri,"宋体",sans-serif;line-height:18px;vertical-align: middle;}
+	select {border:1px solid #cacaca;height:20px;font-family: Calibri,"宋体",sans-serif;vertical-align: middle;}
+</style>
+</head>
+
+<body oncontextmenu="return false">
+ 	<div class="header">
+		<h1 class="logo">Eclear</h1>
+		<div class="sidebar_show"></div>
+		<div class="header_menu">
+			<div class="header_m_1">
+				<a href="../System/ShowMain.php">欢迎您，<font color="#e45857" id="nick_Name_cont"></font></a>
+				<span class="head_menu_icon"></span>
+				<ul class="head_menu_list">
+					<span class="head_menu_top"></span>
+					<li><a href="../System/MyProfile.php">我的账户信息</a></li>
+					<li class="last"><a href="../System/ChangePass.php">修改我的密码</a></li>
+				</ul>
+			</div>
+			<div class="header_m_6" style="margin-left:50px">
+				<a href="../System/ShowMain.php">首页</a>
+			</div>
+			<div class="header_m_2" id="mySetting">
+			</div>
+			<div class="header_m_3" style="margin-left:50px">
+				<a href="../Help/Downs.php">帮助</a>
+				<span class="head_menu_icon"></span>
+				<ul class="head_menu_list">
+					<span class="head_menu_top"></span>
+					<li><a href="../Help/Downs.php">帮助文件下载</a></li>
+					<li><a href="http://doc.itenable.com.cn" target=_blank>在线帮助文档</a></li>
+					<li><a href="http://i.enableq.com" target=_blank>在线讨论社区</a></li>
+					<li class="last"><a href="../System/AdministratorsLogs.php">系统操作日志</a></li>
+				</ul>
+			</div>
+			<div class="header_m_4" style="margin-left:50px">
+				<a href="javascript:void(0);" onclick="javascript:showPopWin('../License/AboutEnableQ.php', 500, 400, null, null,'关于...')">关于</a>
+			</div>
+			<div class="header_m_5">
+				<a href="../System/Logout.php?loginOutURL=../index.php" target=_top>退出</a>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript" src="../JS/MySetting.js.php"></script>
+
+	<div class="container clearfix">
+		<div class="sider_bar">
+			<div class="sider_menu">
+				<a class="sider_menu_title cur" onclick="menuToggle('sider_menu_list_1')">管理调查样本</a>
+				<ul class="sider_menu_list" id="sider_menu_list_1">
+					<li><a href="../System/ShowMembersList.php" class="sel">管理调查样本</a></li>
+					<li><a href="../System/MembersOptionFields.php">定义样本属性</a></li>
+					<li><a href="../System/ShowMemberGroupList.php">管理样本分组</a></li>
+					<li><a href="../System/MembersConfig.php">样本管理设置</a></li>
+				</ul>
+			</div>
+		</div>
+
+		<div class="main">
+		    <div class="nav">
+				<a href="../System/ShowMembersList.php" class="cur">调查样本</a>
+				<a href="../System/MembersOptionFields.php">样本属性</a>
+				<a href="../System/ShowMemberGroupList.php">样本分组</a>
+				<a href="../System/MembersConfig.php">管理设置</a>
+			</div>			
+
+		   <div class="content">
+			<div class="content_tit">
+				<div class="clearfix">
+				<h1>管理调查样本</h1>
+				<span class="total ml10">[{recNum} / {totalNum}样本]</span>
+				<span class="btn ml10"><input class=inputsubmit name="createNew" type="button" id="createNew" value="新增样本" onclick="javascript:showPopWin('ShowMembersList.php?Action=Add', 700, 480, refreshParent, null,'新增调查样本')">&nbsp;<input class=inputsubmit name="mailMgt" type="button" id="mailMgt" value="发送邮件" style="display:{isAdmin6}" onClick="javascript:showPopWin('../System/SendMailNotes.php', 900, 480,null, null,'发送电子邮件通知');"></span>
+				</div>
+				<p class="fc_grey">研究中实际观测或调查的一部分个体称为样本，研究对象的全部称为总体；按照一定的抽样规则从总体中取出的一部分个体是抽样；抽样主要针对样本属性进行的</p>
+			</div>
+			<div class="content_main">
+				<form name="Check_Form" id="Check_Form" method="post" action="">
+				<div class="search_form">
+					<span style="float:left"><IMG SRC="../Images/search.gif"> 查找
+					  <select name="searchType">
+					  <option value='t1'>邮件账号</option>
+					  <option value='t2' {isNickName}>昵称</option>
+					  {fieldsList}
+					  </select>
+					  中包含：<input type="text" name="name" value="{name}">
+					  <SELECT name="administratorsGroupID">
+					   <OPTION value="all">全部样本...</OPTION>
+					   {members_group_list}
+					  </SELECT>
+					   <input name="Action" type="hidden" id="Action" value="querySubmit"> 
+					   <input type="submit" name="Submit" class=inputsubmit value="查询" style="vertical-align: middle;"></span>
+					  <span style="float:right;"><IMG SRC="../Images/excel.gif">&nbsp;<a href="javascript:void(0);" onclick="javascript:showPopWin('ShowMembersList.php?Action=Import', 700, 330, refreshParent, null,'从CSV文件导入样本数据')">从CSV导入</a>&nbsp;<IMG SRC="../Images/excel.gif">&nbsp;<a href="{exportURL}">导出样本至CSV</a>&nbsp;<IMG SRC="../Images/excel.gif">&nbsp;<a href="{exportReplyURL}">导出样本回复信息至CSV</a></span>
+	 		 </div>
+  			 <table class="d_table">
+				<tr class=coltitle> 
+					 <th width=3% align=left noWrap><input name="all" type="checkbox" id="all" value="all" onclick="checkall(this.form)" style="BACKGROUND-COLOR:#f9f9f9"></th>
+					 <th width=* noWrap align=left><b>&nbsp;邮件账号</b></th>
+					 <th width=13% noWrap align=left><b>昵称</b></th>
+					 <th width=4% noWrap align=center><b>登陆</b></th>
+					 <th width=13% noWrap align=center><b>最后登录</b></th>
+					 <th width=11% noWrap align=center><b>加入时间</b></th>
+					 <th width=12% align=center><b>样本分组</b></th>
+					 <th width=17% align=center><b>操作</b></th>
+				</tr>
+
+				 <!-- BEGIN USER -->
+				 <tr> 
+					  <td width=3% align=left noWrap><input name="administratorsID[]" type="checkbox" id="administratorsID" value="{administratorsID}"></td>
+					  <td>&nbsp;{userName}</td>
+					  <td>{nickName}</td>
+					  <td align=center noWrap>{loginNum}</td>
+					  <td align=center noWrap>{lastVisitTime}</td>
+					  <td align=center noWrap>{time}</td>
+					  <td align=center>{administratorsGroupName}</td>
+					  <td align=center noWrap><a href="javascript:void(0);" onclick="javascript:showPopWin('{viewURL}', 800, 450, refreshParent, null,'查看调查样本信息')">查看</a> <a href="javascript:void(0);" onclick="javascript:showPopWin('{editURL}', 700, 450, refreshParent, null,'编辑调查样本信息')">编辑</a> <a href="{deleteURL}" onclick="return window.confirm('您真的想删除该样本吗？本操作不可恢复！?')">删除</a> <a href="{closeURL}" {StopAlert}>{isStop}</a></td>
+				  </tr>
+				  <!-- END USER -->
+			     </table><table width=100%>
+				 <tr>
+					<td>选中的样本迁移至样本分组：
+					<SELECT name="tran_administratorsGroupID" id="tran_administratorsGroupID">
+					 {members_group_list}
+					</SELECT>
+					<input name="formAction" id="formAction" type="hidden">
+					<input name="TranMembersSubmit" class=inputsubmit type="button" id="TranMembersSubmit" value="开始" onclick="javascript:checkUserAction('TranMembersSubmit');" style="vertical-align: middle;"> 
+					<input name="DeleMembersSubmit" class=inputsubmit type="button" id="DeleMembersSubmit" value="删除" onclick="if( window.confirm('您真的想删除选中样本吗？本操作不可恢复！?')) {checkUserAction('DeleMembersSubmit');}" style="vertical-align: middle;">
+				</td></tr>
+		    </table>
+			</form>
+			 <div class="pages">{pagesList}</div>
+			</div><!--end of content_main-->
+		   </div><!--end of content-->
+	   </div><!--end of main-->
+    </div><!--end of container-->
+
+	<link href="../CSS/SideBar.css" type=text/css rel=stylesheet>
+	<script type="text/javascript" src="../JS/SideBar.js.php"></script>
+	<div id="sideBar">	
+		<a href="javascript:void(0);" id="sideBarTab" onfocus="this.blur();"><img src="../Images/slide-button.gif"/></a>
+		<div id="sideBarContents" style="display:none">
+			<div id="sideBarContentsInner" style="display:none">
+				<h2>操作小提示</h2>			
+				<ul>
+					<li><b>[属性]</b> 样本属性指描述单一样本的属性字段，系统允许创建零个或多个样本属性</li>
+					<li><b>[属性]</b> 对于“私有”问卷，样本的主要属性是重要的分析数据；对于其设置和说明在“管理设置”界面中</li>
+					<li><b>[属性]</b> 样本管理，先需定义样本的属性字段，尽可能使用单选或下拉框字段类型</li>
+					<li><b>[数据]</b> 专业的CSV文件编辑工具，可访问<a href="http://csved.sjfrancke.nl/" target=_blank><b>CSVed</b></a>下载。</li>
+				</ul>			
+			</div>
+		</div>	
+	</div>
+	<script>initSideBar();</script>
+
+	<link href="../CSS/Notifier.css" type=text/css rel=stylesheet>
+	<script type="text/javascript" src="../JS/Jquery.notifier.min.js.php"></script>
+	<script>
+		  var mOptions = {};
+		  mOptions.lifeTime = 0;
+
+		  if( {haveRecNum} == 0 )
+		  {
+			  $.jnotify('新用户提示[样本]', '样本属性指描述单一样本的属性字段，系统允许创建多个样本属性。调查抽样主要是针对属性进行的', '../Images/admin.png', mOptions);
+			  $.jnotify('样本导入', 'Eclear允许按照示例文件格式自CSV快速导入样本数据；请留意导入界面的说明提示', '../Images/admin.png', mOptions);
+		  }
+	</script>
+
+	<!--popmenu -->
+	<script type="text/javascript" src="../JS/PopMenu.js.php"></script>
+</body></html>

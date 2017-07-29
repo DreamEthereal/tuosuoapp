@@ -1,0 +1,396 @@
+<html>
+<head>
+<title>{surveyTitle}</title>
+<meta http-equiv=content-type content="text/html;">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<link rel="stylesheet" type="text/css" href="CSS/{uitheme}.css">
+<style>
+	@media screen and (max-device-width: 320px){body{-webkit-text-size-adjust:none}}
+	@media screen and (max-device-width: 480px){body{-webkit-text-size-adjust:none}}
+	@media only screen and (-webkit-min-device-pixel-ratio: 2){body{-webkit-text-size-adjust:none}}
+	@media only screen and (min-device-width: 768px) and (max-device-width: 1024px){body{-webkit-text-size-adjust:none}}
+</style>
+<style>
+	td{padding-left:5px;padding-right:5px}
+</style>
+<script> var secs = {waitingTime};limitedSecs = {limitedTime};</script>
+<script type="text/javascript" src="JS/Waiting.en.php"></script>
+<script type="text/javascript" src="JS/Location.js.php"></script>
+<script type="text/javascript" src="JS/Jquery.min.js.php"></script>
+<script type="text/javascript" src="JS/Jquery.col.js.php"></script>
+<script type="text/javascript" src="JS/Jquery.notification.js.php"></script>
+<link type="text/css" rel="stylesheet" href="CSS/Notification.css" />
+<script type="text/javascript" src="JS/CheckQuestion.en.php"></script>
+<script language=javascript>
+function Survey_Form_Submit()
+{
+	if( Survey_Form_Validator() != false)
+	{
+		var thisCheckStr = document.Survey_Form.thisCheck.value;
+{survey_quota_list}
+		if( thisCheckStr != '')
+		{
+			var thisCheck = thisCheckStr.substr(0,thisCheckStr.length-1).split('|');
+			var ajaxURL = 'JS/AjaxCheckTextRepeat.php?qid={surveyID}&qlang={surveyLang}&hash='+thisCheckStr;
+			for(var m=0;m<thisCheck.length;m++)
+			{
+			   var qtnType = thisCheck[m].split('*');
+			   switch(qtnType[0])
+			   {
+					case '4':
+					case '23':
+					   var objValue = eval('document.Survey_Form.'+qtnType[1]+'.value');
+					   ajaxURL += '&'+qtnType[1]+'='+escape(objValue);
+					break;
+					case '0':
+					break;
+					case 's1':
+					    var theFieldsList = qtnType[3].split('$');
+						for(var t=0;t<theFieldsList.length;t++){
+							var objFieldList = theFieldsList[t].split('-');
+							switch(objFieldList[0]){
+								case '1': 
+									if( typeof $('input[id='+objFieldList[1]+']:checked').val() == 'undefined' )
+									{
+										ajaxURL += '&'+objFieldList[1]+'=';
+									}
+									else
+									{
+										ajaxURL += '&'+objFieldList[1]+'='+escape($('input[id='+objFieldList[1]+']:checked').val());
+									}
+								break;
+								case '2':
+									var thisValue = '';
+									var arr = $('input[id='+objFieldList[1]+']:checked');
+									arr = arr.sort(function(a,b){
+										return parseInt($(a).val()) - parseInt($(b).val());
+									});
+									arr.each(function(){
+										thisValue += $(this).val() + ",";
+									});
+									if( thisValue != '' ){
+										thisValue = thisValue.substr(0,thisValue.length-1)
+										var theAllValueStr = ','+thisValue+',';
+										if( theAllValueStr.indexOf(','+objFieldList[2]+',') == -1 ){
+											ajaxURL += '&'+objFieldList[1]+'-'+objFieldList[2]+'=0';
+										}
+										else{
+											ajaxURL += '&'+objFieldList[1]+'-'+objFieldList[2]+'=1';
+										}
+									}
+									else{
+										ajaxURL += '&'+objFieldList[1]+'-'+objFieldList[2]+'=0';
+									}
+								break;
+								case '3':
+									var thisValue = $("#"+objFieldList[1]).val();
+									if(objFieldList.length == 3 ){
+										if( thisValue != '' ){
+											var theAllValueStr = ','+thisValue+',';
+											if( theAllValueStr.indexOf(','+objFieldList[2]+',') == -1 ){
+												ajaxURL += '&'+objFieldList[1]+'-'+objFieldList[2]+'=0';
+											}
+											else{
+												ajaxURL += '&'+objFieldList[1]+'-'+objFieldList[2]+'=1';
+											}
+										}
+										else{
+											ajaxURL += '&'+objFieldList[1]+'-'+objFieldList[2]+'=0';
+										}
+									}
+									else{
+										ajaxURL += '&'+objFieldList[1]+'='+escape(thisValue);
+									}
+								break;
+							}
+						}
+					break;
+					default:
+					   var objField = eval('document.Survey_Form.'+qtnType[1]);
+					   ajaxURL += '&'+qtnType[1]+'='+getRadioCheckBoxValue(objField);
+					break;
+ 			   }
+			}
+			var js = document.createElement( "script" ); 
+			js.type = "text/javascript" ; 
+			js.setAttribute( "src" , ajaxURL);  
+			document.body.appendChild(js);
+		}
+		else
+		{
+			if( document.getElementById('SurveyPreSubmit') != null ) document.getElementById('SurveyPreSubmit').disabled = true;
+			if( document.getElementById('SurveyNextSubmit') != null ) document.getElementById('SurveyNextSubmit').disabled = true;
+			if( document.getElementById('SurveyOverSubmit') != null ) document.getElementById('SurveyOverSubmit').disabled = true;
+			document.Survey_Form.submit();
+		}
+	}
+}
+function Survey_Form_Validator()
+{
+   {check_survey_form_list}
+}
+function Check_Survey_Conditions()
+{
+	var emptyCheckStr = '';
+{survey_empty_list}
+	if( emptyCheckStr != '')
+	{
+		var emptyCheck = emptyCheckStr.substr(0,emptyCheckStr.length-1).split('|');
+		var ajaxURL = 'JS/AjaxCheckEmpty.php?qid={surveyID}&qlang={surveyLang}&hash='+emptyCheckStr;
+		for(var o=0;o<emptyCheck.length;o++){
+		   var qtnType = emptyCheck[o].split('*');
+		   var theFieldsList = qtnType[3].split('$');
+		   for(var t=0;t<theFieldsList.length;t++){
+				var objFieldList = theFieldsList[t].split('-');
+				switch(objFieldList[0]){
+					case '1': 
+						if( typeof $('input[id='+objFieldList[1]+']:checked').val() == 'undefined' )
+						{
+							ajaxURL += '&'+objFieldList[1]+'=';
+						}
+						else
+						{
+							ajaxURL += '&'+objFieldList[1]+'='+escape($('input[id='+objFieldList[1]+']:checked').val());
+						}
+					break;
+					case '2':
+						var thisValue = '';
+						var arr = $('input[id='+objFieldList[1]+']:checked');
+						arr = arr.sort(function(a,b){
+							return parseInt($(a).val()) - parseInt($(b).val());
+						});
+						arr.each(function(){
+							thisValue += $(this).val() + ",";
+						});
+						if( thisValue != '' ){
+							thisValue = thisValue.substr(0,thisValue.length-1)
+							var theAllValueStr = ','+thisValue+',';
+							if( theAllValueStr.indexOf(','+objFieldList[2]+',') == -1 ){
+								ajaxURL += '&'+objFieldList[1]+'-'+objFieldList[2]+'=0';
+							}
+							else{
+								ajaxURL += '&'+objFieldList[1]+'-'+objFieldList[2]+'=1';
+							}
+						}
+						else{
+							ajaxURL += '&'+objFieldList[1]+'-'+objFieldList[2]+'=0';
+						}
+					break;
+					case '3':
+						var thisValue = $("#"+objFieldList[1]).val();
+						if(objFieldList.length == 3 ){
+							if( thisValue != '' ){
+								var theAllValueStr = ','+thisValue+',';
+								if( theAllValueStr.indexOf(','+objFieldList[2]+',') == -1 ){
+									ajaxURL += '&'+objFieldList[1]+'-'+objFieldList[2]+'=0';
+								}
+								else{
+									ajaxURL += '&'+objFieldList[1]+'-'+objFieldList[2]+'=1';
+								}
+							}
+							else{
+								ajaxURL += '&'+objFieldList[1]+'-'+objFieldList[2]+'=0';
+							}
+						}
+						else{
+							ajaxURL += '&'+objFieldList[1]+'='+escape(thisValue);
+						}
+					break;
+				}
+			}
+		}
+		var js = document.createElement( "script" ); 
+		js.type = "text/javascript" ;
+		js.setAttribute( "src" , ajaxURL);
+		document.body.appendChild(js);
+	}
+	else
+	{
+		Run_Survey_Conditions();
+	}
+}
+function Run_Survey_Conditions()
+{
+   {check_survey_conditions_list}
+}
+function ReloadImage()
+{
+	document.getElementById('verifyImage').src = 'JS/CreateVerifyCode.js.php?sid=' + Math.random(); 
+}
+function WeOverLay()
+{
+	document.getElementById('weoverlay').style.display = 'block';
+	document.getElementById('wechat-div').style.display = 'block';
+}
+
+function HideWeChat()
+{
+	document.getElementById('weoverlay').style.display = 'none';
+	document.getElementById('wechat-div').style.display = 'none';
+}
+function Init()
+{
+   checkStart();
+   Check_Survey_Conditions();
+   {waitingScript}
+   {limitedScript}
+   if({wechatlogin} == 1 ) WeOverLay();
+   if({isGeolocation} == 1) getLocation();
+}
+function checkStart()
+{
+   if( {thisStep} == 0 )
+   {
+	   var thisPageStep = getCookie("thisPageStep_{surveyID}");
+	   if ( thisPageStep != null)
+	   { 
+		  startSurvey();
+	   }
+	   else
+	   {
+		  document.getElementById('start_survey_page_0').style.display = '';
+		  document.getElementById('start_survey_page_1').style.display = 'none';
+	   }
+   }
+}
+function startSurvey()
+{
+	document.getElementById('start_survey_page_0').style.display = 'none';
+	document.getElementById('start_survey_page_1').style.display = '';
+}
+function getCookie(name) {
+	var dc = document.cookie;
+	var prefix = name + "=";
+	var begin = dc.indexOf("; " + prefix);
+	if (begin == -1) {
+		begin = dc.indexOf(prefix);
+		if (begin != 0) return null;
+	} else {
+		begin += 2;
+	}
+	var end = document.cookie.indexOf(";", begin);
+	if (end == -1) {
+		end = dc.length;
+	}
+	return unescape(dc.substring(begin + prefix.length, end));
+}
+</script>
+</head>
+
+<body oncontextmenu="return false">
+
+<div class="titlebar">
+ <table width=100%>
+   <tr>
+   <td align=left width=* class="pageTitle" style="overflow:hidden">{surveyTitle}</td>
+   <td nowrap id="processValueId" align=right valign=bottom style="color:#fff;font-size:14px">{processValue}</td>
+   </tr>
+ </table>
+</div>
+
+<!--该调查问卷由科维能动EnableQ在线问卷调查引擎系统生成 -->
+{limitedTimeBar}
+{startInfo}
+<div id="start_survey_page_1" {survey_page_1}>
+<form action="" method="post" name="Survey_Form" id="Survey_Form" onsubmit="return false;" style="margin:0px;padding:0px">
+ <!-- BEGIN QUESTION -->
+ <table width="100%" style="display:{isShowQuestion_{questionID}};" class="pertable" id="question_{questionID}">
+ {questionList}
+  </table>
+ <!-- END QUESTION -->
+ {secureImage}
+ <table width="100%" style="margin-top:10px;margin-bottom:20px">
+ <tr><td align="center">
+        <input name="thisFields" type="hidden" id="thisFields" value="{thisFields}">
+        <input name="thisFiles" type="hidden" id="thisFiles" value="{thisFiles}">
+        <input name="thisSizes" type="hidden" id="thisSizes" value="{thisSizes}">
+        <input name="thisHidden" type="hidden" id="thisHidden" value="{thisHidden}">
+        <input name="allHidden" type="hidden" id="allHidden" value="{allHidden}">
+        <input name="allFields" type="hidden" id="allFields" value="{allFields}">
+		<input name="thisCheck" type="hidden" id="thisCheck" value="{thisCheck}">
+		<input name="thisStep" type="hidden" id="thisStep" value="{thisStep}">
+		<input name="surveyID" type="hidden" value="{surveyID}">
+		<input name="isPublic" type="hidden" value="{isPublic}">
+		<input name="passPortType" type="hidden" value="{passPortType}">
+		<input name="surveyQuotaFlag" id="surveyQuotaFlag" type="hidden">
+		<input name="screeningFlag" id="screeningFlag" type="hidden">
+		<input name="surveyQuotaId" id="surveyQuotaId" type="hidden">
+		<input name="isCheckCode" id="isCheckCode" value="{isCheckCode}" type="hidden">
+		<input name="GpsInfo" id="GpsInfo" type="hidden">
+		{hiddenFields}
+		<input name="Action" type="hidden" id="Action">
+		{actionButton}
+     </td></tr>
+</table>
+</form>
+</div>
+<div id="weoverlay" style="display:none;position:absolute;top:0px;left:0px;width:100%;height:100%;z-index:90;background:black; filter:alpha(opacity:70);opacity:0.7;"></div>
+<div id="wechat-div" style="display:none;text-align:center;position:absolute;top:50%;left:50%;width:260px;background:#fff;z-index:100;{noSkipCss}">
+	<div style="height:50px;font-size:14px;line-height:50px;">请先进行微信登录再回复问卷</div>
+	<div style="height:50px;line-height:50px;padding-top:4px;"><a href="https://open.weixin.qq.com/connect/oauth2/authorize?appid={app_id}&redirect_uri={redirect_uri}&response_type=code&scope=snsapi_userinfo&state=3#wechat_redirect"><img src="Images/wechat.png" border=0 width=171></a></div>
+	<div style="height:30px;font-size:14px;line-height:30px;display:{getChatUserMode}"><a href="javascript:HideWeChat();">跳过登录</a></div>
+</div>
+<script>Init();</script>
+<!-- DELETE BEGINPART -->
+<script type="text/javascript" src="JS/AjaxSession.js.php"></script>
+<script>ajax_Session_Submit('JS/Session.js.php?qid={surveyID}','');</script>
+<!-- DELETE ENDPART -->
+<script>
+//重新定义告警函数
+(function ($) {
+	$.notification = function (message){
+		alert(message);
+	};
+})(jQuery);
+</script>
+
+<div style="width:0px;height:0px"><img id="WeixinImg" src="{msgImage}" width=0 height=0></div>
+<script>
+  //微信分享
+  var imgUrl = document.getElementById('WeixinImg').src;
+  var lineLink = "{fullPath}q.php?qid={surveyID}&qlang={surveyLang}";
+  var descContent = '{surveyDesc}';
+  var shareTitle = '{surveyTitle}';
+  var appid = '{app_id}';        
+  function shareFriend() {
+      WeixinJSBridge.invoke('sendAppMessage',{
+         "appid": appid,
+         "img_url": imgUrl,
+         "img_width": "200",
+         "img_height": "200",
+         "link": lineLink,
+         "desc": descContent,
+         "title": shareTitle
+      }, function(res) {})
+  }
+  function shareTimeline() {
+      WeixinJSBridge.invoke('shareTimeline',{
+         "img_url": imgUrl,
+         "img_width": "200",
+         "img_height": "200",
+         "link": lineLink,
+         "desc": descContent,
+         "title": shareTitle
+      }, function(res) {});
+  }
+  function shareWeibo() {
+      WeixinJSBridge.invoke('shareWeibo',{
+         "content": descContent,
+         "url": lineLink,
+      }, function(res) {});
+  }
+  document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+      WeixinJSBridge.on('menu:share:appmessage', function(argv){
+         shareFriend();
+      });
+      WeixinJSBridge.on('menu:share:timeline', function(argv){
+         shareTimeline();
+      });
+      WeixinJSBridge.on('menu:share:weibo', function(argv){
+         shareWeibo();
+      });
+  }, false);
+</script>
+<script>scroll(0, 0);</script>
+</body>
+</html>

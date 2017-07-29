@@ -1,0 +1,57 @@
+<script type="text/javascript" src="JS/Jquery.min.js.php"></script>
+<script type="text/javascript" src="JS/Jquery.notification.js.php"></script>
+<link type="text/css" rel="stylesheet" href="CSS/Notification.css" />
+<script src="JS/CheckQuestion.en.php"></script>
+<script src="JS/AjaxLogin.js.php"></script>
+<LINK href="CSS/LoginBox.css" rel=stylesheet>
+<LINK href="CSS/Base.css" rel=stylesheet>
+<script language=javascript>
+function AJAX_Login_Form_Validator()
+{
+	if (!CheckNotNull(document.AJAXLoginForm.username, "RDN")) {return false;}
+	if (!CheckNotNull(document.AJAXLoginForm.password, "password")) {return false;}
+}
+
+function Login_Form_Submit()
+{
+	if( AJAX_Login_Form_Validator() != false)
+	{
+		username = Trim(document.AJAXLoginForm.username.value);
+		password = Trim(document.AJAXLoginForm.password.value);
+   		AjaxLoginSubmitRequest('WebAPI/AjaxLDAPLogin.php?qlang=en&Task=CheckLogin&surveyID={surveyID}&Username='+username+'&Hash='+password);
+	}
+}
+</script>
+<style>
+	#loginTitle {font-family: "Microsoft YaHei","Î¢ÈíÑÅºÚ","ºÚÌå";font-size: 26px; color: #0CF;}
+</style>
+
+<table width=100% cellpadding="0" cellspacing="0"><tr><td align=center>
+<div id="menu-div" class="menu-div" style="display:block;text-align:center;padding-top:15px">
+<div id="loginForm">
+    <form name="AJAXLoginForm" id="AJAXLoginForm" action="" method="post">
+    <table width="100%" border="0" cellspacing="2" cellpadding="0">
+     <tr><td colspan=2 id="loginTitle"><b>Login in&nbsp;<img src="Images/info.gif" border=0></b></td></tr>
+ 	 <tr><td colspan=2 height=5></td></tr>
+     <tr><td colspan=2>To view the survey and submit your answer,you must login first!</td>
+	</tr>
+	 <tr><td colspan=2 height=5></td></tr>
+    <tr><td nowrap="nowrap"><label for="username" class="redfont">RDN</label></td>
+         <td nowrap><input name="username" type="text" class="text" id="username" value="" size=25/></td>
+     </tr>
+     <tr><td nowrap="nowrap" class="redfont"><label for="password">Password</label></td>
+         <td><input name="password" type="password" class="text" id="password" value="" size=25/></td>
+     </tr>
+     <tr><td></td>
+         <td height=50 valign=middle><input type="button" onclick="javascript:Login_Form_Submit();" value=" Submit " name=Submit><br/>
+	     </td>
+      </tr>
+    </table>
+	  <input type="hidden" name="ajaxRtnValue" id="ajaxRtnValue">
+	  <input type="hidden" name="Action" value="PassPortSubmit">
+	  <input type="hidden" name="isPublic" value="0">
+	  <input type="hidden" name="isUseOriPassport" value="5">
+	</form>
+</div>
+</div>
+</td></tr></table>

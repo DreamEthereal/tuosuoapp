@@ -1,0 +1,427 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gbk" />
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" />
+<title>指标分析数据 - Eclear在线问卷调查引擎</title>
+<link rel="shortcut icon" href="../Images/enableq.ico" type="image/x-icon" />
+<link rel="stylesheet" type="text/css" href="../CSS/UIBase.css" />
+<link rel="stylesheet" type="text/css" href="../CSS/DataIndex.css" />
+<link href="../CSS/Window.css" type="text/css" rel=stylesheet>
+<script type="text/javascript" src="../JS/Common.js.php"></script>
+<script type="text/javascript" src="../JS/Window.js.php"></script>
+<script type="text/javascript" src="../JS/Jquery.min.js.php"></script>
+<script type="text/javascript" src="../JS/Actions.js.php"></script>
+<script language=javascript src="../JS/CheckQuestion.js.php"></script>
+<script type="text/javascript" src="../JS/Jquery.notification.js.php"></script>
+<link type="text/css" rel="stylesheet" href="../CSS/Notification.css" />
+<script>
+function refreshParent() {
+   self.location.reload();
+}
+var http_request = false;
+function AjaxDataListRequest(url)
+{
+	http_request = false;
+	if(window.ActiveXObject){
+		try{ http_request = new ActiveXObject("Msxml2.XMLHTTP");}
+		catch (e){ try{ http_request = new ActiveXObject("Microsoft.XMLHTTP");} catch (e) {}
+		}
+	}
+	else if(window.XMLHttpRequest){
+		http_request = new XMLHttpRequest();
+		if (http_request.overrideMimeType){ http_request.overrideMimeType('text/xml');}
+	}	
+	if (!http_request){ alert("Cannot create an XMLHTTP instance");return false;}
+	http_request.onreadystatechange = function() {
+	  if( http_request.readyState == 4 && http_request.status == 200) {
+			 var theRtn = http_request.responseText.split('######');
+			 if( theRtn[0] == 'false' )
+			 {
+				  $.notification(theRtn[1]);
+				  gId('t_userGroupID_text').focus();
+			 }
+			 else
+			 {
+				$("#t_userGroupID_container").html(theRtn[1]);
+			    gId('SearchUsersSubmit').value = '清空';
+			 }
+		}
+	}
+	http_request.open('GET', url, true);
+	http_request.send(null);
+}
+function AjaxInitRequest(url)
+{
+	http_request = false;
+	if(window.ActiveXObject){
+		try{ http_request = new ActiveXObject("Msxml2.XMLHTTP");}
+		catch (e){ try{ http_request = new ActiveXObject("Microsoft.XMLHTTP");} catch (e) {}
+		}
+	}
+	else if(window.XMLHttpRequest){
+		http_request = new XMLHttpRequest();
+		if (http_request.overrideMimeType){ http_request.overrideMimeType('text/xml');}
+	}	
+	if (!http_request){ alert("Cannot create an XMLHTTP instance");return false;}
+	http_request.onreadystatechange = function() {
+	  if( http_request.readyState == 4 && http_request.status == 200) {
+			 var theRtn = http_request.responseText;
+			 $("#t_userGroupID_container").html(theRtn);
+			 gId('SearchUsersSubmit').value = '清空';
+		}
+	}
+	http_request.open('GET', url, true);
+	http_request.send(null);
+}
+function checkUserSubmit(groupId)
+{
+	if( document.getElementById('t_userGroupID') == null )
+	{
+		if(Trim(gId('t_userGroupID_text').value) == '' )
+		{
+			$.notification("输入节点名中的关键字获得可选择的节点列表!");
+			gId('t_userGroupID_text').focus();
+		}
+		else
+		{
+			AjaxDataListRequest("../System/AjaxUserNodes.php?projectOwner={projectOwner}&surveyID={surveyID}&t_name="+Trim(gId('t_userGroupID_text').value));		
+		}
+	}
+	else
+	{
+		gId('t_userGroupID_container').innerHTML = "<input name=\"t_userGroupID_text\" id=\"t_userGroupID_text\" type=text size=30>";
+		gId('SearchUsersSubmit').value = '检索';
+	}
+}
+function Init()
+{
+	if( {t_userGroupID} != '' )
+	{
+		AjaxInitRequest("../System/AjaxShowUserNode.php?t_userGroupID={t_userGroupID}");
+	}
+}
+</script>
+<style>
+	input[type=checkbox]{vertical-align: middle;}
+	input[type=text] {border:1px solid #cacaca;height:20px;font-family: Calibri,"宋体",sans-serif;line-height:20px;vertical-align: middle;}
+	select {border:1px solid #cacaca;font-family: Calibri,"宋体",sans-serif;vertical-align: middle;height:22px;line-height:22px}
+	.classtd{padding-left:0px;padding-right:0px;};
+	.inputsubmit{vertical-align: middle;}
+</style>
+
+</head>
+<body oncontextmenu="return false" onload="javascript:AjaxShowDataSource({surveyID},2);fnLoad(24);" onunload="javascript:fnUnload(24);">
+ 	<div class="header">
+		<h1 class="logo">Eclear</h1>
+		<div class="header_menu">
+			<div class="header_m_1">
+				<a href="../System/ShowMain.php">欢迎您，<font color="#e45857" id="nick_Name_cont"></font></a>
+				<span class="head_menu_icon"></span>
+				<ul class="head_menu_list">
+					<span class="head_menu_top"></span>
+					<li><a href="../System/MyProfile.php">我的账户信息</a></li>
+					<li class="last"><a href="../System/ChangePass.php">修改我的密码</a></li>
+				</ul>
+			</div>
+			<div class="header_m_6" style="margin-left:50px">
+				<a href="../System/ShowMain.php">首页</a>
+			</div>
+			<div class="header_m_2" id="mySetting">
+			</div>
+			<div class="header_m_3" style="margin-left:50px">
+				<a href="../Help/Downs.php">帮助</a>
+				<span class="head_menu_icon"></span>
+				<ul class="head_menu_list">
+					<span class="head_menu_top"></span>
+					<li><a href="../Help/Downs.php">帮助文件下载</a></li>
+					<li><a href="http://doc.itenable.com.cn" target=_blank>在线帮助文档</a></li>
+					<li><a href="http://i.enableq.com" target=_blank>在线讨论社区</a></li>
+					<li class="last"><a href="../System/AdministratorsLogs.php">系统操作日志</a></li>
+				</ul>
+			</div>
+			<div class="header_m_4" style="margin-left:50px">
+				<a href="javascript:void(0);" onclick="javascript:showPopWin('../License/AboutEnableQ.php', 500, 400, null, null,'关于...')">关于</a>
+			</div>
+			<div class="header_m_5">
+				<a href="../System/Logout.php?loginOutURL=../index.php" target=_top>退出</a>
+			</div>
+		</div>
+	</div>
+
+	<div class="datacontainer clearfix">
+	   <div class="datamain">
+			<div class="navmenu">
+				<ul class="navOne">
+					<li>
+						<a href="../Analytics/DataOverview.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">快捷报告<span class="down"></span></a>
+						<ul class="navTwo">
+							<li class="title">快捷报告</li>
+							<li><a href="../Analytics/DataList.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">问卷回复数据</a>
+								<ul class="navThree">
+									<li><a href="../Analytics/DataOverview.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">回复数据概览</a></li>
+									<li><a href="../Analytics/DataList.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">回复数据清单</a></li>
+								</ul>
+							</li>
+							<li><a href="../Analytics/QuotaReCheck.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">问卷执行进度</a>
+								<ul class="navThree">
+									<li id="myTask0"><a href="../Analytics/TaskResult.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">任务执行进度</a></li>
+									<li><a href="../Analytics/QuotaReCheck.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">配额执行进度</a></li>
+									<li id="privateNoCommit0"><a href="../System/PrivateNoCommit.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">尚未回复清单</a></li>
+								</ul>
+							</li>
+							<li><a href="../Analytics/SurveyIndexResult.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}&Does=List">指标数据分析</a>
+								<ul class="navThree">
+									<li><a href="../Analytics/SurveyIndexResult.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">分析数据生成</a></li>
+									<li><a href="../Analytics/SurveyIndexResult.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}&Does=List">指标分析数据</a></li>
+									<li id="surveyIndexRank0"><a href="../Analytics/SurveyIndexResult.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}&Does=Rank">指标分析排名</a></li>
+									<li id="surveyIndexMatch0"><a href="../Analytics/SurveyIndexResult.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}&Does=Match">指标分析对比</a></li>
+								</ul>
+							
+							</li>
+						</ul>
+					</li>
+
+					<li><a href="../Analytics/DataList.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}" id="dataList">回复数据</a></li>
+
+					<li>
+						<a href="../Analytics/Frequency.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">常用报告<span class="down"></span></a>
+						<ul class="navTwo">
+							<li class="title">常用报告</li>
+							<li><a href="../Analytics/Frequency.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">频数频率分析</a>
+								<ul class="navThree">
+									<li><a href="../Analytics/Frequency.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">频数频率分析</a></li>
+									<li><a href="../Analytics/DataCross.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">频数交叉分析</a></li>
+								</ul>							
+							</li>
+							<li><a href="../Analytics/DataCross.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">交叉数据分析</a>
+								<ul class="navThree">
+									<li><a href="../Analytics/DataCross.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">频数交叉分析</a></li>
+									<li><a href="../Analytics/MeanCross.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">均值交叉分析</a></li>
+								</ul>						
+							</li>
+							<li><a href="../Analytics/OptionsCoeff.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">均值数据分析</a>
+								<ul class="navThree">
+									<li><a href="../Analytics/OptionsCoeff.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">均值数据分析</a></li>
+									<li><a href="../Analytics/MeanCross.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">均值交叉分析</a></li>
+								</ul>						
+							</li>
+							<li><a href="../Analytics/DataChart.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">数据图形展示</a></li>
+							<li><a href="../Math/SingleVariable.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">高阶数理统计</a>
+								<ul class="navThree">
+									<li><a href="../Math/SingleVariable.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">单变量</a></li>
+									<li><a href="../Math/DoubleVariable.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">双变量</a></li>
+									<li><a href="../Math/ClusterAnalysis.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">聚类分析</a></li>
+								</ul>							
+							</li>
+							<li><a href="../Analytics/DefineReport.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">自定义报告</a></li>								
+						</ul>
+					</li>
+
+					<li><a href="../Analytics/ChiSquare.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">扩展分析<span class="down"></span></a>
+						<ul class="navTwo">
+							<li class="title">扩展分析</li>
+							<li><a href="../Analytics/ChiSquare.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">卡方分布校验</a>
+								<ul class="navThree">
+									<li><a href="../Analytics/ChiSquare.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">卡方分布校验</a></li>
+									<li><a href="../Analytics/ChiSquareCross.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">交叉卡方校验</a></li>
+								</ul>
+							</li>
+							<li><a href="../Analytics/LinearRegression.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">线性回归分析</a>
+								<ul class="navThree">
+									<li><a href="../Analytics/LinearRegression.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">简单线性回归</a></li>
+									<li><a href="../Analytics/MultipleRegression.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">多元线性回归</a></li>
+								</ul>
+							</li>
+							<li><a href="../Analytics/TURF.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">TURF分析</a></li>
+							<li><a href="../Analytics/PSM.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">价格研究模型</a>
+								<ul class="navThree">
+									<li><a href="../Analytics/SimpleGG.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">简单GG法</a></li>
+									<li><a href="../Analytics/ExtendedGG.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">推广GG法</a></li>
+									<li><a href="../Analytics/PSM.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">PSM法</a></li>
+								</ul>
+							</li>
+							<li><a href="../Analytics/CombOptions.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">合并选项报告</a>
+							</li>
+							<li><a href="../Analytics/DataMatching.php?Type=1&surveyID={surveyID}&surveyTitle={survey_URLTitle}">问卷数据对比</a>
+								<ul class="navThree">
+									<li><a href="../Analytics/DataMatching.php?Type=1&surveyID={surveyID}&surveyTitle={survey_URLTitle}">同一问卷对比</a></li>
+									<li><a href="../Analytics/DataMatching.php?Type=2&surveyID={surveyID}&surveyTitle={survey_URLTitle}">不同问卷对比</a></li>
+								</ul>
+							</li>								
+						</ul>
+					</li>
+					<li><a href="../Analytics/SurveyIndexResult.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}&Does=List" class="cur">辅助分析<span class="down_over"></span></a>
+						<ul class="navTwo">							
+							<li class="title">辅助分析</li>
+							<li><a href="../Analytics/SurveyIndexResult.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}&Does=List">指标数据分析</a>
+								<ul class="navThree">
+									<li><a href="../Analytics/SurveyIndexResult.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">分析数据生成</a></li>
+									<li><a href="../Analytics/SurveyIndexResult.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}&Does=List">指标分析数据</a></li>
+									<li id="surveyIndexRank1"><a href="../Analytics/SurveyIndexResult.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}&Does=Rank">指标分析排名</a></li>
+									<li id="surveyIndexMatch1"><a href="../Analytics/SurveyIndexResult.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}&Does=Match">指标分析对比</a></li>
+								</ul>
+							
+							</li>
+							<li><a href="../Analytics/PlanResult.php?surveyID={surveyID}&surveyTitle={survey_URLTitle} ">计划执行分析</a></li>
+							<li><a href="../Analytics/PanelArea.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">地域来源分析</a></li>
+							<li><a href="../Stats/index.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">回复时段分析</a>
+								<ul class="navThree">
+									<li><a href="../Stats/index.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">概要信息</a></li>
+									<li><a href="../Stats/YearReport.stats.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">年维度</a></li>
+									<li><a href="../Stats/MonthReport.stats.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">月维度</a></li>
+									<li><a href="../Stats/DayReport.stats.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">日维度</a></li>
+									<li><a href="../Stats/History.stats.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">历史查询</a></li>
+								</ul>
+							</li>						
+						</ul>
+					</li>
+					<li><a href="../Analytics/EventAward.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">调查辅助<span class="down"></span></a>
+						<ul class="navTwo">
+							<li class="title">调查辅助</li>
+							<li><a href="../Analytics/QuotaReCheck.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">问卷执行进度</a>
+								<ul class="navThree">
+									<li id="myTask1"><a href="../Analytics/TaskResult.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">任务执行进度</a></li>
+									<li><a href="../Analytics/QuotaReCheck.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">配额执行进度</a></li>
+									<li id="privateNoCommit1"><a href="../System/PrivateNoCommit.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">尚未回复清单</a></li>
+								</ul>
+							</li>
+							<li><a href="../Analytics/EventAward.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">调查奖励设定</a></li>
+							<li><a id="realSurveyGps" href="../Android/BaiduDevicesMap.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}" target=_blank>访员实时定位</a></li>													
+						</ul>
+					</li>
+					<li><a href="../System/AjaxEditSurveyCode.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">基础数据<span class="down"></span></a>						
+						<ul class="navTwo">
+							<li class="title">基础数据</li>
+							<li><a href="../System/AjaxEditSurveyCode.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">基础数据设定</a>
+								<ul class="navThree">
+									<li><a href="../System/AjaxEditSurveyAlias.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">问题别名</a></li>
+									<li><a href="../System/AjaxEditSurveyCode.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">选项代码</a></li>
+									<li><a href="../System/ShowOptWeight.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">选项分值</a></li>
+									<li><a href="../System/ShowOptValue.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">选项数值</a></li>
+								</ul>
+							</li>
+						</ul>
+					</li>
+				</ul>					
+			</div>
+			<div class="data_sub_nav clearfix">
+				<p class="data_sub_nav_top clearfix">
+					<a href="../Analytics/SurveyIndexResult.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">分析数据生成</a>
+					<a href="../Analytics/SurveyIndexResult.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}&Does=List" class="cur">指标分析数据</a>
+					<a href="../Analytics/SurveyIndexResult.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}&Does=Rank" style="display:{isProjectType1}">指标分析排名</a>
+					<a href="../Analytics/SurveyIndexResult.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}&Does=Match" style="display:{isProjectType1}">指标分析对比</a>
+				</p>
+			</div>
+
+			<div class="datacontent">
+			<div class="content_tit">
+				<div class="clearfix">
+				<h1><span class=redtitle>[{surveyTitle}]</span>指标分析</h1>
+				<span class="total ml10">[{totalResponseNum}记录]</span>
+				<span class="btn ml10"></span>
+				</div>
+				<p class="fc_grey">依据生成的指标分析中间数据，列出每一样本在调查问卷每个指标上的得分以及总分数据</p>
+			</div>
+			<div class="content_main" style="margin-top:10px">
+				<form name="Check_Form" id="Check_Form" method="POST" action="">
+				<div id="dataSourceTable" class="data_analyse clearfix" style="border-bottom:1px solid #e3e3e3;+border-bottom:1px solid #cacaca;padding-bottom:10px;width:99%;z-index: 2053;"><div id="dataloading" style="background-color:#f0f0f0;width:160px;overflow:hidden;white-space:nowrap;color:black;font-weight:bold;-moz-border-radius-bottomright:5px;-webkit-border-bottom-right-radius:5px;-khtml-border-bottom-right-radius:5px;border-bottom-right-radius:5px;">&nbsp;<img src="../Images/wait.gif" width="16px" height="16px">&nbsp;正在加载数据源...&nbsp;</div></div>
+				<!--</form>
+			     数据源-->
+				 <script src="../JS/AjaxDataSource.js.php"></script>
+				 <script>
+				 function refreshDataSource(){
+					AjaxShowDataSource({surveyID},2);
+				 }
+				 </script>
+
+				<div class="search_form" style="line-height:30px;padding-top:10px;height:45px">
+					<span style="float:left">
+					  <IMG SRC="../Images/search.gif"> 查找序号为：<input type="text" name="t_responseID" value="{t_responseID}" size=10>
+					  样本标识中包含：<input type="text" name="t_name" value="{t_name}" size=17>	    
+						<select name="area" id="area" style="width:145px">
+							<option value=''>请选择来源...</option>
+							{area_list}
+						</select>
+						<input name="Action" type="hidden" id="Action" value="querySubmit"> 
+						<input type="submit" class=inputsubmit  name="Submit" value="查询" style="vertical-align: middle;"><br/>
+						<span style="display:{isProjectType1}"id="userNodeCont">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;用户节点为：<span id="t_userGroupID_container"><input name="t_userGroupID_text" id="t_userGroupID_text" type=text size=30></span>&nbsp;<input name="SearchUsersSubmit" class=inputsubmit type="button" id="SearchUsersSubmit" value="检索" onclick="javascript:checkUserSubmit();"  style="vertical-align: middle;"></span>
+					 </span>
+					 <span style="float:right"><a href={exportExportURL}><IMG SRC="../Images/excel.gif">&nbsp;导出分析数据</a>&nbsp;</span>
+			    </div>  			    
+				</form>
+				<script>
+				   var theContHeight = ( gId('userNodeCont').style.display=='none') ? '45px' : '70px';
+				   $('.search_form').css('height',theContHeight);
+				</script>
+
+				 <table class="d_table" id="d_table">
+				   <tr class=coltitle> 
+					  <th width=4% noWrap class="classtd" align=center>&nbsp;<b>序号</b></th>
+					  <th width=4% noWrap class="classtd" align=center style="display:{isProjectType1}">&nbsp;<b>任务代号</b></th>
+					  <th width=* noWrap class="classtd" align="left">&nbsp;<b>样本标识</b></th>
+					  <th width=8% noWrap class="classtd" align="left" style="display:{isProjectType2}">&nbsp;<b>来源</b></th>
+					  <th width=5% noWrap class="classtd" align="center"><b>&nbsp;总分</b></th>
+					  {indexNameList}
+					  <th width=5% align=center nowrap><b>&nbsp;操作</b></th>
+				   </tr>
+				   <!-- BEGIN LIST -->
+				   <tr> 
+					  <!--<td class="classtd" style="background:{noHaveAll};" align=center nowrap>{responseID}</td>-->
+					  <td class="classtd" align=center nowrap>{responseID}</td>
+					  <td class="classtd" align=center nowrap style="display:{isProjectType1}">{taskID}</td>
+					  <td class="classtd" nowrap>&nbsp;{administratorsName}</td>
+					  <td class="classtd" style="display:{isProjectType2}">&nbsp;{area}</td>
+					  <td class="classtd" align="center" nowrap>&nbsp;{surveyGrade}</td>
+					  {indexValueList}
+					  <td align=center nowrap><a href="{viewURL}">详细</a></td>
+				   </tr>
+				   <!-- END LIST -->
+				  </table>
+				<div class=pages>{pagesList}</div>
+			</div><!--end of content_main-->
+		   </div><!--end of content-->
+	   </div><!--end of main-->
+    </div><!--end of container-->
+
+	<link href="../CSS/Notifier.css" type=text/css rel=stylesheet>
+	<script type="text/javascript" src="../JS/Jquery.notifier.min.js.php"></script>
+	<script>
+		  var mOptions = {};
+		  mOptions.lifeTime = 0;
+		  if( {isEvalUsers} == 1 )
+		  {
+			  $.jnotify('购买信息', '想获得更多功能和更高软件版本？可访问<a href="http://www.enableq.com/cn/buy/price.html" target=_blank>www.enableq.com</a>网站查询相关购买信息', '../Images/admin.png', mOptions);
+		  }
+	</script>
+	<!--popmenu -->
+	<script type="text/javascript" src="../JS/MySetting.js.php?surveyID={surveyID}"></script>
+	<script type="text/javascript" src="../JS/PopMenu.js.php"></script>
+	<script type="text/javascript" src="../JS/MyMenu.js.php"></script>
+	<script>Init();</script>
+	<script type="text/javascript" src="../JS/Position.js.php"></script>
+	<script>
+	function changeMaskingSingleBgColor()
+	{
+		var obj = eval("document.getElementById('d_table')");
+		var theRowsNum = obj.rows;
+		var showRows = 1;
+		for ( var i=0; i<theRowsNum.length; i++)
+		{
+			if( obj.rows[i].style.display != 'none' )
+			{
+				showRows++;
+				if( showRows % 2 == 0 )
+				{
+					obj.rows[i].style.backgroundColor = '#f5f5f5';
+				}
+				else
+				{
+					obj.rows[i].style.backgroundColor = '#ffffff';
+				}
+			}
+		}
+	}
+	changeMaskingSingleBgColor();
+   </script>
+</body></html>

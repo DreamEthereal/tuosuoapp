@@ -1,0 +1,103 @@
+<?php
+//dezend by http://www.yunlu99.com/
+if (!defined('ROOT_PATH')) {
+	exit('EnableQ Security Violation');
+}
+
+$theBaseID = $theQtnArray['baseID'];
+$theBaseQtnArray = $QtnListArray[$theBaseID];
+$theCheckBoxListArray = $CheckBoxListArray[$theBaseQtnArray['questionID']];
+
+if ($theQtnArray['alias'] != '') {
+	$VarName = $theQtnArray['alias'];
+}
+else {
+	$VarName = 'VAR' . $questionID;
+}
+
+$i = 0;
+
+foreach ($theCheckBoxListArray as $question_checkboxID => $theQuestionArray) {
+	$i++;
+
+	if ($theQuestionArray['itemCode'] != 0) {
+		$content .= ' VARIABLE LABELS ' . $VarName . '_' . $theQuestionArray['itemCode'] . ' \'' . qconverionlabel($theQtnArray['questionName']) . '-' . qconverionlabel($theQuestionArray['optionName']) . '\'.' . "\r\n" . '';
+	}
+	else {
+		$content .= ' VARIABLE LABELS ' . $VarName . '_' . $i . ' \'' . qconverionlabel($theQtnArray['questionName']) . '-' . qconverionlabel($theQuestionArray['optionName']) . '\'.' . "\r\n" . '';
+	}
+
+	if ($theQtnArray['isSelect'] == 0) {
+		if ($theQuestionArray['itemCode'] != 0) {
+			$content .= ' VALUE LABELS ' . $VarName . '_' . $theQuestionArray['itemCode'] . ' ';
+		}
+		else {
+			$content .= ' VALUE LABELS ' . $VarName . '_' . $i . ' ';
+		}
+
+		$k = $theQtnArray['endScale'];
+
+		for (; $theQtnArray['startScale'] <= $k; $k--) {
+			$RatingWeight = $theQtnArray['weight'] * $k;
+			$content .= $RatingWeight . ' \'' . $RatingWeight . '\' ';
+		}
+
+		if ($theQtnArray['isHaveUnkown'] == 1) {
+			if ($theQtnArray['negCode'] != '0') {
+				$content .= '' . $theQtnArray['negCode'] . ' \'UnKown\'.' . "\r\n" . '';
+			}
+			else {
+				$content .= '99 \'UnKown\'.' . "\r\n" . '';
+			}
+		}
+	}
+
+	if ($theQtnArray['isHaveOther'] == '1') {
+		if ($theQuestionArray['itemCode'] != 0) {
+			$content .= ' VARIABLE LABELS ' . $VarName . '_' . $theQuestionArray['itemCode'] . '_why_text \'' . qconverionlabel($theQtnArray['questionName']) . '-' . qconverionlabel($theQuestionArray['optionName']) . '-' . $lang['why_your_rating'] . '\'.' . "\r\n" . '';
+		}
+		else {
+			$content .= ' VARIABLE LABELS ' . $VarName . '_' . $i . '_why_text \'' . qconverionlabel($theQtnArray['questionName']) . '-' . qconverionlabel($theQuestionArray['optionName']) . '-' . $lang['why_your_rating'] . '\'.' . "\r\n" . '';
+		}
+	}
+}
+
+if ($theBaseQtnArray['isHaveOther'] == '1') {
+	if ($theBaseQtnArray['otherCode'] != 0) {
+		$content .= ' VARIABLE LABELS ' . $VarName . '_' . $theBaseQtnArray['otherCode'] . ' \'' . qconverionlabel($theQtnArray['questionName']) . '-' . qconverionlabel($theBaseQtnArray['otherText']) . '\'.' . "\r\n" . '';
+	}
+	else {
+		$content .= ' VARIABLE LABELS ' . $VarName . '_99 \'' . qconverionlabel($theQtnArray['questionName']) . '-' . qconverionlabel($theBaseQtnArray['otherText']) . '\'.' . "\r\n" . '';
+	}
+
+	if ($theQtnArray['isSelect'] == 0) {
+		if ($theBaseQtnArray['otherCode'] != 0) {
+			$content .= ' VALUE LABELS ' . $VarName . '_' . $theBaseQtnArray['otherCode'] . ' ';
+		}
+		else {
+			$content .= ' VALUE LABELS ' . $VarName . '_99 ';
+		}
+
+		$i = $theQtnArray['endScale'];
+
+		for (; $theQtnArray['startScale'] <= $i; $i--) {
+			$RatingWeight = $theQtnArray['weight'] * $i;
+			$content .= $RatingWeight . ' \'' . $RatingWeight . '\' ';
+		}
+
+		if ($theQtnArray['isHaveUnkown'] == 1) {
+			$content .= '99 \'UnKown\'.' . "\r\n" . '';
+		}
+	}
+
+	if ($theQtnArray['isHaveOther'] == '1') {
+		if ($theBaseQtnArray['otherCode'] != 0) {
+			$content .= ' VARIABLE LABELS ' . $VarName . '_' . $theBaseQtnArray['otherCode'] . '_why_text \'' . qconverionlabel($theQtnArray['questionName']) . '-' . qconverionlabel($theBaseQtnArray['otherText']) . '-' . $lang['why_your_rating'] . '\'.' . "\r\n" . '';
+		}
+		else {
+			$content .= ' VARIABLE LABELS ' . $VarName . '_99_why_text \'' . qconverionlabel($theQtnArray['questionName']) . '-' . qconverionlabel($theBaseQtnArray['otherText']) . '-' . $lang['why_your_rating'] . '\'.' . "\r\n" . '';
+		}
+	}
+}
+
+?>

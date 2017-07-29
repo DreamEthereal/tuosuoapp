@@ -1,0 +1,269 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gbk" />
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" />
+<title>回复时段分析:概要信息 - Eclear在线问卷调查引擎</title>
+<link rel="shortcut icon" href="../Images/enableq.ico" type="image/x-icon" />
+<link rel="stylesheet" type="text/css" href="../CSS/UIBase.css" />
+<link rel="stylesheet" type="text/css" href="../CSS/DataIndex.css" />
+<link href="../CSS/Window.css" type="text/css" rel=stylesheet>
+<script type="text/javascript" src="../JS/Common.js.php"></script>
+<script type="text/javascript" src="../JS/Window.js.php"></script>
+<script type="text/javascript" src="../JS/Jquery.min.js.php"></script>
+</head>
+
+<body oncontextmenu="return false">
+ 	<div class="header">
+		<h1 class="logo">Eclear</h1>
+		<div class="header_menu">
+			<div class="header_m_1">
+				<a href="../System/ShowMain.php">欢迎您，<font color="#e45857" id="nick_Name_cont"></font></a>
+				<span class="head_menu_icon"></span>
+				<ul class="head_menu_list">
+					<span class="head_menu_top"></span>
+					<li><a href="../System/MyProfile.php">我的账户信息</a></li>
+					<li class="last"><a href="../System/ChangePass.php">修改我的密码</a></li>
+				</ul>
+			</div>
+			<div class="header_m_6" style="margin-left:50px">
+				<a href="../System/ShowMain.php">首页</a>
+			</div>
+			<div class="header_m_2" id="mySetting">
+			</div>
+			<div class="header_m_3" style="margin-left:50px">
+				<a href="../Help/Downs.php">帮助</a>
+				<span class="head_menu_icon"></span>
+				<ul class="head_menu_list">
+					<span class="head_menu_top"></span>
+					<li><a href="../Help/Downs.php">帮助文件下载</a></li>
+					<li><a href="http://doc.itenable.com.cn" target=_blank>在线帮助文档</a></li>
+					<li><a href="http://i.enableq.com" target=_blank>在线讨论社区</a></li>
+					<li class="last"><a href="../System/AdministratorsLogs.php">系统操作日志</a></li>
+				</ul>
+			</div>
+			<div class="header_m_4" style="margin-left:50px">
+				<a href="javascript:void(0);" onclick="javascript:showPopWin('../License/AboutEnableQ.php', 500, 400, null, null,'关于...')">关于</a>
+			</div>
+			<div class="header_m_5">
+				<a href="../System/Logout.php?loginOutURL=../index.php" target=_top>退出</a>
+			</div>
+		</div>
+	</div>
+
+	<div class="datacontainer clearfix">
+	   <div class="datamain">
+			<div class="navmenu">
+				<ul class="navOne">
+					<li>
+						<a href="../Analytics/DataOverview.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">快捷报告<span class="down"></span></a>
+						<ul class="navTwo">
+							<li class="title">快捷报告</li>
+							<li><a href="../Analytics/DataList.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">问卷回复数据</a>
+								<ul class="navThree">
+									<li><a href="../Analytics/DataOverview.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">回复数据概览</a></li>
+									<li><a href="../Analytics/DataList.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">回复数据清单</a></li>
+								</ul>
+							</li>
+							<li><a href="../Analytics/QuotaReCheck.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">问卷执行进度</a>
+								<ul class="navThree">
+									<li id="myTask0"><a href="../Analytics/TaskResult.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">任务执行进度</a></li>
+									<li><a href="../Analytics/QuotaReCheck.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">配额执行进度</a></li>
+									<li id="privateNoCommit0"><a href="../System/PrivateNoCommit.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">尚未回复清单</a></li>
+								</ul>
+							</li>
+							<li><a href="../Analytics/SurveyIndexResult.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}&Does=List">指标数据分析</a>
+								<ul class="navThree">
+									<li><a href="../Analytics/SurveyIndexResult.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">分析数据生成</a></li>
+									<li><a href="../Analytics/SurveyIndexResult.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}&Does=List">指标分析数据</a></li>
+									<li id="surveyIndexRank0"><a href="../Analytics/SurveyIndexResult.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}&Does=Rank">指标分析排名</a></li>
+									<li id="surveyIndexMatch0"><a href="../Analytics/SurveyIndexResult.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}&Does=Match">指标分析对比</a></li>
+								</ul>
+							
+							</li>
+						</ul>
+					</li>
+
+					<li><a href="../Analytics/DataList.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}" id="dataList">回复数据</a></li>
+
+					<li>
+						<a href="../Analytics/Frequency.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">常用报告<span class="down"></span></a>
+						<ul class="navTwo">
+							<li class="title">常用报告</li>
+							<li><a href="../Analytics/Frequency.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">频数频率分析</a>
+								<ul class="navThree">
+									<li><a href="../Analytics/Frequency.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">频数频率分析</a></li>
+									<li><a href="../Analytics/DataCross.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">频数交叉分析</a></li>
+								</ul>							
+							</li>
+							<li><a href="../Analytics/DataCross.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">交叉数据分析</a>
+								<ul class="navThree">
+									<li><a href="../Analytics/DataCross.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">频数交叉分析</a></li>
+									<li><a href="../Analytics/MeanCross.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">均值交叉分析</a></li>
+								</ul>						
+							</li>
+							<li><a href="../Analytics/OptionsCoeff.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">均值数据分析</a>
+								<ul class="navThree">
+									<li><a href="../Analytics/OptionsCoeff.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">均值数据分析</a></li>
+									<li><a href="../Analytics/MeanCross.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">均值交叉分析</a></li>
+								</ul>						
+							</li>
+							<li><a href="../Analytics/DataChart.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">数据图形展示</a></li>
+							<li><a href="../Math/SingleVariable.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">高阶数理统计</a>
+								<ul class="navThree">
+									<li><a href="../Math/SingleVariable.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">单变量</a></li>
+									<li><a href="../Math/DoubleVariable.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">双变量</a></li>
+									<li><a href="../Math/ClusterAnalysis.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">聚类分析</a></li>
+								</ul>							
+							</li>
+							<li><a href="../Analytics/DefineReport.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">自定义报告</a></li>								
+						</ul>
+					</li>
+
+					<li><a href="../Analytics/ChiSquare.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">扩展分析<span class="down"></span></a>
+						<ul class="navTwo">
+							<li class="title">扩展分析</li>
+							<li><a href="../Analytics/ChiSquare.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">卡方分布校验</a>
+								<ul class="navThree">
+									<li><a href="../Analytics/ChiSquare.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">卡方分布校验</a></li>
+									<li><a href="../Analytics/ChiSquareCross.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">交叉卡方校验</a></li>
+								</ul>
+							</li>
+							<li><a href="../Analytics/LinearRegression.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">线性回归分析</a>
+								<ul class="navThree">
+									<li><a href="../Analytics/LinearRegression.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">简单线性回归</a></li>
+									<li><a href="../Analytics/MultipleRegression.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">多元线性回归</a></li>
+								</ul>
+							</li>
+							<li><a href="../Analytics/TURF.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">TURF分析</a></li>
+							<li><a href="../Analytics/PSM.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">价格研究模型</a>
+								<ul class="navThree">
+									<li><a href="../Analytics/SimpleGG.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">简单GG法</a></li>
+									<li><a href="../Analytics/ExtendedGG.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">推广GG法</a></li>
+									<li><a href="../Analytics/PSM.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">PSM法</a></li>
+								</ul>
+							</li>
+							<li><a href="../Analytics/CombOptions.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">合并选项报告</a>
+							</li>
+							<li><a href="../Analytics/DataMatching.php?Type=1&surveyID={surveyID}&surveyTitle={survey_URLTitle}">问卷数据对比</a>
+								<ul class="navThree">
+									<li><a href="../Analytics/DataMatching.php?Type=1&surveyID={surveyID}&surveyTitle={survey_URLTitle}">同一问卷对比</a></li>
+									<li><a href="../Analytics/DataMatching.php?Type=2&surveyID={surveyID}&surveyTitle={survey_URLTitle}">不同问卷对比</a></li>
+								</ul>
+							</li>								
+						</ul>
+					</li>
+					<li><a href="../Analytics/SurveyIndexResult.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}&Does=List" class="cur">辅助分析<span class="down_over"></span></a>
+						<ul class="navTwo">							
+							<li class="title">辅助分析</li>
+							<li><a href="../Analytics/SurveyIndexResult.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}&Does=List">指标数据分析</a>
+								<ul class="navThree">
+									<li><a href="../Analytics/SurveyIndexResult.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">分析数据生成</a></li>
+									<li><a href="../Analytics/SurveyIndexResult.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}&Does=List">指标分析数据</a></li>
+									<li id="surveyIndexRank1"><a href="../Analytics/SurveyIndexResult.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}&Does=Rank">指标分析排名</a></li>
+									<li id="surveyIndexMatch1"><a href="../Analytics/SurveyIndexResult.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}&Does=Match">指标分析对比</a></li>
+								</ul>
+							
+							</li>
+							<li><a href="../Analytics/PlanResult.php?surveyID={surveyID}&surveyTitle={survey_URLTitle} ">计划执行分析</a></li>
+							<li><a href="../Analytics/PanelArea.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">地域来源分析</a></li>
+							<li><a href="../Stats/index.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">回复时段分析</a>
+								<ul class="navThree">
+									<li><a href="../Stats/index.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">概要信息</a></li>
+									<li><a href="../Stats/YearReport.stats.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">年维度</a></li>
+									<li><a href="../Stats/MonthReport.stats.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">月维度</a></li>
+									<li><a href="../Stats/DayReport.stats.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">日维度</a></li>
+									<li><a href="../Stats/History.stats.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">历史查询</a></li>
+								</ul>
+							</li>						
+						</ul>
+					</li>
+					<li><a href="../Analytics/EventAward.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">调查辅助<span class="down"></span></a>
+						<ul class="navTwo">
+							<li class="title">调查辅助</li>
+							<li><a href="../Analytics/QuotaReCheck.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">问卷执行进度</a>
+								<ul class="navThree">
+									<li id="myTask1"><a href="../Analytics/TaskResult.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">任务执行进度</a></li>
+									<li><a href="../Analytics/QuotaReCheck.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">配额执行进度</a></li>
+									<li id="privateNoCommit1"><a href="../System/PrivateNoCommit.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">尚未回复清单</a></li>
+								</ul>
+							</li>
+							<li><a href="../Analytics/EventAward.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">调查奖励设定</a></li>
+							<li><a id="realSurveyGps" href="../Android/BaiduDevicesMap.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}" target=_blank>访员实时定位</a></li>													
+						</ul>
+					</li>
+					<li><a href="../System/AjaxEditSurveyCode.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">基础数据<span class="down"></span></a>						
+						<ul class="navTwo">
+							<li class="title">基础数据</li>
+							<li><a href="../System/AjaxEditSurveyCode.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">基础数据设定</a>
+								<ul class="navThree">
+									<li><a href="../System/AjaxEditSurveyAlias.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">问题别名</a></li>
+									<li><a href="../System/AjaxEditSurveyCode.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">选项代码</a></li>
+									<li><a href="../System/ShowOptWeight.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">选项分值</a></li>
+									<li><a href="../System/ShowOptValue.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">选项数值</a></li>
+								</ul>
+							</li>
+						</ul>
+					</li>
+				</ul>					
+			</div>
+			<div class="data_sub_nav clearfix">
+				<p class="data_sub_nav_top clearfix">
+					<a href="../Stats/index.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}" class="cur">概要信息</a>
+					<a href="../Stats/YearReport.stats.php?{URL}">年维度</a>
+					<a href="../Stats/MonthReport.stats.php?{URL}">月维度</a>
+					<a href="../Stats/DayReport.stats.php?{URL}">日维度</a>
+					<a href="../Stats/History.stats.php?{URL}">历史查询</a>
+				</p>
+			</div>
+			<div class="datacontent">
+			<div class="content_tit">
+				<div class="clearfix">
+				<h1><span class=redtitle>[{surveyTitle}]</span>回复时段分析:概要信息</h1>
+				<span class="total ml10">[{visit_num}回复]</span>
+				<span class="btn ml10"></span>
+				</div>
+				<p class="fc_grey">样本回复的时间段分布，用以观察市场营销活动是否与样本回复时间所联动，可用来判断市场营销活动是否取到正向激励作用</p>
+			</div>
+			<div class="content_main" style="margin-top:5px">
+
+			<table class="d_table">
+			  <tr class=coltitle><th colspan="2" align=left>概要信息</th></tr>
+			   <tr>
+				 <td width=3% nowrap>&nbsp;总统计天数</td>
+				 <td width=97%>&nbsp;{days_num}</td>
+			   </tr>
+			  <tr> 
+				<td nowrap>&nbsp;首份回复提交日期</td>
+				<td noWrap align=left>&nbsp;{begin_time}</td>
+			  </tr>
+			  <tr> 
+				<td align=left nowrap>&nbsp;总回复数</td>
+				<td noWrap align=left>&nbsp;{visit_num}</td>
+			  </tr>
+			  <tr> 
+				<td align=left nowrap>&nbsp;平均日回复数</td>
+				<td noWrap align=left>&nbsp;{average_days}</td>
+			  </tr>
+			  <tr> 
+				<td align=left nowrap>&nbsp;最高月回复数</td>
+				<td noWrap align=left>&nbsp;{tiptop_month} (发生于{max_month})</td>
+			  </tr>
+			  <tr> 
+				<td align=left nowrap>&nbsp;最高日回复数</td>
+				<td noWrap align=left>&nbsp;{tiptop_day} (发生于{max_day})</td>
+			  </tr>
+			  <tr> 
+				<td align=left nowrap>&nbsp;最高时回复数</td>
+				<td noWrap align=left>&nbsp;{tiptop_hour} (发生于{max_hour})</td>
+			  </tr>
+			</table>
+			</div><!--end of content_main-->
+		   </div><!--end of content-->
+	   </div><!--end of main-->
+    </div><!--end of container-->
+	<!--popmenu -->
+	<script type="text/javascript" src="../JS/MySetting.js.php?surveyID={surveyID}"></script>
+	<script type="text/javascript" src="../JS/PopMenu.js.php"></script>
+	<script type="text/javascript" src="../JS/MyMenu.js.php"></script>
+</body></html>

@@ -1,0 +1,25 @@
+<tr>
+    <td height=25 class="question" valign=center>{questionName}</td>
+</tr>
+<tr>
+   <td>
+	  <table cellSpacing=0 cellPadding=0>
+		<!-- BEGIN OPTION -->
+		<tr class="answer">
+			<td nowrap>&nbsp;{optionName}</td>
+			<td width=15></td>
+			<td nowrap align=right>Code：<input size=10 name="option_2_{questionID}_{optionID}" value="{itemCode}" onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')"></td>
+			<td width=15></td>
+			<td><input type="checkbox" value="1" name="unkown_2_{questionID}_{optionID}" id="unkown_2_{questionID}_{optionID}" {isUnkown}>&nbsp;"不清楚"选项</td>
+		</tr>
+		<!-- END OPTION -->
+		<tr class="answer" style="display:{isHaveOther}">
+			<td nowrap>&nbsp;{other_optionName}</td>
+			<td width=15></td>
+			<td nowrap align=right>Code：<input size=10 name="option_2_{questionID}_0" value="{otherCode}" onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')"></td>
+			<td width=15></td>
+			<td><input type="checkbox" value="1" name="unkown_2_{questionID}_0" id="unkown_2_{questionID}_0" {isUnkown0}>&nbsp;"不清楚"选项</td>
+		</tr>
+	  </table>
+  </td>
+</tr>

@@ -1,0 +1,155 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gbk" />
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" />
+<title>管理系统用户 - Eclear在线问卷调查引擎</title>
+<link rel="shortcut icon" href="../Images/enableq.ico" type="image/x-icon" />
+<link rel="stylesheet" type="text/css" href="../CSS/UIBase.css" />
+<link rel="stylesheet" type="text/css" href="../CSS/Index.css" />
+<script type="text/javascript" src="../JS/Calendar.js.php"></script>
+<link href="../CSS/Window.css" type="text/css" rel=stylesheet>
+<script type="text/javascript" src="../JS/Common.js.php"></script>
+<script type="text/javascript" src="../JS/Window.js.php"></script>
+<script type="text/javascript" src="../JS/Jquery.min.js.php"></script>
+<style>
+.sectionTitle {  border:1px solid #cacaca;background-color: #f9f9f9;padding:5px;+border-bottom:1px solid #cacaca;font-weight:bold; }
+.sectionContent { border:1px solid #cacaca; border-top:none;}
+ul.ztree {margin:0px;padding:0px;width:293px;overflow-y:auto;overflow-x:auto;}
+</style>
+	<link rel="STYLESHEET" type="text/css" href="../DHTMLTree/zTree.css">
+	<script src="../DHTMLTree/zTree.core.min.js"></script>
+	<script>
+	var setting = {
+			view: {
+				selectedMulti: false,
+				nameIsHTML: true
+			},
+			async: {
+				enable: true,
+				url:"../DHTMLTree/TreeData.php",
+				autoParam:["id"]
+			},
+			callback: {
+				beforeAsync: beforeAsync
+			},
+			data: {
+				simpleData: {
+					enable: true
+				}
+			}
+		};
+		var log, className = "dark";
+		function beforeAsync(treeId, treeNode) {
+			className = (className === "dark" ? "":"dark");
+			return true;
+		}
+		function refreshNode() {
+			var zTree = $.fn.zTree.getZTreeObj("zTreeBox");
+			zTree.reAsyncChildNodes(null, 'refresh', false);
+		}
+		$(document).ready(function(){
+			$.fn.zTree.init($("#zTreeBox"), setting);
+		});
+	
+	function reSizeIframeHeight(){
+		var theTreeHeight = getViewportHeight() - 116; //sectionTitle:35px
+		document.getElementById('zTreeBox_cont').style.height = theTreeHeight+'px';
+		document.getElementById('zTreeBox').style.height = theTreeHeight+'px';
+		var theTdHeight = getViewportHeight() - 81;
+		document.getElementById('theIframe_cont').style.height = theTdHeight+'px';
+		document.getElementById('theIframe').style.height = theTdHeight+'px';
+	}
+	</script>
+</head>
+
+<body oncontextmenu="return false" style="margin:0px;padding:0px;overflow:hidden;" onLoad="javascript:reSizeIframeHeight();" onresize="javascript:reSizeIframeHeight();">
+ 	<div class="header">
+		<h1 class="logo">Eclear</h1>
+		<div class="header_menu">
+			<div class="header_m_1">
+				<a href="../System/ShowMain.php">欢迎您，<font color="#e45857" id="nick_Name_cont"></font></a>
+				<span class="head_menu_icon"></span>
+				<ul class="head_menu_list">
+					<span class="head_menu_top"></span>
+					<li><a href="../System/MyProfile.php">我的账户信息</a></li>
+					<li class="last"><a href="../System/ChangePass.php">修改我的密码</a></li>
+				</ul>
+			</div>
+			<div class="header_m_6" style="margin-left:50px">
+				<a href="../System/ShowMain.php">首页</a>
+			</div>
+			<div class="header_m_2" id="mySetting">
+			</div>
+			<div class="header_m_3" style="margin-left:50px">
+				<a href="../Help/Downs.php">帮助</a>
+				<span class="head_menu_icon"></span>
+				<ul class="head_menu_list">
+					<span class="head_menu_top"></span>
+					<li><a href="../Help/Downs.php">帮助文件下载</a></li>
+					<li><a href="http://doc.itenable.com.cn" target=_blank>在线帮助文档</a></li>
+					<li><a href="http://i.enableq.com" target=_blank>在线讨论社区</a></li>
+					<li class="last"><a href="../System/AdministratorsLogs.php">系统操作日志</a></li>
+				</ul>
+			</div>
+			<div class="header_m_4" style="margin-left:50px">
+				<a href="javascript:void(0);" onclick="javascript:showPopWin('../License/AboutEnableQ.php', 500, 400, null, null,'关于...')">关于</a>
+			</div>
+			<div class="header_m_5">
+				<a href="../System/Logout.php?loginOutURL=../index.php" target=_top>退出</a>
+			</div>
+		</div>
+	  </div>
+	 <script type="text/javascript" src="../JS/MySetting.js.php"></script>
+  
+	 <table width=100% style="border-bottom:0px;margin-top:5px" cellspacing=0 cellpadding=0 valign=top>
+		<tr>
+			<td width=300px valign=top>
+				<div style="padding-top:0px;margin-top:0px;height:100%;width:98%;*width:100%;line-height:180%;font-size:12px;overflow:hidden;">
+						<div class=sectionTitle>用户结构树</div>
+						<div id="sectionContent" class=sectionContent style="margin:0px;padding:0px;">
+							<!-- Tree -->
+							<div id="zTreeBox_cont" style="margin:0px;padding:0px;text-align:left;">
+								<ul id="zTreeBox" class="ztree"></ul>
+							</div>
+							<!-- Tree -->
+					   </div>
+				</div>
+			</td>
+			<td width=* style="margin:0px;padding:0px" valign=top id="theIframe_cont"><iframe id="theIframe" name="theIframe" src="ShowUserList.php" frameborder=0 style="height:100%;width:100%;overflow-x:hidden;overflow-y:auto;"></iframe></td>
+	  </tr>
+	  </table>
+
+	  <link href="../CSS/SideBar.css" type=text/css rel=stylesheet>
+	  <script type="text/javascript" src="../JS/SideBar.js.php"></script>
+	  <div id="sideBar">	
+			<a href="javascript:void(0);" id="sideBarTab" onfocus="this.blur();"><img src="../Images/slide-button.gif"/></a>
+			<div id="sideBarContents" style="display:none">
+				<div id="sideBarContentsInner" style="display:none">
+					<h2>操作小提示</h2>			
+					<ul>
+						<li><b>[角色]</b> 系统存在七种不同的用户角色</li>
+						<li><b>[超级]</b> 超级问卷员默认是其所属节点的用户管理员，可创建节点内的其他角色</li>
+						<li><b>[设计]</b> 问卷设计员仅能对自己设计的问卷进行管理与数据分析</li>
+						<li><b>[查看]</b> 数据查看员是用来仅查看问卷数据的角色</li>
+						<li><b>[录入]</b> 数据录入员是用来录入纸面问卷数据的，访员收集数据使用该角色身份</li>
+					</ul>			
+				</div>
+			</div>	
+	  </div>
+	  <script>initSideBar();</script>
+
+	  <link href="../CSS/Notifier.css" type=text/css rel=stylesheet>
+	  <script type="text/javascript" src="../JS/Jquery.notifier.min.js.php"></script>
+	  <script>
+			  var mOptions = {};
+			  mOptions.lifeTime = 0;
+
+			  if( {haveNotAdmin1} == 1 )
+			  {
+				  $.jnotify('新用户提示[用户]', 'EnableQ有七种不同的用户角色，为完成不同的任务目标；尝试创建其他角色试试？', '../Images/admin.png', mOptions);
+			  }
+	 </script>
+	 <!--popmenu -->
+	<script type="text/javascript" src="../JS/PopMenu.js.php"></script>
+</body></html>

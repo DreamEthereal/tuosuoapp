@@ -1,0 +1,78 @@
+<html>
+<head>
+<meta http-equiv=content-language content=zh-cn>
+<meta http-equiv=content-type content="text/html; charset=gbk">
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7">
+<style>
+ td { padding:2px 5px 2px 5px;}
+</style>
+<link href="../CSS/Base.css" rel=stylesheet>
+<script type="text/javascript" src="../JS/Jquery.min.js.php"></script>
+<script type="text/javascript" src="../JS/Jquery.notification.js.php"></script>
+<link type="text/css" rel="stylesheet" href="../CSS/Notification.css" />
+<script language="javascript">
+function Check_Form_Validator()
+{
+	if ( document.Check_Form.ImageFile1.value == "") 
+	{
+        document.Check_Form.ImageFile1.focus();
+        $.notification("请指定附属文件!");
+        return false;
+    }
+}
+function submitForm()
+{
+	if( Check_Form_Validator() != false )
+	{
+		document.getElementById('submitBtn').disabled = true;
+		disabledStyle(document.getElementById('submitBtn'));
+		document.getElementById('close').disabled = true;
+		disabledStyle(document.getElementById('close'));
+		document.Check_Form.submit();
+	}
+}
+function disabledStyle(obj)
+{
+	obj.style.border = '1px solid #DDD';
+	obj.style.backgroundColor = '#F5F5F5';
+	obj.style.color = '#3b5888';
+}
+</script>
+<meta content="mshtml 6.00.3790.0" name=generator></head>
+<body oncontextmenu="return false">
+   <form action="" method="post" enctype="multipart/form-data" id="Check_Form" name="Check_Form" onsubmit="return false;">
+  <table class=datatable style="line-height: 150%;border-collapse:collapse;" cellspacing=0 cellpadding=0 bordercolor=#cacaca border=1 width=100%>
+     <div class=position>位置：&nbsp; 我的问卷 &raquo; 附属文件管理 &raquo; 上传附属文件</div>
+      <tr> 
+         <td colspan="2" bgcolor="#f9f9f9"><b>上传附属文件</b></td>
+      </tr>
+   <tr> 
+       <td  align=center width="30%">附属文件A：</td>
+       <td noWrap width="70%"><input type=file name="ImageFile1" size=60></td>
+   </tr>
+   <tr> 
+       <td  align=center width="30%">附属文件B：</td>
+       <td noWrap width="70%"><input type=file name="ImageFile2" size=60></td>
+   </tr>
+   <tr> 
+       <td  align=center width="30%">附属文件C：</td>
+       <td noWrap width="70%"><input type=file name="ImageFile3" size=60></td>
+   </tr>
+   <tr> 
+       <td  align=center width="30%">附属文件D：</td>
+       <td noWrap width="70%"><input type=file name="ImageFile4" size=60></td>
+   </tr>
+   <tr> 
+       <td  align=center width="30%">附属文件E：</td>
+       <td noWrap width="70%"><input type=file name="ImageFile5" size=60></td>
+   </tr></table>
+   <table width=100%>
+   <tr> 
+       <td width=30%></td><td>
+	   <input type=hidden name="Action" value="AddImageSubmit">
+	   <input class=inputsubmit type="button" name="submitBtn" id="submitBtn" value="确定" onclick="javascript:submitForm();"> 
+	   <input class=inputsubmit type="button" name="close" id="close" value="关闭" onClick="javascript:parent.hidePopWin();">
+   </tr>
+  </form>
+</table>
+</body></html>

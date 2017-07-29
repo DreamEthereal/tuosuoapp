@@ -1,0 +1,10 @@
+<tr><td class="question" valign=center>&nbsp;{questionRequire}<span class="textEdit" id="questionName_{questionID}">{questionName}</span>&nbsp;<span class=notes>{questionNotes}</span></td></tr>
+<tr><td class="tips"><span class="textEdit" id="questionNotes_{questionID}">{questionTips}</span></td></tr>
+<tr><td>
+	<table width=100%><!-- BEGIN OPTION -->
+		<tr class="tdheight" bgcolor="{bgcolor}">
+			<td class=answer align=center valign=center width=1%><input onclick="Check_Survey_Conditions()" type="radio" value="{optionValue}" name="{optionID}" id="{optionID}" {isCheck}></td>
+			<td align=left valign=center class=answer nowrap width=99%><a href="javascript:void(0)" onclick=javascript:selRadioCheckRows("{optionID}",{theOptionOdNum});><div style="white-space:nowrap;" class=tdlineheight><span class="textEdit" id="optionName_1_{questionID}_{optionID}">{optionName}</span></div></a></td>
+		</tr>
+	<!-- END OPTION -->
+</table></td></tr>

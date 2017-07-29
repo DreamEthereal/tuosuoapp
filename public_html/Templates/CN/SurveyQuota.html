@@ -1,0 +1,126 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gbk" />
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" />
+<title>问卷配额定义 - Eclear在线问卷调查引擎</title>
+<link rel="shortcut icon" href="../Images/enableq.ico" type="image/x-icon" />
+<link rel="stylesheet" type="text/css" href="../CSS/UIBase.css" />
+<link rel="stylesheet" type="text/css" href="../CSS/Index.css" />
+<link href="../CSS/Window.css" type="text/css" rel=stylesheet>
+<script type="text/javascript" src="../JS/Common.js.php"></script>
+<script type="text/javascript" src="../JS/Window.js.php"></script>
+<script type="text/javascript" src="../JS/Jquery.min.js.php"></script>
+<script>
+function refreshParent() {
+   self.location.href = '{quotaURL}';
+}
+function gId(_sId){
+	return document.getElementById(_sId);
+}
+</script>
+</head>
+
+<body oncontextmenu="return false" onload="javascript:fnLoad(5);" onunload="javascript:fnUnload(5);">
+ 	<div class="header">
+		<h1 class="logo">Eclear</h1>
+		<div class="header_menu">
+			<div class="header_m_1">
+				<a href="../System/ShowMain.php">欢迎您，<font color="#e45857" id="nick_Name_cont"></font></a>
+				<span class="head_menu_icon"></span>
+				<ul class="head_menu_list">
+					<span class="head_menu_top"></span>
+					<li><a href="../System/MyProfile.php">我的账户信息</a></li>
+					<li class="last"><a href="../System/ChangePass.php">修改我的密码</a></li>
+				</ul>
+			</div>
+			<div class="header_m_6" style="margin-left:50px">
+				<a href="../System/ShowMain.php">首页</a>
+			</div>
+			<div class="header_m_2" id="mySetting">
+			</div>
+			<div class="header_m_3" style="margin-left:50px">
+				<a href="../Help/Downs.php">帮助</a>
+				<span class="head_menu_icon"></span>
+				<ul class="head_menu_list">
+					<span class="head_menu_top"></span>
+					<li><a href="../Help/Downs.php">帮助文件下载</a></li>
+					<li><a href="http://doc.itenable.com.cn" target=_blank>在线帮助文档</a></li>
+					<li><a href="http://i.enableq.com" target=_blank>在线讨论社区</a></li>
+					<li class="last"><a href="../System/AdministratorsLogs.php">系统操作日志</a></li>
+				</ul>
+			</div>
+			<div class="header_m_4" style="margin-left:50px">
+				<a href="javascript:void(0);" onclick="javascript:showPopWin('../License/AboutEnableQ.php', 500, 400, null, null,'关于...')">关于</a>
+			</div>
+			<div class="header_m_5">
+				<a href="../System/Logout.php?loginOutURL=../index.php" target=_top>退出</a>
+			</div>
+		</div>
+	</div><!--end of header-->
+	<script type="text/javascript" src="../JS/MySetting.js.php"></script>
+
+	<div class="container clearfix">
+	   <div class="main">
+			<div class="nav">
+					<a href="{questionListURL}">调查问题</a>
+					<a href="{logicURL}">逻辑关系</a>
+					<a href="{relationURL}">数值关联</a>
+					<a href="{quotaURL}" class="cur">问卷配额</a>
+					<a href="../System/AjaxEditSurveyCode.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}" style="display:{isDesignMode}">基础数据</a>
+			</div>
+		    <div class="content">
+			<div class="content_tit">
+				<div class="clearfix">
+				<h1><span class=redtitle>[{surveyTitle}]</span>配额定义</h1>
+				<span class="total ml10">[{recNum}组定义]</span>
+				<span class="btn ml10"></span>
+				</div>
+				<p class="fc_grey">配额一般用以限制在某一种特征条件成立前提下的样本回复数量，甄别是一种配额限制为0的特殊配额。问卷预览状态下配额不启用。&nbsp;<a onmouseover="this.T_WIDTH=500;this.T_PADDING=0;this.T_BGCOLOR='#ffffff'; return escape('&nbsp;举例：若您的问卷仅需要250位男性及300位女性回复样本<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;您可以定义一个配额，限制是250，在配额的性别题目中的答案选项是男性<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;然后您建立另一个配额，限制是300，在第二个配额的性别题目中的答案选项是女性<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;这样您的问卷只能有最多250位男性及最多300位女性有权填写问卷')" href="javascript:void(0);"><font color=red><b>[帮助]</font></a></b></p>
+			</div>
+			<div class="content_main" style="font-size:12px;margin-bottom:5px;margin-top:8px;"><input class=inputsubmit name="createNew" type="button" id="createNew" value="新增定义" onclick="javascript:showPopWin('{newQuotaURL}', 700, 280, refreshParent, null,'新增问卷配额定义')">&nbsp;<input class=inputsubmit name="updateNow" type="button" id="updateNow" value="修订定义" onclick="javascript:showPopWin('{updateQuotaURL}', 700, 470, refreshParent, null,'修订问卷配额定义')">&nbsp;<input class=inputsubmit name="importNew" type="button" id="importNew" value="导入定义" onclick="javascript:showPopWin('{importQuotaURL}', 730, 260, refreshParent, null,'导入问卷配额定义')">&nbsp;<input class=stnsubmit name="exportLogicData" type="button" id="exportLogicData" value="导出定义"  onclick="gId('exportLogicData').disabled=true;gId('exportLogicData').style.border='1px solid #DDD';gId('exportLogicData').style.backgroundColor='#F5F5F5';gId('exportLogicData').style.color='#3b5888';window.location.href='../Export/Export.quota.inc.php?surveyID={surveyID}';"></div>
+			<div class="content_main" style="margin-top:10px">
+  			 <table class="d_table">
+			   <tr class=coltitle>
+				  <th width=2% noWrap align=center>ID</th>
+				  <th width=82% noWrap align=left>&nbsp;<B>配额名称</B></th>
+				  <th width=8% nowrap align=center>&nbsp;<B>配额限制</B></th>
+				  <th width=10% noWrap align=center><b>操 作</b> </th>
+			   </tr>
+			   <!-- BEGIN QUOTA -->
+			   <tr> 
+				  <td width=2% align=center nowrap>&nbsp;{quotaID}</td>
+				  <td>&nbsp;<b>{quotaName}</b></td>
+				  <td align=center nowrap bgcolor="#efefef">&nbsp;<b>{quotaNum}</b></td>
+				  <td noWrap align=center>
+					   <A href="javascript:void(0);" onclick="javascript:showPopWin('{newQtnQuotaURL}', 900, 450, refreshParent, null,'新增配额定义的配额条件')">新增</A>&nbsp;
+					   <A href="{editURL}">修改</A>&nbsp;
+					   <A href="{deleteURL}" onclick="return window.confirm('您真的想删除该条配额定义吗？本操作不可恢复！')">删除</A>
+				  </td>
+			   </tr>
+			   <tr>
+				 <td colspan=4 align=left bgcolor="#f5fafe" height=25 style="line-height:25px">{conList}</td>
+			   </tr>
+			   <!-- END QUOTA -->
+			</table>
+			</div><!--end of content_main-->
+		   </div><!--end of content-->
+	   </div><!--end of main-->
+    </div><!--end of container-->
+	<link href="../CSS/Notifier.css" type=text/css rel=stylesheet>
+	<script type="text/javascript" src="../JS/Jquery.notifier.min.js.php"></script>
+	<script>
+		  var mOptions = {};
+		  mOptions.lifeTime = 0;
+		  if( {recHaveNum} == 0 )
+		  {
+			  $.jnotify('样本甄别', '举例：当第1题选择了“不同意”的情形下问卷直接结束，那么建立限制为0的配额并基于第1题选择“不同意”', '../Images/admin.png', mOptions);
+			  $.jnotify('问卷配额', '您需要先定义一个配额，指定配额限制等所需信息，再基于创建的配额来指定其逻辑运算条件', '../Images/admin.png', mOptions);
+			  $.jnotify('更多提示信息', '鼠标移向界面上部红色字体的<font color=red>[帮助]</font>可得到更详细提示', '../Images/admin.png', mOptions);
+		  }
+	</script>
+	<!--popmenu -->
+	<script type="text/javascript" src="../JS/PopMenu.js.php"></script>
+	<script language=javascript src="../JS/Example.js.php"></script>
+	<script type="text/javascript" src="../JS/Position.js.php"></script>
+</body></html>

@@ -1,0 +1,248 @@
+<html>
+<head>
+<meta http-equiv=content-language content=zh-cn>
+<meta http-equiv=content-type content="text/html; charset=gbk">
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7">
+<style>
+ td { padding:2px 5px 2px 5px;}
+</style>
+<link href="../CSS/Base.css" rel=stylesheet>
+<script type="text/javascript" src="../JS/Jquery.min.js.php"></script>
+<script type="text/javascript" src="../JS/Jquery.notification.js.php"></script>
+<link type="text/css" rel="stylesheet" href="../CSS/Notification.css" />
+<script language=javascript src="../JS/CheckQuestion.js.php"></script>
+<script language=javascript>
+function Check_Form_Validator()
+{
+	if (!CheckNotNull(document.Check_Form.questionID, "问卷中的此问题")) {return false;}
+	if (!CheckNotNull(document.Check_Form.base_qtnID, "问卷中此问题的矩阵行")) {return false;}
+	if (!CheckNotNull(document.getElementById("condOnID"), "依赖于此问题")) {return false;}
+	if (document.getElementById("logicMode") != null )
+	{
+		switch(getRadioCheckBoxValue(document.Check_Form.logicMode))
+		{
+			case '1':
+				if (!CheckNotNull(document.getElementById("opertion_1"), "运算关系")) {return false;}
+				if (!CheckNotNull(document.getElementById("optionID_1"), "回复值")) {return false;}
+			break;
+			case '2':
+				if (!CheckNotNull(document.getElementById("opertion_2"), "运算关系")) {return false;}
+				if (!CheckNotNull(document.getElementById("optionID_2"), "回复选项的数量")) {return false;}
+				if (!CheckNumber(document.getElementById("optionID_2"), "回复选项的数量",null,null)) {return false;}
+			break;
+		}		
+	}
+	else
+	{
+		if ( document.getElementById("qtnID") != null )
+		{
+			if ( document.getElementById("nodeValue") != null ) //级联题
+			{
+				if (!CheckNotNull(document.getElementById("qtnID"), "级联题问题")) {return false;}
+			}
+			else
+			{
+				if (!CheckNotNull(document.getElementById("qtnID"), "矩阵题问题")) {return false;}
+			}
+		}
+		if ( document.getElementById("opertion") != null )
+		{
+		   if (!CheckNotNull(document.getElementById("opertion"), "运算关系")) {return false;}
+		}
+		if ( document.getElementById("optionID") != null )
+		{
+			if (!CheckNotNull(document.getElementById("optionID"), "回复值")) {return false;}
+			if( document.getElementById("optionID").tagName.toLowerCase() == 'input')
+			{
+				if(!CheckNumber(document.getElementById("optionID"), "回复值",null,null)) {return false;}
+			}
+		}
+		if ( document.getElementById("nodeValue") != null )
+		{
+			if (!CheckNotNull(document.getElementById("nodeValue"), "级联题回复值集合")) {return false;}
+		}
+	}
+}
+function changeLogicMode(logicMode)
+{
+	if(document.getElementById("logicValueIsAnd") != null)
+	{
+		if( logicMode == 2 )
+		{
+			document.getElementById("logicValueIsAnd").disabled = true;
+		}
+		else
+		{
+		    document.getElementById("logicValueIsAnd").checked = false;
+			document.getElementById("logicValueIsAnd").disabled = false;
+		}
+	}
+}
+var http_request = false;
+function AjaxRequest(url)
+{
+	http_request = false;
+	if(window.ActiveXObject){
+		try{ http_request = new ActiveXObject("Msxml2.XMLHTTP");}
+		catch (e){
+			try{ http_request = new ActiveXObject("Microsoft.XMLHTTP");}
+			catch (e) {}
+		}
+	}
+	else if(window.XMLHttpRequest){
+		http_request = new XMLHttpRequest();
+		if (http_request.overrideMimeType){
+			http_request.overrideMimeType('text/xml');
+		}
+	}
+	
+	if (!http_request){
+		$.notification("Cannot create an XMLHTTP instance");
+		return false;
+	}
+	http_request.onreadystatechange = function(){
+		if (http_request.readyState == 4 && http_request.status == 200)
+		{
+			var resText = http_request.responseText.split('########');
+			document.getElementById("rangeHTML").innerHTML = resText[0];
+			document.getElementById("condOnHTML").innerHTML = resText[1];
+		}
+	}
+	;
+  	http_request.open('GET', url, true);
+	http_request.send(null);
+}
+
+function Ajax_Request(url)
+{
+	http_request = false;
+	if(window.ActiveXObject){
+		try{ http_request = new ActiveXObject("Msxml2.XMLHTTP");}
+		catch (e){
+			try{ http_request = new ActiveXObject("Microsoft.XMLHTTP");}
+			catch (e) {}
+		}
+	}
+	else if(window.XMLHttpRequest){
+		http_request = new XMLHttpRequest();
+		if (http_request.overrideMimeType){
+			http_request.overrideMimeType('text/xml');
+		}
+	}
+	
+	if (!http_request){
+		$.notification("Cannot create an XMLHTTP instance");
+		return false;
+	}
+	http_request.onreadystatechange = function(){
+		if (http_request.readyState == 4 && http_request.status == 200)
+		{
+			var resText = http_request.responseText.split('######');
+			document.getElementById("optionHTML").innerHTML = resText[0];
+			if( parseInt(resText[1]) == 1 )
+			{
+				document.getElementById("logicValueIsAnd").disabled = false;
+			}
+			else
+			{
+				document.getElementById("logicValueIsAnd").checked = false;
+				document.getElementById("logicValueIsAnd").disabled = true;
+			}
+		}
+	}
+	;
+  	http_request.open('GET', url, true);
+	http_request.send(null);
+}
+
+function ChangeQtn()
+{
+	var URL = 'AjaxLogicChangeOption.php?surveyID={surveyID}&selectedID=' + document.getElementById("condOnID").value;
+	Ajax_Request(URL);
+}
+
+function ChangeBaseQtn(objField)
+{
+    for( i=0;i<objField.options.length;i++ )
+    {
+	  if( objField.item(i).selected)
+	  {
+	      var theQtnID = objField.item(i).value;
+		  break;
+	  }
+    }
+	var URL = 'AjaxAssQtnChangeQtn.php?surveyID={surveyID}&selectedID=' + theQtnID;
+    AjaxRequest(URL);
+}
+function submitForm()
+{
+	if( Check_Form_Validator() != false )
+	{
+		document.getElementById('submitBtn').disabled = true;
+		disabledStyle(document.getElementById('submitBtn'));
+		document.getElementById('close').disabled = true;
+		disabledStyle(document.getElementById('close'));
+		document.Check_Form.submit();
+	}
+}
+</script>
+<meta content="mshtml 6.00.3790.0" name=generator></head>
+<body oncontextmenu="return false">
+  <form name="Check_Form" id="Check_Form" method="post" action="" onsubmit="return false;" style="margin:0px;padding:0px;">
+  <table class=datatable style="line-height: 150%;border-collapse:collapse;" cellspacing=0 cellpadding=0 bordercolor=#cacaca border=1 width=100%>
+     <div class=position>位置：&nbsp; 我的问卷 &raquo; 逻辑关系 &raquo; 新增矩阵行逻辑关系</div>
+     <tr><td colspan="2" bgcolor="#f9f9f9" height="25"><b>新增矩阵行逻辑关系</b></td></tr>
+     <tr>
+      <td width=10% nowrap>&nbsp;问卷中此问题</td>
+	  <td width=90% nowrap><select name="questionID" id="questionID" onChange="javascript:ChangeBaseQtn(this);" style="width:760px;*width:780px">
+	     <option value='' selected>请选择...</option>
+		 {questionIDList}
+		 </select>
+	  </td>
+    </tr>
+	<tr>
+	  <td>&nbsp;矩阵行</td>
+	  <td><span id="rangeHTML">
+	     <select name="base_qtnID[]" id="base_qtnID" size=6 multiple style="width:760px;*width:780px">
+	     <option value='' selected>请选择...</option>
+		 </select></span><br/> <span class=red>*</span> 按住Ctrl键点击鼠标进行多重选择</span>
+    </td>
+	</tr>
+    <tr>
+      <td>&nbsp;依赖于此问题</td>	  
+	  <td>
+		<span id="condOnHTML">
+	     <select name="condOnID" id="condOnID" onChange="Ajax_Request('AjaxLogicChangeOption.php?surveyID={surveyID}&selectedID='+document.Check_Form.condOnID.options[document.Check_Form.condOnID.selectedIndex].value);" size=6 style="width:760px;*width:780px">
+		   <option selected value="{m_condOnID}">{m_condOnName}</option>
+		 </select>
+		 </span>
+	  </td>
+   </tr>
+   <tr>
+      <td>&nbsp;运算关系<br/>&nbsp;与回复值</td>
+	  <td><span id="optionHTML">
+	    <select name="opertion" id="opertion" size=8>
+		   <option value=''>请选择...</option>
+		   <option value="1" selected>选择</option>
+		   <option value="2">未选择</option>
+		</select>&nbsp;
+		<select name="optionID[]" id="optionID" size=8 multiple>
+		  <option selected value="{m_optionID}">{m_optionName}</option> 
+		</select><br/> <span class=red>*</span> 按住Ctrl键点击鼠标进行多重选择</span>
+	  </td>
+    <tr><td>&nbsp;值间运算关系</td>
+        <td><input name="logicValueIsAnd" id="logicValueIsAnd" value="1" type="checkbox">逻辑“与”运算 (默认逻辑“或”运算)</td>
+   </tr> 
+   </table>
+   <table width="100%">
+   <tr><td width=10% nowrap>&nbsp;</td>
+  	   <td>
+         <input name="surveyID" type="hidden" id="surveyID" value="{surveyID}"> 
+    	 <input name="Action" type="hidden" id="Action" value="{Action}"> 
+		 <input class=inputsubmit type="button" name="submitBtn" id="submitBtn" value="确定" onclick="javascript:submitForm();"> 
+		 <input class=inputsubmit type="button" name="close" id="close" value="关闭" onClick="javascript:parent.hidePopWin();">
+      </td>
+    </tr>
+  </form>
+ </table>
+</body></html>

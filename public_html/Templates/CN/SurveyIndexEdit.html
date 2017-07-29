@@ -1,0 +1,119 @@
+<html>
+<head>
+<meta http-equiv=content-language content=zh-cn>
+<meta http-equiv=content-type content="text/html; charset=gbk">
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7">
+<style>
+ td { padding:2px 5px 2px 5px;}
+</style>
+<link href="../CSS/Base.css" rel=stylesheet>
+<script language=javascript src="../JS/HighLight.js.php"></script>
+<script type="text/javascript" src="../JS/Jquery.min.js.php"></script>
+<script type="text/javascript" src="../JS/Jquery.notification.js.php"></script>
+<link type="text/css" rel="stylesheet" href="../CSS/Notification.css" />
+<script language=javascript src="../JS/CheckQuestion.js.php"></script>
+<script language=javascript>
+function Check_Form_Validator()
+{
+	if (!CheckNotNull(document.Check_Form.indexName, "指标名称")) {return false;}
+	if ( document.Check_Form.indexType.value != "1" )
+	{
+		if (!CheckNotNull(document.Check_Form.fatherId,"所属一级指标")) {return false;}
+	}
+	if (!CheckNoFloat(document.Check_Form.fullValue, "指标的满分")) {return false;}
+}
+
+//检查字符串是否出现中文
+function CheckNoFloat(objField, strText) {
+    var objValue = objField.value;
+    if (objValue=="") return true;
+	var strErr = "“" + strText + "”不是正确的分值数据格式！";
+	var reg=/^-?\d+\.?\d*$/;
+	if (!reg.test(objValue)) {
+        objField.focus();
+		$.notification(strErr);
+		return false;
+	}
+	return true;
+}
+function changeIndexType()
+{ 
+	if (document.Check_Form.indexType.value != "1" )
+	{
+		document.getElementById("fatherIdCont").style.display = "";
+    }
+	else
+	{
+		document.getElementById("fatherIdCont").style.display = "none";
+	}
+}
+function submitForm()
+{
+	if( Check_Form_Validator() != false )
+	{
+		document.getElementById('submitBtn').disabled = true;
+		disabledStyle(document.getElementById('submitBtn'));
+		document.getElementById('close').disabled = true;
+		disabledStyle(document.getElementById('close'));
+		document.Check_Form.submit();
+	}
+}
+</script>
+<meta content="mshtml 6.00.3790.0" name=generator></head>
+<body oncontextmenu="return false" onload="javascript:changeIndexType();">
+ <form action="" method="post" name="Check_Form" id="Check_Form" onsubmit="return false;">
+ <table class=datatable style="line-height: 150%;border-collapse:collapse;" cellspacing=0 cellpadding=0 bordercolor=#cacaca border=1 width=100%>
+     <div class=position>位置：&nbsp; 我的问卷 &raquo; 编辑问卷评估指标</div>
+      <tr><td bgcolor="#f9f9f9" colspan=2><b>编辑问卷评估指标</b></td></tr>
+      <tr>
+        <td align=right colspan=2><SPAN style="PADDING-RIGHT: 16px">注：以下带“<SPAN  class=red>*</SPAN>”的为必填项</SPAN></td></tr>
+      <tr> 
+         <td width="20%"><SPAN class=red>*</SPAN> 指标名称：</td>
+         <td width="80%"><input name="indexName" type="text" id="indexName" size="30" maxlength="40" value="{indexName}"></td>
+      </tr>
+      <tr> 
+          <td height="23">&nbsp;&nbsp;&nbsp;对指标的描述：</td>
+          <td><textarea id="indexDesc" name="indexDesc" rows=6 cols=82>{indexDesc}</textarea></td>
+      </tr>
+       <tr> 
+         <td><SPAN class=red>*</SPAN> 指标类别：</td>
+         <td>
+			<select name="indexType" id="indexType" onChange="javascript:changeIndexType();">
+				<option value='1' {indexType_1}>一级指标</option>
+				<option value='2' {indexType_2}>二级指标</option>
+			</select>		 
+		 </td>
+      </tr>
+      <tr id="fatherIdCont"> 
+         <td><SPAN class=red>*</SPAN> 所属一级指标：</td>
+         <td>
+			<select name="fatherId" id="fatherId">
+				<option value=''>请选择所属一级指标</option>
+				{indexList}
+			</select>		 
+		 </td>
+      </tr>
+     <tr> 
+          <td height="23">&nbsp;&nbsp;&nbsp;满分：</td>
+          <td><input name="fullValue" type="text" id="fullValue" size="10" value="{fullValue}"></td>
+      </tr>
+      <tr> 
+          <td height="23">&nbsp;&nbsp;&nbsp;分值阀值：</td>
+          <td><input type="checkbox" name="isMinZero" id="isMinZero" value="1" {isMinZero}>指标得分最低为零分<br/>
+		      <input type="checkbox" name="isMaxFull" id="isMaxFull" value="1" {isMaxFull}>指标得分最高为满分</td>
+      </tr>
+	 </table><table width=100%>
+     <tr><td width=20%></td> 
+          <td>
+ 		  <input name="indexID" type="hidden" value="{indexID}"> 
+ 		  <input name="surveyID" type="hidden" value="{surveyID}"> 
+ 		  <input name="surveyTitle" type="hidden" value="{surveyTitle}"> 
+ 		  <input name="Action" type="hidden" id="Action" value="{Action}"> 
+		  <input class=inputsubmit type="button" name="submitBtn" id="submitBtn" value="确定" onclick="javascript:submitForm();"> 
+		  <input class=inputsubmit type="button" name="close" id="close" value="关闭" onClick="javascript:parent.hidePopWin();">
+          </td>
+       </tr>
+      </form>       
+   </table>
+   <script type="text/javascript">initInputHighlightScript();</script> 
+</body></html>

@@ -1,0 +1,217 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>{siteName}会员通行证注册</title>
+<meta http-equiv="Content-Type" content="text/html; charset=gbk" />
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7">
+<link rel="stylesheet" type="text/css" href="CSS/UIBase.css" />
+<link rel="stylesheet" type="text/css" href="CSS/Index.css" />
+<script type="text/javascript" src="JS/Jquery.min.js.php"></script>
+<script type="text/javascript" src="JS/Jquery.notification.js.php"></script>
+<link type="text/css" rel="stylesheet" href="CSS/Notification.css" />
+<script language=javascript src="JS/CheckQuestion.js.php"></script>
+<script language=javascript>
+function Check_Form_Validator()
+{
+	if (!CheckNotNull(document.Check_Form.administrators_Name, "邮件账号")) {return false;}
+	if (!CheckEmail(document.Check_Form.administrators_Name,"邮件账号")) {return false;}
+	if (!CheckNotNull(document.Check_Form.nickName, "昵称")) {return false;}
+	<!-- CHECK PASSWORD -->
+	if (!CheckNotNull(document.Check_Form.passWord, "密码")) {return false;}
+	if (!CheckStringLength(document.Check_Form.passWord, "密码",6,20)) {return false;}
+	if (document.Check_Form.passWord.value != document.Check_Form.passWord2.value) {document.Check_Form.passWord2.focus();$.notification("两次输入的密码不一致");return false;}
+	<!-- END PASSWORD -->
+	if (!CheckNotNull(document.Check_Form.answerPass,"密码保护答案")) {return false;}
+	{optionCheckInput}
+}
+var http_request = false;
+function AjaxRequest(url,type)
+{
+	http_request = false;
+	if(window.ActiveXObject)
+	{
+		try  // IE
+		{
+			http_request = new ActiveXObject("Msxml2.XMLHTTP");
+		}
+		catch (e)
+		{
+			try
+			{
+				http_request = new ActiveXObject("Microsoft.XMLHTTP");
+			}
+			catch (e) {}
+		}
+	}
+	else if(window.XMLHttpRequest)
+	{
+		// Mozilla, Safari,...
+		http_request = new XMLHttpRequest();
+		if (http_request.overrideMimeType)
+		{
+			http_request.overrideMimeType('text/xml');
+		}
+	}
+	
+	if (!http_request)
+	{
+		$.notification("Cannot create an XMLHTTP instance");
+		return false;
+	}
+	if( type == 1 )
+	{
+		http_request.onreadystatechange = AjaxNameContents;
+	}
+	else
+	{
+		http_request.onreadystatechange = AjaxNiceContents;
+    }
+	http_request.open('GET', url, true);
+	http_request.send(null);
+}
+
+function AjaxNameContents()
+{
+	if (http_request.readyState == 4)
+	{
+		if(http_request.status == 200)
+		{
+			if(http_request.responseText == "false")
+			   document.getElementById("userNameInfo").innerHTML="<img src=Images/check_no.gif border=0> <span class=red>输入的邮件账号已被注册</span>";
+			else if(http_request.responseText == "true")
+			   document.getElementById("userNameInfo").innerHTML="<img src=Images/check_yes.gif border=0> <span class=green>输入的邮件账号可注册</span>";
+			else if(http_request.responseText == "null") 
+			   document.getElementById("userNameInfo").innerHTML="<img src=Images/check_no.gif border=0> <span class=red>输入的邮件账号为空</span>";
+			else if(http_request.responseText == "noemail") 
+			   document.getElementById("userNameInfo").innerHTML="<img src=Images/check_no.gif border=0> <span class=red>输入Email格式错误</span>";
+		}
+		else
+		{
+			$.notification('网络传输问题');
+		}
+	}
+}
+$(document).ready(function(){ 
+	jQuery("#administrators_Name").blur(function(){
+		AjaxRequest('System/AjaxCheckName.php?type=1&name='+this.value,1);
+	});
+});
+</script>
+<style>
+	input[type=text],input[type=password] {border:1px solid #cacaca;height:18px;font-family: Calibri,"宋体",sans-serif;line-height:18px;vertical-align: middle;}
+	textarea {border:1px solid #cacaca;font-family: Calibri,"宋体",sans-serif;line-height:18px;}
+	select {border:1px solid #cacaca;font-family: Calibri,"宋体",sans-serif;vertical-align: middle;height:20px;line-height:20px}
+    .d_table tr:hover{background-color:transparent}
+</style>
+</head>
+<body>
+	<div class="container clearfix">
+	   <div class="main">
+		    <div class="nav">
+				<a href="r.php?qlang={qlang}&qid={qid}" class="cur">会员注册</a>
+				<a href="g.php?qlang={qlang}&qid={qid}">忘记密码</a>
+			</div>			
+			<!-- BEGIN STEP0 -->
+			<div class="content">
+			<div class="content_tit">
+				<div class="clearfix">
+				<h1><span class=redtitle>{siteName}</span>注册协议文本</h1>
+				<span class="total ml10"></span>
+				<span class="btn ml10"></span>
+				</div>
+				<p class="fc_grey">{siteName}新会员注册</p>
+			</div>
+
+			<div class="content_main" style="margin-top:10px">
+				<table class="d_table">
+				   <tr>
+					 <td height=60 align="center" style="padding:5px"><textarea cols=155 rows=30 readonly>{registerText}</textarea></td></tr>
+				</table>
+				<table width=99%>
+				   <tr>
+					 <td align=center>
+					 <input type=button class=inputsubmit name=submit value="我完全同意" onClick="javascript:window.location.href='r.php?qlang={qlang}&qid={qid}&step=1'">
+					 <input type=button class=inputsubmit name=submit value="我不能同意" onClick="javascript:self.close();">
+					</td></tr>
+				  </table>
+			 </div>
+		   </div>
+		  <!-- STEP0 END -->
+
+		  <!-- BEGIN STEP1 -->
+			<div class="content">
+			<div class="content_tit">
+				<div class="clearfix">
+				<h1><span class=redtitle>{siteName}</span>会员通行证注册</h1>
+				<span class="total ml10"></span>
+				<span class="btn ml10"></span>
+				</div>
+				<p class="fc_grey">{siteName}新会员注册</p>
+			</div>
+			<div class="content_main" style="margin-top:10px">
+				<form name="Check_Form" id="Check_Form" onsubmit="return Check_Form_Validator(this)" method="post" action="">
+				<table class="d_table">
+				  <tr><th align=left colspan=2><b>&nbsp;会员基本资料</b></th></tr>
+				  <tr> 
+					 <td width="16%"><SPAN class=red>*</SPAN> 邮件账号：</td>
+					 <td width="84%"><input id="administrators_Name" name="administrators_Name" type="text" size=50>&nbsp;&nbsp;<span id="userNameInfo"></span></td>
+				  </tr>
+				  <tr> 
+					   <td height="25"><SPAN class=red>*</SPAN> 昵称：</td>
+					   <td><input name="nickName" type="text" id="nickName" size="30" maxlength="30"></td>
+				  </tr>
+				  <!-- INPUT INPUTPASSWORD -->
+				  <tr> 
+					  <td height="23"><SPAN class=red>*</SPAN> 密码：</td>
+					  <td><input name="passWord" type="password" id="passWord" size="30" maxlength="30"></td>
+				  </tr>
+				  <tr> 
+					  <td height="25"><SPAN class=red>*</SPAN> 确认密码：</td>
+					  <td><input name="passWord2" type="password" id="passWord2" size="30" maxlength="30"></td>
+				  </tr>
+				   <!-- END INPUTPASSWORD -->
+				  <tr> 
+					   <td height="25"><SPAN class=red>*</SPAN> 密码保护问题：</td>
+					   <td><SELECT id=hintPass name=hintPass> 
+								<option value=1>最喜欢的宠物名字？</option> 
+								<option value=2>最喜欢的电影名字？</option> 
+								<option value=3>最喜欢的歌曲名字？</option> 
+								<option value=4>爱人的名字？</option> 
+								<option value=5>父亲的名字？</option>
+								<option value=6>第一所中学的校名？</option> 
+								<option value=7>第一个孩子的爱称？</option> 
+								<option value=8>第一部移动电话的牌子？</option> 
+								<option value=9>最喜欢的运动项目？</option> 
+								<option value=10>最喜欢的运动队名字？</option>
+								<option value=11>您的身份证号？</option>
+								<option value=12>您的护照号？</option>
+								<option value=13>您的驾驶证号？</option>
+								<option value=14>您的工作证号？</option>
+								<option value=15>您参加工作的日期？</option>
+								<option value=16>您的生日？</option>
+							</SELECT></td>
+				   </tr>
+				   <tr> 
+					   <td height="25"><SPAN class=red>*</SPAN> 密码保护答案：</td>
+					   <td><input id=answerPass name=answerPass type="text"></td>
+				   </tr>
+				  <tr><th align=left colspan=2><b>&nbsp;其他附属信息</b></th></tr>
+				  {optionList}
+				  </table>
+				  <table width=99% style="border:0px">
+				  <tr><td style="border:0px"> 
+					  <input type="hidden" name="Action" value="MemberAddSubmit"> 
+					  <input class=inputsubmit type="submit" name="submit" value="注册">
+					  <input class=inputsubmit name="submit2" type="reset" value="重置">
+					  <input type="hidden" name="qid" id="qid" value="{qid}">
+					</td>
+				  </tr>
+			  </form>
+			 </table>
+			 </div>
+		   </div>
+		   <!-- STEP1 END -->
+	   </div>
+    </div>
+</body>
+</html>

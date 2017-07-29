@@ -1,0 +1,164 @@
+	<html>
+	<head>
+	<title>{siteTitle} </title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<style>
+		@media screen and (max-device-width: 320px){body{-webkit-text-size-adjust:none}}
+		@media screen and (max-device-width: 480px){body{-webkit-text-size-adjust:none}}
+		@media only screen and (-webkit-min-device-pixel-ratio: 2){body{-webkit-text-size-adjust:none}}
+		@media only screen and (min-device-width: 768px) and (max-device-width: 1024px){body{-webkit-text-size-adjust:none}}
+	</style>
+	<meta http-equiv=content-type content="text/html; charset=gbk">
+	<LINK href="../CSS/Android.css" type=text/css rel=stylesheet>
+	<LINK href="../Offline/resources/phone.css" type=text/css rel=stylesheet>
+	<SCRIPT type=text/javascript>
+		window.onRexseeReady = function(){
+			//设置横屏
+			rexseeScreen.setScreenOrientation('landscape');
+
+			rexseeMenu.create("mainOptionsMenu1","label:mainOptionsMenu1");
+			rexseeMenu.addItem("mainOptionsMenu1","rexsee:reload","label:刷新;");
+			rexseeMenu.addItem("mainOptionsMenu1","../Monitor/index.php","label:返回;");
+			rexseeMenu.addItem("mainOptionsMenu1","../Monitor/Logout.php","label:注销;");			
+			rexseeMenu.addItem("mainOptionsMenu1","rexsee:quit","label:退出;");
+			rexseeMenu.setOptionsMenuId("mainOptionsMenu1");
+
+			rexseeTitleBar.setStyle('visibility:hidden;');
+			rexseeStatusBar.setStyle('visibility:hidden;');
+			rexseeSpecialKey.enableBackKeyListener(true);
+	}
+</script>
+<style>
+  .classtd { padding:2px 5px 2px 5px;font-size:14px}
+  table {margin-bottom:4px;}
+  .titlebar {padding:3px;font-weight:bold;background: -webkit-gradient(linear, left top, right bottom, from(#014e82), to(#4d7496));}
+  table{border-collapse:collapse;border-spacing:0;}  
+</style>
+</head>
+<BODY style="background:#fff;color:#666" oncontextmenu="return false">
+
+<div class="titlebar">
+ <table width=100% style="margin:0px">
+   <tr height=30><td width=30 valign=middle><a href="../Monitor/index.php"><img src="../Images/back.png"></a></td>
+	   <td align=center width=* class="pageTitle">回复数据概览</td>
+	   <td width=30 valign=middle><a href="rexsee:quit"><img src="../Images/exit.png"></a></td>
+  </tr>
+ </table>
+</div>
+
+<div class="notesInfo">【问卷】{surveyTitle}</div>
+
+<div class="invertedshiftdown">
+	<ul>
+	<li class="current"><a href="../Analytics/DataOverview.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">数据概览</a></li>
+	<li><a href="../Monitor/QuotaResult.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">配额进度</a></li>
+	<li><a href="../Monitor/DefineReport.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">定制报告</a></li>
+	</ul>
+</div>
+
+
+<div id="androidList" style="padding-left:10px;padding-right:10px;padding-top:5px;">
+
+<form name="Check_Form" id="Check_Form" method="POST" action="" style="margin:0px;padding:0px">
+  <table style="LINE-HEIGHT: 150%;border-collapse:collapse;margin-bottom:0px;" cellSpacing=0 cellPadding=0 width="100%" borderColor=#ccc border=0>
+  <tr><td class="classtd" align=right style="font-size:14px;border-top:#ccc 1px solid">
+    选择分析的数据源：
+	<select name="dataSource" id="dataSource" style="font-size:12px" onchange="javascript:document.Check_Form.submit();">
+		{dataSourceList}
+	</select>
+  </td></tr></table>
+</form>
+
+<div style="margin-bottom:10px;">
+  
+  <table style="LINE-HEIGHT: 150%;border-collapse:collapse;" cellSpacing=0 cellPadding=0 width="100%" borderColor=#ccc border=1>
+   <tr><td class="classtd" colspan=2 bgcolor="#f9f9f9" style="font-size:14px"><b>基本信息</b></td></tr>
+   <tr><td class="classtd" nowrap width=23%>&nbsp;样本数(N)</td>
+       <td class="classtd" width=77%>&nbsp;<b>{totalResponseNum}</b></td>
+   </tr>
+   <tr><td class="classtd">&nbsp;第一条数据</td>
+       <td class="classtd">&nbsp;{beginTime}</td>
+   </tr>
+   <tr><td class="classtd">&nbsp;最新一条数据</td>
+       <td class="classtd">&nbsp;{endTime}</td>
+   </tr>
+   <tr><td class="classtd">&nbsp;最少回复用时</td>
+       <td class="classtd">&nbsp;{beginOverTime}秒</td>
+   </tr>
+   <tr><td class="classtd">&nbsp;最多回复用时</td>
+       <td class="classtd">&nbsp;{endOverTime}秒</td>
+   </tr>
+  </table>
+
+  <table style="LINE-HEIGHT: 150%;border-collapse:collapse;" cellSpacing=0 cellPadding=0 width="100%" borderColor=#ccc border=1>
+   <tr><td class="classtd" colspan=4 bgcolor="#f9f9f9" style="font-size:14px"><b>数据完成标记</b></td></tr>
+   <tr><td class="classtd" nowrap width=*>&nbsp;<b>完成标记分类</b></td>
+       <td class="classtd" nowrap width=16% align=center>&nbsp;<b>区分颜色</b></td>
+       <td class="classtd" nowrap width=15% align=center>&nbsp;<b>数量</b></td>
+       <td class="classtd" nowrap width=15% align=center>&nbsp;<b>比率</b></td>
+   </tr>
+   <tr><td class="classtd">&nbsp;未完成数据</td>
+       <td class="classtd" bgcolor="#ffe000" align=center>&nbsp;黄色</td>
+       <td class="classtd" align=center>&nbsp;{overFlag0Num}</td>
+       <td class="classtd" align=center>&nbsp;{overFlag0Rate}%</td>
+   </tr>
+   <tr><td class="classtd">&nbsp;完成数据</td>
+       <td class="classtd" bgcolor="#ffffff" align=center>&nbsp;白色</td>
+       <td class="classtd" align=center>&nbsp;{overFlag1Num}</td>
+       <td class="classtd" align=center>&nbsp;{overFlag1Rate}%</td>
+   </tr>
+   <tr><td class="classtd">&nbsp;导入数据</td>
+       <td class="classtd" bgcolor="#339933" align=center>&nbsp;<font color=white>绿色</font></td>
+       <td class="classtd" align=center>&nbsp;{overFlag3Num}</td>
+       <td class="classtd" align=center>&nbsp;{overFlag3Rate}%</td>
+   </tr>
+   <tr><td class="classtd">&nbsp;无效回复数据</td>
+       <td class="classtd" bgcolor="#cc0000" align=center>&nbsp;<font color=white>红色</font></td>
+       <td class="classtd" align=center>&nbsp;{overFlag2Num}</td>
+       <td class="classtd" align=center>&nbsp;{overFlag2Rate}%</td>
+  </tr>
+  </table>
+
+  <table style="LINE-HEIGHT: 150%;border-collapse:collapse;" cellSpacing=0 cellPadding=0 width="100%" borderColor=#ccc border=1>
+   <tr><td class="classtd" colspan=4 bgcolor="#f9f9f9" style="font-size:14px"><b>数据审核状态</b></td></tr>
+   <tr><td class="classtd" nowrap width=*>&nbsp;<b>审核状态</b></td>
+       <td class="classtd" nowrap width=16% align=center>&nbsp;<b>区分颜色</b></td>
+       <td class="classtd" nowrap width=15% align=center>&nbsp;<b>数量</b></td>
+       <td class="classtd" width=15% align=center>&nbsp;<b>比率</b></td>
+   </tr>
+   <tr><td class="classtd">&nbsp;未处理</td>
+       <td class="classtd" bgcolor="#ffffff" align=center>&nbsp;白色</td>
+       <td class="classtd" align=center>&nbsp;{authStat0Num}</td>
+       <td class="classtd" align=center>&nbsp;{authStat0Rate}%</td>
+   </tr>
+   <tr><td class="classtd">&nbsp;审核中</td>
+       <td class="classtd" bgcolor="#ffe000" align=center>&nbsp;黄色</td>
+       <td class="classtd" align=center>&nbsp;{authStat3Num}</td>
+       <td class="classtd" align=center>&nbsp;{authStat3Rate}%</td>
+   </tr>
+   <tr><td class="classtd">&nbsp;审核通过</td>
+       <td class="classtd" bgcolor="#339933" align=center>&nbsp;<font color=white>绿色</font></td>
+       <td class="classtd" align=center>&nbsp;{authStat1Num}</td>
+       <td class="classtd" align=center>&nbsp;{authStat1Rate}%</td>
+   </tr>
+   <tr><td class="classtd">&nbsp;审核未通过</td>
+       <td class="classtd" bgcolor="#cc0000" align=center>&nbsp;<font color=white>红色</font></td>
+       <td class="classtd" align=center>&nbsp;{authStat2Num}</td>
+       <td class="classtd" align=center>&nbsp;{authStat2Rate}%</td>
+   </tr>
+  </table>
+
+  <table style="LINE-HEIGHT: 150%;border-collapse:collapse;" cellSpacing=0 cellPadding=0 width="100%" borderColor=#ccc border=1>
+   <tr><td class="classtd" colspan=3 bgcolor="#f9f9f9" style="font-size:14px"><b>不同数据来源</b></td></tr>
+   <tr><td class="classtd" nowrap width=* class="option">&nbsp;<b>数据来源</b></td>
+       <td class="classtd" nowrap width=15% align=center>&nbsp;<b>数量</b></td>
+       <td class="classtd" width=15% align=center>&nbsp;<b>比率</b></td>
+   </tr>
+   {dataSourcePageList}
+  </table>
+
+</div>
+</div>
+
+<script>scroll(0,0);</script>
+</body></html>

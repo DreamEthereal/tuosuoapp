@@ -1,0 +1,200 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gbk" />
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" />
+<title>单一回复数据详细 - Eclear在线问卷调查引擎</title>
+<link rel="shortcut icon" href="../Images/enableq.ico" type="image/x-icon" />
+<link rel="stylesheet" type="text/css" href="../CSS/UIBase.css" />
+<link rel="stylesheet" type="text/css" href="../CSS/DataIndex.css" />
+<link href="../CSS/Window.css" type="text/css" rel=stylesheet>
+<script type="text/javascript" src="../JS/Common.js.php"></script>
+<script type="text/javascript" src="../JS/Window.js.php"></script>
+<script type="text/javascript" src="../JS/Jquery.min.js.php"></script>
+<script type="text/javascript" src="../JS/Loading.js.php"></script>
+<script language="javascript"> 
+function dynimgsize(o){
+	var zoom=parseInt(o.style.zoom, 10)||100;zoom+=event.wheelDelta/12;if (zoom>0) o.style.zoom=zoom+'%';
+	return false;
+}
+function refreshParent() {
+   self.location.reload(true);
+}
+function Init()
+{
+   {check_survey_conditions_list}
+}
+</script> 
+<style>
+    .t_table{width:99%;border:1px solid #cacaca;margin-bottom:2px;}
+    .t_table tr{height:25px;color:#5d5d5d;}
+    .t_table tr th{background-color: #f9f9f9;padding:0 5px;}
+    .t_table tr td{ padding:2px 5px 2px 5px;line-height:20px;}
+    .t_table tr th{font-weight:bold;}
+    .t_table tr th.title,.d_table tr td.title{text-align:left;}    
+    .t_table tr td a{color:#3b5888;}
+    .t_table tr td a:hover{color:#ff7700;}
+    .t_table tr:hover{background-color:transparent}
+
+	.r_table tr,r_table tr td{line-height:20px;}
+	input[type=text] {border:1px solid #cacaca;height:20px;font-family: Calibri,"宋体",sans-serif;line-height:20px;vertical-align: middle;}
+	textarea {border:1px solid #cacaca;font-family: Calibri,"宋体",sans-serif;line-height:20px;vertical-align: middle;}
+	select {border:1px solid #cacaca;font-family: Calibri,"宋体",sans-serif;vertical-align: middle;font-weight:normal;height:22px;line-height:22px}
+	input[type=checkbox]{vertical-align: middle;margin-right:5px}
+	input[type=radio]{vertical-align: middle;margin-right:5px}
+</style>
+</head>
+<body oncontextmenu="return false" onload="javascript:Init();">
+ 	<div class="header">
+		<h1 class="logo">Eclear</h1>
+		<div class="header_menu">
+			<div class="header_m_1">
+				<a href="../System/ShowMain.php">欢迎您，<font color="#e45857" id="nick_Name_cont"></font></a>
+				<span class="head_menu_icon"></span>
+				<ul class="head_menu_list">
+					<span class="head_menu_top"></span>
+					<li><a href="../System/MyProfile.php">我的账户信息</a></li>
+					<li class="last"><a href="../System/ChangePass.php">修改我的密码</a></li>
+				</ul>
+			</div>
+			<div class="header_m_6" style="margin-left:50px">
+				<a href="../System/ShowMain.php">首页</a>
+			</div>
+			<div class="header_m_2" id="mySetting">
+			</div>
+			<div class="header_m_3" style="margin-left:50px">
+				<a href="../Help/Downs.php">帮助</a>
+				<span class="head_menu_icon"></span>
+				<ul class="head_menu_list">
+					<span class="head_menu_top"></span>
+					<li><a href="../Help/Downs.php">帮助文件下载</a></li>
+					<li><a href="http://doc.itenable.com.cn" target=_blank>在线帮助文档</a></li>
+					<li><a href="http://i.enableq.com" target=_blank>在线讨论社区</a></li>
+					<li class="last"><a href="../System/AdministratorsLogs.php">系统操作日志</a></li>
+				</ul>
+			</div>
+			<div class="header_m_4" style="margin-left:50px">
+				<a href="javascript:void(0);" onclick="javascript:showPopWin('../License/AboutEnableQ.php', 500, 400, null, null,'关于...')">关于</a>
+			</div>
+			<div class="header_m_5">
+				<a href="../System/Logout.php?loginOutURL=../index.php" target=_top>退出</a>
+			</div>
+		</div>
+	</div>
+
+	<div class="container clearfix">
+	   <div class="main">
+		    <div class="nav">
+				<a href="ShowMain.php">我的问卷</a>
+				{actionSurveyURL}
+				<a href="../System/ShowInputData.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}" class="cur">列出录入数据</a>
+			</div>
+			<script type="text/javascript" src="../JS/MySetting.js.php?surveyID={surveyID}"></script>
+
+		    <div class="content">
+			<div class="content_tit">
+				<div class="clearfix">
+				<h1><span class=redtitle>[{surveyTitle}]</span>单一回复数据详细</h1>
+				<span class="total ml10"></span>
+				<span class="btn ml10"></span>
+				</div>
+				<p class="fc_grey">列出单一样本在调查问卷每个调查问题上的详细回复数据</p>
+			</div>
+			<div class="content_main" style="margin-top:5px">
+
+			<form name="Check_Form" id="Check_Form" method="post" action="">
+			  <table class="t_table">
+				   <tr class=coltitle>
+					   <th colspan=2 align=left style="border-bottom:1px solid #cacaca;height:34px"><b>基本信息</b></th></tr>
+				   <tr><td nowrap width=12% class="option">&nbsp;数据序号</td>
+					   <td>&nbsp;<b>{responseID}</b></td>
+				   </tr>
+				   <tr><td nowrap class="option">&nbsp;回复时间(开始)</td>
+					   <td>&nbsp;{joinTime}</td>
+				   </tr>
+				   <tr><td nowrap class="option">&nbsp;回复时间(结束)</td>
+					   <td>&nbsp;{submitTime}</td>
+				   </tr>
+				   <tr><td class="option">&nbsp;用时</td>
+					   <td>&nbsp;{overTime}</td>
+				   </tr>
+				   <tr><td class="option">&nbsp;完成标记</td>
+					   <td>&nbsp;{overFlag}</td>
+				   </tr>
+				   <tr><td class="option">&nbsp;样本标识</td>
+					   <td>&nbsp;{administratorsName}</td>
+				   </tr>
+				   <tr><td class="option">&nbsp;地址标识</td>
+					   <td>&nbsp;{ipAddress}</td>
+				   </tr>
+				   <tr><td class="option">&nbsp;录入人员</td>
+					   <td>&nbsp;{area}</td>
+				   </tr>
+				   <tr><td class="option">&nbsp;数据来源</td>
+					   <td>&nbsp;{uniDataCode}</td>
+				   </tr>
+				   <tr style="display:{isHaveGroup}"><td class="option">&nbsp;样本分组</td>
+					   <td>&nbsp;{administratorsGroupName}</td>
+				   </tr>
+				   {ajaxRtnValue}
+			</table>
+
+			<table class="t_table" style="display:{isHaveRecFile};margin-top:5px;">
+			   <tr style="display:{isHaveRecFile}" class=coltitle><th align=left style="border-bottom:1px solid #cacaca;height:34px" colspan=2><b>全程录音|录像文件</b></th></tr>
+			   <tr style="display:{isHaveRecFile}"><td class="option" width=12%>&nbsp;全程录音|录像文件</td>
+				   <td>&nbsp;{recFileInfo}</td>
+			   </tr>
+			  </table>
+
+			<table class="t_table" style="display:{isHaveGps};margin-top:5px;">
+			   <tr style="display:{isHaveGps}" class=coltitle><th colspan=2 align=left style="border-bottom:1px solid #cacaca;height:34px"><b>设备和GPS信息</b></th></tr>
+			   <tr style="display:{isHaveGps}"><td class="option" width=12%>&nbsp;设备和SIM卡信息</td>
+				   <td>&nbsp;{simInfo}</td>
+			   </tr>
+			   <tr style="display:{isHaveGps}"><td class="option">&nbsp;GPS信息</td>
+				   <td>&nbsp;{gpsInfo}</td>
+			   </tr>
+			</table>
+
+			 <table class="t_table" style="margin-top:5px;margin-bottom:5px">
+			    <tr class=coltitle><th align=left style="border-bottom:1px solid #cacaca;height:34px"><b>问卷回复信息</b></th></tr>
+				<tr><td>
+				<!-- BEGIN QUESTION -->
+				 <table width="100%" id="question_{questionID}">
+				   <tr style="display:{isSingleDataModi}"><td style="padding:5px"><a href="{modiDataURL}&firstQtnId={questionID}" style="border: 1px solid #c2d5e3; padding: 5px 10px 5px 10px;line-height: 20px; margin-right:2px;height: 20px;background-color: #e5edf2;color:#333368;" onclick="return window.confirm('您真的想从该问题所在的问卷页开始修改数据吗？')" >&nbsp;&nbsp;修改&nbsp;&nbsp;</a></td></tr>
+				   {questionList}
+				   {authList}
+				</table>
+				<!-- END QUESTION -->
+			  </td></tr></table>
+
+			<table class="t_table" style="display:{isFingerDrawing};margin-top:5px;">
+			   <tr style="display:{isFingerDrawing}" class=coltitle><th align=left style="border-bottom:1px solid #cacaca;height:34px"><b>数据录入员手写签名文件</b></th></tr>
+			   <tr style="display:{isFingerDrawing}"><td>{fingerFile}</td></tr></table>
+
+		    <table class="t_table" style="margin-top:5px;">
+ 		      <tr class=coltitle><th align=left colspan=2 style="border-bottom:1px solid #cacaca;height:34px"><b>数据审核和批注信息</b></th></tr>
+			  <tr><td class="option" width=12%>&nbsp;数据审核状态</td>
+				<td>&nbsp;{authStat}</td>
+			  </tr>
+			  {authInfoList}
+		    </table>
+
+		   <table class="t_table" style="border:0px;margin-top:5px;">
+		     <tr style="border:0px"> 
+			   <td height="20" style="border:0px">
+				   <input name="backTopic" class=inputsubmit type="button" value="上一条" style="vertical-align: middle;" onClick="javascript:window.location.href='{last1URL}'">
+				   <input name="backTopic" class=inputsubmit type="button" value="下一条" style="vertical-align: middle;" onClick="javascript:window.location.href='{next1URL}'">
+				   <input name="backTopic" class=inputsubmit type="button" value=" 修改 " style="vertical-align: middle;display:{isAuthDataModi}" onClick="javascript:window.location.href='{modiDataURL}'">
+				   <input name="backTopic" class=inputsubmit type="button" value=" 返回 " style="vertical-align: middle;" onClick="javascript:window.location.href='{lastURL}'">
+			   </td>
+		   </tr>
+		</table>
+		</div><!--end of content_main-->
+		</div><!--end of content-->
+	   </div><!--end of main-->
+    </div><!--end of container-->
+	<!--popmenu -->
+	<script type="text/javascript" src="../JS/PopMenu.js.php"></script>
+	<script>setTimeout("closeDialog()",400);</script>
+</body></html>

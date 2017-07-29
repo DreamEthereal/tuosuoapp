@@ -1,0 +1,154 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gbk" />
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" />
+<title>管理调研文件 - Eclear在线问卷调查引擎</title>
+<link rel="shortcut icon" href="../Images/enableq.ico" type="image/x-icon" />
+<link rel="stylesheet" type="text/css" href="../CSS/UIBase.css" />
+<link rel="stylesheet" type="text/css" href="../CSS/Index.css" />
+<link href="../CSS/Window.css" type="text/css" rel=stylesheet>
+<script type="text/javascript" src="../JS/Common.js.php"></script>
+<script type="text/javascript" src="../JS/Window.js.php"></script>
+<script type="text/javascript" src="../JS/Jquery.min.js.php"></script>
+<script type="text/javascript" src="../JS/Calendar.js.php"></script>
+<style>
+input[type=text] {border:1px solid #cacaca;height:18px;font-family: Calibri,"宋体",sans-serif;line-height:18px;vertical-align: middle;}
+select {border:1px solid #cacaca;height:20px;font-family: Calibri,"宋体",sans-serif;vertical-align: middle;}
+</style>
+<script>
+function refreshParent() {
+   self.location.reload();
+}
+</script>
+</head>
+
+<body oncontextmenu="return false">
+ 	<div class="header">
+		<h1 class="logo">Eclear</h1>
+		<div class="sidebar_show"></div>
+		<div class="header_menu">
+			<div class="header_m_1">
+				<a href="../System/ShowMain.php">欢迎您，<font color="#e45857" id="nick_Name_cont"></font></a>
+				<span class="head_menu_icon"></span>
+				<ul class="head_menu_list">
+					<span class="head_menu_top"></span>
+					<li><a href="../System/MyProfile.php">我的账户信息</a></li>
+					<li class="last"><a href="../System/ChangePass.php">修改我的密码</a></li>
+				</ul>
+			</div>
+			<div class="header_m_6" style="margin-left:50px">
+				<a href="../System/ShowMain.php">首页</a>
+			</div>
+			<div class="header_m_2" id="mySetting">
+			</div>
+			<div class="header_m_3" style="margin-left:50px">
+				<a href="../Help/Downs.php">帮助</a>
+				<span class="head_menu_icon"></span>
+				<ul class="head_menu_list">
+					<span class="head_menu_top"></span>
+					<li><a href="../Help/Downs.php">帮助文件下载</a></li>
+					<li><a href="http://doc.itenable.com.cn" target=_blank>在线帮助文档</a></li>
+					<li><a href="http://i.enableq.com" target=_blank>在线讨论社区</a></li>
+					<li class="last"><a href="../System/AdministratorsLogs.php">系统操作日志</a></li>
+				</ul>
+			</div>
+			<div class="header_m_4" style="margin-left:50px">
+				<a href="javascript:void(0);" onclick="javascript:showPopWin('../License/AboutEnableQ.php', 500, 400, null, null,'关于...')">关于</a>
+			</div>
+			<div class="header_m_5">
+				<a href="../System/Logout.php?loginOutURL=../index.php" target=_top>退出</a>
+			</div>
+		</div>
+	</div>
+
+	<div class="container clearfix">
+		<div class="sider_bar">
+			<div class="sider_menu">
+				<a class="sider_menu_title" href="javascript:void(0);" onclick="menuToggle('sider_menu_list_1')">调查问卷模版</a>
+				<ul class="sider_menu_list" id="sider_menu_list_1">
+					<li><a href="../System/MgtTplFile.php">管理展示模板</a></li>
+					<li><a href="../System/MgtImageFile.php">管理附属文件</a></li>
+				</ul>
+			</div>
+			<div class="sider_menu">
+				<a class="sider_menu_title" href="javascript:void(0);" onclick="menuToggle('sider_menu_list_2')">辅助问卷管理</a>
+				<ul class="sider_menu_list" id="sider_menu_list_2">
+					<li><a href="../System/MgtNormalOption.php">定义常用选项</a></li>
+					<li id="batchSurveyAction"><a href="../System/BatchSurveyAction.php">批量问卷操作</a></li>
+					<li><a href="../System/SurveyDistribution.php">迁移问卷数据</a></li>
+					<li><a href="../System/MgtArchiving.php">问卷归档记录</a></li>
+				</ul>
+			</div>
+			<div class="sider_menu" id="researchReport">
+				<a class="sider_menu_title cur" href="javascript:void(0);" onclick="menuToggle('sider_menu_list_4')">辅助调研管理</a>
+				<ul class="sider_menu_list" id="sider_menu_list_4">
+					<li><a href="../System/ResearchReport.php" class="sel">管理调研文件</a></li>
+				</ul>
+			</div>
+			<div class="sider_menu" id="listSurveyApi">
+				<a class="sider_menu_title" href="javascript:void(0);" onclick="menuToggle('sider_menu_list_3')">问卷列表调用</a>
+				<ul class="sider_menu_list" id="sider_menu_list_3">
+					<li><a class="window-700-360" title="问卷列表调用" href="../System/ListSurveyAPI.php">问卷列表调用</a></li>
+				</ul>
+			</div>
+		</div>
+	    <script type="text/javascript" src="../JS/MySetting.js.php"></script>
+
+	   <div class="main">
+		 <div class="content">
+			<div class="content_tit">
+				<div class="clearfix">
+				<h1>列出调研(报告|管理)文件清单</h1>
+				<span class="total ml10">[{recNum} / {totalNum}文件]</span>
+				<span class="btn ml10"><input class=inputsubmit name="createNew" type="button" id="createNew" value="上传文件" onclick="javascript:showPopWin('?Action=Add', 780, 470, refreshParent, null,'上传调研(报告|管理)文件')">&nbsp;</span>
+				</div>
+				<p class="fc_grey">调研文件管理提供对应调研项目的(报告|管理)文件上行并指定(数据查看员|数据录入员)查阅下载的系统功能</p>
+			</div>
+			<div class="content_main" style="margin-top:10px">
+			
+			<div class="search_form" style="line-height:30px;height:70px">
+			<form name="Check_Form" id="Check_Form" style="margin:0;padding:0" method="POST" action="">
+					  <IMG SRC="../Images/search.gif"> 查找文件名称中包含：<input type="text" name="t_name" value="{t_name}" size=14>
+						创建时间：自 <input class="text" name="t_reportTime" size='14' maxlength='10' id='t_reportTime' value='{t_reportTime}' onfocus="if(this.value=='0000-00-00') this.value=''" onclick="javascript:SelectDate(this,'yyyy-MM-dd')"> 至 <input class="text" name="t_reportTimeEnd" size='14' maxlength='10' id='t_reportTimeEnd' value='{t_reportTimeEnd}' onfocus="if(this.value=='0000-00-00') this.value=''" onclick="javascript:SelectDate(this,'yyyy-MM-dd')">
+						<br/>
+					   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<select name="t_administratorsID">
+						 <option value="0">选择创建用户...</option>
+							{users_list}
+						</select> 的文件记录
+					   <input name="Action" type="hidden" id="Action" value="querySubmit"> 
+					   <input type="submit" class=inputsubmit name="Submit" value="查询" style="vertical-align: middle;">
+			 </div>
+  			 <table class="d_table">
+				  <tr class=coltitle>
+				   <th width=* align=left nowrap>&nbsp;<b>文件名称</b></th>
+				   <th width=8% align=center nowrap><b>创建人</b></th>
+				   <th width=8% align=center nowrap><b>接受人数</b></th>
+				   <th width=8% align=center nowrap><b>创建时间</b></th>
+				   <th width=8% nowrap align=center><b>操作</b></th>
+			   </tr>
+
+			   <!-- BEGIN LIST -->
+			   <tr>
+				   <td>&nbsp;{reportName}</td>
+				   <td align=center nowrap>{owner}</td>
+				   <td align=center nowrap>{reportRecipient}</td>
+				   <td align=center nowrap>{reportTime}</td>
+				   <td nowrap align=center>
+					    <a href="javascript:void(0)" onclick="javascript:showPopWin('{viewURL}', 780, 370, null, null,'查看调研(报告|管理)文件')">详细</a>&nbsp;
+						<a href="javascript:void(0)" onclick="javascript:showPopWin('{editURL}', 780, 470, refreshParent, null,'修改调研(报告|管理)文件')">修改</a>&nbsp;
+						<a href="{deleteURL}" onclick="return window.confirm('您真的想删除本记录吗？对应文件将从服务器中删除，并且不可恢复！?')">删除</a>
+				  </td>
+			   </tr>
+			   <!-- END LIST -->
+			     </table>
+			 </form>
+			 <div class="pages" style="margin-top:0px">{pagesList}</div>
+			</div><!--end of content_main-->
+		   </div><!--end of content-->
+	   </div><!--end of main-->
+    </div><!--end of container-->
+
+	<!--popmenu -->
+	<script type="text/javascript" src="../JS/PopMenu.js.php"></script>
+</body></html>

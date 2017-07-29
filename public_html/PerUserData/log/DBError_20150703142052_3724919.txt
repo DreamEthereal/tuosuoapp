@@ -1,0 +1,2 @@
+2015-07-03 14:20:52     <b>Bad SQL Query</b>:  SELECT * FROM eq_response_4 b  WHERE (b.overFlag != 2 and b.authStat != 2)  AND b.authStat =1  and b.responseID = luru.responseID  ORDER BY responseID DESC <br><b>Unknown column 'luru.responseID' in 'where clause'</b>
+

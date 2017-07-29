@@ -1,0 +1,36 @@
+	<div class="content_tit">
+		<div class="clearfix">
+		<h1><span class=redtitle>[{surveyTitle}]</span>问题列表</h1>
+		<span class="total ml10">[{totalPageNum}页{totalRecNum}问题]</span>
+		</div>
+		<p class="fc_grey">为确保已有数据的一致性，“执行”状态的问卷仅开放问题和选项修订的部分功能，您可以执行“清空数据”操作将问卷转回设计状态，或复制问卷后在副本上修改</p>
+	</div>
+	
+	<div class="content_main" style="font-size:12px;margin-bottom:5px;margin-top:8px;"><a href="../d.php?qname={surveyName}&qlang={qlang}&type=1" target=_blank><div class=inputsubmit style="width:55px;height:16px;float:left;position:relative;;margin-right:4px;*margin-right:0px" onmousedown="this.style.left='1px';this.style.top='1px';" onmouseup="this.style.left='0px';this.style.top='0px';" id="preSurvey" name="preSurvey">预览修改</div></a></div>
+
+	<div class="content_main" style="margin-top:10px;">
+	<table class="d_table">
+	 <tr class=coltitle>
+	   <th width=1% noWrap align=center>&nbsp;</th>
+	   <th width=4% noWrap align=center>ID</th>
+	   <th width=* align=left>&nbsp;<B>题目文字</B></th>
+	   <th width=7% noWrap align=center><B>题型</B></th>
+	   <th width=6% noWrap align=center><b>操 作</b> </th>
+	 </tr>
+	<!-- BEGIN QUESTION -->
+	<tr> 
+	  <td width=1% noWrap align=center>&nbsp;</td>
+	  <td noWrap align=center style="{logic_color}">{questionID}</td>
+	  <td style="line-height:25px">{questionName}</td>
+	  <td align=center nowrap style="{qtn_color}">{questionType}</td>
+	  <!--<a href="../d.php?qname={surveyName}&qlang={qlang}&type=1&&preFirstQtnId={preFirstQtnId}" target=_blank style="display:{isModiQtn}" onclick="return window.confirm('您真的确定想修改该问题的问题文字或选项文字吗？')">-->
+	  <td align=center nowrap>&nbsp;<a href="javascript:void(0)" onclick="javascript:fnUnload(2);showPopWin('{editURL}', 900, 480,refreshParent, null,'修改调查问题')" style="display:{isModiQtn}">修改</a></td>
+	</tr>
+	<!-- END QUESTION -->
+	</table>
+	<table style="border:0px;margin-top:15px;margin-bottom:15px" class="n_table">
+	   <tr> 
+		<td style="border:0px;padding-left:0px;"><B><IMG src="../Images/notes.gif" alt=已封存 border=0></B><b>：</b><span class=red>*</span>表示该问题为必答题；背景为黄色的问题表明该题存在逻辑关系。
+		</td>
+	   </tr>
+	</table></div>

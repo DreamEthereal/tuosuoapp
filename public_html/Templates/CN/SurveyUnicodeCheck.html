@@ -1,0 +1,36 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gbk" />
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" />
+<link rel="stylesheet" type="text/css" href="../CSS/UIBase.css" />
+<link rel="stylesheet" type="text/css" href="../CSS/Index.css" />
+<style>
+	.d_table tr{height:28px;line-height:28px;
+</style>
+<META content="MSHTML 6.00.3790.0" name=GENERATOR></HEAD>
+<body oncontextmenu="return false">
+<div class="container" style="margin-left:5px;margin-top:0px">
+   <table class="d_table" width=100% style="margin-bottom:0px">
+   <div class=position>位置：&nbsp; 我的问卷 &raquo; {surveyTitle}</div>
+   	<tr class=coltitle bgcolor="#f9f9f9">
+		<td colspan=4>
+			<span style="float:left"><b>检查与分析调查问卷唯一的访问地址(URL)</b></span>
+			<span style="float:right"><a href="?Action=DownQRCode&surveyID={surveyID}" style="display:{isAdmin6}"><img SRC="../Images/zip.gif">&nbsp;批量下载二维码</a></span>
+	</td></tr>
+   <tr><td width=* noWrap><b>调查问卷唯一的访问地址(URL)</b></td>
+	   <td width=10% align=center noWrap><b>qkey值</b></td>
+	   <td width=9% noWrap align=center><b>状态</b> </td>
+	   <td width=9% noWrap align=center><b>操作</b> </td>
+   </tr>
+  <!-- BEGIN LIST -->
+  <tr onmouseover="this.style.backgroundColor='#f9f9f9'" onmouseout="this.style.backgroundColor='#ffffff'"> 
+	  <td>{qURL}</td>
+	  <td noWrap align=center>{qkey}</td>
+	  <td noWrap align=center style="background-color:{statusColor};">{status}</td>
+	  <td noWrap align=center><a href="{dataURL}" target=_blank style="display:{isHaveData}">数据</a></td>
+  </tr>
+ <!-- END LIST -->
+ </table>
+</div>
+</body></html>

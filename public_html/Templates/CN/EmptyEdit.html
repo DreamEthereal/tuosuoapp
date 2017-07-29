@@ -1,0 +1,76 @@
+<html>
+<head>
+<meta http-equiv=content-language content=zh-cn>
+<meta http-equiv=content-type content="text/html; charset=gbk">
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7">
+<style>
+ td { padding:2px 5px 2px 5px;}
+ select,img {vertical-align: middle;}
+</style>
+<link href="../CSS/Base.css" rel=stylesheet>
+<script language=javascript src="../JS/HighLight.js.php"></script>
+<script type="text/javascript" src="../JS/Jquery.min.js.php"></script>
+<script type="text/javascript" src="../JS/Jquery.notification.js.php"></script>
+<link type="text/css" rel="stylesheet" href="../CSS/Notification.css" />
+<script language=javascript src="../JS/CheckQuestion.js.php"></script>
+<script language=javascript>
+function Check_Form_Validator()
+{
+	if (!CheckNotNull(document.Check_Form.questionName, "空题标识名称")) {return false;}
+}
+function submitForm(actionName)
+{
+	if( Check_Form_Validator() != false )
+	{
+		document.getElementById('AddEmptySubmit').disabled = true;
+		disabledStyle(document.getElementById('AddEmptySubmit'));
+		document.getElementById('AddEmptyOver').disabled = true;
+		disabledStyle(document.getElementById('AddEmptyOver'));
+		document.getElementById('close').disabled = true;
+		disabledStyle(document.getElementById('close'));
+		document.getElementById('Action').value = actionName;
+		document.Check_Form.submit();
+	}
+}
+</script>
+
+<meta content="mshtml 6.00.3790.0" name=generator></head>
+<body oncontextmenu="return false">
+   <form method="post" action="" name="Check_Form" id="Check_Form" onsubmit="return false;">
+  <table class=datatable style="line-height: 150%;border-collapse:collapse;" cellspacing=0 cellpadding=0 bordercolor=#cacaca border=1 width=100%>
+   <div class=position>位置：&nbsp; 我的问卷 &raquo; 编辑问卷问题 &raquo; 空题</div>
+   <tr><td bgcolor="#e9e9e9"><b>编辑问卷问题</b></td></tr>
+   <tr><td>&nbsp;<span style="font-size:14px;font-weight:bold;">空题</span></td></tr>
+   <tr bgcolor="#f9f9f9" height=25><td><b>&nbsp;关于...</b>&nbsp;<img src="../Images/info.gif" border=0></td></tr>
+   <tr><td>&nbsp;空题作为一种特殊用途的问题题型，用来存储问卷内复杂逻辑关系的中间运算结果。其取值仅为true或者false。<br/>&nbsp;问卷内若存在类此(1 || 2) && (3 || 4)表达式的复杂逻辑，可先将(1 || 2)和(3 || 4)分别运算到某一空题，再从两空题间运算&&。<br/>&nbsp;空题也可存储数值关联关系表达式的逻辑运算结果(true或者false)，并由此构建复杂的问卷逻辑关系设定。<br/>&nbsp;<font color=red>因空题的特殊性，空题最好和无逻辑关系的问题存在于同一问卷分页，否则可能会造成该页无问题显示(空页)的情形。</font></td></tr>
+   <tr bgcolor="#f9f9f9" height=25><td><b>&nbsp;定义空题</b>&nbsp;<img src="../Images/info.gif" border=0></td></tr>
+   <tr><td>
+       <table cellSpacing=0 borderColorDark=#ffffff cellPadding=0>
+	     <tr>
+		  <td>&nbsp;空题标识名称：</td>
+		  <td><input name="questionName" value="{questionName}" size=50> (用以区分不同空题)</td>
+		 </tr>
+	   </table>
+	</td></tr>
+	<tr bgcolor="#f9f9f9" height=25><td><b>&nbsp;控制设置</b>&nbsp;<img src="../Images/info.gif" border=0></td></tr>
+	<tr><td style="padding-top:5px;padding-bottom:5px">
+	 &nbsp;<input type="radio" name="requiredMode" id="requiredMode" value="1" {requiredMode_1}>标准空题<br/>
+	 &nbsp;<input type="radio" name="requiredMode" id="requiredMode" value="2" {requiredMode_2}>用以存储数值关联关系表达式的逻辑运算结果<br/>
+     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{relationName}<br/>
+	</td></tr>	
+	</table><table width=100% style="margin-bottom:15px">
+   <tr> 
+  	 <td height="15">
+         <input name="surveyID" type="hidden" id="surveyID" value="{surveyID}"> 
+         <input name="questionID" type="hidden" id="questionID" value="{questionID}"> 
+         <input name="orderByID" type="hidden" id="orderByID" value="{orderByID}"> 
+         <input name="Action" type="hidden" id="Action"> 
+         <input class=inputsubmit name="AddEmptySubmit" type="button" id="AddEmptySubmit" value="保存，下一个" onclick="javascript:submitForm('AddEmptySubmit');">
+         <input class=inputsubmit name="AddEmptyOver" type="button" id="AddEmptyOver" value="保存，结束" onclick="javascript:submitForm('AddEmptyOver');">
+         <input class=inputsubmit type="button" name="close" id="close" value="  关闭  " onClick="javascript:parent.hidePopWin();">
+      </td>
+    </tr>
+  </form>
+ </table>
+  <script type="text/javascript">initInputHighlightScript();</script> 
+</body></html>

@@ -1,0 +1,25 @@
+#jquery-notification {
+	background: transparent url(../Images/black.png) repeat;
+	border-radius: 12px;
+	padding: 16px;
+	cursor: pointer;
+	z-index:12000;
+}
+
+#jquery-notification-message {
+	font: bold 14px Helvetica, Arial, sans-serif;
+	color: #FFF;
+	text-shadow: 0 -1px 0 rgba(0, 0, 0, .5);
+	text-align: center;
+	white-space:normal;  
+  word-break:break-all;  
+  overflow:hidden; 
+  width:650px;
+}
+
+#jquery-notification-iframe{
+    position: absolute;
+    width: 100%;
+    height: 100%;   
+    z-index:-1; 
+ }

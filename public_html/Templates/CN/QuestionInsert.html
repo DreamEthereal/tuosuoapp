@@ -1,0 +1,156 @@
+<html>
+<head>
+<meta http-equiv=content-language content=zh-cn>
+<meta http-equiv=content-type content="text/html; charset=gbk">
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7">
+<style>
+ td { padding:2px 5px 2px 5px;}
+</style>
+<link href="../CSS/Base.css" rel=stylesheet>
+<script type="text/javascript" src="../JS/Jquery.min.js.php"></script>
+<script type="text/javascript" src="../JS/Jquery.notification.js.php"></script>
+<link type="text/css" rel="stylesheet" href="../CSS/Notification.css" />
+<script language=javascript src="../JS/CheckQuestion.js.php"></script>
+<script language=javascript>
+function getBaseQtnListRequest(url){
+	http_request = false;
+	if(window.ActiveXObject){
+		try{ http_request = new ActiveXObject("Msxml2.XMLHTTP");}
+		catch (e){ try{ http_request = new ActiveXObject("Microsoft.XMLHTTP");} catch (e) {}
+		}
+	}
+	else if(window.XMLHttpRequest){
+		http_request = new XMLHttpRequest();
+		if (http_request.overrideMimeType){ http_request.overrideMimeType('text/xml');}
+	}	
+	if (!http_request){ $.notification("Cannot create an XMLHTTP instance");return false;}
+	http_request.onreadystatechange = function() {
+	  if( http_request.readyState == 4 && http_request.status == 200) {
+			 gId('baseQtnList').innerHTML = http_request.responseText;
+		}
+	}
+	http_request.open('GET', url, true);
+	http_request.send(null);
+}
+function newChangeQtn()
+{
+	var theNewQtnType = getRadioCheckBoxValue(gId('newQuestionType'));
+	switch(theNewQtnType)
+	{
+		case '17':
+		case '18':
+		case '19':
+		case '20':
+		case '21':
+		case '22':
+		case '28':
+		case '29':
+			gId('baseID').disabled = false;
+			getBaseQtnListRequest('AjaxShowBaseQtn.php?type=single&surveyID={surveyID}&orderByID={orderByID}&newQuestionType=' +theNewQtnType );
+		break;
+		default:
+			gId('baseID').disabled = true;
+		break;
+	}
+}
+function Check_Form_Validator()
+{
+	if (!CheckListNoSelect(document.Check_Form.newQuestionType, "在当前问题前插入的问题题型")) {return false;}
+	switch(getRadioCheckBoxValue(gId('newQuestionType')))
+	{
+		case '17':
+		case '18':
+		case '19':
+		case '20':
+		case '21':
+		case '22':
+		case '28':
+		case '29':
+			if (!CheckListNoSelect(document.Check_Form.baseID, "选择插入问题的来源问题")) {return false;}
+		break;
+	}
+}
+function gId(_sId){
+	return document.getElementById(_sId);
+}
+function submitForm()
+{
+	if( Check_Form_Validator() != false )
+	{
+		document.getElementById('submitBtn').disabled = true;
+		disabledStyle(document.getElementById('submitBtn'));
+		document.getElementById('close').disabled = true;
+		disabledStyle(document.getElementById('close'));
+		document.Check_Form.submit();
+	}
+}
+</script>
+<meta content="mshtml 6.00.3790.0" name=generator></head>
+<body oncontextmenu="return false">
+  
+  <form style="margin:0px" name="Check_Form" method="post" action="" id="Check_Form" onsubmit="return false;">
+  <table class=datatable style="line-height: 150%;border-collapse:collapse;" cellspacing=0 cellpadding=0 bordercolor=#cacaca border=1 width=100%>
+     <div class=position>位置：&nbsp; 我的问卷 &raquo; 新增问题 &raquo; 在当前问题前插入新问题</div>
+     <tr><td colspan="2" bgcolor="#f9f9f9" height="25"><b>在当前问题前插入新问题</b></td></tr>
+     <tr>
+      <td width=14% nowrap>&nbsp;当前问题</td>	  
+	  <td width=86% nowrap>{questionName}</td>
+	 </tr>
+     <tr>
+      <td width=14% nowrap>&nbsp;插入问题的题型</td>
+	  <td><select name="newQuestionType" id="newQuestionType" onchange="newChangeQtn();">
+				  <option value=''>在当前问题前插入合适题型...</option>
+				  <option value='1'>是非题</option>
+				  <option value='2'>单选题</option>
+				  <option value='24'>复合单选题</option>
+				  <option value='3'>多选题</option>
+				  <option value='25'>复合多选题</option>
+				  <option value='4'>填空题</option>
+				  <option value='5'>多行填空题</option>
+				  <option value='23'>组合填空题</option>
+				  <option value='27'>矩阵填空题</option>
+				  <option value='29'>自动矩阵填空题</option>
+				  <option value='8'>分页标记</option>
+				  <option value='9'>段落小节</option>
+				  <option value='14'>枚举题</option>
+				  <option value='6'>矩阵单选题</option>
+				  <option value='19'>自动矩阵单选题</option>
+				  <option value='26'>复合矩阵单选题</option>
+				  <option value='7'>矩阵多选题</option>
+				  <option value='28'>自动矩阵多选题</option>
+				  <option value='10'>排序题</option>
+				  <option value='20'>自动排序题</option>
+				  <option value='15'>评分题</option>
+				  <option value='21'>自动评分题</option>
+				  <option value='16'>比重题</option>
+				  <option value='22'>自动比重题</option>
+				  <option value='11'>文件上传题</option>
+				  <option value='17'>自动选项题</option>
+				  <option value='18'>条件选项题</option>
+				  <option value='12'>隐藏变量</option>
+				  <option value='30'>空题</option>
+		</select></td>
+     </tr>
+     <tr>
+      <td width=14% nowrap>&nbsp;来源问题</td>	  
+	  <td width=86% nowrap><span id="baseQtnList">
+	      <select name="baseID" id="baseID" style="width:720px;*width:730px">
+			<option value=''>选择掩蔽问题题型的来源问题...</option>
+			{baseQtnList}
+		  </select></span>
+	  </td>
+   </tr></table><table width=100%>
+   <tr>
+     <td width=14%></td>
+  	 <td>
+		 <input name="formAction" id="formAction" type="hidden" value="InsertNewOneQtnSubmit">
+		 <input name="questionID" type="hidden" id="questionID" value="{questionID}">
+		 <input name="surveyID" type="hidden" value="{surveyID}">
+		 <input name="surveyTitle" type="hidden" value="{survey_URLTitle}">
+		 <input class=inputsubmit type="button" name="submitBtn" id="submitBtn" value="确定" onclick="javascript:submitForm();"> 
+		 <input class=inputsubmit type="button" name="close" id="close" value="关闭" onClick="javascript:parent.hidePopWin();">
+      </td>
+    </tr>
+  </form>
+ </table>
+</body></html>

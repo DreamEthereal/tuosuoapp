@@ -1,0 +1,111 @@
+<html>
+<head>
+<title>EnableQ 在线问卷调查引擎 - 安装程序</title>
+<meta name='robots' content='noindex, nofollow'>
+<meta http-equiv=content-language content=zh-cn>
+<meta http-equiv=content-type content="text/html; charset=gbk">
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7">
+<meta name="generator" content="EnableQ Installer">
+<link rel='stylesheet' href='../CSS/Base.css'>
+<style type="text/css">
+    .title {font-family: Calibri;padding-top: 15px;padding-left: 10px;font-size : 20px;font-weight: bold;color : #000000;}
+    .notes {font-family: Calibri;font-size  : 12px;padding-left: 10px;font-weight: normal;line-height: 150%;color : #333366;}
+	.tableclass {width:83%; vertical-align: top;background-color: #e8f4ff;border: 1px solid #005FBA;margin-top:10px}
+	.checkupFailure {font-size:11px;color:red;font-weight:bold;}
+	.checkupSuccess { font-size:11px; color:green; font-weight:normal;}
+    .inputsubmit{background-color:#e45857;border:1px solid #c14142;padding:2px 6px;color:#fff;border-radius: 4px; }
+    .inputsubmit {
+        height: 24px;
+        font-size: 12px;
+        padding: 3px 16px;
+        *padding: 3px 0px 2px 0px;
+        border: 1px solid #3b5888;
+        background-color: #3b5888;
+        color: #fff;
+        line-height: 16px;
+        cursor: pointer;
+        text-align: center;
+        text-decoration: none;
+        font-family: verdana;
+        border-radius: 4px;
+        font-weight:normal;
+    }
+</style>
+</head>
+
+<body bgcolor="#ffffff">
+
+<table width="83%" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr> 
+    <td width=260 height=60 valign=middle><a href="http://www.enableq.com"><img src="../Images/enableq.png" border=0></a></td>
+    <td width="*">&nbsp;</td>
+  </tr>
+</table>
+
+<table width="100%" border="0" class="tableclass" align="center" cellpadding="0" cellspacing="0">
+   <tr><td>
+      <table cellspacing=0 cellpadding=0 border=0 width=100%>
+        <form action=index.php method=post>
+          <tr><td class="title" valign=top align=left colspan=2><span style="COLOR: #cc0000">&gt;&gt;</span> EnableQ在线问卷调查引擎 产品升级安装向导<hr color=#000000 noShade size=1 width=80% align=left></td></tr>
+		  <tr><td class='notes' valign='top' align='left' colspan='2'>
+			欢迎来到EnableQ在线问卷调查引擎安装程序， 请确定您在运行本程序前已经<b>仔细阅读《系统用户手册》</b>。 <br>并且请您在将来开始的安装过程中仔细检查您输入的信息，以免安装后出现问题。
+            <hr noshade size=1 color='#000000' width=80% align=left>
+		   </td></tr>
+	   </table>
+       
+	   <table cellspacing=0 cellpadding=0 border=0 width=100%>
+	     <tr><td valign="center" height=40>&nbsp;&nbsp;<img src="../Images/step_2.gif">&nbsp;<b>EnableQ在线问卷调查引擎升级安装向导 >> 产品升级安装重要提示</b></td></tr>
+	   </table>
+	   
+	   <table cellspacing=0 cellpadding=0 border=0 width=72%>
+	     <tr><td>&nbsp;&nbsp;&nbsp;<span style="color:#CC0000"><b>版本升级：自版本{startQ}至版本{endQ}</b></span></td></tr>
+		 <tr><td height=5></td></tr>
+	   </table>
+
+	   <table cellspacing=0 cellpadding=0 border=0 width=72%>
+	     <tr><td>&nbsp;&nbsp;&nbsp;<span style="color:#CC0000"><b>请按照以下步骤提示进行：</b></span></td></tr>
+		 <tr><td height=5></td></tr>
+        <form action="index.php" method=post>
+	    <tr class=notes>
+			<td>&nbsp;&nbsp;<span class=red>(1)</span> 备份以下目录或文件至其他物理目录：</td>
+		</tr>
+		<tr class=notes>
+		    <td>&nbsp;&nbsp;&nbsp;&nbsp;a) Config/config.php</td>
+		</tr>
+		<tr class=notes>
+		    <td>&nbsp;&nbsp;&nbsp;&nbsp;b) PerUserData/目录下全部文件</td>
+		</tr>
+		<tr class=notes>
+		    <td>&nbsp;&nbsp;&nbsp;&nbsp;c) Templates/CN/目录下以Panel_字符串打头的全部文件</td>
+		</tr>
+	    <tr class=notes>
+			<td>&nbsp;&nbsp;<span class=red>(2)</span> 复制新系统程序覆盖原安装目录；</td>
+		</tr>
+	    <tr class=notes>
+			<td>&nbsp;&nbsp;<span class=red>(3)</span> 自按照(1)步骤备份的目录或文件复制至对应目录覆盖原文件；</td>
+		</tr>
+	    <tr class=notes>
+			<td>&nbsp;&nbsp;<span class=red>(4)</span> 执行本升级程序升级数据库表结构。</td>
+		</tr>
+	    <tr class=notes>
+			<td>&nbsp;&nbsp;<span class=red>(5)</span> V1.51以下版本升级到V1.51以及以上版本请查看<a href="Readme.txt" target=_blank>Upgrade/Readme.txt</a>详细说明；</td>
+		</tr>
+	   </table>
+
+	   <table cellspacing=0 cellpadding=0 border=0 width=100%>
+	     <tr><td height=10></td></tr>
+	   </table>
+
+	   <table cellspacing=0 cellpadding=0 border=0 width=100%>
+	     <tr><td align=left>&nbsp;
+		  <input type="hidden" name="Step" value="2">
+	      <input type=button name=submit class="inputsubmit" value=" 上一步 " onClick="javascript:window.location.href='?Step=0'"> 
+	      <input type=button name=submit class="inputsubmit" value=" 下一步 " onClick="javascript:window.location.href='?Step=2'"> 
+		  <input type=button name=submit class="inputsubmit" value=" 退  出 " onClick="javascript:self.close();"></td></tr>
+ 	   </form>
+       </table>
+	   <table cellspacing=0 cellpadding=0 border=0 width=100%>
+	     <tr><td height=10></td></tr>
+	   </table>
+</td></tr></table>
+</body></html> 

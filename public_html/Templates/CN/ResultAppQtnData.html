@@ -1,0 +1,306 @@
+<html>
+<head>
+<META http-equiv=Content-Language content=zh-cn>
+<META http-equiv=Content-Type content="text/html; charset=gbk">
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7">
+<link rel="stylesheet" type="text/css" href="CSS/Standard.css">
+<link rel="stylesheet" type="text/css" href="CSS/Box.css">
+<link rel="stylesheet" type="text/css" href="CSS/MiniBase.css">
+<script> var loadingImage = 'Images/loading.gif'; var closeButton = 'Images/closewindow.gif';</script>
+<style>
+#overlay{ background-image: url(Images/overlay.png); }
+* html #overlay{
+	background-color: #333;
+	background-color: transparent;
+	background-image: url(Images/blank.gif);
+	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="Images/overlay.png", sizingMethod="scale");
+	}
+</style>
+<script type="text/javascript" src="JS/PicBox.js.php"></script>
+<script type="text/javascript" src="JS/Jquery.min.js.php"></script>
+<script type="text/javascript" src="JS/Jquery.col.js.php"></script>
+<script type="text/javascript" src="JS/Jquery.notification.js.php"></script>
+<link type="text/css" rel="stylesheet" href="CSS/Notification.css" />
+<script type="text/javascript" src="JS/CheckQuestion.js.php"></script>
+
+{no_fileUpload_include}
+<style>
+ td { padding:2px 5px 2px 5px;}
+ #jquery-notification-message {width:100%;}
+</style>
+<script language=javascript>
+function Survey_Form_Submit()
+{
+	if( Survey_Form_Validator() != false)
+	{
+		if( document.getElementById('SurveyCloseSubmit') != null ) document.getElementById('SurveyCloseSubmit').disabled = true;
+		if( document.getElementById('SurveyOverSubmit') != null ) document.getElementById('SurveyOverSubmit').disabled = true;
+		document.Survey_Form.submit();
+	}
+}
+function Survey_Form_Validator()
+{
+   {check_survey_form_list}
+   if (!CheckNotNull(Survey_Form.reason, "申诉理由")) {return false;}   
+   //if (!CheckNotNull(Survey_Form.evidence, "上传的证据文件")) {return false;}
+}
+function Check_Survey_Conditions()
+{
+	var emptyCheckStr = '';
+{survey_empty_list}
+	if( emptyCheckStr != '')
+	{
+		var emptyCheck = emptyCheckStr.substr(0,emptyCheckStr.length-1).split('|');
+		var ajaxURL = 'JS/AjaxCheckEmpty.php?qid={surveyID}&qlang={surveyLang}&hash='+emptyCheckStr;
+		for(var o=0;o<emptyCheck.length;o++){
+		   var qtnType = emptyCheck[o].split('*');
+		   var theFieldsList = qtnType[3].split('$');
+		   for(var t=0;t<theFieldsList.length;t++){
+				var objFieldList = theFieldsList[t].split('-');
+				switch(objFieldList[0]){
+					case '1': 
+						if( typeof $('input[id='+objFieldList[1]+']:checked').val() == 'undefined' )
+						{
+							ajaxURL += '&'+objFieldList[1]+'=';
+						}
+						else
+						{
+							ajaxURL += '&'+objFieldList[1]+'='+escape($('input[id='+objFieldList[1]+']:checked').val());
+						}
+					break;
+					case '2':
+						var thisValue = '';
+						var arr = $('input[id='+objFieldList[1]+']:checked');
+						arr = arr.sort(function(a,b){
+							return parseInt($(a).val()) - parseInt($(b).val());
+						});
+						arr.each(function(){
+							thisValue += $(this).val() + ",";
+						});
+						if( thisValue != '' ){
+							thisValue = thisValue.substr(0,thisValue.length-1)
+							var theAllValueStr = ','+thisValue+',';
+							if( theAllValueStr.indexOf(','+objFieldList[2]+',') == -1 ){
+								ajaxURL += '&'+objFieldList[1]+'-'+objFieldList[2]+'=0';
+							}
+							else{
+								ajaxURL += '&'+objFieldList[1]+'-'+objFieldList[2]+'=1';
+							}
+						}
+						else{
+							ajaxURL += '&'+objFieldList[1]+'-'+objFieldList[2]+'=0';
+						}
+					break;
+					case '3':
+						var thisValue = $("#"+objFieldList[1]).val();
+						if(objFieldList.length == 3 ){
+							if( thisValue != '' ){
+								var theAllValueStr = ','+thisValue+',';
+								if( theAllValueStr.indexOf(','+objFieldList[2]+',') == -1 ){
+									ajaxURL += '&'+objFieldList[1]+'-'+objFieldList[2]+'=0';
+								}
+								else{
+									ajaxURL += '&'+objFieldList[1]+'-'+objFieldList[2]+'=1';
+								}
+							}
+							else{
+								ajaxURL += '&'+objFieldList[1]+'-'+objFieldList[2]+'=0';
+							}
+						}
+						else{
+							ajaxURL += '&'+objFieldList[1]+'='+escape(thisValue);
+						}
+					break;
+				}
+			}
+		}
+		var js = document.createElement( "script" ); 
+		js.type = "text/javascript" ;
+		js.setAttribute( "src" , ajaxURL);
+		document.body.appendChild(js);
+	}
+	else
+	{
+		Run_Survey_Conditions();
+	}
+}
+function Run_Survey_Conditions()
+{
+	{check_survey_conditions_list}
+}
+function Init()
+{
+   initLightbox();
+   Check_Survey_Conditions();
+   $("#question_{questionID}").show();
+}
+</script>
+
+<meta content="mshtml 6.00.3790.0" name=generator></head>
+<body oncontextmenu="return false" style="background:#ffffff;margin:0px;padding:0px;padding-left:10px">
+ <form action="" method="post" name="Survey_Form" id="Survey_Form" onsubmit="return Survey_Form_Validator()">
+  <table class=datatable style="line-height: 150%;border-collapse:collapse;" cellspacing=0 cellpadding=0 bordercolor=#cacaca border=1 width=100%>
+      <div class=position>位置：&nbsp; 我的问卷 &raquo; 回复数据申诉</div>
+      <tr><td bgcolor="#f9f9f9">
+       <span style="float:left;"><b>原问题和原值</b></span>
+	   <span style="color:red;float:right"><b>修改原值为申诉的期望值</b></span>
+	  </td></tr>
+	  <tr><td><table cellSpacing=0 cellPadding=0 width="100%" style="border:0px" id="question_{questionID}">
+			{questionList}
+			 </table>
+	  </td></tr>
+      <tr><td bgcolor="#f9f9f9"><b>申诉理由</b></td></tr>
+	  <tr><td><textarea rows=5 cols=120 name="reason" id="reason"></textarea></td></tr>
+      <tr style="display:{isUploadType}"><td bgcolor="#f9f9f9"><b>证据文件</b></td></tr>
+      <tr style="display:{isUploadType}"><td><table cellSpacing=0 cellPadding=0 width="100%" style="border:0px">
+		   <tr style="border:0px"><td class="answer" style="border:0px"><input type="text" readonly id="evidence" name="evidence" size="60"/><span id="upload_evidence"></span>&nbsp;<input type="button" value="上传" onclick="fileUpload_evidence.startUpload();" class="buttonClass" /></td></tr>
+		   <tr style="border:0px"><td id="fsUploadProgress_evidence" style="border:0px"></td></tr>
+		   <noscript>
+		   <tr style="border:0px"><td style="background-color: #FFFF66; border-top: solid 4px #FF9966; border-bottom: solid 4px #FF9966; margin: 10px 25px; padding: 10px 15px;border:0px">上传控件加载失败，原因可能是：您可能未开启JavaScript支持！</td></tr>
+		   </noscript>
+		   <tr style="border:0px"><td id="divLoadingContent_evidence" class="content" style="background-color: #FFFF66; border-top: solid 4px #FF9966; border-bottom: solid 4px #FF9966; margin: 10px 25px; padding: 10px 15px; display: none;border:0px">上传控件加载中，请稍候...</td></tr>
+		   <tr style="border:0px"><td id="divLongLoading_evidence" class="content" style="background-color: #FFFF66; border-top: solid 4px #FF9966; border-bottom: solid 4px #FF9966; margin: 10px 25px; padding: 10px 15px; display: none;border:0px">上传控件加载超时，原因可能是：请保证您的flash插件是开启状态，上传控件需要Flash Player 9或以上的支持！</td></tr>
+		   <tr style="border:0px"><td id="divAlternateContent_evidence" class="content" style="background-color: #FFFF66; border-top: solid 4px #FF9966; border-bottom: solid 4px #FF9966; margin: 10px 25px; padding: 10px 15px; display: none;border:0px">上传控件加载失败，原因可能是：您的Flash Player版本过低！您可以访问<a href="http://www.adobe.com/shockwave/download/download.cgi?P1_Prod_Version=ShockwaveFlash">Adobe网站</a>获得最新Flash Player版本。</td></tr>
+		   <tr style="border:0px"><td style="border:0px">* 上传文件扩展名限制为：{allowType}<!--，大小限制为：{maxSize}M--></td></tr>
+	  </table></td></tr>
+	  </table><table width=100%>
+      <tr><td>
+		  <input name="thisFields" type="hidden" id="thisFields" value="{thisFields}">
+		  <input name="thisFiles" type="hidden" id="thisFiles" value="{thisFiles}">
+		  <input name="thisSizes" type="hidden" id="thisSizes" value="{thisSizes}">
+		  <input name="thisHidden" type="hidden" id="thisHidden" value="{thisHidden}">
+		  <input name="allHidden" type="hidden" id="allHidden" value="{allHidden}">
+		  <input name="allFields" type="hidden" id="allFields" value="{allFields}">
+		  <input name="thisCheck" type="hidden" id="thisCheck" value="{thisCheck}">
+		  <input name="surveyID" type="hidden" value="{surveyID}">
+		  <input name="responseID" type="hidden" value="{responseID}">
+		  <input name="surveyQuotaFlag" id="surveyQuotaFlag" type="hidden">
+		  <input name="screeningFlag" id="screeningFlag" type="hidden">
+		  <input name="surveyQuotaId" id="surveyQuotaId" type="hidden">
+		  <input name="createDate" type="hidden" value="{createDate}">
+		  {hiddenFields}
+		  <input name="surveyID" type="hidden" value="{surveyID}"> 
+ 		  <input name="responseID" type="hidden" value="{responseID}"> 
+ 		  <input name="questionID" type="hidden" value="{questionID}"> 
+		  <input name="Action" value="AddAppQtnDataSubmit" type="hidden">
+	      <input type=submit class=inputsubmit name="SurveyOverSubmit" id="SurveyOverSubmit" value="确定">&nbsp;<input class=inputsubmit type="button" name="SurveyCloseSubmit" id="SurveyCloseSubmit" value="关闭" onClick="javascript:parent.hidePopWin();">
+          </td>
+       </tr>
+      </form>       
+   </table>
+   <table width=100%><tr><td height=20>&nbsp;</td></tr></table>
+
+      <script type="text/javascript">
+	var fileUpload_evidence;
+	function Init_evidence() {
+		var settings = {
+			flash_url : "JS/swfupload.swf",
+			upload_url: "JS/RecFileUpload.php",
+			post_params: {"PHPSESSID" : "{session_id}",
+			  "uploadFileName": "evidence"
+			},
+			file_post_name:"evidence",
+			file_size_limit : "{maxSize} MB",
+			file_types : "{allowType}",
+			file_types_description : "{allowType}",
+			file_upload_limit : 1,
+			custom_settings : {
+				progressTarget : "fsUploadProgress_evidence"
+			},
+			debug: false,
+			prevent_swf_caching:true,
+
+			//Button settings
+			button_image_url: "Images/cnfileselect.png",
+			button_width: "61",
+			button_height: "22",
+			button_placeholder_id: "upload_evidence",
+			button_action : SWFUpload.BUTTON_ACTION.SELECT_FILE,
+			button_window_mode:"OPAQUE",
+			
+			swfupload_loaded_handler : swfUploadLoaded_evidence,
+			file_dialog_start_handler:fileDialogStart_evidence,
+			file_queued_handler : fileQueued,
+			file_queue_error_handler : fileQueueError,
+			file_dialog_complete_handler : fileDialogComplete,
+			upload_start_handler : uploadStart,
+			upload_progress_handler : uploadProgress,
+			upload_error_handler : uploadError,
+			upload_success_handler : uploadSuccess_evidence,
+			upload_complete_handler : uploadComplete,
+			
+			//SWFObject settings
+			minimum_flash_version : "9.0.28",
+			swfupload_pre_load_handler : swfUploadPreLoad_evidence,
+			swfupload_load_failed_handler : swfUploadLoadFailed_evidence
+		};
+
+		fileUpload_evidence= new SWFUpload(settings);
+	}
+
+	function swfUploadPreLoad_evidence() {
+		var self = this;
+		var loading = function () {
+			document.getElementById("divLoadingContent_evidence").style.display = "";
+
+			var longLoad = function () {
+				document.getElementById("divLoadingContent_evidence").style.display = "none";
+				document.getElementById("divLongLoading_evidence").style.display = "";
+			};
+			this.customSettings.loadingTimeout = setTimeout(function () {
+					longLoad.call(self)
+				},
+				15 * 1000
+			);
+		};
+		
+		this.customSettings.loadingTimeout = setTimeout(function () {
+				loading.call(self);
+			},
+			1*1000
+		);
+	}
+	function swfUploadLoaded_evidence() {
+		var self = this;
+		clearTimeout(this.customSettings.loadingTimeout);
+		document.getElementById("divLoadingContent_evidence").style.display = "none";
+		document.getElementById("divLongLoading_evidence").style.display = "none";
+		document.getElementById("divAlternateContent_evidence").style.display = "none";
+	}
+	   
+	function swfUploadLoadFailed_evidence() {
+		clearTimeout(this.customSettings.loadingTimeout);
+		document.getElementById("divLoadingContent_evidence").style.display = "none";
+		document.getElementById("divLongLoading_evidence").style.display = "none";
+		document.getElementById("divAlternateContent_evidence").style.display = "";
+	}
+	//打开文件选择选择窗口时触发的事件
+	function fileDialogStart_evidence() {
+		var txt = document.getElementById("evidence");
+		txt.value = "";
+		this.cancelUpload();
+	}
+
+	//文件传输完成触发事件
+	function uploadSuccess_evidence(file, serverData) {
+		try {
+			var progress = new FileProgress(file, this.customSettings.progressTarget);
+			progress.setComplete();
+			progress.setStatus("文件上传完成。");
+			progress.toggleCancel(false);
+
+			this.setButtonDisabled(true);
+			
+			//给文本框赋值
+			var txt = document.getElementById("evidence");
+			txt.value = serverData;
+			if( document.getElementById('SurveyOverSubmit') != null ) document.getElementById('SurveyOverSubmit').disabled = false;
+		} catch (ex) {
+			this.debug(ex);
+		}
+	}
+	//开始执行
+	Init_evidence();
+ </script>
+<script>Init();</script>
+</body></html>

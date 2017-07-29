@@ -1,0 +1,218 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gbk" />
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" />
+<title>修改我的密码 - Eclear在线问卷调查引擎</title>
+<link rel="shortcut icon" href="../Images/enableq.ico" type="image/x-icon" />
+<link rel="stylesheet" type="text/css" href="../CSS/UIBase.css" />
+<link rel="stylesheet" type="text/css" href="../CSS/Index.css" />
+<link href="../CSS/Window.css" type="text/css" rel=stylesheet>
+<script type="text/javascript" src="../JS/Common.js.php"></script>
+<script type="text/javascript" src="../JS/Window.js.php"></script>
+<script type="text/javascript" src="../JS/Jquery.min.js.php"></script>
+<script language=javascript src="../JS/PwdMeter.js.php"></script>
+<script type="text/javascript" src="../JS/Jquery.notification.js.php"></script>
+<link type="text/css" rel="stylesheet" href="../CSS/Notification.css" />
+<script language=javascript src="../JS/CheckQuestion.js.php"></script>
+	<SCRIPT language=javascript src="../JS/Md5.js.php"></SCRIPT>
+<script language=javascript>
+	function Check_Form_Validator()
+	{
+		if (!CheckNotNull(document.Check_Form.oldpassWord, "原密码")) {return false;}
+		if (!CheckNotNull(document.Check_Form.passWord, "新密码")) {return false;}
+		if (!CheckStringLength(document.Check_Form.passWord, "新密码",6,20)) {return false;}
+		if (document.Check_Form.passWord.value != document.Check_Form.passWord2.value) {document.Check_Form.passWord2.focus();$.notification("两次输入的密码不一致");return false;}
+	}
+	function submitPassForm()
+	{
+		if( Check_Form_Validator() != false )
+		{
+			$.notification('正在努力为您修改密码...');
+
+			var theOldPassWord =  hex_md5(Trim(document.getElementById('oldpassWord').value));
+			var theNewPassWord = hex_md5(Trim(document.getElementById('passWord').value));
+			var ParamString = "Action=ChangePasswordSubmit";
+			ParamString += "&theOldPassWord="+theOldPassWord;
+			ParamString += "&theNewPassWord="+theNewPassWord;
+			ajax_Submit('ChangePass.php',ParamString);
+		}
+	}
+	function ajax_Submit(url,postStr) {
+		var ajax=false; 
+		try { ajax = new ActiveXObject("Msxml2.XMLHTTP"); }
+		catch (e) { try { ajax = new ActiveXObject("Microsoft.XMLHTTP"); } catch (E) { ajax = false; } }
+		if (!ajax && typeof XMLHttpRequest!='undefined') ajax = new XMLHttpRequest(); 
+
+		ajax.open("POST", url, true); 
+		ajax.setRequestHeader("Content-Type","application/x-www-form-urlencoded"); 
+		ajax.send(postStr);
+		ajax.onreadystatechange = function(){
+			if (ajax.readyState == 4)
+			{
+				if(ajax.status == 200)
+				{
+					if( Trim(ajax.responseText) == '' )
+					{
+						$.notification('网络传输问题');
+					}
+					else
+					{
+						var theRtnText = ajax.responseText.split('######');
+						switch(theRtnText[0])
+						{
+							case 'false':
+							default:
+								if( Trim(theRtnText[1]) == '' ) $.notification('网络传输问题');
+								else $.notification(theRtnText[1]);
+							break;
+							case 'true':
+								document.getElementById('submitBtn').disabled = true;
+								disabledStyle(document.getElementById('submitBtn'));
+								document.getElementById('backBtn').disabled = true;
+								disabledStyle(document.getElementById('backBtn'));
+								window.location.href = '{controlURL}';
+							break;
+						}
+					}
+				}
+				else
+				{
+					$.notification('网络传输问题');
+				}
+			}	
+		} 
+	}
+</script>
+<style>
+#score {
+	color: #000;
+	font-size: 85%;
+	position:absolute;
+	text-align: center;
+	width: 138px;
+	z-index: 10;
+}
+#score,#complexity{
+	font-weight: bold;
+}
+#scorebar {
+	background-image: url(../Images/bg_pwd_meter.jpg);
+	background-repeat: no-repeat;
+	background-position: 0 0;
+	position:absolute;
+	width: 138px;
+	z-index: 0;
+}
+#scorebarBorder {
+	background: #ffffff;
+	height: 16px;
+	margin-bottom: 20px;
+	width: 140px;
+}
+.text_inp {border:1px solid #cacaca;height:18px;font-family: Calibri,"宋体",sans-serif;line-height:18px;vertical-align: middle;}
+</style>
+</head>
+
+<body oncontextmenu="return false">
+ 	<div class="header">
+		<h1 class="logo">Eclear</h1>
+		<div class="header_menu">
+			<div class="header_m_1">
+				<a href="../System/ShowMain.php">欢迎您，<font color="#e45857" id="nick_Name_cont"></font></a>
+				<span class="head_menu_icon"></span>
+				<ul class="head_menu_list">
+					<span class="head_menu_top"></span>
+					<li><a href="../System/MyProfile.php">我的账户信息</a></li>
+					<li class="last"><a href="../System/ChangePass.php">修改我的密码</a></li>
+				</ul>
+			</div>
+			<div class="header_m_6" style="margin-left:50px">
+				<a href="../System/ShowMain.php">首页</a>
+			</div>
+			<div class="header_m_2" id="mySetting">
+			</div>
+			<div class="header_m_3" style="margin-left:50px">
+				<a href="../Help/Downs.php">帮助</a>
+				<span class="head_menu_icon"></span>
+				<ul class="head_menu_list">
+					<span class="head_menu_top"></span>
+					<li><a href="../Help/Downs.php">帮助文件下载</a></li>
+					<li><a href="http://doc.itenable.com.cn" target=_blank>在线帮助文档</a></li>
+					<li><a href="http://i.enableq.com" target=_blank>在线讨论社区</a></li>
+					<li class="last"><a href="../System/AdministratorsLogs.php">系统操作日志</a></li>
+				</ul>
+			</div>
+			<div class="header_m_4" style="margin-left:50px">
+				<a href="javascript:void(0);" onclick="javascript:showPopWin('../License/AboutEnableQ.php', 500, 400, null, null,'关于...')">关于</a>
+			</div>
+			<div class="header_m_5">
+				<a href="../System/Logout.php?loginOutURL=../index.php" target=_top>退出</a>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript" src="../JS/MySetting.js.php"></script>
+
+	<div class="container clearfix">
+	   <div class="main">
+		 <div class="nav">
+			<a href="../System/MyProfile.php">我的账户信息</a>
+			<a href="../System/ChangePass.php" class="cur">修改我的密码</a>
+		 </div>
+		 <div class="content">
+			<div class="content_tit">
+				<div class="clearfix">
+				<h1>修改我的密码</h1>
+				<span class="total ml10"></span>
+				<span class="btn ml10"></span>
+				</div>
+				<p class="fc_grey">修改我的系统登录密码</p>
+			</div>
+			<div class="content_main" style="margin-top:10px">
+			   <form action="" method="post" name="Check_Form" id="Check_Form" onsubmit="return Check_Form_Validator()" >
+			   <table class="d_table">
+				 <tr class=coltitle>
+					<th align=right colspan=2><SPAN style="PADDING-RIGHT: 16px">注：以下带“<SPAN  class=red>*</SPAN>”的为必填项</SPAN></th></tr>
+				  <tr> 
+					 <td width="16%" height="25"><SPAN class=red>*</SPAN> 原密码：</td>
+					 <td width="84%"><INPUT id="oldpassWord" type="password" name="oldpassWord" class="text_inp">
+				  </tr>
+				  <tr> 
+					 <td height="25"><SPAN class=red>*</SPAN> 新密码：</td>
+					 <td><INPUT class="text_inp" id="passWord" type="password" name="passWord" autocomplete="off" onkeyup="chkPass(this.value);"></td>
+				  </tr>
+				   <tr>
+					  <td>&nbsp;&nbsp;&nbsp;密码强度分数：</td>
+					  <td>
+						 <div id="scorebarBorder">
+						 <div id="score">0%</div>
+						 <div id="scorebar">&nbsp;</div>
+						 </div>
+					  </td>
+				   </tr>
+				   <tr>
+					  <td>&nbsp;&nbsp;&nbsp;密码复杂度：</td>
+					  <td><div id="complexity">太短</div></td>
+				   </tr>
+				  <tr> 
+					 <td height="25"><SPAN class=red>*</SPAN> 确认密码：</td>
+					 <td><INPUT id="passWord2" type="password" name="passWord2" autocomplete="off" class="text_inp"></td>
+				  </tr></table><table width=100% style="border:0px;">
+				  <tr>
+					 <td width=16% style="border:0px;"></td>
+					 <td height="23" style="border:0px;">
+						<input type="button" name="submitBtn" id="submitBtn" class=inputsubmit value="确 定" onclick="javascript:submitPassForm();"> 
+						<input name="backBtn" id="backBtn" type="button" class=inputsubmit value="返 回"  onClick="javascript:window.location.href='{controlURL}'"> 
+					 </td>
+				  </tr>
+			  </table>
+			   </form>
+			</div><!--end of content_main-->
+		   </div><!--end of content-->
+	   </div><!--end of main-->
+    </div><!--end of container-->
+	<!--popmenu -->
+	<script type="text/javascript" src="../JS/PopMenu.js.php"></script>
+	<script type="text/javascript">initPwdChk();</script>
+</body></html>
+

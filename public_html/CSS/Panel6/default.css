@@ -1,0 +1,55 @@
+body { background-color:#f0f0f0; margin:0; padding:3px 0px 3px 0px; *padding:8px 0px;font-family: "Î¢ÈíÑÅºÚ",Calibri;}
+div, table,td, a, p, h2{margin:0px;padding:0px; font-family: "Î¢ÈíÑÅºÚ",Calibri; color:#444;}
+a { text-decoration:none;}
+a:hover {color:#DF0000; text-decoration:underline;}
+
+img {border-style:none;}
+input {	font-size: 12px; color: #000000; font-family: "Î¢ÈíÑÅºÚ",Calibri;background-color:expression(this.type=='text'?'#ffffff':'');}
+radio {	font-size: 12px; color: #000000;}
+checkbox { font-size: 12px; color: #000000;}
+select { border: #a5ac95 1px solid; font-size: 12px; color: #000000; font-family: "Î¢ÈíÑÅºÚ",Calibri; background-color: #ffffff}
+option { font-size: 12px; color: #000000; font-family: "Î¢ÈíÑÅºÚ",Calibri; background-color: #ffffff }
+textarea { font-size: 12px; color: #000000; font-family: "Î¢ÈíÑÅºÚ",Calibri; background-color: #ffffff }
+td {font-size: 12px;padding:2px;}
+from {padding: 0px; margin: 0px;}
+p {margin:0px;}
+/* ================================== Site ================================== */
+#site a {color:#444;}
+#site a:hover {color:#fff;}
+
+.sitename {text-align:right; font-weight:bold;border-bottom:1px solid #57a000;margin:0 5px;height:30px;padding:20px 12px 10px 0;line-height:30px;}
+.sitename a{font-family: "Î¢ÈíÑÅºÚ","ºÚÌå";font-size:20px;color:#0188C9;text-decoration: none;}
+.sitename a:hover {font-family: "Î¢ÈíÑÅºÚ","ºÚÌå";color: #fff;}
+.sitehtmlurl {font-family: "Î¢ÈíÑÅºÚ",Calibri;line-height:28px;color:#666667;font-size:12px;text-align:right;padding-right:10px;}
+.sitehtmlurl a{font-size: 12px;color: #0188C9;text-decoration: none;}
+.sitehtmlurl a:hover {color: #0188C9;text-decoration: none;}
+
+/* ================================== Nav ================================== */
+#infonav {width:960px !important;width:960px;margin:0;}
+#infonav .haveText {line-height:150%;width:940px !important;width:960px; text-align:left;padding:10px;font-size:12px;overflow:hidden; background-color:#f7f7f7;margin:0 0 0.3em;}
+#infonav .noHaveText {line-height:150%;width:940px !important;width:960px; text-align:left;height:10px;font-size:12px;overflow:hidden; background-color:#f7f7f7;margin:0 0 0.3em;}
+
+/* ================================== Content ================================== */
+#content {background-color:#fff;width:960px !important;width:960px;font-size:12px;}
+
+.details {width:940px !important;width:960px;padding:5px 10px;background:#fff;text-align:left;color:#666;}
+.details {font-size:12px;}
+.details p {font-size:12px;}
+
+.pertable{border:1px solid #DDDDDD;border-top:0px;width:936px !important;width:936px;margin-bottom:8px;padding:0px}
+.question{color:#57A000;margin:0px;padding:0px;font-size:14px;height:28px;line-height:28px;border:1px solid #DDDDDD;border-left:0px;border-right:0px;width:936px !important;width:936px;background:#F3F3F3;font-family: "Î¢ÈíÑÅºÚ",Calibri;font-weight:bold;}
+.answer { font-weight: normal; font-size: 12px; color: #000000; font-family: "Î¢ÈíÑÅºÚ",Calibri;}
+.textinfo {font-size: 14px;color: #000000;background:#d5ded9;line-height:150%;border-top:1px solid #DDDDDD;border-bottom:10px;}
+.tips { font-weight: normal; font-size: 12px;color:#555;font-family: "Î¢ÈíÑÅºÚ",Calibri;font-style:italic;padding-left:10px;padding-top:10px}
+.notes {font-size:12px;color:#cf1100;font-family: "Î¢ÈíÑÅºÚ",Calibri;}
+.option { font-weight: normal; font-size: 13px; color: #000000; font-family: "Î¢ÈíÑÅºÚ",Calibri;}
+
+#processBar{margin-left:2px;}
+#limitedBar{margin-left:2px;}
+
+/* ================================== Contact ================================== */
+#contact {float:left;width:960px;margin:0 auto;background-color:#E2E2E2;text-align:center;font-size:12px;font-family: "Î¢ÈíÑÅºÚ",Calibri;}
+#contact a {color:#1B2B4D;font-size:12px;}
+
+.red { color:#cf1100;font-weight: bold;}
+.btn { background:url(../../Images/btn_bg.gif) no-repeat 0 3px; border:0; width:85px; height:36px; text-align:center; font-size:14px; color:#fff; }

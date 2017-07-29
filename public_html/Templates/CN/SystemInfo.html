@@ -1,0 +1,173 @@
+<HTML><HEAD><TITLE>系统运行检测</TITLE>
+<META http-equiv=Content-Language content=zh-cn>
+<META http-equiv=Content-Type content="text/html; charset=gbk">
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7">
+<LINK href="../CSS/Base.css" rel=stylesheet>
+<META content="MSHTML 6.00.3790.0" name=GENERATOR>
+<style type="text/css">
+	.checkupFailure {font-size:12px;color:red;font-weight:bold;}
+	.checkupSuccess { font-size:12px; color:green; font-weight:bold;}
+    td { padding:2px 5px 2px 5px;}
+</style>
+</HEAD>
+<BODY oncontextmenu="return false" oncontextmenu="return false">
+<CENTER>
+   <table style="LINE-HEIGHT: 150%;border-collapse:collapse;" cellSpacing=0 cellPadding=0 width="100%" borderColor=#cacaca border=1>
+      <div class=position>位置：&nbsp; 我的问卷 &raquo; 系统运行信息</div>
+	   <tr> 
+          <td colspan="2" align=left height=25 bgcolor="#f9f9f9"><B>&nbsp;系统环境信息</B>&nbsp;<img src="../Images/info.gif" border=0></td>
+       </tr>
+	   <tr> 
+         <td align=left>&nbsp;操作系统</td>
+         <td align=left>&nbsp;{OS_SOFTWARE}</td>
+	   </tr>
+	   <tr> 
+         <td align=left>&nbsp;Web服务器</td>
+         <td align=left>&nbsp;{SERVER_SOFTWARE}</td>
+	   </tr>
+	   <tr>
+         <td align=left>&nbsp;PHP版本</td>
+         <td noWrap align=left>&nbsp;{PHPVersion}</td>
+       </tr>
+	   <tr>
+         <td align=left>&nbsp;php.ini文件位置</td>
+         <td noWrap align=left>&nbsp;{phpini_local}</td>
+       </tr>
+	   <tr> 
+		 <td align=left>&nbsp;Zend版本</td>
+         <td noWrap align=left>&nbsp;{ZendVersion}</td>
+	  </tr>
+	  <tr>
+	     <td align=left>&nbsp;MySQL版本</td>
+         <td noWrap align=left>&nbsp;{MySqlVersion}</td>
+      </tr>         
+	  <!--<tr>
+	     <td align=left>&nbsp;当前内存清耗量</td>
+         <td noWrap align=left>&nbsp;{memoryUsage}</td>
+      </tr>-->
+	   <tr> 
+          <td colspan="2" align=left bgcolor="#f9f9f9" height=25><B>&nbsp;EnableQ信息</B>&nbsp;<img src="../Images/info.gif" border=0></td>
+       </tr>
+	  <tr> 
+          <td align=left width=30%>&nbsp;当前系统版本</td>
+          <td noWrap align=left width=70%>&nbsp;<b>{version}</b></td>
+	  </tr>
+	  <tr>
+         <td align=left>&nbsp;授权使用主机IP地址</td>
+         <td noWrap align=left>&nbsp;{SystemIPAddress}</td>
+      </tr>
+	   <tr> 
+          <td align=left bgcolor="#f9f9f9" colspan=2 height=25><B>&nbsp;物理路径配置检查</B>&nbsp;<img src="../Images/info.gif" border=0></td>
+       </tr>
+	   <tr><td colspan=2 align=left>
+	        <table width=100% cellspacing=0 cellpadding=0 border=0>
+			   <tr> 
+				 <td align=left width=90%>&nbsp;系统安装的物理路径</td>
+				 <td noWrap align=left colspan="2" width=10%>&nbsp;{auto_Path}</td>
+			   </tr>
+			   <tr> 
+				 <td align=left>&nbsp;Config/config.php配置的物理路径</td>
+				 <td noWrap align=left colspan="2">&nbsp;{absolutenessPath}</td>
+			   </tr>
+			   <tr><td>&nbsp;检测状态</td>
+			       <td noWrap><span class="{path_cssClass}">&nbsp;{path_check_state}</span></td>
+			   </tr>
+			</table>
+	   </td></tr>
+	   <tr> 
+          <td align=left bgcolor="#f9f9f9" colspan=2 height=25><B>&nbsp;系统环境检查</B>&nbsp;<img src="../Images/info.gif" border=0></td>
+       </tr>
+	   <tr><td colspan=2 align=left>
+	        <table width=100% cellspacing=0 cellpadding=0 border=0>
+			   <!-- BEGIN SYSCHECK -->
+			   <tr><td width=90%>&nbsp;{check_title}</td>
+				   <td align="center" width=10% nowrap><span class="{cssClass}">{check_state}</span></td>
+			   </tr>		 
+			   <!-- END SYSCHECK -->
+			   <tr><td>&nbsp;Config/config.php可写入</td>
+					<td align="center" nowrap><span class="{file_cssClass}">{file_check_state}</span></td>
+			   </tr>		 
+			   <tr><td>&nbsp;PerUserData/目录可写入</td>
+					<td align="center" nowrap><span class="{dir1_cssClass}">{dir1_check_state}</span></td>
+			   </tr>		 
+			   <tr><td>&nbsp;Templates/CN/目录可写入</td>
+				   <td align="center" nowrap><span class="{dir2_cssClass}">{dir2_check_state}</span></td>
+			   </tr>		 
+		   	  <tr><td>&nbsp;License/目录可写入</td>
+				  <td align="center" nowrap><span class="{dir3_cssClass}">{dir3_check_state}</span></td>
+              </tr>		 
+		   	  <tr><td>&nbsp;Cache/目录可写入</td>
+				  <td align="center" nowrap><span class="{dir4_cssClass}">{dir4_check_state}</span></td>
+              </tr>		 
+ 			 </table>
+	  </td></tr>
+	   <tr> 
+          <td colspan=2 align=left bgcolor="#f9f9f9" height=25><B>&nbsp;Php.ini设置检查</B>&nbsp;<img src="../Images/info.gif" border=0></td>
+       </tr>
+	   <tr><td colspan=2 align=left width=100%>
+	        <table width=100% cellspacing=0 cellpadding=0 border=0>
+		   	  <tr><td width=80%>&nbsp;<b>设置项</b></td>
+			      <td align=center width=10% nowrap>&nbsp;<b>推荐值</b></td>
+				  <td align="center" width=10% nowrap><b>状态</b></td>
+              </tr>		 
+		      <!-- BEGIN PHPCHECK -->
+		   	  <tr><td>&nbsp;{php_check_title}</td>
+			      <td align=center nowrap>&nbsp;<b>{php_rem_setting}</b></td>
+				  <td align="center" nowrap><span class="{php_cssClass}">{php_check_state}</span></td>
+              </tr>		 
+		      <!-- END PHPCHECK -->
+			 </table>
+	  </td></tr>
+	   <tr> 
+          <td colspan=2 align=left bgcolor="#f9f9f9" height=25><B>&nbsp;可能影响系统运行或系统性能的更多Php.ini设置</B>&nbsp;<img src="../Images/info.gif" border=0></td>
+       </tr>
+	   <tr><td colspan=2 align=left width=100%>
+	        <table width=100% cellspacing=0 cellpadding=0 border=0>
+		   	   <tr><td width=30%>&nbsp;<b>设置项</b></td>
+			       <td width=60% nowrap>&nbsp;<b>说明</b></td>
+				   <td align="center" width=10% nowrap><b>目前值</b></td>
+			  </tr>
+			   <tr>
+				 <td align=left>&nbsp;max_execution_time</td>
+				 <td noWrap align=left>&nbsp;每个PHP页面运行的最大时间值(秒)。默认为30秒</td>
+				 <td align=center nowrap>{max_execution_time}</td>
+			   </tr>
+			   <tr>
+				 <td align=left>&nbsp;max_input_time</td>
+				 <td noWrap align=left>&nbsp;每个PHP页面接收数据所需的最大时间。默认为60秒</td>
+				 <td align=center nowrap>{max_input_time}</td>
+			   </tr>
+			   <tr>
+				 <td align=left>&nbsp;memory_limit</td>
+				 <td noWrap align=left>&nbsp;每个PHP页面所吃掉的最大内存。默认为8M</td>
+				 <td align=center nowrap>{memory_limit}</td>
+			   </tr>
+			   <tr>
+				 <td align=left>&nbsp;session.gc_maxlifetime</td>
+				 <td noWrap align=left>&nbsp;Session数据在服务器端存储的最大时间(秒)。默认为1440秒</td>
+				 <td align=center nowrap>{gc_maxlifetime}</td>
+			   </tr>
+			   <tr>
+				 <td align=left>&nbsp;upload_max_filesize</td>
+				 <td noWrap align=left>&nbsp;允许上传文件大小的最大值。默认为2M</td>
+				 <td align=center nowrap>{upload_max_filesize}</td>
+			   </tr>
+			   <tr>
+				 <td align=left>&nbsp;post_max_size</td>
+				 <td noWrap align=left>&nbsp;指通过表单POST给PHP的所能接收的最大值。默认为8M</td>
+				 <td align=center nowrap>{post_max_size}</td>
+			   </tr>
+			   <tr>
+				 <td align=left>&nbsp;max_file_uploads</td>
+				 <td noWrap align=left>&nbsp;一张表单中input[type=file]文件上传的最多数量。默认为20</td>
+				 <td align=center nowrap>{max_file_uploads}</td>
+			   </tr>
+			   <tr>
+				 <td align=left>&nbsp;max_input_vars</td>
+				 <td noWrap align=left>&nbsp;一张表单中可接受变量的最多数量。默认为1000</td>
+				 <td align=center nowrap>{max_input_vars}</td>
+			   </tr>			   
+	   </table></td></tr>
+   </table>  
+</center>
+</body></html>

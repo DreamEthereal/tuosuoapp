@@ -1,0 +1,60 @@
+<html>
+<head>
+<meta http-equiv=content-language content=zh-cn>
+<meta http-equiv=content-type content="text/html; charset=gbk">
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7">
+<link href="../CSS/Base.css" rel=stylesheet>
+<style>
+ td { padding:2px 5px 2px 5px;}
+ table { margin-bottom:4px;}
+</style>
+<meta content="mshtml 6.00.3790.0" name=generator></head>
+<body>
+  <table class=datatable style="line-height: 150%;border-collapse:collapse;" cellspacing=0 cellpadding=0 bordercolor=#cacaca border=1 width=100%>
+     <div class=position>位置： 我的问卷 &raquo; 问卷归档记录详细</div>
+      <tr align="left"><td colspan="2" bgcolor="#f9f9f9"><b>问卷归档记录详细</b></td></tr>
+	  <tr><td>问卷标题</td>
+	      <td>{surveyTitle}</td>
+      <tr> 
+         <td>问卷名</td>
+         <td>{surveyName}</td>
+      </tr>
+      <tr> 
+         <td>问卷类型</td>
+         <td>{isPublic}</td>
+      </tr>
+      <tr> 
+         <td>问卷创建者</td>
+         <td>{owner}</td>
+      </tr>
+      <tr> 
+         <td>问卷开始时间</td>
+         <td>{beginTime}</td>
+      </tr>
+      <tr> 
+         <td>问卷结束时间</td>
+         <td>{endTime}</td>
+      </tr>
+      <tr> 
+         <td>问卷归档者</td>
+         <td>{archivingOwner}</td>
+      </tr>
+      <tr> 
+         <td>问卷归档时间</td>
+         <td>{archivingTime}</td>
+      </tr>
+      <tr> 
+         <td>归档文件大小</td>
+         <td>{archivingSize}</td>
+      </tr>
+	  <tr> 
+         <td><b>下载</b>&nbsp;<img src="../Images/zip.gif" style="vertical-align: middle;"></td>
+         <td width="85%">&nbsp;{downFile}</td>
+      </tr>
+    </table>
+    <table width=100%>
+     <tr><td width=15%></td>
+         <td><input class=inputsubmit type="button" name="close" value="关闭" onClick="javascript:parent.hidePopWin();"></td>
+      </tr>
+   </table>
+</body></html>

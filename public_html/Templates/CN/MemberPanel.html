@@ -1,0 +1,38 @@
+<html>
+<head>
+<meta http-equiv=content-language content=zh-cn>
+<meta http-equiv=content-type content="text/html; charset=gbk">
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7">
+<style>
+td { padding:2px 5px 2px 5px;}
+table {margin-bottom:4px;}
+</style>
+<link href="../CSS/Base.css" rel=stylesheet>
+<META content="MSHTML 6.00.3790.0" name=GENERATOR></HEAD>
+<body oncontextmenu="return false">
+
+<form name="Check_Form" method="post" action="">
+<table style="LINE-HEIGHT: 150%;border-collapse:collapse;" cellSpacing=0 cellPadding=0 width="100%" borderColor=#cacaca border=1>
+   <div class=position>位置：&nbsp; 我的桌面 &raquo; 选择符合条件的电子邮件账号</div>
+   <tr bgcolor="#f9f9f9" height=25><td colspan=2><b>&nbsp;设置数据过滤条件</b>&nbsp;<img src="../Images/info.gif" border=0></td></tr>    
+   <tr><td width=18%>样本分组</td>
+       <td><select name="option_0[]" id="option_0" multiple size=5>
+	   {panel_groups_list}
+	   </select>
+   </td></tr>
+   <!-- BEGIN QUESTION -->
+   <tr><td>{panelname}</td>
+       <td>{panelopt}</td></tr>
+   <!-- END QUESTION -->
+   </table><table width=100%><tr><td>
+    	 <input name="Action" type="hidden" id="Action" value="{Action}"> 
+    	 <input name="this_fields_list" type="hidden" id="this_fields_list" value="{this_fields_list}"> 
+    	 <input name="this_fields_type" type="hidden" id="this_fields_type" value="{this_fields_type}"> 
+         <input class=inputsubmit type="submit" name="submit" value="确定"> 
+         <input class=inputsubmit name="reset" type="reset" value="重置">
+	     <input class=inputsubmit type="button" name="close" value="关闭" onClick="javascript:parent.hidePopWin();">
+      </td>
+    </tr>
+  </form>
+ </table>
+</body></html>

@@ -1,0 +1,70 @@
+<html>
+<head>
+<meta http-equiv=content-language content=zh-cn>
+<meta http-equiv=content-type content="text/html; charset=gbk">
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7">
+<LINK href="../CSS/Base.css" rel=stylesheet>
+<LINK href="../CSS/Window.css" type=text/css rel=stylesheet>
+<script type="text/javascript" src="../JS/Common.js.php"></script>
+<script type="text/javascript" src="../JS/Window.js.php"></script>
+<script language="javascript"> 
+function dynimgsize(o){
+	var zoom = parseInt(o.style.zoom, 10)||100;zoom+=event.wheelDelta/12;if (zoom>0) o.style.zoom=zoom+'%';
+	return false;
+}
+</script>
+<style>
+ td { padding:2px 5px 2px 5px;}
+ table {margin-bottom:4px;}
+</style>
+<meta content="mshtml 6.00.3790.0" name=generator></head>
+<body oncontextmenu="return false">
+  <form action="" method="post" name="Check_Form">
+  <table class=datatable style="line-height: 150%;border-collapse:collapse;" cellspacing=0 cellpadding=0 bordercolor=#cacaca border=1 width=100%>
+      <div class=position>位置：&nbsp; 我的问卷 &raquo; 查看对应指标数据详细</div>
+	   <tr><td colspan=2 bgcolor="#f9f9f9" style="font-size:14px"><b>基本信息</b></td></tr>
+	   <tr><td nowrap width=15% class="option">&nbsp;回复时间(开始)</td>
+		   <td>&nbsp;{joinTime}</td>
+	   </tr>
+	   <tr><td nowrap width=15% class="option">&nbsp;回复时间(结束)</td>
+		   <td>&nbsp;{submitTime}</td>
+	   </tr>
+	   <tr><td nowrap class="option">&nbsp;数据上行时间</td>
+	       <td>&nbsp;{uploadTime}</td>
+	   </tr>
+	   <tr><td class="option">&nbsp;用时</td>
+		   <td>&nbsp;{overTime}</td>
+	   </tr>
+	   <tr><td class="option">&nbsp;完成标记</td>
+		   <td>&nbsp;{overFlag}</td>
+	   </tr>
+	   <tr><td class="option">&nbsp;数据来源</td>
+		   <td>&nbsp;{uniDataCode}</td>
+	   </tr>
+	   <tr style="display:{t2_show}"><td class="option">&nbsp;样本标识</td>
+		   <td>&nbsp;{administratorsName}</td>
+	   </tr>
+	   <tr><td class="option">&nbsp;地址标识</td>
+		   <td>&nbsp;{ipAddress}</td>
+	   </tr>
+	   <tr style="display:{t1_show}"><td class="option">&nbsp;来源</td>
+		   <td>&nbsp;{area}</td>
+	   </tr>
+	   </table>
+
+	   <table style="LINE-HEIGHT: 150%;border-collapse:collapse;" cellSpacing=0 cellPadding=0 width="100%" borderColor=#cacaca border=1>
+		<tr><td colspan=2 bgcolor="#f9f9f9"><b style="font-size:14px">指标：{indexName}&nbsp;({indexCoeff})</b><br/>{indexDesc}</td></tr>
+		<tr><td colspan=2>
+		<!-- BEGIN QUESTION -->
+        <table width="100%">
+		   {questionList}
+		 </table>
+		<!-- END QUESTION -->
+	   </td></tr></table>
+
+	  <table width=100%>
+      <tr><td><input class=inputsubmit type="button" name="close" value="关闭" onClick="javascript:parent.hidePopWin();"></td>
+       </tr>
+      </form>       
+   </table>
+  </body></html>

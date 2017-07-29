@@ -1,0 +1,58 @@
+<table style="LINE-HEIGHT: 150%;border-collapse:collapse;margin-bottom:5px" cellSpacing=0 cellPadding=0 borderColor=#ffffff border=1>
+ <tr><td>
+	 <div id="flashcontent">
+		<b>浏览器可能需要升级Flash播放器版本</b>
+	 </div>
+
+	<script type="text/javascript">
+	    var chartWidth = {chartWidth};
+		var chartHeight = {chartHeight};
+		var so = new SWFObject("../Chart/AmLine.swf", "amline", chartWidth, chartHeight, "8", "#FFFFFF");
+		so.addVariable("path", "../Chart/");
+		so.addParam("wmode", "transparent");
+		so.addVariable("data_file", escape("../Chart/EGGDataLine.php?surveyID={surveyID}"));
+		so.addVariable("chart_settings", encodeURIComponent("<settings><decimals_separator>.</decimals_separator> <thousands_separator>,</thousands_separator><legend><y>{legendY}</y><text_size>12</text_size> </legend><grid><x><approx_count>{xLineNum}</approx_count><dashed>true</dashed></x><y_left><dashed>true</dashed></y_left></grid><background><color></color><alpha>100</alpha></background><export_as_image><file>../Chart/ChartExport.php</file><target>_top</target><x></x><y></y><color></color><alpha>100</alpha><text_color></text_color><text_size></text_size></export_as_image><strings><no_data>尚无符合条件的问卷数据，无法绘制图形</no_data><export_as_image>以图片格式导出</export_as_image><collecting_data>收集数据过程中...</collecting_data><ss></ss><mm></mm><hh></hh><DD></DD></strings><context_menu><default_items><zoom>false</zoom><print>false</print></default_items></context_menu></settings>"));
+		so.write("flashcontent");
+	</script>
+</td></tr>
+</table>
+
+<table style="border:1px solid #cacaca;margin-bottom:5px" width=99%>
+ <tr style="background-color:#e4e0ea;border-bottom:1px solid #cacaca"><td>
+ <span class=red>*</span> 推广的Gabor Granger法需求曲线是指各竞争品牌价格分别固定在某一价格水平上，消费者选择测试品牌的人数百分比随测试品牌价格变化的曲线。按照需求曲线理论，随着测试品牌的价格上升，该品牌的某些顾客可能会流失，推广的Gabor Granger法将测试产品价格变化但竞争品牌价格不变时其他竞争品牌需求数量的变化与测试产品的需求曲线在同一张图表中展现，以分析价格上升后测试品牌流失的顾客流向哪一个竞争品牌。
+
+</td></tr></table>
+
+<table style="border:1px solid #cacaca;margin-bottom:5px" width=99% id="copyContent">
+	<tr style="color:white;">
+	    <td bgcolor=#cf1100 align=center nowrap>&nbsp;<b>品牌\价格水平</b></td>
+		<!-- BEGIN PRICE -->
+		<td bgcolor=#cf1100 align=center>&nbsp;<b>{thePrice}</b>&nbsp;<br/>&nbsp;(%)&nbsp;</td>
+		<!-- END PRICE -->
+	</tr>
+	<!-- BEGIN LIST -->
+	<tr style="background-color:#e4e0ea;border-bottom:1px solid #cacaca">
+	    <td nowrap align=center nowrap>&nbsp;{brand}</td>
+		<!-- BEGIN ANSWER -->
+		<td nowrap align=center>&nbsp;<b>{thePriceRate}</b></td>
+		<!-- END ANSWER -->
+	</tr>
+	<!-- END LIST -->
+	<tr style="background-color:#e4e0ea;border-bottom:1px solid #cacaca">
+	    <td nowrap align=center nowrap>&nbsp;{optionName}的需求弹性</td>
+		<!-- BEGIN ANSWER0 -->
+		<td nowrap align=center>&nbsp;<b>{theElasticity}</b></td>
+		<!-- END ANSWER0 -->
+	</tr>
+	<tr style="background-color:#e4e0ea;border-bottom:1px solid #cacaca">
+	    <td nowrap align=center nowrap>&nbsp;{optionName}的仿造收益</td>
+		<!-- BEGIN ANSWER1 -->
+		<td nowrap align=center>&nbsp;<b>{theIncomeValue}</b></td>
+		<!-- END ANSWER1 -->
+	</tr>
+</table>
+
+<table style="border:1px solid #cacaca;margin-bottom:5px" width=99%>
+ <tr style="background-color:#e4e0ea;border-bottom:1px solid #cacaca"><td>
+ <span class=red>*</span>  推广的Gabor Granger法的缺点：<br/>&nbsp;&nbsp;&nbsp;&nbsp;1) 必须预先给定测试的价格点，且对每一位被访问者均相同<br/>&nbsp;&nbsp;&nbsp;&nbsp;2) 只能对已给定的价格进行评价</td></tr>
+</table>

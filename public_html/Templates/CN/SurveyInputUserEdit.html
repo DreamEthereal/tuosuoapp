@@ -1,0 +1,197 @@
+<html>
+<head>
+<meta http-equiv=content-language content=zh-cn>
+<meta http-equiv=content-type content="text/html; charset=gbk">
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7">
+<style>
+ td { padding:2px 5px 2px 5px;}
+</style>
+<script>
+function move(fbox, tbox) {
+	var arrFbox = new Array();
+	var arrTbox = new Array();
+	var arrLookup = new Array();
+	var arrValue = new Array();
+	var i;
+	for (i = 0; i < tbox.options.length; i++) {
+		arrLookup[tbox.options[i].text] = tbox.options[i].value;
+		arrValue[i] = tbox.options[i].value;;
+		arrTbox[i] = tbox.options[i].text;
+	}
+	var fLength = 0;
+	var tLength = arrTbox.length;
+	for(i = 0; i < fbox.options.length; i++) {
+		arrLookup[fbox.options[i].text] = fbox.options[i].value;
+		if (fbox.options[i].selected && fbox.options[i].value != "" && !isInArray(fbox.options[i].value,arrValue) ) {
+			arrTbox[tLength] = fbox.options[i].text;
+			tLength++;
+		}
+		else {
+			arrFbox[fLength] = fbox.options[i].text;
+			fLength++;
+		}
+	}
+	//arrFbox.sort();
+	//arrTbox.sort();
+	fbox.length = 0;
+	tbox.length = 0;
+	var c;
+	for(c = 0; c < arrFbox.length; c++) {
+		var no = new Option();
+		no.value = arrLookup[arrFbox[c]];
+		no.text = arrFbox[c];
+		fbox[c] = no;
+	}
+	for(c = 0; c < arrTbox.length; c++) {
+		var no = new Option();
+		no.value = arrLookup[arrTbox[c]];
+		no.text = arrTbox[c];
+		tbox[c] = no;
+	}
+}
+function isInArray(valuea,arrayb)
+{
+	var isHaveValue = false;
+	for(var i=0;i<arrayb.length;i++)
+	{
+	    if(Trim(arrayb[i]) == Trim(valuea) ) 
+		{
+		    isHaveValue = true;
+			break;
+		}
+	}
+	return isHaveValue;
+}
+function Check_Form_Validator()
+{
+    theObj = document.getElementById("inputUsers");
+    for(c = 0; c < theObj.options.length; c++) {
+	    theObj.options[c].selected = true;
+    }
+}
+//去除字符串左端空格
+function LTrim(str) {
+  return str.replace(/^\s*/, '');
+}
+
+//去除字符串右端空格
+function RTrim(str) {
+  return str.replace(/\s*$/, '');
+}
+
+//去除字符串两端空格
+function Trim(str) {
+  return LTrim(RTrim(str));
+}
+function refreshParent() {
+   //window.location.replace(window.location.href);
+   window.location.reload(true);
+}
+var http_request = false;
+function AjaxRequest(url)
+{
+	http_request = false;
+	if(window.ActiveXObject)
+	{
+		try  // IE
+		{
+			http_request = new ActiveXObject("Msxml2.XMLHTTP");
+		}
+		catch (e)
+		{
+			try
+			{
+				http_request = new ActiveXObject("Microsoft.XMLHTTP");
+			}
+			catch (e) {}
+		}
+	}
+	else if(window.XMLHttpRequest)
+	{
+		// Mozilla, Safari,...
+		http_request = new XMLHttpRequest();
+		if (http_request.overrideMimeType)
+		{
+			http_request.overrideMimeType('text/xml');
+		}
+	}
+	
+	if (!http_request)
+	{
+		alert("Cannot create an XMLHTTP instance");
+		return false;
+	}
+	http_request.onreadystatechange = AlertContents;
+	http_request.open('GET', url, true);
+	http_request.send(null);
+}
+function AlertContents()
+{
+	if (http_request.readyState == 4)
+	{
+		if(http_request.status == 200)
+		{
+			document.getElementById("randText").innerHTML = http_request.responseText;
+		}
+		else
+		{
+			alert('网络传输问题');
+		}
+	}
+}
+function searchUserName()
+{
+	var q_userName = Trim(document.Check_Form.q_userName.value);
+	AjaxRequest("../System/AjaxSearchInputUser.php?surveyID={surveyID}&q_userName="+q_userName+"&randid="+Math.random());
+}
+function submitForm()
+{
+	if( Check_Form_Validator() != false )
+	{
+		document.getElementById('submitBtn').disabled = true;
+		disabledStyle(document.getElementById('submitBtn'));
+		document.getElementById('close').disabled = true;
+		disabledStyle(document.getElementById('close'));
+		document.Check_Form.submit();
+	}
+}
+function disabledStyle(obj)
+{
+	obj.style.border = '1px solid #DDD';
+	obj.style.backgroundColor = '#F5F5F5';
+	obj.style.color = '#3b5888';
+}
+</script>
+<link href="../CSS/Base.css" rel=stylesheet>
+<meta content="mshtml 6.00.3790.0" name=generator></head>
+<body oncontextmenu="return false">
+  <form name="Check_Form" id="Check_Form" method="post" action="" onsubmit="return false;">
+  <table class=datatable style="line-height: 150%;border-collapse:collapse;" cellspacing=0 cellpadding=0 bordercolor=#cacaca border=1 width=100%>
+     <div class=position>位置：&nbsp; 我的问卷 &raquo; 调整问卷数据录入用户</div>
+      <tr><td bgcolor="#f9f9f9" colspan=3><b>调整问卷数据录入用户</b></td></tr>
+      <tr><td style="margin:0px 2px 0px 2px;padding:0px 2px 0px 2px">
+	         <span style="float:left;padding-top:2px">可选用户：</span>
+			 <span style="float:right"><input name="q_userName" id="q_userName" size=20>&nbsp;<input type=button name="q_submit" class=stnsubmit value=" 查找 " onclick="javascript:searchUserName();"></span>
+			 <span id="randText"><select multiple name="inputNameList[]" id="inputNameList" size="23" style="width:348px;*width:358px">
+				   {inputNameList}
+			 </select></span></td>
+			 <td style="margin:0px 2px 0px 2px;padding:0px 2px 0px 2px"><input type="button" class=inputsubmit onClick="move(this.form.inputNameList,this.form.inputUsers)" value=">" style="margin-bottom:2px;"><br/>
+			 <input type="button" class=inputsubmit onClick="move(this.form.inputUsers,this.form.inputNameList)" value="<" style="margin-bottom:2px;"></td>
+			 <td style="margin:0px 2px 0px 2px;padding:0px 2px 0px 2px">
+			 <span style="padding-top:2px">当前用户：</span>
+			 <select name="inputUsers[]" id="inputUsers" multiple size="23" style="width:346px;*width:356px">
+				  {inputList}
+			 </select></td>
+	  </tr></table><table width=100%>
+      <tr><td height="23" align=center>
+ 		  <input name="surveyID" type="hidden" value="{surveyID}"> 
+ 		  <input name="surveyTitle" type="hidden" value="{surveyTitle}"> 
+ 		  <input name="Action" type="hidden" id="Action" value="EditInputUserSubmit"> 
+ 		  <input name="nowInputValue" type="hidden" id="nowInputValue" value="{nowInputValue}"> 
+		  <input class=inputsubmit type="button" name="submitBtn" id="submitBtn" value="确定" onclick="javascript:submitForm();"> 
+		  <input class=inputsubmit type="button" name="close" id="close" value="关闭" onClick="javascript:parent.hidePopWin();">
+          </td>
+       </tr>
+      </form>
+   </table>
+</body></html>

@@ -1,0 +1,31 @@
+<HTML><HEAD><TITLE>问卷列表调用</TITLE>
+<META http-equiv=Content-Language content=zh-cn>
+<META http-equiv=Content-Type content="text/html; charset=gbk">
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7">
+<LINK href="../CSS/Base.css" rel=stylesheet>
+<META content="MSHTML 6.00.3790.0" name=GENERATOR>
+</HEAD>
+<BODY oncontextmenu="return false" oncontextmenu="return false">
+<CENTER>
+   <table style="LINE-HEIGHT: 150%;border-collapse:collapse;" cellSpacing=0 cellPadding=0 width="100%" borderColor=#cacaca border=1>
+      <div class=position>位置：&nbsp; 我的问卷 &raquo; 问卷列表调用</div>
+      <tr><td height=25 bgcolor="#f9f9f9"><b>&nbsp;关于...</b>&nbsp;<img src="../Images/info.gif" border=0></td></tr>
+	  <tr><td height=25>&nbsp;系统中执行状态的调查问卷列表清单可被其他程序所调用，详见参见《开发手册》。</td></tr>
+      <tr><td height=25 bgcolor="#f9f9f9"><b>&nbsp;问卷列表调用</b></td></tr>
+      <tr>
+	   <td>&nbsp;问卷列表调用地址：<br/>&nbsp;&nbsp;<span style="height:30px;line-height:30px">&nbsp;<b><a href="{listURL}/l.php?hash={SecurityFlag}" target=_blank>{listURL}/l.php?hash={SecurityFlag}</a></b>&nbsp;</span></td>
+	 </tr>
+	  <tr>
+	   <td>&nbsp;其他可选调用参数：<br/>
+	       &nbsp;&nbsp;<span style="height:25px;line-height:25px;">&nbsp;&nbsp;&nbsp;&nbsp;<b>uname</b></span>：用户名，标识仅显示该用户创建的调查问卷。默认显示全部<br/>
+	       &nbsp;&nbsp;<span style="height:25px;line-height:25px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>pub</b></span>：调查问卷类型，1 - 公开  0 - 私有  2 - 令牌，默认显示全部<br/>
+	       &nbsp;&nbsp;<span style="height:25px;line-height:25px"><b>onlyname</b></span>：0 - 显示全部调查问卷标题、说明信息  1 - 仅显示调查问卷标题，默认为1<br/>
+	       &nbsp;&nbsp;<span style="height:25px;line-height:25px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>pnum</b></span>：每个分页显示的调查问卷数量，默认为20<br/>
+	 </td></tr>
+	 <tr>
+	   <td>&nbsp;展示模版和样式修改：<br/>
+		   &nbsp;&nbsp;<span style="height:25px;line-height:25px;">&nbsp;&nbsp;&nbsp;&nbsp;程序目录/Templates/CN/uSurveyList.html负责列表调用的展示和样式
+	 </td></tr>   
+   </table>  
+</center>
+</body></html>

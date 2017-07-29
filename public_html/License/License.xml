@@ -1,0 +1,58 @@
+<?PHP
+/**************************************************************************
+ *                                                                        *
+ *    EnableQ System                                                      *
+ *    ----------------------------------------------------------------    *
+ *                                                                        *
+ *        Copyright: (C) 2012-2018 ItEnable Services,Inc.                 *  
+ *        WebSite: itenable.com.cn                                        *
+ *                                                                        *
+ *        Last Modified: 2012/07/05                                       *
+ *        Scriptversion: 7.00                                             *
+ *                                                                        *
+ **************************************************************************/
+
+$_SERVER['SERVER_ADDR'] = '117.121.24.76';
+$RE29199C6C5DC97F47564201E7E599AC9 = 1; 
+$License['isModiLogo'] = 1;
+if (!defined('ROOT_PATH'))
+{
+	die("EnableQ Security Violation");
+}
+
+//IP地址
+$License['MasterAddress'] = '117.121.24.76';
+$License['MinorAddress'] = '117.121.24.76';
+
+//扩展许可证
+$License['AjaxPassport'] =1;
+$License['ADPassport'] = 1;
+$License['isMobile'] = 1;
+$License['isCustLogo'] = 1;
+$License['isDistribution'] = 1;
+
+//增强许可证
+$License['isPanel'] = 1;
+$License['isOnline'] = 1;
+$License['isOffline'] = 1;
+$License['isMonitor'] = 1;
+$License['isCell'] = 1;
+$License['isRealGps'] = 1;
+
+//限制
+$License['Limited'] = 0;
+$License['LimitedNum'] = 0;
+
+//时间
+$License['LimitedTime'] = 'N/A';
+
+//试用
+$License['isEvalUsers'] = 0;
+
+//用户单位
+$License['UserCompany'] = '科维能动';
+
+//校验码
+$ItEnable['License'] = 'HzWKAZCLje4RerjjmOQEf73Lr41Agt9GFeGdXgH5FmxUCeQWZWvZ1cQDd64hBVXt5uBpikXDx/Mlo9DfftUAwFuD23o258va0y61+HKjYfMNmn9T23PkQRAg/gZh8Pn1h1Ytle/+EE8jK1KF5EyuvvCOjonTKkz1mFOqUIF/cuW2xuWKFIvpq3lS9BLmOomuSJsHSU4mZTKLnucFbJV3otIrAMW918DNrgKJU98eSJyC08shkrZz6st6FHDFjkn99jVFtlyz+mKOu3AnSvtDIj6UOOK/oSrld5jEvvzbVbO61sCO4ywyoiy09vsGH0eyHBM3S6mMm7Aj2NE2xArp+y5dXahvQi1CFHsWr5+Wmgr5C7fliEwn95tm2aiXSu0Wp/Y6277oUviYUPsnZ/YXgMuQdbcWClTutUleWoSWwzWVHBP7QlYMk4cM3nVYkJL/bd53BpxsaHlDGGtiDQeON0fEWnuK/yPWaDKZt/nWzyZI+QAXrVjv+trXGyaL/BxQbVoB7gK9EXVopLHnvKGGfjx0qFcYCwLfds0O5GKZU3BjIbO+hMfptZFSc+Ryz7R0eIJe88GYqR1ddolhWuwrQKNX7lchjhGzqW76qOZNTC1ztdXQtx3ts5p2fAGqN+mq1gTTzbiyfMet3/8fvYfmoi1QDNVgoY3nOL6xy/aRMEdeycYHPeBjl82gDpyYvF9JfLtYrNr1Fo7NqtA8LwzO91ASRMZyg/IqjkwMVA==';
+
+?>

@@ -1,0 +1,27 @@
+<div class=actionsTitle>问卷<img src=../Images/arrow_down.gif align=absmiddle></div>
+<div class=actionsInner style="line-height:20px"> 
+     <div>标题：{survey_Title}</div>
+     <div>语言：{surveyLang}</div>
+     <div>类型：{surveyStatus}</div>
+     <div>创建：{createDate}</div>
+     <div>已有<span class=red>{qtnNum}</span>问题</div>
+ </div>
+
+<div class=actionsTitle>问题<img src=../Images/arrow_down.gif align=absmiddle></div>
+<div class=actionsInner style="line-height:20px"> 
+     <div>题目：<b>{qtnName}</b></div>
+     <div>题型：{qtnTypes}</div>
+     <div>是否必答：{isQtnRequire}</div>
+     <div>是否存在[逻辑关系|配额]定义：{isQtnLogic}</div>
+     <div>是否存在[数值关联关系]定义：{isQtnRel}</div>
+ </div>
+
+<div class=actionsTitle>操作<img src=../Images/arrow_down.gif align=absmiddle></div>
+<div class=actionsInner>
+	 <a href="../d.php?qname={surveyName}&qlang={qlang}&preFirstQtnId={preFirstQtnId}" target=_blank style="display:{isPreQtn}"><div class=inputsubmit style="width:55px;height:16px;float:left;position:relative;;margin-right:4px;*margin-right:0px" onmousedown="this.style.left='1px';this.style.top='1px';" onmouseup="this.style.left='0px';this.style.top='0px';" id="preSurvey" name="preSurvey">开始预览</div></a>
+     <input class=inputsubmit name="modiQtnBtn" type="button" id="modiQtnBtn" value="修改问题" onclick="javascript:fnUnload(1);closeLog('menu-div');showPopWin('{editURL}', 900, 480,refreshParent, null,'修改调查问题')" style="display:{isEdit}">
+	 <input class=inputsubmit name="copyQtnBtn" type="button" id="copyQtnBtn" value="复制问题" onclick="if(window.confirm('您真的想从该问题复制一份副本吗？副本问题将被插入在当前问题之后，并且问题的逻辑关系并不被复制!？')){fnUnload(1);showWaiting();window.location.href='{copyURL}';}">
+	 <input class=inputsubmit name="deleSurveyBtn" type="button" id="deleSurveyBtn" value="删除问题" onclick="if(window.confirm('您真的想删除该调查问题吗？本操作不可恢复！')){fnUnload(1);showWaiting();window.location.href='{deleteURL}';}">
+     <input class=inputsubmit name="inQtnBtn" type="button" id="inQtnBtn" value="插入问题" onclick="javascript:fnUnload(1);closeLog('menu-div');showPopWin('{inURL}', 900, 200,refreshParent, null,'插入调查问题')">
+	 <input class=inputsubmit name="qtnLogicBtn" type="button" id="qtnLogicBtn" value="逻辑关系" onclick="showWaiting();window.location.href='{logicURL}';" style="display:{isHaveLogicQtn}">
+ </div>

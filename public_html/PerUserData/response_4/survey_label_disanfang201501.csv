@@ -1,0 +1,225 @@
+ VARIABLE LABELS responseNo '序号'.
+ VARIABLE LABELS joinTime '回复时间(开始)'.
+ VARIABLE LABELS submitTime '回复时间(结束)'.
+ VARIABLE LABELS recordFile '全程录音|录像文件'.
+ VARIABLE LABELS submitFlag '完成标记'.
+ VARIABLE LABELS dataAuthStat '审核状态'.
+ VARIABLE LABELS timeSpent '用时'.
+ VARIABLE LABELS dataSource '数据来源'.
+ VARIABLE LABELS ipAddress '地址标识'.
+ VARIABLE LABELS fromArea '来源'.
+ VARIABLE LABELS userName '样本标识'.
+ VARIABLE LABELS VAR254 '第三方授权服务商类型选择'.
+ VALUE LABELS VAR254 1 '形象店' 2 '非形象店' .
+ VARIABLE LABELS VAR255 '成绩卡编号'.
+ VARIABLE LABELS VAR415 '省'.
+ VALUE LABELS VAR415 1 '北京' 2 '天津' 3 '上海' 4 '重庆' 5 '河北' 6 '河南' 7 '云南' 8 '辽宁' 9 '黑龙江' 10 '湖南' 11 '安徽' 12 '山东' 13 '新疆' 14 '江苏' 15 '浙江' 16 '江西' 17 '湖北' 18 '广西' 19 '甘肃' 20 '山西' 21 '内蒙古' 22 '陕西' 23 '吉林' 24 '福建' 25 '贵州' 26 '广东' 27 '青海' 28 '西藏' 29 '四川' 30 '宁夏' 31 '海南' .
+ VARIABLE LABELS VAR257 '机构代码'.
+ VARIABLE LABELS VAR258 '门店名称'.
+ VARIABLE LABELS VAR260 '调查日期'.
+ VARIABLE LABELS VAR261 '进店时间：'.
+ VARIABLE LABELS VAR262 '离店时间：'.
+ VARIABLE LABELS VAR263 '详细地址'.
+ VARIABLE LABELS VAR264 '店内员工人数'.
+ VALUE LABELS VAR264 1 '1人' 2 '2人' 3 '3人' 4 '4人' 5 '5人' 6 '6人' 7 '7人' 8 '8人' 9 '9人' 10 '10人' 11 '11人' 12 '12人及以上' .
+ VARIABLE LABELS VAR423 '按照预先设定，我送修的该部手机属于'.
+ VALUE LABELS VAR423 1 '保内' 2 '保外' .
+ VARIABLE LABELS VAR265 '手机型号'.
+ VALUE LABELS VAR265 1 'Mi4' 2 '红米Note' 3 '红米1S' 4 'Mi3' 5 '小米Note' 6 'H3X' .
+ VARIABLE LABELS VAR266 '串号'.
+ VARIABLE LABELS VAR416 '故障描述'.
+ VALUE LABELS VAR416 1 '在开启Wifi状态下使用HIFI音效播放音乐，外接耳机会听到兹兹声' 2 '漏电，扬声器无声' 3 'GPS无法定位，定位慢或定位不准' 4 '不开机' 5 '显示屏碎 局部触屏失灵' 6 '不识卡' 7 '闪光灯触片断' 8 '无信号或信号弱' 9 '扬声器无声' 10 '不送话' 11 '照相模糊' 12 'SIM卡掉焊盘 不开机' 13 '主板变形不开机' 14 '主板反应慢  进水' 15 '有WIFI信号，但无法使用WIF上网' 16 '卡1或2无信号' 17 '触屏失灵，触屏接口进水' 18 '主板显示屏碎' 19 '死机 主板变形' 20 '黄米定屏' 21 '无显示' 22 '照相有黑线' 23 '听筒杂音' 24 '信号弱' 25 '电池连接器损坏' 26 '照相模糊' 27 '不照相' 28 '送话声小' 29 '耳机不送话' 30 '耳机一边无声' .
+ VARIABLE LABELS VAR268 '神秘顾客姓名'.
+ VARIABLE LABELS VAR428 '神秘顾客联系方式'.
+ VARIABLE LABELS VAR270 'A1-1形象店：小米标准户外门头/非形象店：小米标准logo'.
+ VALUE LABELS VAR270 1 '符合' 2 '不符合' .
+ VARIABLE LABELS VAR270_2_text 'A1-1形象店：小米标准户外门头/非形象店：小米标准logo-不符合-Text'.
+ VARIABLE LABELS VAR271 'A1-2门窗玻璃清洁明亮'.
+ VALUE LABELS VAR271 1 '符合' 2 '不符合' .
+ VARIABLE LABELS VAR271_2_text 'A1-2门窗玻璃清洁明亮-不符合-Text'.
+ VARIABLE LABELS VAR272 'A1-3硬件设施干净整洁'.
+ VALUE LABELS VAR272 1 '符合' 2 '不符合' .
+ VARIABLE LABELS VAR272_2_text 'A1-3硬件设施干净整洁-不符合-Text'.
+ VARIABLE LABELS VAR273 'A1-4门头、灯箱、家具等硬件设施完好'.
+ VALUE LABELS VAR273 1 '符合' 2 '不符合' .
+ VARIABLE LABELS VAR273_2_text 'A1-4门头、灯箱、家具等硬件设施完好-不符合-Text'.
+ VARIABLE LABELS VAR274 'A1-5网点内地面、墙面干净整洁'.
+ VALUE LABELS VAR274 1 '符合' 2 '不符合' .
+ VARIABLE LABELS VAR274_2_text 'A1-5网点内地面、墙面干净整洁-不符合-Text'.
+ VARIABLE LABELS VAR275 'A1-6工作时间室内家具、硬件灯光全部开启'.
+ VALUE LABELS VAR275 1 '符合' 2 '不符合' .
+ VARIABLE LABELS VAR275_2_text 'A1-6工作时间室内家具、硬件灯光全部开启-不符合-Text'.
+ VARIABLE LABELS VAR276 'A1-7物品摆放整齐有序'.
+ VALUE LABELS VAR276 1 '符合' 2 '不符合' .
+ VARIABLE LABELS VAR276_2_text 'A1-7物品摆放整齐有序-不符合-Text'.
+ VARIABLE LABELS VAR277 'A1-8有授权牌且摆放在醒目位置'.
+ VALUE LABELS VAR277 1 '符合' 2 '不符合' .
+ VARIABLE LABELS VAR277_2_text 'A1-8有授权牌且摆放在醒目位置-不符合-Text'.
+ VARIABLE LABELS VAR278 'A1-9服务政策牌符合规范'.
+ VALUE LABELS VAR278 1 '符合' 2 '不符合' .
+ VARIABLE LABELS VAR278_2_text 'A1-9服务政策牌符合规范-不符合-Text'.
+ VARIABLE LABELS VAR279 'A1-10前台摆放小米名片'.
+ VALUE LABELS VAR279 1 '符合' 2 '不符合' .
+ VARIABLE LABELS VAR279_2_text 'A1-10前台摆放小米名片-不符合-Text'.
+ VARIABLE LABELS VAR280 'A1-11休息椅、接待椅、背景墙logo无缺'.
+ VALUE LABELS VAR280 1 '符合' 2 '不符合' .
+ VARIABLE LABELS VAR280_2_text 'A1-11休息椅、接待椅、背景墙logo无缺-不符合-Text'.
+ VARIABLE LABELS VAR281 'A1-12接待台、休息椅、配件墙等规范统一'.
+ VALUE LABELS VAR281 1 '符合' 2 '不符合' .
+ VARIABLE LABELS VAR281_2_text 'A1-12接待台、休息椅、配件墙等规范统一-不符合-Text'.
+ VARIABLE LABELS VAR282 'A1-13配件柜配件摆放数量饱满'.
+ VALUE LABELS VAR282 1 '符合' 2 '不符合' .
+ VARIABLE LABELS VAR282_2_text 'A1-13配件柜配件摆放数量饱满-不符合-Text'.
+ VARIABLE LABELS VAR283 'A1-14店内无非小米原装配件'.
+ VALUE LABELS VAR283 1 '符合' 2 '不符合' .
+ VARIABLE LABELS VAR283_2_text 'A1-14店内无非小米原装配件-不符合-Text'.
+ VARIABLE LABELS VAR284 'A1-15体验台有展示样机（每张台子至少摆4台机器）'.
+ VALUE LABELS VAR284 1 '符合' 2 '不符合' .
+ VARIABLE LABELS VAR284_2_text 'A1-15体验台有展示样机（每张台子至少摆4台机器）-不符合-Text'.
+ VARIABLE LABELS VAR285 'A1-16体验台有产品桌卡'.
+ VALUE LABELS VAR285 1 '符合' 2 '不符合' .
+ VARIABLE LABELS VAR285_2_text 'A1-16体验台有产品桌卡-不符合-Text'.
+ VARIABLE LABELS VAR286 'A1-17店内配备叫号器'.
+ VALUE LABELS VAR286 1 '符合' 2 '不符合' .
+ VARIABLE LABELS VAR286_2_text 'A1-17店内配备叫号器-不符合-Text'.
+ VARIABLE LABELS VAR287 'A1-18店内安装监控'.
+ VALUE LABELS VAR287 1 '符合' 2 '不符合' .
+ VARIABLE LABELS VAR287_2_text 'A1-18店内安装监控-不符合-Text'.
+ VARIABLE LABELS VAR289 'A2-1统一着装，干净整洁'.
+ VALUE LABELS VAR289 1 '符合' 2 '不符合' .
+ VARIABLE LABELS VAR289_2_text 'A2-1统一着装，干净整洁-不符合-Text'.
+ VARIABLE LABELS VAR290 'A2-2胸前佩戴胸卡，或统一胸前挂牌'.
+ VALUE LABELS VAR290 1 '符合' 2 '不符合' .
+ VARIABLE LABELS VAR290_2_text 'A2-2胸前佩戴胸卡，或统一胸前挂牌-不符合-Text'.
+ VARIABLE LABELS VAR291 'A2-3无异妆、异发等打扮'.
+ VALUE LABELS VAR291 1 '符合' 2 '不符合' .
+ VARIABLE LABELS VAR291_2_text 'A2-3无异妆、异发等打扮-不符合-Text'.
+ VARIABLE LABELS VAR292 'A2-4配备引导员/体验师'.
+ VALUE LABELS VAR292 1 '符合' 2 '不符合' .
+ VARIABLE LABELS VAR292_2_text 'A2-4配备引导员/体验师-不符合-Text'.
+ VARIABLE LABELS VAR294 'A3-1保持桶内有水'.
+ VALUE LABELS VAR294 1 '符合' 2 '不符合' .
+ VARIABLE LABELS VAR294_2_text 'A3-1保持桶内有水-不符合-Text'.
+ VARIABLE LABELS VAR295 'A3-2饮水机内放置一次性水杯'.
+ VALUE LABELS VAR295 1 '符合' 2 '不符合' .
+ VARIABLE LABELS VAR295_2_text 'A3-2饮水机内放置一次性水杯-不符合-Text'.
+ VARIABLE LABELS VAR296 'A3-3电视运行正常（正在播放电视节目或与小米相关内容）'.
+ VALUE LABELS VAR296 1 '符合' 2 '不符合' .
+ VARIABLE LABELS VAR296_2_text 'A3-3电视运行正常（正在播放电视节目或与小米相关内容）-不符合-Text'.
+ VARIABLE LABELS VAR297 'A3-4店内WIFI正常使用'.
+ VALUE LABELS VAR297 1 '符合' 2 '不符合' .
+ VARIABLE LABELS VAR297_2_text 'A3-4店内WIFI正常使用-不符合-Text'.
+ VARIABLE LABELS VAR298 'A3-5报纸/杂志及时整理、完好'.
+ VALUE LABELS VAR298 1 '符合' 2 '不符合' .
+ VARIABLE LABELS VAR298_2_text 'A3-5报纸/杂志及时整理、完好-不符合-Text'.
+ VARIABLE LABELS VAR299 'A3-6下载台电脑呈打开状态且运行正常'.
+ VALUE LABELS VAR299 1 '符合' 2 '不符合' .
+ VARIABLE LABELS VAR299_2_text 'A3-6下载台电脑呈打开状态且运行正常-不符合-Text'.
+ VARIABLE LABELS VAR301 'B1-1坚守岗位，不擅离职守'.
+ VALUE LABELS VAR301 1 '符合' 2 '不符合' .
+ VARIABLE LABELS VAR301_2_text 'B1-1坚守岗位，不擅离职守-不符合-Text'.
+ VARIABLE LABELS VAR302 'B1-2 对工作流程和业务操作娴熟'.
+ VALUE LABELS VAR302 1 '符合' 2 '不符合' .
+ VARIABLE LABELS VAR302_2_text 'B1-2 对工作流程和业务操作娴熟-不符合-Text'.
+ VARIABLE LABELS VAR303 'B1-3 工作时间不做与工作无关的事情'.
+ VALUE LABELS VAR303 1 '符合' 2 '不符合' .
+ VARIABLE LABELS VAR303_2_text 'B1-3 工作时间不做与工作无关的事情-不符合-Text'.
+ VARIABLE LABELS VAR304 'B1-4不当顾客面谈论涉及小米品牌的内部事项'.
+ VALUE LABELS VAR304 1 '符合' 2 '不符合' .
+ VARIABLE LABELS VAR304_2_text 'B1-4不当顾客面谈论涉及小米品牌的内部事项-不符合-Text'.
+ VARIABLE LABELS VAR306 'B2-1微笑服务'.
+ VALUE LABELS VAR306 1 '符合' 2 '不符合' .
+ VARIABLE LABELS VAR306_2_text 'B2-1微笑服务-不符合-Text'.
+ VARIABLE LABELS VAR307 'B2-2与客户沟通时保持目光接触'.
+ VALUE LABELS VAR307 1 '符合' 2 '不符合' .
+ VARIABLE LABELS VAR307_2_text 'B2-2与客户沟通时保持目光接触-不符合-Text'.
+ VARIABLE LABELS VAR308 'B2-3尊称或昵称客户'.
+ VALUE LABELS VAR308 1 '符合' 2 '不符合' .
+ VARIABLE LABELS VAR308_2_text 'B2-3尊称或昵称客户-不符合-Text'.
+ VARIABLE LABELS VAR309 'B2-4提醒用户刷机前进行备份，或协助用户进行备份'.
+ VALUE LABELS VAR309 1 '符合' 2 '不符合' .
+ VARIABLE LABELS VAR309_2_text 'B2-4提醒用户刷机前进行备份，或协助用户进行备份-不符合-Text'.
+ VARIABLE LABELS VAR310 'B2-5提醒用户提供1小时快修服务及超期赔付'.
+ VALUE LABELS VAR310 1 '符合' 2 '不符合' .
+ VARIABLE LABELS VAR310_2_text 'B2-5提醒用户提供1小时快修服务及超期赔付-不符合-Text'.
+ VARIABLE LABELS VAR311 'B2-6拆机前会征得客户的同意'.
+ VALUE LABELS VAR311 1 '符合' 2 '不符合' .
+ VARIABLE LABELS VAR311_2_text 'B2-6拆机前会征得客户的同意-不符合-Text'.
+ VARIABLE LABELS VAR312 'B2-7拆机后的附件放在专用小物品袋中并与客户逐一确认'.
+ VALUE LABELS VAR312 1 '符合' 2 '不符合' .
+ VARIABLE LABELS VAR312_2_text 'B2-7拆机后的附件放在专用小物品袋中并与客户逐一确认-不符合-Text'.
+ VARIABLE LABELS VAR313 'B2-8轻拿轻放客户的手机'.
+ VALUE LABELS VAR313 1 '符合' 2 '不符合' .
+ VARIABLE LABELS VAR313_2_text 'B2-8轻拿轻放客户的手机-不符合-Text'.
+ VARIABLE LABELS VAR314 'B2-9在服务过程中使用标准用语'.
+ VALUE LABELS VAR314 1 '符合' 2 '不符合' .
+ VARIABLE LABELS VAR314_2_text 'B2-9在服务过程中使用标准用语-不符合-Text'.
+ VARIABLE LABELS VAR315 'B2-10双手接递款物、单据'.
+ VALUE LABELS VAR315 1 '符合' 2 '不符合' .
+ VARIABLE LABELS VAR315_2_text 'B2-10双手接递款物、单据-不符合-Text'.
+ VARIABLE LABELS VAR316 'B2-11积极聆听客户需求'.
+ VALUE LABELS VAR316 1 '符合' 2 '不符合' .
+ VARIABLE LABELS VAR316_2_text 'B2-11积极聆听客户需求-不符合-Text'.
+ VARIABLE LABELS VAR317 'B2-12口齿清晰，语速适中'.
+ VALUE LABELS VAR317 1 '符合' 2 '不符合' .
+ VARIABLE LABELS VAR317_2_text 'B2-12口齿清晰，语速适中-不符合-Text'.
+ VARIABLE LABELS VAR318 'B2-13避免使用服务禁语'.
+ VALUE LABELS VAR318 1 '符合' 2 '不符合' .
+ VARIABLE LABELS VAR318_2_text 'B2-13避免使用服务禁语-不符合-Text'.
+ VARIABLE LABELS VAR319 'B2-14不与客户发生争吵'.
+ VALUE LABELS VAR319 1 '符合' 2 '不符合' .
+ VARIABLE LABELS VAR319_2_text 'B2-14不与客户发生争吵-不符合-Text'.
+ VARIABLE LABELS VAR320 'B2-15服务中不流露不满'.
+ VALUE LABELS VAR320 1 '符合' 2 '不符合' .
+ VARIABLE LABELS VAR320_2_text 'B2-15服务中不流露不满-不符合-Text'.
+ VARIABLE LABELS VAR321 'B2-16中断服务，需要客户等待时，礼貌地告知客户'.
+ VALUE LABELS VAR321 1 '符合' 2 '不符合' .
+ VARIABLE LABELS VAR321_2_text 'B2-16中断服务，需要客户等待时，礼貌地告知客户-不符合-Text'.
+ VARIABLE LABELS VAR322 'B2-17提醒客户填写客户服务反馈表'.
+ VALUE LABELS VAR322 1 '符合' 2 '不符合' .
+ VARIABLE LABELS VAR322_2_text 'B2-17提醒客户填写客户服务反馈表-不符合-Text'.
+ VARIABLE LABELS VAR323 'B2-18使用标准送别语'.
+ VALUE LABELS VAR323 1 '符合' 2 '不符合' .
+ VARIABLE LABELS VAR323_2_text 'B2-18使用标准送别语-不符合-Text'.
+ VARIABLE LABELS VAR324 'B2-19没有不良投诉发生'.
+ VALUE LABELS VAR324 1 '符合' 2 '不符合' .
+ VARIABLE LABELS VAR324_2_text 'B2-19没有不良投诉发生-不符合-Text'.
+ VARIABLE LABELS VAR325 'B2-20及时回应客户的询问'.
+ VALUE LABELS VAR325 1 '符合' 2 '不符合' .
+ VARIABLE LABELS VAR325_2_text 'B2-20及时回应客户的询问-不符合-Text'.
+ VARIABLE LABELS VAR326 'B2-21坐姿端正自然、不前仰后靠、不左摇右晃'.
+ VALUE LABELS VAR326 1 '符合' 2 '不符合' .
+ VARIABLE LABELS VAR326_2_text 'B2-21坐姿端正自然、不前仰后靠、不左摇右晃-不符合-Text'.
+ VARIABLE LABELS VAR327 'B2-22当顾客对服务人员的服务表示不满时，主动致歉'.
+ VALUE LABELS VAR327 1 '符合' 2 '不符合' .
+ VARIABLE LABELS VAR327_2_text 'B2-22当顾客对服务人员的服务表示不满时，主动致歉-不符合-Text'.
+ VARIABLE LABELS VAR328 'B2-23工程师出现在前台有防静电服'.
+ VALUE LABELS VAR328 1 '符合' 2 '不符合' .
+ VARIABLE LABELS VAR328_2_text 'B2-23工程师出现在前台有防静电服-不符合-Text'.
+ VARIABLE LABELS VAR330 'C1-1主动倒水服务'.
+ VALUE LABELS VAR330 1 '符合' 2 '不符合' .
+ VARIABLE LABELS VAR330_2_text 'C1-1主动倒水服务-不符合-Text'.
+ VARIABLE LABELS VAR331 'C1-2主动关怀等待过长时间用户问题和进展'.
+ VALUE LABELS VAR331 1 '符合' 2 '不符合' .
+ VARIABLE LABELS VAR331_2_text 'C1-2主动关怀等待过长时间用户问题和进展-不符合-Text'.
+ VARIABLE LABELS VAR332 'C1-3店内有课堂等活动'.
+ VALUE LABELS VAR332 1 '符合' 2 '不符合' .
+ VARIABLE LABELS VAR332_2_text 'C1-3店内有课堂等活动-不符合-Text'.
+ VARIABLE LABELS VAR333 'C1-4店内除标配硬件，有其他免费服务设施（如桌上足球、飞镖）'.
+ VALUE LABELS VAR333 1 '符合' 2 '不符合' .
+ VARIABLE LABELS VAR333_2_text 'C1-4店内除标配硬件，有其他免费服务设施（如桌上足球、飞镖）-不符合-Text'.
+ VARIABLE LABELS VAR334 'C1-4是独立的小米受理店面'.
+ VALUE LABELS VAR334 1 '符合' 2 '不符合' .
+ VARIABLE LABELS VAR334_2_text 'C1-4是独立的小米受理店面-不符合-Text'.
+ VARIABLE LABELS VAR336_1 '结合你在该店的个人体验，用10分制来评价以下描述语句。10分表示对此描述完全同意，1分则表示完全不同意。-D1 小米的售后服务人员，是在用真心与客户交朋友！'.
+ VALUE LABELS VAR336_1 10 '10' 9 '9' 8 '8' 7 '7' 6 '6' 5 '5' 4 '4' 3 '3' 2 '2' 1 '1'  VARIABLE LABELS VAR336_1_why_text '结合你在该店的个人体验，用10分制来评价以下描述语句。10分表示对此描述完全同意，1分则表示完全不同意。-D1 小米的售后服务人员，是在用真心与客户交朋友！-理由'.
+ VARIABLE LABELS VAR336_2 '结合你在该店的个人体验，用10分制来评价以下描述语句。10分表示对此描述完全同意，1分则表示完全不同意。-D2 在这个店，我觉得他们的维修技术十分专业！'.
+ VALUE LABELS VAR336_2 10 '10' 9 '9' 8 '8' 7 '7' 6 '6' 5 '5' 4 '4' 3 '3' 2 '2' 1 '1'  VARIABLE LABELS VAR336_2_why_text '结合你在该店的个人体验，用10分制来评价以下描述语句。10分表示对此描述完全同意，1分则表示完全不同意。-D2 在这个店，我觉得他们的维修技术十分专业！-理由'.
+ VARIABLE LABELS VAR419 '该部手机在该店是否完成了维修？'.
+ VALUE LABELS VAR419 1 '是' 2 '否' .
+ VARIABLE LABELS VAR418 '如果最终没有完成维修，请记录原因。'.
+ VARIABLE LABELS VAR418_99_text '如果最终没有完成维修，请记录原因。-其他-Text'.
+ VALUE LABELS VAR418 1 '经检测没有故障' 2 '店内当日没有配件，无法维修' 3 '返厂维修或留机' 4 '要求出示凭证否则不予维修' 5 '我送修的手机属于保外，维修需要收费'  99 '其他' .
+ VARIABLE LABELS VAR421 '是否在附近发现有小米售后山寨店或疑似山寨店。'.
+ VALUE LABELS VAR421 1 '是的，附近有山寨或疑似山寨店' 2 '本次没有发现' .
+ VARIABLE LABELS VAR421_1_text '是否在附近发现有小米售后山寨店或疑似山寨店。-是的，附近有山寨或疑似山寨店-Text'.

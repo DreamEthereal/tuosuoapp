@@ -1,0 +1,60 @@
+<table style="LINE-HEIGHT: 150%;border-collapse:collapse;margin-bottom:5px" cellSpacing=0 cellPadding=0 borderColor=#ffffff border=1>
+ <tr><td>
+	 <div id="flashcontent">
+		<b>浏览器可能需要升级Flash播放器版本</b>
+	 </div>
+
+	<script type="text/javascript">
+	    var chartWidth = {chartWidth};
+		var chartHeight = {chartHeight};
+		var so = new SWFObject("../Chart/AmLine.swf", "amline", chartWidth, chartHeight, "8", "#FFFFFF");
+		so.addVariable("path", "../Chart/");
+		so.addParam("wmode", "transparent");
+		so.addVariable("data_file", escape("../Chart/SGGDataLine.php?surveyID={surveyID}"));
+		so.addVariable("chart_settings", encodeURIComponent("<settings><decimals_separator>.</decimals_separator> <thousands_separator>,</thousands_separator><legend><y>{legendY}</y><text_size>12</text_size> </legend><grid><x><approx_count>{xLineNum}</approx_count><dashed>true</dashed></x><y_left><dashed>true</dashed></y_left></grid><background><color></color><alpha>100</alpha></background><export_as_image><file>../Chart/ChartExport.php</file><target>_top</target><x></x><y></y><color></color><alpha>100</alpha><text_color></text_color><text_size></text_size></export_as_image><strings><no_data>尚无符合条件的问卷数据，无法绘制图形</no_data><export_as_image>以图片格式导出</export_as_image><collecting_data>收集数据过程中...</collecting_data><ss></ss><mm></mm><hh></hh><DD></DD></strings><context_menu><default_items><zoom>false</zoom><print>false</print></default_items></context_menu></settings>"));
+		so.write("flashcontent");
+	</script>
+</td></tr>
+</table>
+
+<table style="border:1px solid #cacaca;margin-bottom:5px" width=99%>
+ <tr style="background-color:#e4e0ea;border-bottom:1px solid #cacaca"><td>
+ <span class=red>*</span> 简单的Gabor Granger法需求曲线可显示测试产品的三个关键测度：①Maximum franchise potential(最大潜在权限)，它是在最低价格时对产品的需求；②Elasticity(需求价格弹性)，反映价格变动一个百分点，需求数量变动的百分比；③Core loyals(核心忠诚顾客)，它是在最高价格下仍选择测试产品的人数百分比，这部分人是测试产品的忠诚顾客。</td></tr>
+
+ <tr style="background-color:#e4e0ea;border-bottom:1px solid #cacaca"><td><span class=red>*</span> 
+ 从需求曲线可以看出随着价格上升，需求数量减少是否均匀，还是存在一个特殊价格点称价格门限(Price threshold)，在这个点上需求数量突然减少很多。</td></tr>
+
+<tr style="background-color:#e4e0ea;border-bottom:1px solid #cacaca"><td><span class=red>*</span> 
+从需求曲线的形状可以分析对于测试的产品是否存在价格细分市场。 
+
+</td></tr></table>
+
+<table style="border:1px solid #cacaca;margin-bottom:5px" id="copyContent" width=99%>
+	<tr style="color:white;">
+	    <td bgcolor=#cf1100 align=center nowrap>&nbsp;<b>价格水平</b></td>
+	    <td bgcolor=#cf1100 align=center nowrap>&nbsp;<b>肯定或可能购买的百分比(%)</b></td>
+		<td bgcolor=#cf1100 align=center>&nbsp;<b>仿造收益(元)</b></td>
+		<td bgcolor=#cf1100 align=center>&nbsp;<b>需求弹性</b></td>
+	</tr>
+	<!-- BEGIN LIST -->
+	<tr style="background-color:#e4e0ea;border-bottom:1px solid #cacaca">
+	    <td nowrap align=center nowrap>&nbsp;{priceValue}</td>
+		<td nowrap align=center>&nbsp;<b>{thePriceRate}</b></td>
+		<td nowrap align=center>&nbsp;<b>{theIncomeValue}</b></td>
+		<td nowrap align=center>&nbsp;<b>{theElasticity}</b></td>
+	</tr>
+	<!-- END LIST -->
+</table>
+
+<table style="border:1px solid #cacaca;margin-bottom:5px" width=99%>
+ <tr style="background-color:#e4e0ea;border-bottom:1px solid #cacaca"><td>
+ <span class=red>*</span> 使用分析结果时的注意事项：</td></tr>
+ 
+ <tr style="background-color:#e4e0ea;border-bottom:1px solid #cacaca"><td>
+ &nbsp;&nbsp;&nbsp;&nbsp;1) Gabor Granger法是假定其他营销组合因素如渠道、广告、销售促销等方面不变，而且竞争品牌的价格也不变的情况下，测试产品价格变化时对销售的影响，如果其他因素发生变化，所得到的结论就不能应用</td></tr>
+ 
+ <tr style="background-color:#e4e0ea;border-bottom:1px solid #cacaca"><td>
+ &nbsp;&nbsp;&nbsp;&nbsp;2) 正如1中所指出的，Gabor Granger法假定其他不变，但时间一长很难保证其他方面不变，因此，所得到的最优价格是暂时的，不能保证在整个时期最优价格都不会改变</td></tr>
+ <tr style="background-color:#e4e0ea;border-bottom:1px solid #cacaca"><td>
+ &nbsp;&nbsp;&nbsp;&nbsp;3) Gabor Granger法是用统计方法得出最优价格的，因此肯定会存在误差。为保险起见，常取最优价格的95％置信区间的下限作为保守的最优价格</td></tr>
+</table>

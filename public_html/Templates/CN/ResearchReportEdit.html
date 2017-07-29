@@ -1,0 +1,206 @@
+<html>
+<head>
+<meta http-equiv=content-language content=zh-cn>
+<meta http-equiv=content-type content="text/html; charset=gbk">
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7">
+<style>
+ td { padding:2px 5px 2px 5px;}
+</style>
+<link href="../CSS/Base.css" rel=stylesheet>
+<LINK href="../CSS/Window.css" type=text/css rel=stylesheet>
+<LINK href="../CSS/TagsInput.css" type=text/css rel=stylesheet>
+<script type="text/javascript" src="../JS/Jquery.min.js.php"></script>
+<script type="text/javascript" src="../JS/Jquery.notification.js.php"></script>
+<link type="text/css" rel="stylesheet" href="../CSS/Notification.css" />
+<script language=javascript src="../JS/CheckQuestion.js.php"></script>
+<script language=javascript src="../JS/HighLight.js.php"></script>
+<script language=javascript src="../JS/Jquery.tagsinput.js.php"></script>
+
+<link href="../CSS/FileUpload.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="../JS/Swfupload.js.php"></script>
+<script type="text/javascript" src="../JS/Swfqueue.js.php"></script>		
+<script type="text/javascript" src="../JS/Swfobject.js.php"></script>		
+<script type="text/javascript" src="../JS/FileProgress.js.php"></script>
+<script type="text/javascript" src="../JS/Swfhandlers.js.php"></script>
+
+<script language=javascript>
+function Check_Form_Validator()
+{
+	if (!CheckNotNull(document.Check_Form.reportName, "文件名称")) {return false;}
+	if (!CheckNotNull(document.Check_Form.reportRecipient, "文件接受人")) {return false;}
+	if (!CheckNotNull(document.Check_Form.reportFile, "上传文件")) {return false;}
+}
+function submitForm()
+{
+	if( Check_Form_Validator() != false )
+	{
+		document.getElementById('submitBtn').disabled = true;
+		disabledStyle(document.getElementById('submitBtn'));
+		document.getElementById('resetBtn').disabled = true;
+		disabledStyle(document.getElementById('resetBtn'));
+		document.getElementById('close').disabled = true;
+		disabledStyle(document.getElementById('close'));
+		document.Check_Form.submit();
+	}
+}
+</script>
+<style>
+	select,img {vertical-align: middle;}
+</style>
+<meta content="mshtml 6.00.3790.0" name=generator></head>
+<body oncontextmenu="return false">
+  <form action="" method="post" name="Check_Form" id="Check_Form" onsubmit="return false;">
+  <table class=datatable style="line-height: 150%;border-collapse:collapse;" cellspacing=0 cellpadding=0 bordercolor=#cacaca border=1 width=100%>
+     <div class=position>位置：&nbsp; 我的问卷 &raquo; 上传调研(报告|管理)文件</div>
+      <tr><td bgcolor="#f9f9f9"><b>文件名称</b></td></tr>
+      <tr><td><input class="textInput" name="reportName" type="text" id="reportName" value="{reportName}" size="120"></td></tr>
+      <tr><td bgcolor="#f9f9f9"><b>文件接受人</b></td></tr>
+      <tr><td><span class=red>*</span> 输入(录入员|查看员)用户登录名，以逗号/回车/鼠标点击作为输入多个用户名之间的分割，不存在的用户名将被系统抛弃</td></tr>
+      <tr><td><input name="reportRecipient" type="text" id="reportRecipient" class="tags" size="92" value="{reportRecipient}">
+	  </td></tr>
+      <tr><td bgcolor="#f9f9f9"><b>上传文件</b></td></tr>
+	  <tr><td><table cellSpacing=0 cellPadding=0 width="100%" style="border:0px">
+		   <div><b>上传文件：</b><input type="text" readonly id="reportFile" name="reportFile" value="{reportFile}" style="margin-right:5px;vertical-align: middle" size="70"/><span id="upload_reportFile"></span>&nbsp;<input type="button" value="上传" onclick="fileUpload_reportFile.startUpload();" class="buttonClass"  style="vertical-align: middle"/></div>
+		   <div id="fsUploadProgress_reportFile" style="border:0px"></div>
+		   <noscript>
+		   <div style="background-color: #FFFF66; border-top: solid 4px #FF9966; border-bottom: solid 4px #FF9966; margin: 10px 25px; padding: 10px 15px;border:0px">上传控件加载失败，原因可能是：您可能未开启JavaScript支持！</div>
+		   </noscript>
+		   <div id="divLoadingContent_reportFile" class="content" style="background-color: #FFFF66; border-top: solid 4px #FF9966; border-bottom: solid 4px #FF9966; margin: 10px 25px; padding: 10px 15px; display: none;border:0px">上传控件加载中，请稍候...</div>
+		   <div id="divLongLoading_reportFile" class="content" style="background-color: #FFFF66; border-top: solid 4px #FF9966; border-bottom: solid 4px #FF9966; margin: 10px 25px; padding: 10px 15px; display: none;border:0px">上传控件加载超时，原因可能是：请保证您的flash插件是开启状态，上传控件需要Flash Player 9或以上的支持！</div>
+		   <div id="divAlternateContent_reportFile" class="content" style="background-color: #FFFF66; border-top: solid 4px #FF9966; border-bottom: solid 4px #FF9966; margin: 10px 25px; padding: 10px 15px; display: none;border:0px">上传控件加载失败，原因可能是：您的Flash Player版本过低！您可以访问<a href="http://www.adobe.com/shockwave/download/download.cgi?P1_Prod_Version=ShockwaveFlash">Adobe网站</a>获得最新Flash Player版本。</div>
+		   <div><span class=red>*</span> 上传文件扩展名限制为：{allowType}，大小限制为：{maxSize}M</div>
+		   <div><span class=red>*</span> 建议上传的文件名中不包含英文单引号</div>
+   </table></td></tr>
+   </table>
+   <table width=100%>
+      <tr><td height="23" align="left" style="padding-left:0px">
+				<input type="hidden" name="Action" value="{Action}">
+				<input type="hidden" name="reportID" value="{reportID}">
+				<input type="hidden" name="reportTime" value="{reportTime}">
+				<input type="hidden" name="ori_reportFile" value="{ori_reportFile}">
+				<input type="hidden" name="ori_reportFileName" value="{ori_reportFileName}">
+				<input class=inputsubmit type="button" name="submitBtn" id="submitBtn" value="确定" onclick="javascript:submitForm();"> 
+				<input class=inputsubmit name="resetBtn" id="resetBtn" type="reset" value="重置">
+				<input class=inputsubmit type="button" name="close" id="close" value="关闭" onClick="javascript:parent.hidePopWin();">
+		  </td></tr>
+	</table>  
+   </form>
+   <script>
+		$(function() {
+			$('#reportRecipient').tagsInput({width:'auto'});
+		});	
+	</script>
+	<script type="text/javascript">
+	var fileUpload_reportFile;
+	function Init_reportFile() {
+		var settings = {
+			flash_url : "../JS/swfupload.swf",
+			upload_url: "../JS/ReportFileUpload.php",
+			post_params: {"PHPSESSID" : "{session_id}",
+			  "uploadFileName": "reportFile"
+			},
+			file_post_name:"reportFile",
+			file_size_limit : "{maxSize} MB",
+			file_types : "{allowType}",
+			file_types_description : "{allowType}",
+			file_upload_limit : 1,
+			custom_settings : {
+				progressTarget : "fsUploadProgress_reportFile"
+			},
+			debug: false,
+			prevent_swf_caching:true,
+
+			//Button settings
+			button_image_url: "../Images/cnfileselect.png",
+			button_width: "61",
+			button_height: "22",
+			button_placeholder_id: "upload_reportFile",
+			button_action : SWFUpload.BUTTON_ACTION.SELECT_FILE,
+			button_window_mode:"OPAQUE",
+			
+			swfupload_loaded_handler : swfUploadLoaded_reportFile,
+			file_dialog_start_handler:fileDialogStart_reportFile,
+			file_queued_handler : fileQueued,
+			file_queue_error_handler : fileQueueError,
+			file_dialog_complete_handler : fileDialogComplete,
+			upload_start_handler : uploadStart,
+			upload_progress_handler : uploadProgress,
+			upload_error_handler : uploadError,
+			upload_success_handler : uploadSuccess_reportFile,
+			upload_complete_handler : uploadComplete,
+			
+			//SWFObject settings
+			minimum_flash_version : "9.0.28",
+			swfupload_pre_load_handler : swfUploadPreLoad_reportFile,
+			swfupload_load_failed_handler : swfUploadLoadFailed_reportFile
+		};
+
+		fileUpload_reportFile= new SWFUpload(settings);
+	}
+
+	function swfUploadPreLoad_reportFile() {
+		var self = this;
+		var loading = function () {
+			document.getElementById("divLoadingContent_reportFile").style.display = "";
+
+			var longLoad = function () {
+				document.getElementById("divLoadingContent_reportFile").style.display = "none";
+				document.getElementById("divLongLoading_reportFile").style.display = "";
+			};
+			this.customSettings.loadingTimeout = setTimeout(function () {
+					longLoad.call(self)
+				},
+				15 * 1000
+			);
+		};
+		
+		this.customSettings.loadingTimeout = setTimeout(function () {
+				loading.call(self);
+			},
+			1*1000
+		);
+	}
+	function swfUploadLoaded_reportFile() {
+		var self = this;
+		clearTimeout(this.customSettings.loadingTimeout);
+		document.getElementById("divLoadingContent_reportFile").style.display = "none";
+		document.getElementById("divLongLoading_reportFile").style.display = "none";
+		document.getElementById("divAlternateContent_reportFile").style.display = "none";
+	}
+	   
+	function swfUploadLoadFailed_reportFile() {
+		clearTimeout(this.customSettings.loadingTimeout);
+		document.getElementById("divLoadingContent_reportFile").style.display = "none";
+		document.getElementById("divLongLoading_reportFile").style.display = "none";
+		document.getElementById("divAlternateContent_reportFile").style.display = "";
+	}
+	//打开文件选择选择窗口时触发的事件
+	function fileDialogStart_reportFile() {
+		var txt = document.getElementById("reportFile");
+		txt.value = "";
+		this.cancelUpload();
+	}
+
+	//文件传输完成触发事件
+	function uploadSuccess_reportFile(file, serverData) {
+		try {
+			var progress = new FileProgress(file, this.customSettings.progressTarget);
+			progress.setComplete();
+			progress.setStatus("文件上传完成。");
+			progress.toggleCancel(false);
+
+			this.setButtonDisabled(true);
+			
+			//给文本框赋值
+			var txt = document.getElementById("reportFile");
+			txt.value = serverData;
+			if( document.getElementById('ReportAddAction') != null ) document.getElementById('ReportAddAction').disabled = false;
+		} catch (ex) {
+			this.debug(ex);
+		}
+	}
+	//开始执行
+	Init_reportFile();
+ </script>
+ <script type="text/javascript">initInputHighlightScript();</script> 
+</body></html>

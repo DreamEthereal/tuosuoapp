@@ -1,0 +1,2 @@
+2016-03-13 19:41:31     Could not connect to the database server (192.168.1.104, eclear).
+

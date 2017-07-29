@@ -1,0 +1,30 @@
+<table width="100%">
+<tr>
+    <td height=25 class="question" valign=center>{questionName}</td>
+</tr>
+<tr>
+   <td>
+	 <table style="border:1px solid #cacaca;">
+		<tr><td colspan=4>&nbsp;样本数：<b>&nbsp;{totalRepAnswerNum}</b>&nbsp;&nbsp;有效回复数：&nbsp;<b>{repAnswerNum}</b>&nbsp;&nbsp;回复百分比：&nbsp;{repAnswerPercent} %&nbsp;&nbsp;缺失数：&nbsp;<b>{skipAnswerNum}</b>&nbsp;&nbsp;缺失百分比：&nbsp;{skipAnswerPercent} %</td>
+		<tr style="color:white;"><td bgcolor=#cf1100>&nbsp;<b>选项名称</b></td>
+			<td bgcolor=#cf1100 align=center>&nbsp;<b>频数</b></td>
+			<td bgcolor=#cf1100 align=center>&nbsp;<b>百分比</b></td>
+			<td bgcolor=#cf1100 align=center>&nbsp;<b>有效百分比</b></td>
+		</tr>
+		<!-- BEGIN OPTION -->
+		<tr style="background-color:#e4e0ea;border-bottom:1px solid #cacaca"><td nowrap>&nbsp;{optionName}</td>
+			<td nowrap align=center>&nbsp;<b>{answerNum}</b></td>
+			<td nowrap align=center>&nbsp;{optionPercent} %</td>
+			<td align=center>&nbsp;{optionValidPercent} %</td>
+		</tr>
+		<!-- END OPTION -->
+		<!-- BEGIN OTHER -->
+		<tr style="background-color:#e4e0ea;border-bottom:1px solid #cacaca"><td nowrap>&nbsp;{other_optionName}</td>
+			<td nowrap align=center>&nbsp;<b>{other_answerNum}</b></td>
+			<td nowrap align=center>&nbsp;{other_optionPercent} %</td>
+			<td align=center>&nbsp;{other_optionValidPercent} %</td>
+		</tr>
+		<!-- END OTHER -->
+	  </table>
+  </td>
+</tr></table>

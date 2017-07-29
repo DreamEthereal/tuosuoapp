@@ -1,0 +1,40 @@
+<script type="text/javascript" src="JS/CheckAutoRating.js.php"></script>
+<tr><td height=25 class="question" valign=center>&nbsp;{questionRequire}<span class="textEdit" id="questionName_{questionID}">{questionName}</span>&nbsp;<span class=notes>{questionNotes}</span></td></tr>
+<tr><td class="tips"><span class="textEdit" id="questionNotes_{questionID}">{questionTips}</span></td></tr>
+<tr><td>
+  <table cellSpacing=0 cellPadding=0 id="qtn_table_{questionID}">
+     <tr height=30 class=tdheight style="display:none" id="rating_{baseID}_{questionID}_title">
+	    <td>&nbsp;</td>
+	    <td width=8></td>
+		<td colspan="{colWidth}" class="answer" nowrap>
+		    <span style="float:left">{unitTextLeft}&nbsp;</span>
+		    <span style="float:right">&nbsp;{unitTextRight}</span>
+		</td>
+		<td style="display:{isHaveUnkown}">&nbsp;</td>
+		<td width=10></td>
+		<td>&nbsp;</td>
+	</tr>
+    <tr style="display:none" id="rating_{baseID}_{questionID}_text" height=30 class=tdheight>
+	    <td class=tdheight>&nbsp;</td>
+	    <td width=8></td>
+		<!-- BEGIN RATING -->
+		<td class="answer" align="center" nowrap>{ratingName}</span></td>
+		<td width=10></td>
+		<!-- END RATING -->
+		<td class="answer" align="center" style="display:{isHaveUnkown}" nowrap>Unknow</span></td>
+		<td width=10></td>
+		<td>&nbsp;</td>
+	</tr>	
+    <!-- BEGIN OPTION -->
+    <tr style="display:none" id="rating_{baseID}_{questionID}_{optionNameID}" height=30 class=tdheight>
+		<td class="answer tdheight" nowrap>&nbsp;&nbsp;{optionName}</td>
+	    <td width=8></td>
+		<!-- BEGIN SUBRATING -->
+		<td class="answer" align="center" height=40 id="ratingcheck_{baseID}_{questionID}_{optionNameID}_{optionValue}"><input type="radio" value="{optionValue}" name="{optionID}" id="{optionID}" onclick="Check_Survey_Conditions()" {isCheck}></td>
+		<td width=10></td>
+		<!-- END SUBRATING -->
+ 		<td style="display:none" id="TextInput_{questionID}_{optionNameID}" class="answer" nowrap>Why?<input name="TextOtherValue_{questionID}_{optionNameID}" id="TextOtherValue_{questionID}_{optionNameID}" value="{otherValue}" type="text" size=30></td>
+   </tr>
+	<!-- END OPTION -->
+  </table>
+</td></tr>

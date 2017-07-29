@@ -1,0 +1,194 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gbk" />
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" />
+<title>管理系统用户 - Eclear在线问卷调查引擎</title>
+<link rel="shortcut icon" href="../Images/enableq.ico" type="image/x-icon" />
+<link rel="stylesheet" type="text/css" href="../CSS/UIBase.css" />
+<link rel="stylesheet" type="text/css" href="../CSS/Index.css" />
+<link href="../CSS/Window.css" type="text/css" rel=stylesheet>
+<script type="text/javascript" src="../JS/Common.js.php"></script>
+<script type="text/javascript" src="../JS/Window.js.php"></script>
+<script type="text/javascript" src="../JS/Jquery.min.js.php"></script>
+<script type="text/javascript" src="../JS/Jquery.notification.js.php"></script>
+<link type="text/css" rel="stylesheet" href="../CSS/Notification.css" />
+<script type="text/javascript" src="../JS/Actions.js.php"></script>
+<script language="javascript"> 
+function checkall(form)  
+{
+	if( form.all.checked)
+	{
+		for(var i = 0;i < form.elements.length-1; i++) 
+		{
+			var e = form.elements[i];
+			if( ! e.disabled )	e.checked = true;
+		}
+	}
+	else
+	{
+		for(var i = 0;i < form.elements.length-1; i++) 
+		{
+			var e = form.elements[i];
+			if( ! e.disabled )	e.checked = false;
+		}
+    }
+}
+function refreshParent() {
+   window.location.reload(true);
+}
+function importRefreshParent() {
+   self.location.reload();
+   parent.refreshNode();
+}
+function checkSelectUser()
+{
+	var strErr = "操作要求必须先选择一个或多个用户！";
+	objField = document.Check_Form.administratorsID;
+	if( typeof objField != 'undefined' )
+	{
+		if( objField.length == null )
+		{
+			if (! objField.disabled && objField.checked) return true;
+			else
+			{
+				document.Check_Form.all.focus();
+				$.notification(strErr);
+				return false;
+			}
+		}
+		else
+		{
+			for (i=0;i<objField.length;i++){
+				if ( ! objField[i].disabled && objField[i].checked) return true;
+			}
+			document.Check_Form.all.focus();
+			$.notification(strErr);
+			return false;
+		}
+	}
+	else
+	{
+		$.notification(strErr);
+		return false;
+	}	
+}
+function checkUserAction( actionValue )
+{
+	if ( checkSelectUser()) 
+	{
+		document.getElementById('DeleUsersSubmit').disabled = true;
+		disabledStyle(document.getElementById('DeleUsersSubmit'));
+		gId('formAction').value = actionValue;
+		gId('Check_Form').submit();
+	}
+}
+
+function deleteUserSubmit()
+{
+	if ( checkSelectUser()) 
+	{
+		if( window.confirm('危险提示!!!您真的想删除选中的这些用户吗？删除用户将删除该用户创建的所有问卷数据，并本操作不可恢复！?建议您使用单个用户的删除功能，查看删除单个用户可能会删除哪些信息后将更为可靠？') )
+		{
+			checkUserAction('DeleUsersSubmit');
+		}
+	}
+}
+function disabledStyle(obj)
+{
+	obj.style.border = '1px solid #DDD';
+	obj.style.backgroundColor = '#F5F5F5'; 
+	obj.style.color = '#3b5888';
+}
+</script>
+<style>
+	input[type=text] {border:1px solid #cacaca;height:18px;font-family: Calibri,"宋体",sans-serif;line-height:18px;vertical-align: middle;}
+	select {border:1px solid #cacaca;height:20px;font-family: Calibri,"宋体",sans-serif;vertical-align: middle;}
+</style>
+</head>
+
+<body oncontextmenu="return false">
+	<div class="container clearfix" style="margin-top:0px">
+		<div class="main">
+		   <div class="content">
+			<div class="content_tit">
+				<div class="clearfix">
+				<h1>列出系统中所有用户</h1>
+				<span class="total ml10">[{recNum} / {totalNum}用户]</span>
+				<span class="btn ml10"><input class=stnsubmit name="createNew" type="button" id="createNew" value="新增用户" onclick="javascript:showPopWin('{addURL}', 640, 380, importRefreshParent, null,'新增系统用户')">&nbsp;</span>
+				</div>
+				<p class="fc_grey">用户指利用Eclear提供的软件功能完成系统管理职能或任务的使用人员</p>
+			</div>
+			<div class="content_main">
+			   <form name="Check_Form" id="Check_Form" style="margin:0;padding:0" method="POST" action="">
+			   <div class="search_form" style="height:50px;line-height:50px">
+			    <span style="float:left;">
+				  <IMG SRC="../Images/search.gif"> 查找
+				  用户名包含：<input type="text" name="name" value="{name}" size=15>
+				  &nbsp;角色：<SELECT name="isAdmin" id="isAdmin">
+				   <OPTION value="0">全部系统角色</OPTION>
+				   <OPTION value="1" {option_1}>系统管理员</OPTION>
+				   <OPTION value="6" {option_6}>用户管理员</OPTION>
+				   <OPTION value="5" {option_5}>超级问卷员</OPTION>
+				   <OPTION value="2" {option_2}>问卷设计员</OPTION>
+				   <OPTION value="4" {option_4}>数据录入员</OPTION>
+				   <OPTION value="7" {option_7}>数据审核员</OPTION>
+				   <OPTION value="3" {option_3}>数据查看员</OPTION>
+				  </SELECT>
+				   <input name="Action" type="hidden" id="Action" value="querySubmit"> 
+				   <input type="submit" class=inputsubmit name="Submit" value="查询" style="vertical-align: middle;"></span>	   
+				  <span style="float:right;margin-right:20px;vertical-align: middle;display:{isAdmin5}"><IMG SRC="../Images/excel.gif">&nbsp;<a href="javascript:void(0);" onclick="javascript:showPopWin('?Action=ImportNodes', 630, 240, importRefreshParent, null,'从CSV文件导入节点数据')">导入节点</a>&nbsp;&nbsp;<IMG SRC="../Images/excel.gif">&nbsp;<a href="javascript:void(0);" onclick="javascript:showPopWin('?Action=Import', 630, 240, importRefreshParent, null,'从CSV文件导入用户数据')">导入用户</a></span>
+	 		 </div>
+  			 <table class="d_table">
+				<tr class=coltitle> 
+					 <th width=3% align=center noWrap><input name="all" type="checkbox" id="all" value="all" onclick="checkall(this.form)" style="BACKGROUND-COLOR:#f9f9f9"></th>
+					 <th width=16% noWrap align=left><b>用户名</b></th>
+					 <th width=16% noWrap align=left><b>昵称</b></th>
+					 <th width=13% noWrap align=center><b>角色</b></th>
+					 <th width=8% noWrap align=center><b>类型</b></th>
+					 <th width=* align=left><b>所属节点</b></th>
+					 <th width=* align=left><b>会员来源</b></th>
+					 <th width=15% nowrap align=center><b>操作</b></th>
+				</tr>
+
+				 <!-- BEGIN USER -->
+				 <tr> 
+					  <td width=3% align=center noWrap><input name="administratorsID[]" type="checkbox" id="administratorsID" value="{administratorsID}" {isAdmin1}></td>
+					  <td>{userName}</td>
+					  <td>{nickName}</td>
+					  <td align=center nowrap>{roleName}</td>
+					  <td align=center nowrap>{typeName}</td>
+					  <td align=left title="{userAllGroupName}"><a href="ShowGroupUserList.php?groupType={groupType}&groupId={groupId}" title="{userAllGroupName}">{userGroupName}</a></td>
+					  <td align=left nowrap>{isActive}</td>
+
+					  <td align=center nowrap><a href="javascript:void(0);" onclick="javascript:showPopWin('{editURL}', 640, 380, importRefreshParent, null,'编辑系统用户信息')">编辑</a> <a href="javascript:void(0);" onclick="javascript:showPopWin('{deleteAlertURL}', 700, 470, importRefreshParent, null,'删除系统用户')" style="display:{isSelf}">删除</a> <a href="{closeURL}" {StopAlert}>{isStop}</a></td>
+				  </tr>
+				  <!-- END USER -->
+			     </table><table width=100%>
+				 <tr>
+					<td align=left>
+					<input name="formAction" id="formAction" type="hidden">
+					<input name="DeleUsersSubmit" class=inputsubmit type="button" id="DeleUsersSubmit" value="删除" onclick="javascript:deleteUserSubmit();"> 
+				</td></tr>
+				 </table>
+				</form>
+			 <div class="pages">{pagesList}</div>
+			</div><!--end of content_main-->
+		   </div><!--end of content-->
+	   </div><!--end of main-->
+    </div><!--end of container-->
+	<script>
+		switch({isAdminRole})
+		{
+			case 6:
+				gId('isAdmin').remove(1); 
+				gId('isAdmin').remove(1);
+			break;
+			case 5:
+				gId('isAdmin').remove(1);
+				gId('isAdmin').remove(1);
+				gId('isAdmin').remove(1);
+			break;
+		}
+	</script>
+</body></html>

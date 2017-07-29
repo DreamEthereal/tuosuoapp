@@ -1,0 +1,78 @@
+<HTML>
+<HEAD>
+	<TITLE>{siteTitle}</TITLE>
+	<meta http-equiv=content-type content="text/html; charset=gbk">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta http-equiv="pragma" content="no-cache">
+	<meta http-equiv="cache-control" content="no-cache">
+	<meta http-equiv="expires" content="0">
+	<LINK href="../CSS/Android.css" type=text/css rel=stylesheet>
+	<SCRIPT type=text/javascript>
+	window.onRexseeReady = function(){
+			//设置横屏
+			rexseeMenu.create("mainOptionsMenu","label:mainOptionsMenu");
+			rexseeMenu.addItem("mainOptionsMenu","rexsee:reload","label:刷新;");
+			rexseeMenu.addItem("mainOptionsMenu","rexsee:quit","label:退出;");
+			rexseeMenu.setOptionsMenuId("mainOptionsMenu");
+			//setTabBar();
+			
+			rexseeMenu.create("mainOptionsMenu1","label:mainOptionsMenu1");
+			rexseeMenu.addItem("mainOptionsMenu1","rexsee:reload","label:刷新;");
+			rexseeMenu.addItem("mainOptionsMenu1","javascript:rexseeBrowser.goBack();","label:后退;");
+			rexseeMenu.addItem("mainOptionsMenu1","rexsee:quit","label:退出;");
+
+			rexseeMenu.create("mainOptionsMenu2","label:mainOptionsMenu2");
+			rexseeMenu.addItem("mainOptionsMenu2","javascript:rexseeBrowser.goBack();","label:后退;");
+			rexseeMenu.addItem("mainOptionsMenu2","rexsee:quit","label:退出;");
+
+			if( rexseePushHttpListener.contains('{pushURL}') )
+			{
+				rexseePushHttpListener.refresh(false,false);
+			}
+			else
+			{
+				rexseePushHttpListener.add('{pushURL}',rexseeTelephony.getSimSerialNumber(),rexseeTelephony.getDeviceId());
+				rexseePushHttpListener.setDurationAndTimeout(3,10);
+			}
+			
+			rexseeTitleBar.setStyle('visibility:hidden;');
+			rexseeStatusBar.setStyle('visibility:hidden;');
+			
+			rexseeSpecialKey.enableBackKeyListener(false);
+			//rexseeSpecialKey.enableVolumeKeyListener(false);
+			//rexseeBrowserStyle.setStyle('browser-zoom-button:visible;');
+
+			//正在加载信息
+			rexseeDialog.toast("正在努力为您加载信息...");
+	}
+	</SCRIPT>
+</HEAD>
+<body style="background:#e5e5e5;color:#666">
+
+<div style="padding:5px;font-weight:bold;background: -webkit-gradient(linear, left top, right bottom, from(#6A0500), to(#ddd));color:#fff;font-size:20px">
+ <table width=100%>
+   <tr><td width=30><a href="Logout.php"><img src="../Images/exit.png" border=0></a></td>
+   <td align=center width=* style="color:#fff;font-size:24px">调查项目</td>
+   <td width=30>&nbsp;</td></tr>
+ </table>
+</div>
+
+<div style="background:#ddd;border-bottom:#ccc 1px solid;font-size:18px;height:20px;padding:10px 0px 10px 0px;">【说明】欢迎您，{nickName}，请点击当前进行的调查项目，进行回复。</div>
+
+<div id="androidList" style="padding-left:10px;padding-right:10px;padding-top:5px;background: #e5e5e5;">
+<!-- BEGIN LIST -->
+ <table width=100% style="border:#d9d9d9 2px solid;margin-bottom:10px;background:#ffffff">
+   <tr>
+      <td height=80 width=* valign=center style="border-bottom:#ddd 1px solid;padding-left:20px;font-size:24px"><a href="{surveyURL}"><div  class="actiontitle" style="padding-top:25px;padding-bottom:25px;line-height:30px;border-bottom:none">{surveyTitle}</div></a></td>
+	  <td align=right style="border-bottom:#ddd 1px solid"><a href="{surveyURL}"><img src="../Images/action.png" border=0></a>&nbsp;</td>
+   </tr>
+   <tr>
+      <td height=50 align=left style="padding-left:20px;font-size:20px">{actionTitle}</td>
+      <td align=right valign=center style="font-size:18px">{beginTime}&nbsp;(<font color=red>{replyNum}</font>)&nbsp;</td></tr>
+ </table>
+<!-- END LIST -->
+</div>
+<div class=pageinfo style="color:#444444;font-size:18px">共计<span class=red>{totalNum}</span>张问卷</div>
+<script>scroll(0,0);</script>
+</body>
+</html>

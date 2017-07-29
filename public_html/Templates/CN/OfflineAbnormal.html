@@ -1,0 +1,494 @@
+<HTML>
+<HEAD>
+	<TITLE>{siteTitle}</TITLE>
+	<meta http-equiv=content-type content="text/html; charset=gbk">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<LINK href="../CSS/Android.css" type=text/css rel=stylesheet>
+    <script type="text/javascript" src="../Offline/common/string.js.php"></script>
+    <script type="text/javascript" src="../Offline/script/animation.js"></script>
+	<script type="text/javascript" src="../JS/CheckQuestion.js.php"></script>
+	<script type="text/javascript" src="../JS/SelRadioCheckBox.js.php"></script>
+	<script type="text/javascript" src="../Offline/common/jquery-1.6.2.min.js.php"></script>
+	<script type="text/javascript" src="../Offline/common/smart-2.11.min.js.php"></script>
+	<SCRIPT type=text/javascript>
+	var img = 0;
+	if( ! rexseeDatabase.tableExists('eq_font','rexsee:enableq.db') )
+	{
+		var ftsql = "CREATE TABLE eq_font (id int(1) NOT NULL default '1',fontId int(1) NOT NULL default '1');";
+		rexseeDatabase.exec(ftsql,'rexsee:enableq.db');
+		ftsql = " INSERT INTO eq_font (id,fontId) values ('1','1');";
+		rexseeDatabase.exec(ftsql,'rexsee:enableq.db');
+		if( rexseeScreen.getScreenHeight() < 500 || rexseeScreen.getScreenWidth() < 500 )
+		{
+			rexseeScreen.setScreenOrientation('landscape');
+			document.write('<LINK href="../Offline/resources/minipad.css" type=text/css rel=stylesheet>');
+			img = 0;
+		}
+		else
+		{
+			document.write('<LINK href="../Offline/resources/pad10.css" type=text/css rel=stylesheet>');
+			img = 1;
+		}
+	}
+	else
+	{
+		var ftsql = " SELECT fontId FROM eq_font WHERE id='1';";
+		var ftRow = eval('('+getDbRows(ftsql,'rexsee:enableq.db')+')');
+		if( parseInt(ftRow.rows[0][0] ) == 1)  //大字体
+		{
+			document.write('<LINK href="../Offline/resources/pad10.css" type=text/css rel=stylesheet>');
+			img = 1;
+		}
+		else
+		{
+			document.write('<LINK href="../Offline/resources/minipad.css" type=text/css rel=stylesheet>');
+			img = 0;
+		}
+	}
+	window.onRexseeReady = function(){
+			rexseeScreen.setFullScreen(true);
+			rexseeMenu.setOptionsMenuId("mainOptionsMenu1");
+			rexseeTitleBar.setStyle('visibility:hidden;');
+			rexseeStatusBar.setStyle('visibility:hidden;');
+			
+			rexseeSpecialKey.enableBackKeyListener(false);
+			//rexseeSpecialKey.enableVolumeKeyListener(false);
+			//rexseeBrowserStyle.setStyle('browser-zoom-button:visible;');
+			
+			//正在加载信息
+			rexseeDialog.toast("正在努力为您加载信息...");
+	}
+	function checkSelectSurvey()
+	{
+		var strErr = "操作要求必须先选择一张或多张问卷！";
+		objField = document.form.surveyID;
+		if( objField.length == null )
+		{
+			if (objField.checked) return true;
+			else
+			{
+				objField.focus();
+				rexseeDialog.toast(strErr);
+				return false;
+			}
+		}
+		else
+		{
+			for (i=0;i<objField.length;i++){
+				if (objField[i].checked) return true;
+			}
+			objField[0].focus();
+			rexseeDialog.toast(strErr);
+			return false;
+		}
+	}
+	var rtnMessage = '';
+	function abnormalSurveyAction()
+	{
+		if ( !checkSelectSurvey()) {return false;}
+		if ( window.confirm('您确定需要对上行数据过程中出现异常的本地问卷进行异常处理？!也许您需要再次尝试上行数据或者联系系统管理员？这些问卷以及问卷的回复数据将打包给服务器，不确保其一定可再次导入系统，并从本地完全删除，不可恢复？!'))
+		{
+			rexseeChronometer.show('label:正在努力为您处理问卷异常数据，可能需要花费较长时间...;align:left;background-color:transparent;color:#000000;border-width:0;window-style:light;',1800,'javascript:document.getElementById("abnormalBtn").disabled = true;');
+
+			var theSurveyID = getRadioCheckBoxValue(document.form.surveyID);
+			var theHomeURL = (rexseeApplication.getHome() == '' ) ? rexseeApplication.getDeveloperHome() : rexseeApplication.getHome();
+			var remoteServer = str_replace('Offline/default.html','',theHomeURL);
+
+			document.getElementById("infocontent").innerHTML = "&nbsp;<img src=\"..\/Images\/wait.gif\" width=\"16px\" height=\"16px\">&nbsp;<font color=green><b>正在准备异常处理您选择的本地问卷</b></font>&nbsp;";
+			document.getElementById('abnormalBtn').disabled = true;
+
+			var sql = " SELECT surveyID,surveyTitle,beginTime,isRecord,isUploadRec,isFingerDrawing FROM eq_survey_list WHERE surveyID ='"+theSurveyID+"'; ";
+			surveyRow = eval('('+getDbRows(sql,'rexsee:enableq.db')+')');
+
+			//创建临时文件夹
+			var theFilePath = rexseeStorage.getRoot()+'enableq_offline/files/'+theSurveyID+"/";
+			var theTmpPath = rexseeStorage.getRoot()+'enableq_offline/files/tmp/';
+			if( ! rexseeFile.exists(theTmpPath) )
+			{
+				rexseeFile.newDir(theTmpPath);
+			}
+
+			//上行本地的数据文件
+			var theUploadURL = remoteServer+"Offline/AbnormalLocalFileUpload.php?fileNameUnit={fileNameUnit}&surveyID="+theSurveyID;
+
+			//删除旧的
+			var theScriptFile = rexseeStorage.getRoot()+'enableq_offline/script/'+theSurveyID+'/jsondata.js.qf';
+			if( rexseeFile.exists(theScriptFile) )
+			{
+				rexseeFile.remove(theScriptFile);
+			}
+			//复制原jsondata文件，防火墙限制
+			rexseeFile.renameTo(rexseeStorage.getRoot()+'enableq_offline/script/'+theSurveyID+'/jsondata.js',theScriptFile);
+			//打包上行jsondata文件
+			rexseeProfessionalUpload.selectFile(theScriptFile);
+			var rtnUploadMess = rexseeProfessionalUpload.syncUpload(theUploadURL,'uploadedfile');
+			if( rtnUploadMess != '' )
+			{
+				//日志
+				var theLogURL = remoteServer+'Offline/UserAction.php';
+				var postData = eval('({surveyID: "'+theSurveyID+'", userId: "{userId}",nickName: "{nickName}",actionMess:"问卷:'+surveyRow.rows[0][1]+'打包本地问卷数据JsonData文件到服务器出现异常",actionType:3})');
+				$.ajaxSetup({async:false});
+				$.post(theLogURL, postData);
+
+				document.getElementById("infocontent").innerHTML = "&nbsp;<img src=\"..\/Images\/check_no.gif\" width=\"16px\" height=\"16px\">&nbsp;<font color=red><b>问卷："+surveyRow.rows[0][1]+"打包本地问卷数据JsonData文件到服务器出现异常，请再次尝试</b></font>";
+			}
+			else
+			{
+				//打包数据
+				var dataList = getDbRows('SELECT * FROM eq_response_'+theSurveyID+' ORDER BY responseID ASC ','rexsee:enableq.db');
+				var theUploadURL = remoteServer+'Offline/AbnormalDataUpload.php';
+				var postData = eval('({fileNameUnit:"{fileNameUnit}",surveyID: "'+theSurveyID+'",isRecord:"'+surveyRow.rows[0][3]+'",isFingerDrawing:"'+surveyRow.rows[0][5]+'",datas: "'+base64_encode(dataList)+'"})');
+				$.ajaxSetup({async:false});
+				$.post(theUploadURL, postData, 
+					function(data) { 
+						rtnMessage = data;
+				},"html");
+				if( rtnMessage == 'true' )
+				{	
+					//下载打包的文件到问卷目录
+					var rtnDownloadMess = rexseeDownload.syncDownloads(remoteServer+'PerUserData/tmp/Result_{fileNameUnit}_Abnormal_List.csv',theFilePath);
+					if( rtnDownloadMess == "" )
+					{
+						if( parseInt(surveyRow.rows[0][3]) != 0 ) //录音
+						{
+							var dataRow = eval('('+getDbRows('SELECT recordFile FROM eq_response_'+theSurveyID+' ORDER BY responseID ASC ','rexsee:enableq.db')+')');
+							var theStoragePath = rexseeStorage.getRoot()+'enableq_offline/dump/'+theSurveyID+'/';
+							if( ! rexseeFile.exists(theStoragePath) )
+							{
+								rexseeFile.newDir(theStoragePath);
+							}
+							if( parseInt(surveyRow.rows[0][4]) != 1 ) //录音文件上传
+							{
+								for( var tmp in dataRow.rows )
+								{
+									var the_rec_file = dataRow.rows[tmp][0];
+									if( the_rec_file != '' && rexseeFile.exists(theFilePath+the_rec_file) )
+									{	
+										if( the_rec_file.split('.').length == 3 )
+										{
+											//删除旧的
+											if( rexseeFile.exists(theStoragePath+substr(the_rec_file,0,-3) ) )
+											{
+												rexseeFile.remove(theStoragePath+substr(the_rec_file,0,-3));
+											}
+											rexseeFile.renameTo(theFilePath+the_rec_file,theStoragePath+substr(the_rec_file,0,-3)); //转存
+										}
+										else
+										{
+											//删除旧的
+											if( rexseeFile.exists(theStoragePath+the_rec_file) )
+											{
+												rexseeFile.remove(theStoragePath+the_rec_file);
+											}
+											rexseeFile.renameTo(theFilePath+the_rec_file,theStoragePath+the_rec_file); //转存
+										}
+									}
+								}
+								$('#actionStat').append("<img src=\"..\/Images\/check_no.gif\" width=\"16px\" height=\"16px\">&nbsp;<font color=red><b>全程录音|录像文件未随数据一并上传</b></font><br/>");
+								$('#actionStat').append("<img src=\"..\/Images\/check_yes.gif\" width=\"16px\" height=\"16px\">&nbsp;<font color=red><b>全程录音|录像文件本地转存在"+str_replace("file:///mnt/",'',theStoragePath)+"</b></font><br/>");
+							}
+						}
+
+						//开始打包
+						var theZipFileName = 'abnormal_'+theSurveyID+'_'+'{userId}'+'_{fileNameUnit}.zip';
+						var theZipFile = theTmpPath+theZipFileName;
+						//删除旧的
+						if( rexseeFile.exists(theZipFile) )
+						{
+							rexseeFile.remove(theZipFile);
+						}
+						//修订文件名
+						var theFileArray = eval('('+rexseeFile.dir(theFilePath)+')');
+						for( var tmpd in theFileArray )
+						{
+							if( theFileArray[tmpd].split('.').length == 3 )
+							{
+								rexseeFile.renameTo(theFileArray[tmpd],substr(theFileArray[tmpd],0,-3));
+							}
+						}
+						
+						//打包
+						if( ! rexseeZIP.zip(theFilePath,theZipFile,true,false) )
+						{
+							//日志
+							var theLogURL = remoteServer+'Offline/UserAction.php';
+							var postData = eval('({surveyID: "'+theSurveyID+'", userId: "{userId}",nickName: "{nickName}",actionMess:"问卷:'+surveyRow.rows[0][1]+'问卷附属文件Zip压缩打包出现异常",actionType:3})');
+							$.ajaxSetup({async:false});
+							$.post(theLogURL, postData);
+
+							document.getElementById("infocontent").innerHTML = "&nbsp;<img src=\"..\/Images\/check_no.gif\" width=\"16px\" height=\"16px\">&nbsp;<font color=red><b>问卷："+surveyRow.rows[0][1]+"问卷附属文件Zip压缩打包出现异常，请再次尝试</b></font>";						
+						}
+						else
+						{
+							//打包文件上传
+							var theUploadURL = remoteServer+"Offline/AbnormalZipFileUpload.php";
+							rexseeProfessionalUpload.selectFile(theZipFile);
+							var rtnUploadMess = rexseeProfessionalUpload.syncUpload(theUploadURL,'uploadedfile');
+							if( rtnUploadMess != '' )
+							{
+								//日志
+								var theLogURL = remoteServer+'Offline/UserAction.php';
+								var postData = eval('({surveyID: "'+theSurveyID+'", userId: "{userId}",nickName: "{nickName}",actionMess:"问卷:'+surveyRow.rows[0][1]+'打包异常数据Zip包到服务器出现异常",actionType:3})');
+								$.ajaxSetup({async:false});
+								$.post(theLogURL, postData);
+
+								document.getElementById("infocontent").innerHTML = "&nbsp;<img src=\"..\/Images\/check_no.gif\" width=\"16px\" height=\"16px\">&nbsp;<font color=red><b>问卷："+surveyRow.rows[0][1]+"打包异常数据Zip包到服务器出现异常，请再次尝试</b></font>";
+								$('#actionStat').append("<img src=\"..\/Images\/check_yes.gif\" width=\"16px\" height=\"16px\">&nbsp;<font color=red><b>请去本地"+str_replace("file:///mnt/",'',theTmpPath)+"目录查看打包文件"+theZipFileName+"，尝试其他方法给系统管理员</b></font>");
+							}
+							else
+							{
+								//日志
+								var theUploadURL = remoteServer+'Offline/UserAction.php';
+								var actionMess = "上行异常数据包:"+surveyRow.rows[0][1]+"<br/>文件存储：{absPath}PerUserData/tmp/"+theZipFileName+"<br/><a href='AbnormalFile.php?Action=Download&fileName="+theZipFileName+"'>下载文件</a>&nbsp;&nbsp;&nbsp;<a onclick=deleAbnFile('AbnormalFile.php?Action=Delete&fileName="+theZipFileName+"');>删除文件</a>";
+								var postData = eval('({surveyID: "'+theSurveyID+'", userId: "{userId}",nickName: "{nickName}",actionMess:"'+actionMess+'",actionType:3})');
+								$.ajaxSetup({async:false});
+								$.post(theUploadURL, postData);
+								
+								//删除原有压缩包
+								if( rexseeFile.exists(theZipFile) )
+								{
+									rexseeFile.remove(theZipFile);
+								}		
+								//删除原回复附属文件
+								if( rexseeFile.exists(rexseeStorage.getRoot()+'enableq_offline/files/'+theSurveyID) )
+								{
+									rexseeFile.remove(rexseeStorage.getRoot()+'enableq_offline/files/'+theSurveyID);
+								}									
+								//删除原本地化文件
+								if( rexseeFile.exists(rexseeStorage.getRoot()+'enableq_offline/script/'+theSurveyID) )
+								{
+									rexseeFile.remove(rexseeStorage.getRoot()+'enableq_offline/script/'+theSurveyID);
+								}
+								//删除数据文件
+								if( rexseeFile.exists(rexseeStorage.getRoot()+'enableq_offline/datas/'+theSurveyID) )
+								{
+									rexseeFile.remove(rexseeStorage.getRoot()+'enableq_offline/datas/'+theSurveyID);
+								}
+								//删除表
+								if( rexseeDatabase.tableExists('eq_response_'+theSurveyID,'rexsee:enableq.db') )
+								{
+									sql = "DROP TABLE eq_response_"+theSurveyID+";";
+									rexseeDatabase.exec(sql,'rexsee:enableq.db');
+								}							
+								sql = " DELETE FROM eq_survey_list WHERE surveyID = "+theSurveyID+";";
+								rexseeDatabase.exec(sql,'rexsee:enableq.db');
+								sql = " DELETE FROM eq_task_list WHERE surveyID = "+theSurveyID+";";
+								rexseeDatabase.exec(sql,'rexsee:enableq.db');
+								sql = " DELETE FROM eq_abnormal_list WHERE surveyID = "+theSurveyID+";";
+								rexseeDatabase.exec(sql,'rexsee:enableq.db');
+								sql = " DELETE FROM eq_gps_trace WHERE surveyID = "+theSurveyID+";";
+								rexseeDatabase.exec(sql,'rexsee:enableq.db');
+								sql = " DELETE FROM eq_gps_trace_upload WHERE surveyID = "+theSurveyID+";";
+								rexseeDatabase.exec(sql,'rexsee:enableq.db');
+
+								document.getElementById("infocontent").innerHTML = "&nbsp;<img src=\"..\/Images\/check_yes.gif\" width=\"16px\" height=\"16px\">&nbsp;<font color=green><b>问卷："+surveyRow.rows[0][1]+"异常处理成功</b></font>";
+								$('#actionStat').append("<img src=\"..\/Images\/check_yes.gif\" width=\"16px\" height=\"16px\">&nbsp;<font color=red><b>请去服务器{absPath}PerUserData/tmp/目录查看打包文件"+theZipFileName+"，异常文件只保留24小时</b></font>");
+							}//打包文件上传
+						} //本地打包
+					}
+					else
+					{
+						document.getElementById("infocontent").innerHTML = "&nbsp;<img src=\"..\/Images\/check_no.gif\" width=\"16px\" height=\"16px\">&nbsp;<font color=red><b>问卷："+surveyRow.rows[0][1]+"下行数据文件到本地出现异常，请再次尝试</b></font>";
+					}		
+				}
+				else
+				{
+					document.getElementById("infocontent").innerHTML = "&nbsp;<img src=\"..\/Images\/check_no.gif\" width=\"16px\" height=\"16px\">&nbsp;<font color=red><b>问卷："+surveyRow.rows[0][1]+"打包数据到服务器出现异常，请再次尝试</b></font>:"+rtnMessage;
+				}//打包数据	
+			}//上传本地JSON Data
+		}
+		rexseeChronometer.dismiss();
+	}
+	function jsonToString(obj){
+    	var THIS = this; 
+        switch(typeof(obj)){
+            case 'string':
+                return '"' + obj.replace(/(["\\])/g, '\\$1') + '"';
+            case 'array':
+                return '[' + obj.map(THIS.jsonToString).join(',') + ']';
+            case 'object':
+                 if(obj instanceof Array){
+                    var strArr = [];
+                    var len = obj.length;
+                    for(var i=0; i<len; i++){
+                        strArr.push(THIS.jsonToString(obj[i]));
+                    }
+                    return '[' + strArr.join(',') + ']';
+                }else if(obj==null){
+                    return 'null';
+
+                }else{
+                    var string = [];
+                    for (var property in obj) string.push(THIS.jsonToString(property) + ':' + THIS.jsonToString(obj[property]));
+                    return '{' + string.join(',') + '}';
+                }
+            case 'number':
+                return obj;
+            case false:
+                return obj;
+        }
+    }
+	window.onException = function(className, message){
+		//alert(unescape(message));
+		var theLogFilePath = rexseeStorage.getRoot()+'enableq_offline/logs/';
+		if( ! rexseeFile.exists(theLogFilePath) )
+		{
+			rexseeFile.newDir(theLogFilePath);
+		}
+		var theLogFile = theLogFilePath +'error.txt';
+		if( !rexseeFile.exists(theLogFile) )
+		{
+			rexseeFile.newFile(theLogFile);
+		}
+		else
+		{
+			if( rexseeFile.size(theLogFile) > 102400 )
+			{
+				rexseeFile.remove(theLogFile);
+				rexseeFile.newFile(theLogFile);
+			}
+		}
+		var theOriFileContent = rexseeFile.getContent(theLogFile,'GBK');
+		rexseeFile.putContent(theLogFile,theOriFileContent+"Error("+date('Y-m-d H:i:s',time())+"):"+className+":"+unescape(message)+"\r\n",'GBK');
+	}
+	</SCRIPT>
+</HEAD>
+<body style="background:#e5e5e5;color:#666">
+
+<script>
+ if(img == 0 ) 
+ {
+	document.write('<div class="titlebar"><table width=100%><tr><td valign=center width=51><a id="rtnURL"><img src="../Images/rtn.png" border=0 width=51></a></td><td align=center width=* class="pageTitle">异常处理</td><td valign=center width=51><a href="Logout.php"><img src="../Images/lout.png" border=0 width=51></a></td></table></div>');
+ }
+ else
+ {
+	document.write('<div class="titlebar"><table width=100%><tr><td valign=center width=75><a id="rtnURL"><img src="../Images/hrtn.png" border=0 width=75></a></td><td align=center width=* class="pageTitle">异常处理</td><td valign=center width=75><a href="Logout.php"><img src="../Images/hlout.png" border=0 width=75></a></td></table></div>');
+ }
+</script>
+<script>
+	var theHomeURL = (rexseeApplication.getHome() == '' ) ? rexseeApplication.getDeveloperHome() : rexseeApplication.getHome();
+	var remoteXMLURL = str_replace('default.html','bulidClient.xml',theHomeURL);
+	$('#rtnURL').attr('href',"javascript:animationLoad('"+rexseeClient.getRoot(remoteXMLURL)+"index.html');");
+</script>
+
+<div class="notesInfo">【说明】{nickName}，请选择进行异常处理的本地问卷</div>
+
+<div class="invertedshiftdown">
+	<ul>
+	<li><a href="javascript:animationLoad('DownSurveyList.php');">下载问卷</a></li>
+	<li><a href="javascript:animationLoad('DownTaskList.php');">任务下载</a></li>
+	<li><a href="javascript:animationLoad('UploadSurveyData.php');">数据上行</a></li>
+	<li class="current"><a href="javascript:animationLoad('AbnormalSurveyList.php');">异常处理</a></li>
+	<li><a href="javascript:animationLoad('DeleSurveyList.php');">问卷删除</a></li>
+	<li><a href="javascript:animationLoad('CheckServerVersion.php');">程序更新</a></li>
+	</ul>
+</div>
+
+
+<script id="main_list_tpl" type="text/x-jsmart-tmpl">
+<div id="androidList" style="padding-top:5px;background: #e5e5e5;" class="contentPadding">
+ <form name="form" id="form" method="post">
+{foreach $surveys as $i => $survey}
+ <table width=100% style="border:#d9d9d9 2px solid;margin-bottom:5px;margin-top:5px;background:#ffffff">
+   <tr>
+      <td class="mainHeight" width=99% valign=center style="border-bottom:#ddd 1px solid"><a href="javascript:void(0);" onclick="javascript:selRadioCheckRows('surveyID',{$survey.theOptionOdNum});"><div class="actiontitle actionPadding"  style="line-height:30px;border-bottom:none">{$survey.surveyTitle}</div></a></td>
+	  <td class="mainHeight" align=right valign=center width=1% style="border-bottom:#ddd 1px solid"><a><div style="actionPadding"><input type="radio" name="surveyID" id="surveyID" value="{$survey.surveyID}" {$survey.disabled} style="margin-top:15px"></div></a>&nbsp;</td>
+   </tr>
+   <tr>
+      <td class="infoHeight sysinfo" align=left style="padding-left:20px">{$survey.info}</td>
+      <td align=right valign=center nowrap class="sysinfo">{$survey.beginTime}&nbsp;(<font color=red>{$survey.replyNum}</font>)&nbsp;</td></tr>
+ </table>
+ {/foreach}
+ <table width=100%>
+   <tr><td><input type="button" name="abnormalBtn" id="abnormalBtn" class=btnclass value="开始处理" onclick="javascript:abnormalSurveyAction();">&nbsp;&nbsp;<span id="infocontent"></span>
+   </td></tr>
+   <tr><td><span id="actionStat" class="sysinfo"></span></td></tr>
+ </table>
+ 
+ </form>
+</div>
+<div class="pageinfo infoTotal">共计<span class=red>{$survey@total}</span>张问卷</div>
+</script>
+<script>
+	var dataCheckRow = eval('('+ getDbRows('SELECT * FROM eq_survey_list WHERE surveyID =0 LIMIT 1','rexsee:enableq.db')+')');
+	if( ! in_array('userName',dataCheckRow.columns) )
+	{
+		sql = " ALTER TABLE eq_survey_list ADD userName varchar(255) NOT NULL default '' ";
+		rexseeDatabase.exec(sql,'rexsee:enableq.db');
+	}
+	dataCheckRow = null;
+
+	//问卷列表
+	sql = " SELECT a.surveyID,a.surveyTitle,a.beginTime,b.abnormalTypeId,b.abnormalText,a.isRecord,a.isUploadRec,a.isFingerDrawing FROM eq_survey_list a,eq_abnormal_list b WHERE a.surveyID = b.surveyID AND ( a.userName = '' OR a.userName ='{nickName}' )  ORDER BY a.surveyID DESC; ";
+	var surveyRow = eval('('+getDbRows(sql,'rexsee:enableq.db')+')');
+	var thisTotal = 0;
+	if( count(surveyRow.rows) != 0 )
+	{
+		var datas ="{ surveys:[";
+		var theOptionOdNum = 0;
+		for( var tmp in surveyRow.rows )
+		{
+			datas += "{";
+			datas += "surveyID:" + surveyRow.rows[tmp][0] +",";
+			datas += "surveyTitle:'" + surveyRow.rows[tmp][1] +"',";
+			datas += "beginTime:'" + surveyRow.rows[tmp][2]+"',";
+			datas += "theOptionOdNum:" + theOptionOdNum +",";
+			theOptionOdNum++;
+			if( rexseeDatabase.tableExists('eq_response_'+surveyRow.rows[tmp][0],'rexsee:enableq.db') )
+			{
+				var datasRow = eval('('+getDbRows('SELECT COUNT(*) as totalResponseNum FROM eq_response_'+surveyRow.rows[tmp][0],'rexsee:enableq.db')+')');
+				if( count(datasRow.rows) != 0 )
+				{
+					if( parseInt(datasRow.rows[0][0]) == 0 )
+					{
+						datas += " info:'<font color=red><b>本地无数据，无需异常处理</b></span>',";
+						datas += " disabled:'disabled',";
+					}
+					else
+					{
+						thisTotal++;
+						datas += " info:'<font color=green><b>异常原因:"+surveyRow.rows[tmp][4]+"</b></font>',";
+						datas += " disabled:'',";
+					}
+					datas += " replyNum:'"+datasRow.rows[0][0] +"'";
+				}
+				else
+				{
+					datas += " info:'<font color=red><b>本地无数据，无需异常处理</b></span>',";
+					datas += " disabled:'disabled',";
+					datas += " replyNum:'0'";
+				}
+			}
+			else
+			{
+				datas += " info:'<font color=red><b>本地无数据，无需异常处理</b></span>',";
+				datas += " disabled:'disabled',";
+				datas += " replyNum:'0'";
+			}			  
+			datas += "},";
+		}
+		datas = datas.substr(0,datas.length-1)+"] }";
+	}
+	else
+	{
+		var datas ="{ surveys:[] }";
+	}
+	var jsondatas = eval('('+datas+')');				
+
+	var tplText = document.getElementById('main_list_tpl').innerHTML;
+	var tpl = new jSmart( tplText );
+	var res = tpl.fetch( jsondatas );
+    document.write( res );
+
+	if(thisTotal >0 )
+	{
+		document.getElementById('abnormalBtn').disabled = false;
+	}
+	else
+	{
+		document.getElementById('abnormalBtn').disabled = true;
+	}
+</script>
+<script>scroll(0, 0);</script>
+</body>
+</html>

@@ -1,0 +1,97 @@
+<html>
+<head>
+<META http-equiv=Content-Language content=zh-cn>
+<meta http-equiv=content-type content="text/html; charset=gbk">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta http-equiv="pragma" content="no-cache">
+<meta http-equiv="cache-control" content="no-cache">
+<meta http-equiv="expires" content="0">
+<link rel="stylesheet" type="text/css" href="../Offline/resources/pad.css">
+<link rel="stylesheet" type="text/css" href="../Offline/resources/pad10.css">
+<script language="javascript"> 
+
+	rexseeSpecialKey.enableBackKeyListener(false);
+	rexseeMenu.setOptionsMenuId("mainOptionsMenu1");
+
+	function checkall() 
+	{
+		if( typeof document.Ajax_Form.responseID != 'undefined' )
+		{
+			if( document.Ajax_Form.responseID.length == null )
+			{
+				if(document.Ajax_Form.responseID.disabled != true)
+				document.Ajax_Form.responseID.checked = true;
+			}
+			else
+			{
+				for(var i = 0;i < document.Ajax_Form.responseID.length; i++) 
+				{
+					if(document.Ajax_Form.responseID[i].disabled != true)
+					document.Ajax_Form.responseID[i].checked = true;
+				}
+			}
+		}
+	}
+	function nocheckall()
+	{
+		if( typeof document.Ajax_Form.responseID != 'undefined' )
+		{
+			if( document.Ajax_Form.responseID.length == null )
+			{
+				if(document.Ajax_Form.responseID.disabled != true)
+				document.Ajax_Form.responseID.checked = false;
+			}
+			else
+			{
+				for(var i = 0;i < document.Ajax_Form.responseID.length; i++) 
+				{
+					if(document.Ajax_Form.responseID[i].disabled != true)
+					document.Ajax_Form.responseID[i].checked = false;
+				}
+			}
+		}
+	}
+</script>
+<body oncontextmenu="return false" style="background:#e5e5e5;color:#666;margin:0px;padding:0px;overflow:hidden;">
+
+<div style="padding:5px;font-weight:bold;background: -webkit-gradient(linear, left top, right bottom, from(#6A0500), to(#ddd));color:#fff;font-size:20px;">
+ <table width=100%>
+   <tr><td width=30 style="padding:0px"><a href="InputIndex.php"><img src="../Images/back.png" border=0></a></td>
+   <td align=center width=* style="color:#fff;font-size:24px;padding:0px">调查数据</td>
+   <td width=30 style="padding:0px">&nbsp;</td></tr>
+ </table>
+</div>
+
+<div style="background:#ddd;border-bottom:#ccc 1px solid;font-size:18px;height:20px;padding:10px 0px 10px 0px;">&nbsp;列出问卷数据：{surveyTitle} (<font color=red>{totalResponseNum}</font>)</div>
+
+<div id="androidList" style="padding-left:10px;padding-right:10px;padding-top:5px;background: #e5e5e5;">
+
+<form name="Ajax_Form" id="Ajax_Form" method="post" action="">
+<!-- BEGIN LIST -->
+<table width=100% style="border:#d9d9d9 2px solid;margin-bottom:5px;background:#ffffff">
+   <tr>
+      <td height=40 width=* valign=center style="border-bottom:#ddd 1px solid;padding-left:20px;font-size:24px">{joinTime}</td>
+	  <td style="border-bottom:#ddd 1px solid" align=center>&nbsp;</td>
+	  <td style="border-bottom:#ddd 1px solid" align=center><input name="responseID[]" type="checkbox" id="responseID" value="{responseID}" {isDeleAllowed}>&nbsp;<input name="overFlag[{responseID}]" type="hidden" id="overFlag" value="{overFlag}"><input name="createDate[{responseID}]" type="hidden" id="createDate" value="{createDate}"></td>
+   </tr>
+   <tr>
+      <td height=30 width=* align=left style="padding-left:20px;font-size:20px">{action}&nbsp;&nbsp;<a href="{deleteURL}" onclick="return window.confirm('您真的想删除该数据吗？本操作不可恢复！?')" style="display:{isDelete}">删除</a></td>
+	  <td align=center valign=center nowrap width=120 style="background:{authColor};font-size:18px">审核：{authStat}</td>
+      <td align=center valign=center nowrap width=80 style="background:{noHaveAll};font-size:18px">{stat}</td>
+	  </tr>
+ </table>
+<!-- END LIST -->
+<table width=100% style="margin-bottom:5px;background:#ffffff">
+   <tr>
+     <td height=50 width=* align=left style="padding-left:20px"><input class=btn name="DeleteSubmit" type="submit" id="DeleteSubmit" value="删除选定记录" onclick="return window.confirm('您真的想删除这些数据吗？本操作不可恢复！')"></td>
+	 <td align=center valign=center width=100><a href="javascript:checkall();" style="font-size:18px;">全选</a>&nbsp;&nbsp;<a href="javascript:nocheckall();" style="font-size:18px;">全不选</a></td>
+   </tr>
+</table>
+<table width=100%><tr><td height=5></td></tr></table>
+<div class=pages>{pagesList}</div>
+</div>
+
+</form>
+<script>scroll(0,0);</script>
+</body>
+</html>

@@ -1,0 +1,14 @@
+<tr><td height=25 class="question" valign=center>&nbsp;{questionRequire}<span class="textEdit" id="questionName_{questionID}">{questionName}</span>&nbsp;<span class=notes>{questionNotes}</span></td></tr>
+<tr><td class="tips"><span class="textEdit" id="questionNotes_{questionID}">{questionTips}</span></td></tr>
+<tr><td>
+	<table cellSpacing=0 cellPadding=0 width=100% id="qtn_table_{questionID}">
+       <!-- BEGIN OPTION -->
+	   <tr class=tdheight id="option_checkbox_{optionID}_container">
+	       <td><input onclick="Check_Survey_Conditions()" type="checkbox" value="{optionID}" name="option_{questionID}[]" id="option_{questionID}" {isCheck}></td>
+	       <td width=99% class="answer" nowrap><a href="javascript:void(0)" onclick=javascript:selCheckBoxCheckRows("option_{questionID}",{theOptionOdNum});><div style="white-space:nowrap;" class=tdlineheight><span class="textEdit" id="optionName_25_{questionID}_{optionID}">{optionName}</span></div></a></td></tr>
+	   <tr style="display:{isHaveText}" id="option_checkbox_{optionID}_container_0" class="no_color_tr">
+		  <td style="display:{isHaveText}">&nbsp;</td>
+		  <td style="display:{isHaveText}" class="answer tdheight"><input name="TextOtherValue_{questionID}_{optionID}" type="{inputPrompt}" size="{length}" id="TextOtherValue_{questionID}_{optionID}" value="{value}" onblur="Check_Survey_Conditions();">&nbsp;{unitText}&nbsp;</td></tr>
+	   <!-- END OPTION -->
+	</table>
+</td></tr>

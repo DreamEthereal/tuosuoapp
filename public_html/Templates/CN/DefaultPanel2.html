@@ -1,0 +1,40 @@
+<HTML>
+<HEAD>
+<title>{siteTitle}</title>
+<META http-equiv=Content-Type content="text/html; charset=gbk">
+<meta http-equiv="Expires" CONTENT="0">
+<meta http-equiv="Cache-Control" CONTENT="no-cache">
+<meta http-equiv="Pragma" CONTENT="no-cache"> 
+<LINK href="CSS/Panel2/default.css" type=text/css rel=stylesheet>
+<style type="text/css">
+#site {background-image:url(CSS/Panel2/top_bg.jpg);width:960px; height:160px; margin:7px auto 0;}
+#site .title{
+	width:716px;
+	height:90px;
+	float:right;
+	margin:30px 18px 0 0;
+	_margin:30px 9px 0 0;
+	background:url(CSS/Panel2/filter.png) no-repeat !important;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(enabled=true, sizingMethod=scale, src="{IMGFULLPATH}/CSS/Panel2/filter.png");
+	_background:none;
+}
+</style>
+</head>
+<body>
+<div align="center">
+
+<div id="site">
+	<div class="title">
+    	<div class="sitename"><a href="{surveyURL}">{surveyTitle}</a></div>
+        <div class="sitehtmlurl"><span class="sitehtmlurl">{surveySubTitle}</span></div>
+    </div>
+</div>
+
+<div id="content" style="margin:0px;">
+    <div id="infonav"><div class="{haveText}">{surveyInfo}</div></div>
+    <div class="details">{enableq}</div>
+    <div id="contact">&nbsp;</div>
+</div>
+</div>
+</body>
+</html>

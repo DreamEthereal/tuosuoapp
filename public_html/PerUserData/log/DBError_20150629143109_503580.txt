@@ -1,0 +1,2 @@
+2015-06-29 14:31:09     <b>Bad SQL Query</b>: <br><b>You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'Z',area='wangyc',dataSource = '7', taskID='6864', recordFile='',option_2692='Î÷°' at line 1</b>
+

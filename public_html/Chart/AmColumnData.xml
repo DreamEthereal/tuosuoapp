@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chart>
+	<series>
+	    <!-- BEGIN LABEL -->
+		<value xid="{xid}">{labelName}</value>
+		<!-- END LABEL -->
+	</series>
+	<graphs>
+		<graph gid="1">
+		    <!-- BEGIN DATA -->
+    		<value xid="{gid}" color="{color}">{value}</value>
+			<!-- END DATA -->
+      </graph>
+	</graphs>
+</chart>

@@ -1,0 +1,9 @@
+<?php
+//dezend by http://www.yunlu99.com/
+define('ROOT_PATH', '../');
+require_once ROOT_PATH . 'Config/SystemConfig.inc.php';
+echo '<LINK href="../CSS/About.css" type=text/css rel=stylesheet>' . "\r\n" . '' . "\r\n" . '<span class="body">' . "\r\n" . '    <br>' . "\r\n" . '	<p><img src="../Images/enableq.png" alt="EnableQ"><br>' . "\r\n" . '	<b>The power for new survey</b><br/>' . "\r\n" . '	版本: ';
+echo $Config['version'];
+echo '</p>' . "\r\n" . '' . "\r\n" . '    <p>Copyright &copy; 2012-2018 <A href="http://www.itenable.com.cn" target="_blank" class="body">ItEnable Services Inc.</A> All Rights Reserved.<br>' . "\r\n" . '' . "\r\n" . '    EnableQ<span class="tm">TM</span> are trademarks of ItEnable Services Inc.' . "\r\n" . '' . "\r\n" . '    <p><table cellspacing="0" cellpadding="0" border="0" class="contentBox">' . "\r\n" . '    <tr>' . "\r\n" . '       <td class="body" style="padding-right: 10px;" valign="middle"><IMG src="../Images/company_logo.png" alt="ItEnable Services Logo"></td>' . "\r\n" . '	   <td class="body" valign="top" style="padding-right: 10px;">' . "\r\n" . '         <p><br><B style="font-size:14px">北京科维能动信息技术有限公司</B><BR>' . "\r\n" . '		 ItEnable Services(Beijing),Inc.<br/>' . "\r\n" . '        <a href="http://www.itenable.com.cn" target="_blank" class="body">www.itenable.com.cn<a><br><br><br><br><br>' . "\r\n" . '		</p>		' . "\r\n" . '        <p><B>联系信息</B><BR>' . "\r\n" . '		企业网站: <a href="http://www.itenable.com.cn" target="_blank" class="body">http://www.itenable.com.cn</a><br/>' . "\r\n" . '		产品网站: <a href="http://www.enableq.com" target="_blank" class="body">http://www.enableq.com</a><br/>' . "\r\n" . '		技术支持: <a href="mailto:services@itenable.com.cn" class="body">services@itenable.com.cn</a> <br>' . "\r\n" . '		</p>' . "\r\n" . '	  </td>' . "\r\n" . '   </tr></table></p>' . "\r\n" . '</span>' . "\r\n" . '';
+
+?>

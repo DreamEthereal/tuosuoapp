@@ -1,0 +1,160 @@
+<html>
+<head>
+<meta http-equiv=content-language content=zh-cn>
+<meta http-equiv=content-type content="text/html; charset=gbk">
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7">
+<style>
+td { padding:2px 5px 2px 5px;}
+table {margin-bottom:4px;}
+</style>
+<link href="../CSS/Base.css" rel=stylesheet>
+<LINK href="../CSS/Window.css" type=text/css rel=stylesheet>
+<script type="text/javascript" src="../JS/Common.js.php"></script>
+<script type="text/javascript" src="../JS/Window.js.php"></script>
+<script type="text/javascript" src="../JS/Jquery.min.js.php"></script>
+<script type="text/javascript" src="../JS/Jquery.notification.js.php"></script>
+<link type="text/css" rel="stylesheet" href="../CSS/Notification.css" />
+<script language=javascript src="../JS/CheckQuestion.js.php"></script>
+<script language="javascript"> 
+function Check_Form_Validator()
+{
+	if (!CheckNotNull(document.Check_Form.wxappid, "微信公众号AppID")) {return false;}
+	if (!CheckSpecicalChar(document.Check_Form.wxappid, "微信公众号AppID")) {return false;}
+	if (!CheckNotNull(document.Check_Form.mch_id, "微信支付商户号")) {return false;}
+	if (!CheckSpecicalChar(document.Check_Form.mch_id, "微信支付商户号")) {return false;}
+	if (!CheckNotNull(document.Check_Form.send_name, "微信支付商户名称")) {return false;}
+	if (!CheckSpecicalChar(document.Check_Form.send_name, "微信支付商户名称")) {return false;}
+	if (!CheckNotNull(document.Check_Form.nick_name, "红包提供方名称")) {return false;}
+	if (!CheckSpecicalChar(document.Check_Form.nick_name, "红包提供方名称")) {return false;}
+	if (!CheckNotNull(document.Check_Form.min_value, "最小红包金额")) {return false;}
+	if (!CheckNumber(document.Check_Form.min_value, "最小红包金额",100,20000)) {return false;}
+	if (!CheckNotNull(document.Check_Form.max_value, "最大红包金额")) {return false;}
+	if (!CheckNumber(document.Check_Form.max_value, "最大红包金额",100,20000)) {return false;}
+	if (Number(document.Check_Form.max_value.value ) < Number(document.Check_Form.min_value.value) )
+	{
+		document.Check_Form.max_value.focus();
+		$.notification('最大红包金额必须大于最小红包金额');
+		return false;
+	}
+	if (!CheckNotNull(document.Check_Form.wishing, "红包祝福语")) {return false;}
+	if (!CheckSpecicalChar(document.Check_Form.wishing, "红包祝福语")) {return false;}
+	if (!CheckNotNull(document.Check_Form.act_name, "红包活动名称")) {return false;}
+	if (!CheckSpecicalChar(document.Check_Form.act_name, "红包活动名称")) {return false;}
+
+	if (!CheckNotNull(document.Check_Form.apikey, "API密钥")) {return false;}
+	if (!CheckSpecicalChar(document.Check_Form.apikey, "API密钥")) {return false;}
+	
+	if ({apiclient_cert_file} == 0 )
+	{
+		if (!CheckNotNull(document.Check_Form.apiclient_cert_file, "apiclient_cert.pem证书")) {return false;}
+	}
+	if ({apiclient_key_file} == 0 )
+	{
+		if (!CheckNotNull(document.Check_Form.apiclient_key_file, "apiclient_key.pem证书")) {return false;}
+	}
+	if ({rootca_file} == 0 )
+	{
+		if (!CheckNotNull(document.Check_Form.rootca_file, "rootca.pem证书")) {return false;}
+	}
+}
+function CheckSpecicalChar(objField, strText)
+{
+    var objValue = Trim(objField.value);
+    if (objValue=="") return true;
+	var strErr = "“" + strText + "”不能包含单引号、双引号、反斜线等非法字符！";
+	var Re = /[\x22\x27\x5C\x3F\x23\x25\x2B\x2F]+/ig;
+	if ( Re.test(objField.value))
+	{
+        objField.focus();
+		$.notification(strErr);
+		return false;
+	}
+	return true;
+}
+function CheckExt(obj)
+{
+   	var AllowExt = ".pem|";
+	FileExt = obj.value.substr(obj.value.lastIndexOf(".")).toLowerCase();
+	if( AllowExt.indexOf(FileExt + "|") == -1) 
+	{
+		document.getElementById("submitBtn").disabled = true;
+	    $.notification("上传的文件扩展名仅支持pem");
+		return false;
+	}
+	else
+	{
+		document.getElementById("submitBtn").disabled = false;
+		return true;
+    }    
+}
+function refreshWindow() {
+   self.location.href = '{thisURL}';
+}
+function submitForm()
+{
+	if( Check_Form_Validator() != false )
+	{
+		document.getElementById('submitBtn').disabled = true;
+		disabledStyle(document.getElementById('submitBtn'));
+		document.getElementById('close').disabled = true;
+		disabledStyle(document.getElementById('close'));
+		document.Check_Form.submit();
+	}
+}
+</script> 
+<META content="MSHTML 6.00.3790.0" name=GENERATOR></HEAD>
+<body oncontextmenu="return false">
+
+<form name="Check_Form" method="post" action="" id="Check_Form" enctype="multipart/form-data" onsubmit="return false;" style="margin:0px;padding:0px">
+<table style="LINE-HEIGHT: 150%;border-collapse:collapse;" cellSpacing=0 cellPadding=0 width="100%" borderColor=#cacaca border=1>
+   <div class=position>位置：&nbsp; 我的问卷 &raquo; 预定义微信红包参数</div>
+   <tr bgcolor="#f9f9f9" height=25><td colspan=2><b>&nbsp;关于...</b>&nbsp;<img src="../Images/info.gif" border=0></td></tr>
+   <tr><td colspan=2>&nbsp;建议购买Eclear系统<font color=red>“移动设备浏览器问卷UI”</font>扩展许可证<br/>&nbsp;您须拥有经过认证的类型为<font color=red>服务号</font>的微信公众号，并成为开发者<br/>&nbsp;须在微信公众号管理系统中将Eclear系统运行的域名在<font color=red>“OAuth2.0网页授权”</font>处配置成<font color=red>“授权回调页面域名”</font><br/>&nbsp;已开通<font color=red>微信支付</font>，在<font color=red>微信支付商户平台</font>已完成充值，同时<font color=red>安全设置</font>处已设置<font color=red>API密钥</font>，并已下载<font color=red>API证书</font></td></tr>
+   <tr><td bgcolor="#f9f9f9" colspan=2>
+		<span style="float:left"><b>微信红包参数设定</b></span>
+   </td></tr>
+   <tr><td width=15%>微信公众号AppID：</td>
+       <td><input type=text size=40 name="wxappid" id="wxappid" value="{wxappid}">
+   </tr>
+   <tr><td width=15%>微信支付商户号：</td>
+       <td><input type=text size=30 name="mch_id" id="mch_id" value="{mch_id}">
+   </tr>
+   <tr><td width=15%>微信支付商户名称:</td>
+       <td><input type=text size=50 name="send_name" id="send_name" value="{send_name}">
+   </tr>
+   <tr><td width=15%>红包提供方名称：</td>
+       <td><input type=text size=50 name="nick_name" id="nick_name" value="{nick_name}">
+   </tr>
+   <tr><td width=15%>最小红包金额：</td>
+       <td><input type=text size=10 name="min_value" id="min_value" value="{min_value}"> 分
+   </tr>
+   <tr><td width=15%>最大红包金额：</td>
+       <td><input type=text size=10 name="max_value" id="max_value" value="{max_value}"> 分
+   </tr>
+   <tr><td width=15%>红包祝福语：</td>
+       <td><input type=text size=80 name="wishing" id="wishing" value="{wishing}"> (<128字符)
+   </tr>
+   <tr><td width=15%>红包活动名称：</td>
+       <td><input type=text size=50 name="act_name" id="act_name" value="{act_name}"> (<32字符)
+   </tr>
+</table>
+ <table style="LINE-HEIGHT: 150%;border-collapse:collapse;" cellSpacing=0 cellPadding=0 width="100%" borderColor=#cacaca border=1>
+   <tr><td bgcolor="#f9f9f9" colspan=2><b>API密钥</b></td></tr>
+   <tr><td width=15%>API密钥：</td><td><input type="text" name="apikey" id="apikey" size=40 value="{apikey}"></td></tr>
+  </table>
+
+ <table style="LINE-HEIGHT: 150%;border-collapse:collapse;" cellSpacing=0 cellPadding=0 width="100%" borderColor=#cacaca border=1>
+   <tr><td bgcolor="#f9f9f9"><b>上传API证书</b></td></tr>
+   <tr><td>apiclient_cert.pem：<input type="file" name="apiclient_cert_file" id="apiclient_cert_file" size=60 onchange="CheckExt(this);"><br/>{apiclient_cert_info}</td></tr>
+   <tr><td>apiclient_key.pem：&nbsp;<input type="file" name="apiclient_key_file" id="apiclient_key_file" size=60 onchange="CheckExt(this);"><br/>{apiclient_key_info}</td></tr>
+   <tr><td>rootca.pem：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="file" name="rootca_file" id="rootca_file" size=60 onchange="CheckExt(this);"><br/>{rootca_info}</td></tr>
+  </table>
+  <table width=100% style="margin-bottom:10px"><tr><td>
+	     <input name="surveyID" type="hidden" id="surveyID" value="{surveyID}"> 
+	     <input name="ori_appid" type="hidden" id="ori_appid" value="{wxappid}"> 
+    	 <input name="Action" type="hidden" id="Action" value="HongBaoDataSumbit"> 
+		 <input class=inputsubmit type="button" name="submitBtn" id="submitBtn" value="确定" onclick="javascript:submitForm();"> 
+		 <input class=inputsubmit type="button" name="close" id="close" value="关闭" onClick="javascript:parent.hidePopWin();">
+      </td></tr></table>
+  </form>
+</body></html>

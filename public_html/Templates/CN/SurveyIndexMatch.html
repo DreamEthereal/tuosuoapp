@@ -1,0 +1,213 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gbk" />
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" />
+<title>指标匹配问题 - Eclear在线问卷调查引擎</title>
+<link rel="shortcut icon" href="../Images/enableq.ico" type="image/x-icon" />
+<link rel="stylesheet" type="text/css" href="../CSS/UIBase.css" />
+<link rel="stylesheet" type="text/css" href="../CSS/Index.css" />
+<link href="../CSS/Window.css" type="text/css" rel=stylesheet>
+<script type="text/javascript" src="../JS/Common.js.php"></script>
+<script type="text/javascript" src="../JS/Window.js.php"></script>
+<script type="text/javascript" src="../JS/Jquery.min.js.php"></script>
+<script type="text/javascript" src="../JS/Jquery.notification.js.php"></script>
+<link type="text/css" rel="stylesheet" href="../CSS/Notification.css" />
+<script>
+function gId(_sId){
+	return document.getElementById(_sId);
+}
+function move(fbox, tbox) {
+	var arrFbox = new Array();
+	var arrTbox = new Array();
+	var arrLookup = new Array();
+	var i;
+	for (i = 0; i < tbox.options.length; i++) {
+		arrLookup[tbox.options[i].text] = tbox.options[i].value;
+		arrTbox[i] = tbox.options[i].text;
+	}
+	var fLength = 0;
+	var tLength = arrTbox.length;
+	for(i = 0; i < fbox.options.length; i++) {
+		arrLookup[fbox.options[i].text] = fbox.options[i].value;
+		if (fbox.options[i].selected && fbox.options[i].value != "") {
+			arrTbox[tLength] = fbox.options[i].text;
+			tLength++;
+		}
+		else {
+			arrFbox[fLength] = fbox.options[i].text;
+			fLength++;
+		}
+	}
+	//arrFbox.sort();
+	//arrTbox.sort();
+	fbox.length = 0;
+	tbox.length = 0;
+	var c;
+	for(c = 0; c < arrFbox.length; c++) {
+		var no = new Option();
+		no.value = arrLookup[arrFbox[c]];
+		no.text = arrFbox[c];
+		fbox[c] = no;
+	}
+	for(c = 0; c < arrTbox.length; c++) {
+		var no = new Option();
+		no.value = arrLookup[arrTbox[c]];
+		no.text = arrTbox[c];
+		tbox[c] = no;
+	}
+}
+function Check_Form_Validator()
+{
+  /* if(document.MatchForm.questionName.options.length != 0 )
+   {
+	   document.MatchForm.questionName.focus();
+       $.notification('尚有问题未与问卷指标建立匹配关系');
+	   return false;
+   }*/
+   var theValue = document.getElementById("indexIDList").value;
+   var indexIDList = theValue.substr(0,theValue.length-1).split("|");
+   for( i=0;i<indexIDList.length;i++)
+   {
+      var theObj = eval("document.getElementById(\"indexID_" + indexIDList[i] + "\")");
+	  for(c = 0; c < theObj.options.length; c++) {
+	      theObj.options[c].selected = true;
+	  }
+   }
+}
+function submitForm()
+{
+	if( Check_Form_Validator() != false )
+	{
+		document.getElementById('submitBtn').disabled = true;
+		disabledStyle(document.getElementById('submitBtn'));
+		document.getElementById('close').disabled = true;
+		disabledStyle(document.getElementById('close'));
+		document.MatchForm.submit();
+	}
+}
+function disabledStyle(obj)
+{
+	obj.style.border = '1px solid #DDD';
+	obj.style.backgroundColor = '#F5F5F5';
+	obj.style.color = '#3b5888';
+}
+</script>
+<style>
+	select {border:1px solid #cacaca;font-family: Calibri,"宋体",sans-serif;vertical-align: middle;margin-top:2px;margin-bottom:2px}
+    .t_table{width:708px;border:1px solid #cacaca;margin-bottom:5px}
+    .t_table tr{height:34px;line-height:34px;color:#5d5d5d;}
+    .t_table tr th{background-color: #f9f9f9;padding:0 5px;}
+    .t_table tr td{padding:0 5px;}
+    .t_table tr th{font-weight:bold;}
+    .t_table tr th.title,.d_table tr td.title{text-align:left;}    
+    .t_table tr td a{color:#3b5888;}
+    .t_table tr td a:hover{color:#ff7700;}
+    .t_table tr:hover{background-color:transparent}
+</style>
+
+</head>
+<body oncontextmenu="return false">
+ 	<div class="header">
+		<h1 class="logo">Eclear</h1>
+		<div class="header_menu">
+			<div class="header_m_1">
+				<a href="../System/ShowMain.php">欢迎您，<font color="#e45857" id="nick_Name_cont"></font></a>
+				<span class="head_menu_icon"></span>
+				<ul class="head_menu_list">
+					<span class="head_menu_top"></span>
+					<li><a href="../System/MyProfile.php">我的账户信息</a></li>
+					<li class="last"><a href="../System/ChangePass.php">修改我的密码</a></li>
+				</ul>
+			</div>
+			<div class="header_m_6" style="margin-left:50px">
+				<a href="../System/ShowMain.php">首页</a>
+			</div>
+			<div class="header_m_2" id="mySetting">
+			</div>
+			<div class="header_m_3" style="margin-left:50px">
+				<a href="../Help/Downs.php">帮助</a>
+				<span class="head_menu_icon"></span>
+				<ul class="head_menu_list">
+					<span class="head_menu_top"></span>
+					<li><a href="../Help/Downs.php">帮助文件下载</a></li>
+					<li><a href="http://doc.itenable.com.cn" target=_blank>在线帮助文档</a></li>
+					<li><a href="http://i.enableq.com" target=_blank>在线讨论社区</a></li>
+					<li class="last"><a href="../System/AdministratorsLogs.php">系统操作日志</a></li>
+				</ul>
+			</div>
+			<div class="header_m_4" style="margin-left:50px">
+				<a href="javascript:void(0);" onclick="javascript:showPopWin('../License/AboutEnableQ.php', 500, 400, null, null,'关于...')">关于</a>
+			</div>
+			<div class="header_m_5">
+				<a href="../System/Logout.php?loginOutURL=../index.php" target=_top>退出</a>
+			</div>
+		</div>
+	</div><!--end of header-->
+	<script type="text/javascript" src="../JS/MySetting.js.php"></script>
+
+	<div class="container clearfix">
+	   <div class="main">
+		<div class="nav">
+			    <a href="{indexListURL}">问卷指标体系</a>
+				<a href="{qtnURL}" class="cur">指标匹配问题</a>
+				<a href="../Analytics/SurveyIndexResult.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}" style="display:{isDesignMode}">问卷指标分析</a>
+		</div>
+
+	    <div class="content">
+			<div class="content_tit">
+				<div class="clearfix">
+				<h1><span class=redtitle>[{surveyTitle}]</span>指标匹配问题</h1>
+				<span class="total ml10"></span>
+				<span class="btn ml10"></span>
+				</div>
+				<p class="fc_grey">建立问卷内问题与指标之间的匹配关系</p>
+			</div>
+		   <div class="content_main" style="margin-top:10px;">
+
+			 <form name="MatchForm" id="MatchForm" method="post" action="" onsubmit="return false;">
+  			 <table class="t_table" width=970px>
+			   <tr><td valign=top style="width:450px;margin:0px;padding:0px">
+				  <table cellspacing=0 cellpadding=0>
+					 <tr><td><b>可分配问题列表</b></td></tr>
+					 <tr><td><select name="questionName" id="questionName" multiple size="{qtnSize}" style="width:445px">
+					  {qtnList}
+					  </select>
+				  </td></tr></table></td>
+				  <td valign=top align=left width=* style="margin:0px;padding:0px">
+				  <table cellspacing=0 cellpadding=0 width=100%>
+					<!-- BEGIN INDEX -->
+					<tr><td></td><td><b>{indexName}</b></tr>
+					<tr>
+					<td align=center valign=middle width="14px">
+						<input type="button" class=inputsubmit onClick="move(this.form.questionName,this.form.indexID_{indexID})" value=">" style="margin-bottom:2px;"><br/>
+						<input type="button" class=inputsubmit onClick="move(this.form.indexID_{indexID},this.form.questionName)" value="<" style="margin-bottom:2px;">
+					</td>
+					<td align=left valign=top><select name="indexID_{indexID}[]" id="indexID_{indexID}" multiple size="5" style="width:445px">
+						  {indexList}
+						  </select>
+					  </td>
+				   </tr>
+				   <!-- END INDEX -->
+				 </table></td>
+			   </tr></table>
+			 
+			   <table width=970px style="margin-top:10px;margin-bottom:15px">
+			   <tr><td align=center>
+				  <input type="hidden" name="surveyID" id="surveyID" value="{surveyID}">
+				  <input type="hidden" name="surveyTitle" id="surveyTitle" value="{surveyTitle}">
+				  <input type="hidden" name="indexIDList" id="indexIDList" value="{indexIDList}">
+				  <input type="hidden" name="Action" id="Action" value="SurveyIndexMatchSubmit">
+				  <input class=inputsubmit type="button" name="submitBtn" id="submitBtn" value="确定" onclick="javascript:submitForm();" {noSubmit}> 
+		          <input class=inputsubmit type="button" name="close" id="close"  value="取消" onClick="javascript:window.location.href='{indexListURL}'">
+			   </td></tr>
+			  </table>	
+			</form>
+
+			</div><!--end of content_main-->
+		   </div><!--end of content-->
+	   </div><!--end of main-->
+    </div><!--end of container-->
+	<!--popmenu -->
+	<script type="text/javascript" src="../JS/PopMenu.js.php"></script>
+</body></html>

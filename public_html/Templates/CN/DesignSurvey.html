@@ -1,0 +1,324 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gbk" />
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" />
+<title>调查问题列表 - Eclear在线问卷调查引擎</title>
+<link rel="shortcut icon" href="../Images/enableq.ico" type="image/x-icon" />
+<link rel="stylesheet" type="text/css" href="../CSS/UIBase.css" />
+<link rel="stylesheet" type="text/css" href="../CSS/Index.css" />
+<link href="../CSS/Window.css" type="text/css" rel=stylesheet>
+<script type="text/javascript" src="../JS/Common.js.php"></script>
+<script type="text/javascript" src="../JS/Window.js.php"></script>
+<script type="text/javascript" src="../JS/Jquery.min.js.php"></script>
+<LINK href="../CSS/Actions.css" type=text/css rel=stylesheet>
+<script type="text/javascript" src="../JS/Actions.js.php"></script>
+<script type="text/javascript" src="../JS/Jquery.notification.js.php"></script>
+<link type="text/css" rel="stylesheet" href="../CSS/Notification.css" />
+<script type="text/javascript" src="../JS/CheckQuestion.js.php"></script>
+<script language="javascript"> 
+function checkall(form) 
+{
+	if( form.all.checked)
+	{
+		for(var i = 0;i < form.elements.length-1; i++) 
+		{
+			var e = form.elements[i];
+			e.checked = true;
+		}
+	}
+	else
+	{
+		for(var i = 0;i < form.elements.length-1; i++) 
+		{
+			var e = form.elements[i];
+			e.checked = false;
+		}
+    }
+}
+function refreshParent() {
+   AjaxQtnListRequest("ShowQtnList.php{thisURLStr}"+"&randid="+Math.random());
+}
+function qtnAddAction()
+{ 
+	var x =(document.body.clientWidth-700)/2;		
+	var y = 180;
+	gId('menu-div').style.position = "absolute";
+	gId('menu-div').style.left = Math.ceil(x) + 'px';
+	var scTop = parseInt(getScrollTop(),10);
+	gId('menu-div').style.top = ( scTop + 90 ) + "px";
+	gId('menu-div').style.width = '640px';
+	//gId('menu-div').style.height = height + 'px';
+
+	gId('menu-div').style.display = "block";
+	gId('actionContent').style.padding = '0px';
+	gId('actionContent').innerHTML = "<div id=\"preloading\" style=\"background-color:#f0f0f0;width:160px;overflow:hidden;white-space:nowrap;color:black;font-weight:bold;-moz-border-radius-bottomright:5px;-webkit-border-bottom-right-radius:5px;-khtml-border-bottom-right-radius:5px;border-bottom-right-radius:5px;\">&nbsp;<img src=\"..\/Images\/wait.gif\" width=\"16px\" height=\"16px\">&nbsp;正在加载操作向导&nbsp;<\/div>";
+	change_style('select', 'hidden');
+	var postStr = '';
+	ajax_Post_Action("{addURL}"+"&randid="+Math.random(),postStr);
+}
+function createNewQtn(returnVal)
+{
+    AjaxQtnListRequest("ShowQtnList.php{thisURLStr}"+"&randid="+Math.random());
+    if( returnVal == 1 )  //保存,下一个
+    {
+       qtnAddAction();
+    }
+}
+function sendAddQtnAction(qtnType)
+{
+	closeLog('menu-div');
+    var thisProg = '{listURL}&Action=View&questionType='+qtnType;
+    showPopWin(thisProg, 900, 480,createNewQtn, null,'新增问卷问题');
+}
+function sendPageBreakAction(qtnType)
+{
+	closeLog('menu-div');
+    var thisProg = '{listURL}&Action=View&questionType='+qtnType;
+    self.location.href = thisProg;
+}
+function Init()
+{
+	gId('questionlist').innerHTML = "<div id=\"preloading\" style=\"background-color:#f0f0f0;width:200px;overflow:hidden;white-space:nowrap;color:black;font-weight:bold;-moz-border-radius-bottomright:5px;-webkit-border-bottom-right-radius:5px;-khtml-border-bottom-right-radius:5px;border-bottom-right-radius:5px;\">&nbsp;<img src=\"..\/Images\/wait.gif\" width=\"16px\" height=\"16px\">&nbsp;正在努力为您加载问题数据&nbsp;<\/div>";
+    AjaxQtnListRequest("ShowQtnList.php{thisURLStr}"+"&randid="+Math.random());
+}
+var http_request = false;
+function AjaxQtnListRequest(url)
+{
+	http_request = false;
+	if(window.ActiveXObject){
+		try{ http_request = new ActiveXObject("Msxml2.XMLHTTP");}
+		catch (e){ try{ http_request = new ActiveXObject("Microsoft.XMLHTTP");} catch (e) {}
+		}
+	}
+	else if(window.XMLHttpRequest){
+		http_request = new XMLHttpRequest();
+		if (http_request.overrideMimeType){ http_request.overrideMimeType('text/xml');}
+	}	
+	if (!http_request){ $.notification("Cannot create an XMLHTTP instance");return false;}
+	http_request.onreadystatechange = function() {
+	  if( http_request.readyState == 4 && http_request.status == 200) {
+			 gId('questionlist').innerHTML = http_request.responseText;
+			 gId('sideBar').style.right = '0px';
+			 newChangeQtn();
+			 fnLoad(1);
+		}
+	}
+	http_request.open('GET', url, true);
+	http_request.send(null);
+}
+function getBaseQtnListRequest(url){
+	http_request = false;
+	if(window.ActiveXObject){
+		try{ http_request = new ActiveXObject("Msxml2.XMLHTTP");}
+		catch (e){ try{ http_request = new ActiveXObject("Microsoft.XMLHTTP");} catch (e) {}
+		}
+	}
+	else if(window.XMLHttpRequest){
+		http_request = new XMLHttpRequest();
+		if (http_request.overrideMimeType){ http_request.overrideMimeType('text/xml');}
+	}	
+	if (!http_request){ $.notification("Cannot create an XMLHTTP instance");return false;}
+	http_request.onreadystatechange = function() {
+	  if( http_request.readyState == 4 && http_request.status == 200) {
+			 gId('baseQtnList').innerHTML = http_request.responseText;
+		}
+	}
+	http_request.open('GET', url, true);
+	http_request.send(null);
+}
+function newChangeQtn()
+{
+	var theNewQtnType = getRadioCheckBoxValue(gId('newQuestionType'));
+	switch(theNewQtnType)
+	{
+		case '17':
+		case '18':
+		case '19':
+		case '20':
+		case '21':
+		case '22':
+		case '28':
+		case '29':
+			gId('baseID').disabled = false;
+			getBaseQtnListRequest('AjaxShowBaseQtn.php?surveyID={surveyID}&newQuestionType=' +theNewQtnType );
+		break;
+		default:
+			gId('baseID').disabled = true;
+		break;
+	}
+}
+function checkSelectQtn()
+{
+	var strErr = "操作要求必须先选择一个或多个问题！";
+	objField = document.form.questionID;
+	if( objField.length == null )
+	{
+		if (objField.checked) return true;
+		else
+		{
+			objField.focus();
+			$.notification(strErr);
+			return false;
+		}
+	}
+	else
+	{
+		for (i=0;i<objField.length;i++){
+			if (objField[i].checked) return true;
+		}
+		objField[0].focus();
+		$.notification(strErr);
+		return false;
+	}
+}
+function checkInsertNewQtnInput()
+{
+	if ( !checkSelectQtn()) {return false;}
+	if (!CheckListNoSelect(document.form.newQuestionType, "在当前选中问题前插入的问题题型")) {return false;}
+	switch(getRadioCheckBoxValue(gId('newQuestionType')))
+	{
+		case '17':
+		case '18':
+		case '19':
+		case '20':
+		case '21':
+		case '22':
+		case '28':
+		case '29':
+			if (!CheckListNoSelect(document.form.baseID, "选择插入问题的来源问题")) {return false;}
+		break;
+	}
+}
+function checkInsertNewQtn()
+{
+	if( checkInsertNewQtnInput() != false )
+	{
+		document.getElementById('InsertNewQtnSubmit').disabled = true;
+		disabledStyle(document.getElementById('InsertNewQtnSubmit'));
+		document.getElementById('InsertPageBreakSubmit').disabled = true;
+		disabledStyle(document.getElementById('InsertPageBreakSubmit'));
+		document.getElementById('DeleteQuestionSubmit').disabled = true;
+		disabledStyle(document.getElementById('DeleteQuestionSubmit'));
+		document.getElementById('UpdateIsRequireSubmit').disabled = true;
+		disabledStyle(document.getElementById('UpdateIsRequireSubmit'));
+		document.getElementById('createNew0').disabled = true;
+		disabledStyle(document.getElementById('createNew0'));
+		gId('formAction').value = 'InsertNewQtnSubmit';
+		gId('form').submit();
+	}
+}
+function checkQtnAction( actionValue )
+{
+	if ( checkSelectQtn()) 
+	{
+		document.getElementById('InsertNewQtnSubmit').disabled = true;
+		disabledStyle(document.getElementById('InsertNewQtnSubmit'));
+		document.getElementById('InsertPageBreakSubmit').disabled = true;
+		disabledStyle(document.getElementById('InsertPageBreakSubmit'));
+		document.getElementById('DeleteQuestionSubmit').disabled = true;
+		disabledStyle(document.getElementById('DeleteQuestionSubmit'));
+		document.getElementById('UpdateIsRequireSubmit').disabled = true;
+		disabledStyle(document.getElementById('UpdateIsRequireSubmit'));
+		document.getElementById('createNew0').disabled = true;
+		disabledStyle(document.getElementById('createNew0'));
+		gId('formAction').value = actionValue;
+		gId('form').submit();
+	}
+}
+</script>
+<style>
+  .actionsTitle {color:#0099cc;font-size:14px;font-weight:bold;margin-bottom:5px;}
+  .actionsInner {font-size:12px;padding-left:10px;margin-bottom:8px;border-bottom:#f9f9f9 1px solid;}
+  .classtd { padding:2px 5px 2px 5px;}
+  input[type=text] {border:1px solid #cacaca;height:18px;font-family: Calibri,"宋体",sans-serif;line-height:18px;vertical-align: middle;}
+  select {border:1px solid #cacaca;height:20px;font-family: Calibri,"宋体",sans-serif;vertical-align: middle;}
+  .inputsubmit{vertical-align: middle;}
+  .stnsubmit{vertical-align: middle;}
+</style>
+
+<body oncontextmenu="return false" onload="javascript:Init();" onunload="javascript:fnUnload(1);">
+ 	<div class="header">
+		<h1 class="logo">Eclear</h1>
+		<div class="header_menu">
+			<div class="header_m_1">
+				<a href="../System/ShowMain.php">欢迎您，<font color="#e45857" id="nick_Name_cont"></font></a>
+				<span class="head_menu_icon"></span>
+				<ul class="head_menu_list">
+					<span class="head_menu_top"></span>
+					<li><a href="../System/MyProfile.php">我的账户信息</a></li>
+					<li class="last"><a href="../System/ChangePass.php">修改我的密码</a></li>
+				</ul>
+			</div>
+			<div class="header_m_6" style="margin-left:50px">
+				<a href="../System/ShowMain.php">首页</a>
+			</div>
+			<div class="header_m_2" id="mySetting">
+			</div>
+			<div class="header_m_3" style="margin-left:50px">
+				<a href="../Help/Downs.php">帮助</a>
+				<span class="head_menu_icon"></span>
+				<ul class="head_menu_list">
+					<span class="head_menu_top"></span>
+					<li><a href="../Help/Downs.php">帮助文件下载</a></li>
+					<li><a href="http://doc.itenable.com.cn" target=_blank>在线帮助文档</a></li>
+					<li><a href="http://i.enableq.com" target=_blank>在线讨论社区</a></li>
+					<li class="last"><a href="../System/AdministratorsLogs.php">系统操作日志</a></li>
+				</ul>
+			</div>
+			<div class="header_m_4" style="margin-left:50px">
+				<a href="javascript:void(0);" onclick="javascript:showPopWin('../License/AboutEnableQ.php', 500, 400, null, null,'关于...')">关于</a>
+			</div>
+			<div class="header_m_5">
+				<a href="../System/Logout.php?loginOutURL=../index.php" target=_top>退出</a>
+			</div>
+		</div>
+	</div><!--end of header-->
+	<script type="text/javascript" src="../JS/MySetting.js.php"></script>
+
+	<div class="container clearfix">
+	   <div class="main">
+		<div class="nav">
+			    <a href="{questionListURL}" class="cur">调查问题</a>
+				<a href="{logicURL}">逻辑关系</a>
+				<a href="{relationURL}">数值关联</a>
+				<a href="{quotaURL}">问卷配额</a>
+				<a href="../System/AjaxEditSurveyCode.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">基础数据</a>
+		</div>
+		<form name="form" id="form" method="post" action="">
+			<div class="content" id="questionlist"></div>
+		</form>
+	   </div><!--end of main-->
+    </div><!--end of container-->
+
+	<div id="menu-div">
+		<div id="actionInner">
+		  <div id="actionTitleBar">
+			  <div id="actionTitle">请选择对应调查问题操作</div>
+			  <div id="actionControls"><img src="../Images/closewindow.gif" onclick="closeLog('menu-div');" id="actionCloseBox"/></div>
+		  </div>
+		  <div id="actionContent"></div>
+		</div>
+	</div>
+
+	<link href="../CSS/SideBar.css" type="text/css" rel=stylesheet>
+	<script type="text/javascript" src="../JS/SideBar.js.php"></script>
+	<div id="sideBar">	
+		<a href="javascript:void(0);" id="sideBarTab" onfocus="this.blur();"><img src="../Images/slide-button.gif"/></a>
+		<div id="sideBarContents" style="display:none">
+			<div id="sideBarContentsInner" style="display:none">
+				<h2>操作小提示</h2>			
+				<ul>
+					<li><b>[设计]</b> 新增调查问卷，需要您继续添加问卷问题与选项，问卷设计工作才算完成；</li>
+					<li><b>[预览]</b> 检查问卷的正确与否及最终样式，可对问卷进行预览，并可进行模拟数据提交；</li>
+					<li><b>[执行]</b> 设计好的问卷要供被调查者填写数据，需把问卷转成“执行”状态；</li>
+					<li><b>[执行]</b> 执行状态的问卷为保持数据完整性，将关闭问卷部分设计功能。</li>
+				</ul>			
+			</div>
+		</div>	
+	</div>
+	<script>initSideBar();</script>
+	<!--popmenu -->
+	<script type="text/javascript" src="../JS/PopMenu.js.php"></script>
+	<script type="text/javascript" src="../JS/Position.js.php"></script>
+</body></html>

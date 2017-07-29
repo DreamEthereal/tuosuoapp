@@ -1,0 +1,281 @@
+<html>
+<head>
+<meta http-equiv=content-language content=zh-cn>
+<meta http-equiv=content-type content="text/html; charset=gbk">
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7">
+<style>
+ td { padding:2px 5px 2px 5px;}
+</style>
+<link href="../CSS/Base.css" rel="stylesheet">
+<script type="text/javascript" src="../JS/Jquery.min.js.php"></script>
+<script type="text/javascript" src="../JS/Jquery.notification.js.php"></script>
+<link type="text/css" rel="stylesheet" href="../CSS/Notification.css" />
+<script language=javascript src="../JS/CheckQuestion.js.php"></script>
+<script LANGUAGE="JAVASCRIPT">		
+ function checkIsDisplay()
+ { 
+	if (document.Check_Form.types.value == "text")
+	{
+		document.getElementById("isLength").style.display = "";
+		document.getElementById("defaultText").style.display = "";
+		document.getElementById("defaultTextarea").style.display = "none";
+		document.getElementById("isCols").style.display = "none";
+		document.getElementById("contentValue").style.display = "none";
+		document.getElementById("defaultValue").style.display = "none";
+		document.getElementById("isCheckInputBase").style.display = "";
+		document.getElementById("isCheckInputAtt").style.display = "";
+		document.Check_Form.length.disabled  = false
+		document.Check_Form.defaultText.disabled  = false
+		document.Check_Form.defaultTextarea.disabled  = true
+		document.Check_Form.defaultList.disabled  = true
+		document.Check_Form.rows.disabled  = true
+		document.Check_Form.optionContent.disabled  = true
+		document.Check_Form.isCheckNull.disabled  = false
+		document.Check_Form.isCheckType.disabled  = false
+		//document.Check_Form.MinValue.disabled  = false
+		//document.Check_Form.MaxValue.disabled  = false 
+		checkIsCheckType();
+	}
+
+	if (document.Check_Form.types.value == "textarea")
+	{
+		document.getElementById("isLength").style.display = "";
+		document.getElementById("defaultText").style.display = "none";
+		document.getElementById("defaultTextarea").style.display = "";
+		document.getElementById("isCols").style.display = "";
+		document.getElementById("contentValue").style.display = "none";
+		document.getElementById("defaultValue").style.display = "none";
+		document.getElementById("isCheckInputBase").style.display = "";
+		document.getElementById("isCheckInputAtt").style.display = "none";
+		document.Check_Form.length.disabled  = false
+		document.Check_Form.defaultText.disabled  = true
+		document.Check_Form.defaultTextarea.disabled  = false
+		document.Check_Form.defaultList.disabled  = true
+		document.Check_Form.rows.disabled  = false
+		document.Check_Form.optionContent.disabled  = true
+		document.Check_Form.isCheckNull.disabled  = false
+		document.Check_Form.isCheckType.disabled  = true
+		document.Check_Form.MinValue.disabled  = true
+		document.Check_Form.MaxValue.disabled  = true         
+	}
+			
+	if (document.Check_Form.types.value == "select" || document.Check_Form.types.value == "radio" || document.Check_Form.types.value == "checkbox")
+	{
+		document.getElementById("isLength").style.display = "none";
+		document.getElementById("defaultText").style.display = "none";
+		document.getElementById("defaultTextarea").style.display = "none";
+		document.getElementById("isCols").style.display = "none";
+		document.getElementById("contentValue").style.display = "";
+		document.getElementById("defaultValue").style.display = "";
+		document.getElementById("isCheckInputBase").style.display = "none";
+		document.getElementById("isCheckInputAtt").style.display = "none";
+		document.Check_Form.length.disabled  = true
+		document.Check_Form.defaultText.disabled  = true
+		document.Check_Form.defaultTextarea.disabled  = true
+		document.Check_Form.defaultList.disabled  = false
+		document.Check_Form.rows.disabled  = true
+		document.Check_Form.optionContent.disabled  = false
+		document.Check_Form.isCheckNull.disabled  = true
+		document.Check_Form.isCheckType.disabled  = true
+		document.Check_Form.MinValue.disabled  = true
+		document.Check_Form.MaxValue.disabled  = true         
+	}
+}
+
+function Check_Form_Validator()
+{
+	if (!CheckNotNull(document.Check_Form.name, "字段名称")) {return false;}
+	if (!CheckNotNull(document.Check_Form.length, "字段长度")) {return false;}
+	if (!CheckNumber(document.Check_Form.length, "字段长度",2,80)) {return false;}
+	if (!CheckNumber(document.Check_Form.rows, "字段行数",1,10)) {return false;}
+	if (document.Check_Form.types.value == "text" )
+	{
+	    switch( document.Check_Form.isCheckType.value )
+		{
+		   case '0':
+		   case '1':
+		   case '3':
+		   case '5':
+		   case '6':
+		   case '7':
+		   case '8':
+		   case '9':
+		   case '10':
+		   case '11':
+		   case '12':
+		   break;
+		   case '2':
+			    if (!CheckNotNull(document.Check_Form.MinValue, "要求的输入最少值")) {return false;}
+			    if (!CheckNotNull(document.Check_Form.MaxValue, "要求的输入最大值")) {return false;}
+				if (!CheckMinMaxNum(document.Check_Form.MinValue, "要求的输入最少值")) {return false;}
+			    if (!CheckMinMaxNum(document.Check_Form.MaxValue, "要求的输入最大值")) {return false;}
+				if (Number( document.Check_Form.MaxValue.value ) < Number(document.Check_Form.MinValue.value) )
+				{
+					document.Check_Form.MaxValue.focus();
+					$.notification('区间值的最大值必须大于最少值');
+					return false;
+				}
+		   break;
+		   case '4':
+			    if (!CheckNotNull(document.Check_Form.MinValue, "要求的输入最少值")) {return false;}
+			    if (!CheckNotNull(document.Check_Form.MaxValue, "要求的输入最大值")) {return false;}
+				if (!CheckIsValue(document.Check_Form.MinValue, "要求的输入最少值",null,null)) {return false;}
+			    if (!CheckIsValue(document.Check_Form.MaxValue, "要求的输入最大值",null,null)) {return false;}
+				if (Number( document.Check_Form.MaxValue.value ) < Number(document.Check_Form.MinValue.value) )
+				{
+					document.Check_Form.MaxValue.focus();
+					$.notification('区间值的最大值必须大于最少值');
+					return false;
+				}
+		   break;
+		}
+	}
+	if( (document.Check_Form.types.value == "select" || document.Check_Form.types.value == "radio" || document.Check_Form.types.value == "checkbox" )  &&  document.Check_Form.optionContent.value == '' )
+	{
+		document.Check_Form.optionContent.focus();
+		$.notification('请填写选项值');
+		return false;
+	}
+		
+}
+//检查输入内容是否为数字
+function CheckMinMaxNum(objField, strText) {
+  if (objField.value == "") return true;
+  var RE = new RegExp("[^0-9]");
+  if (objField.value.search(RE) != -1) {
+    objField.focus();
+    $.notification("“" + strText + "”中只能填写整数！");
+    return false;
+  }
+  return true;
+}
+function checkIsCheckType(value)
+{
+   switch( value )
+   {
+		case '0':
+		case '1':
+		case '3':
+		case '5':
+		case '6':
+		case '7':
+		case '8':
+		case '9':
+		case '10':
+		case '11':
+		case '12':
+		   document.Check_Form.MinValue.disabled  = true
+		   document.Check_Form.MaxValue.disabled  = true
+		   document.getElementById("checkInfo").innerHTML= '';
+		break;
+		case '2':
+		   document.Check_Form.MinValue.disabled  = false
+		   document.Check_Form.MaxValue.disabled  = false
+		   document.getElementById("checkInfo").innerHTML= '字符串长度：';
+		break;
+		case '4':
+		   document.Check_Form.MinValue.disabled  = false
+		   document.Check_Form.MaxValue.disabled  = false
+		   document.getElementById("checkInfo").innerHTML= '数值区间：';
+		break;
+   }
+}
+function submitForm()
+{
+	if( Check_Form_Validator() != false )
+	{
+		document.getElementById('submitBtn').disabled = true;
+		disabledStyle(document.getElementById('submitBtn'));
+		document.getElementById('close').disabled = true;
+		disabledStyle(document.getElementById('close'));
+		document.Check_Form.submit();
+	}
+}
+</script>
+<meta content="mshtml 6.00.3790.0" name=generator></head>
+<body oncontextmenu="return false" onload="javascript:checkIsCheckType(1);">
+  <form action="" method="post" name="Check_Form" id="Check_Form" onsubmit="return false;">
+  <table class=datatable style="line-height: 150%;border-collapse:collapse;" cellspacing=0 cellpadding=0 bordercolor=#cacaca border=1 width=100%>
+        <div class=position>位置：&nbsp; 我的问卷 &raquo; 样本属性自定义字段 &raquo; 新增自定义字段</div>
+        <tr><td colspan="2" height=25 bgcolor="#f9f9f9"><b>新增自定义字段</b></td></tr>
+       <tr><td colspan="2" align=right><SPAN style="PADDING-RIGHT: 16px">注：以下带“<SPAN  class=red>*</SPAN>”的为必填项</SPAN></td></tr>
+        <tr> 
+          <td width="16%" height="25"><SPAN  class=red>*</SPAN>&nbsp;字段名称</td>
+          <td width="84%"><input name="name" type="text" id="name" size="30"></td>
+        </tr>
+        <tr> 
+          <td align=left><SPAN  class=red>*</SPAN>&nbsp;字段类型</td>
+          <td align=left><select name="types" id="types" onChange="checkIsDisplay();">
+              <option value="text">单行文本</option>
+              <option value="textarea">多行文本</option>
+              <option value="select">下拉框</option>
+              <option value="radio">单选框</option>
+              <option value="checkbox">复选框</option>
+            </select></td>
+        </tr>
+        <tr id="isLength" style=""> 
+          <td align=left><SPAN  class=red>*</SPAN>&nbsp;显示长度</td>
+          <td align=left><input name="length" type="text" id="length" value="30" size="3" maxlength="3"></td>
+        </tr>
+        <tr id="defaultText" style=""> 
+          <td align=left>&nbsp;&nbsp;&nbsp;默认值</td>
+          <td align=left><input name="defaultText" type="text" id="defaultText" value="" size="30" maxlength="60"></td>
+        </tr>
+        <tr id="isCols" style="display:none"> 
+          <td align=left><SPAN  class=red>*</SPAN>&nbsp;显示行数</td>
+          <td align=left><input name="rows" type="text" id="rows" value="5" size="3" maxlength="3" disabled></td>
+        </tr>
+        <tr id="defaultTextarea" style="display:none"> 
+          <td align=left>&nbsp;&nbsp;&nbsp;默认值</td>
+          <td align=left><textarea name="defaultTextarea" cols="60" rows="3" id="defaultTextarea"></textarea></td>
+        </tr>
+        <tr id="contentValue" style="display:none"> 
+          <td align=left><SPAN  class=red>*</SPAN>&nbsp;选项值</td>
+          <td align=left><textarea name="optionContent" cols="40" rows="6" id="optionContent"></textarea>
+            (* 每个选项值一行)</td>
+        </tr>
+        <tr id="defaultValue" style="display:none"> 
+          <td align=left>&nbsp;&nbsp;&nbsp;默认值</td>
+          <td align=left><input name="defaultList" type="text" id="defaultList" size=3 value="1"> * 对应选项值的序列号</td>
+        </tr>
+		<tr id="isCheckInputBase">
+          <td align=left>&nbsp;&nbsp;&nbsp;基本输入检查规则</td>
+          <td align=left><input type=checkbox name="isCheckNull" value="1" checked> 必填项</td>
+        </tr>
+		<tr id="isCheckInputAtt"> 
+          <td align=left>&nbsp;&nbsp;&nbsp;附属输入检查规则</td>
+          <td align=left><Select name="isCheckType" id="isCheckType" onchange="checkIsCheckType(document.Check_Form.isCheckType.options[document.Check_Form.isCheckType.selectedIndex].value);">
+		     <option value="0">请选择输入检查规则</option>
+		     <option value="1">检查输入为Email</option>
+		     <option value="2">检查字符串长度</option>
+		     <option value="3">禁止字符串出现中文</option>
+		     <option value="12">仅允许输入中文字符</option>
+		     <option value="4">检查输入为数值</option>
+		     <option value="5">检查输入为电话号码</option>
+		     <option value="11">检查输入为手机号码</option>
+		     <option value="6">检查输入为日期</option>
+		     <option value="7">检查输入为身份证号</option>
+		     <option value="8">检查输入为企业法人代码</option>
+		     <option value="9">检查输入为邮政编码</option>
+		     <option value="10">检查输入为网址</option>
+			</select>&nbsp;&nbsp;<span id=checkInfo>区间值：</span>最小：<input name="MinValue" type="text" size=6>&nbsp;最大：<input name="MaxValue" type="text" size=6></td>
+        </tr>
+        <tr> 
+          <td align=left>&nbsp;&nbsp;&nbsp;是否显示</td>
+          <td align=left><select name="isPublic" id="isPublic">
+              <option value="1">是</option>
+              <option value="0">否</option>
+            </select></td>
+        </tr></table>
+		<table width=100%>
+        <tr>
+		  <td width="16%"></td>
+          <td> 
+		    <input type="hidden" name="Action" value="AddFieldsSubmit"> 
+		    <input class=inputsubmit type="button" name="submitBtn" id="submitBtn" value="确定" onclick="javascript:submitForm();"> 
+		    <input class=inputsubmit type="button" name="close" id="close" value="关闭" onClick="javascript:parent.hidePopWin();">
+          </td>
+        </tr>
+     </table>
+ </form> 
+</body></html>

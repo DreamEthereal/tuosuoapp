@@ -1,0 +1,76 @@
+<html>
+<head>
+<meta http-equiv=content-language content=zh-cn>
+<meta http-equiv=content-type content="text/html; charset=gbk">
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7">
+<style>
+ td { padding:2px 5px 2px 5px;}
+</style>
+<link href="../CSS/Base.css" rel=stylesheet>
+<script type="text/javascript" src="../JS/Jquery.min.js.php"></script>
+<script type="text/javascript" src="../JS/Jquery.notification.js.php"></script>
+<link type="text/css" rel="stylesheet" href="../CSS/Notification.css" />
+<script language=javascript src="../JS/CheckQuestion.js.php"></script>
+<script language=javascript>
+function Check_Form_Validator()
+{
+	if (!CheckNotNull(document.Check_Form.csvFile, "选择导入的文件")) {return false;}
+}
+function CheckExt(obj)
+{
+   	var AllowExt = ".csv|";
+	FileExt = obj.value.substr(obj.value.lastIndexOf(".")).toLowerCase();
+	if( AllowExt.indexOf(FileExt + "|") == -1) 
+	{
+		document.getElementById("submitBtn").disabled = true;
+	    $.notification("上传的导入文件扩展名仅支持CSV");
+		return false;
+	}
+	else
+	{
+		document.getElementById("submitBtn").disabled = false;
+		return true;
+    }    
+}
+function submitForm()
+{
+	if( Check_Form_Validator() != false )
+	{
+		document.getElementById('submitBtn').disabled = true;
+		disabledStyle(document.getElementById('submitBtn'));
+		document.getElementById('close').disabled = true;
+		disabledStyle(document.getElementById('close'));
+		document.Check_Form.submit();
+	}
+}
+</script>
+
+<meta content="mshtml 6.00.3790.0" name=generator></head>
+<body oncontextmenu="return false">
+  <form name="Check_Form" method="post" enctype="multipart/form-data" action="" id="Check_Form" onsubmit="return false;">
+  <table class=datatable style="line-height: 150%;border-collapse:collapse;" cellspacing=0 cellpadding=0 bordercolor=#cacaca border=1 width=100%>
+        <div class=position>位置：&nbsp; 我的问卷</font> &raquo; 从CSV文件导入{actionType}</div>
+      <tr> 
+         <td colspan="2" bgcolor="#f9f9f9"><b>上传本地格式文件(.csv)</b></td>
+      </tr>
+  	  <tr><td align=left width="13%"><b></b></td>
+           <td align=left width="87%"><input name="csvFile" type="file" id="csvFile" size=80 onchange="CheckExt(this)"></td>
+	  </tr>
+	  </table><table width=100%>
+	  <tr><td width=13%></td><td>
+         <input name="Action" type="hidden" id="Action" value="{actionName}">
+		 <input name="surveyID" id="surveyID" type="hidden" value="{surveyID}">
+		 <input class=inputsubmit type="button" name="submitBtn" id="submitBtn" value="确定" onclick="javascript:submitForm();"> 
+		 <input class=inputsubmit type="button" name="close" id="close" value="关闭" onClick="javascript:parent.hidePopWin();">
+       </td>
+     </tr>
+  </form> 
+ </table>
+ 
+  <table width=100%>
+   <tr><td style="padding-left:0px">
+     <span class=red>*</span>&nbsp;批量导入文件模板请参照示例文件：<a href="../WebAPI/Down.php?path=Li4vSGVscC8=&file={helpFileName}"><b><font color=red>下载示例文件</font></b></a>；<br/>
+	 <span class=red>*</span>&nbsp;批量导入的CSV文件<b>须保留文件标题行(第1行)</b>，并确保上传的CSV文件内<b>列顺序</b>与示例文件保持一致<br/>
+  </td></tr>
+  </table>
+</body></html>

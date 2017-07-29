@@ -1,0 +1,412 @@
+<html>
+<head>
+<meta http-equiv=content-type content="text/html; charset=gbk">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<link rel="stylesheet" type="text/css" href="resources/android.css">
+<script type="text/javascript" src="common/string.js"></script>
+<script type="text/javascript" src="common/jquery-1.11.2.min.js"></script>
+<script type="text/javascript" src="common/viewqtn.js"></script>
+<script type="text/javascript" src="common/smart-2.11.min.js"></script>
+<script type="text/javascript" src="common/viewvideo.js"></script>
+<script type="text/javascript" src="script/animation.js"></script>
+<script type="text/javascript" src="script/user.js"></script>
+<script type="text/javascript" src="common/gpsconfig.js"></script>
+<script type="text/javascript" src="common/gps.js"></script>
+<style>
+ .question { font-weight: bold; font-size: 16px; color: #00568f; font-family: Calibri;height:25px;}
+ .answer { font-weight: normal; font-size: 14px; color: #000000; font-family: Calibri;}
+</style>
+<script language="javascript"> 
+	var img = 0;
+	if( ! rexseeDatabase.tableExists('eq_font','rexsee:enableq.db') )
+	{
+		var ftsql = "CREATE TABLE eq_font (id int(1) NOT NULL default '1',fontId int(1) NOT NULL default '1');";
+		rexseeDatabase.exec(ftsql,'rexsee:enableq.db');
+		ftsql = " INSERT INTO eq_font (id,fontId) values ('1','1');";
+		rexseeDatabase.exec(ftsql,'rexsee:enableq.db');
+		if( rexseeScreen.getScreenHeight() < 500 || rexseeScreen.getScreenWidth() < 500 )
+		{
+			rexseeScreen.setScreenOrientation('landscape');
+			document.write('<LINK href="resources/minipad.css" type=text/css rel=stylesheet>');
+			document.write('<style>td{padding-left:5px;padding-right:5px;font-size:12px}table {margin-bottom:2px;}</style>');
+			img = 0;
+		}
+		else
+		{
+			document.write('<LINK href="resources/pad10.css" type=text/css rel=stylesheet>');
+			document.write('<style>td{padding:2px 5px 2px 5px;font-size:14px}table {margin-bottom:3px;}</style>');
+			img = 1;
+		}
+	}
+	else
+	{
+		var ftsql = " SELECT fontId FROM eq_font WHERE id='1';";
+		var ftRow = eval('('+getDbRows(ftsql,'rexsee:enableq.db')+')');
+		if( parseInt(ftRow.rows[0][0] ) == 1)  //´ó×ÖÌå
+		{
+			document.write('<LINK href="resources/pad10.css" type=text/css rel=stylesheet>');
+			document.write('<style>td{padding:2px 5px 2px 5px;font-size:14px}table {margin-bottom:3px;}</style>');
+			img = 1;
+		}
+		else
+		{
+			document.write('<LINK href="resources/minipad.css" type=text/css rel=stylesheet>');
+			document.write('<style>td{padding-left:5px;padding-right:5px;font-size:12px}table {margin-bottom:2px;}</style>');
+			img = 0;
+		}
+	}
+	rexseeScreen.setFullScreen(true);
+	function dynimgsize(o){
+		var zoom=parseInt(o.style.zoom, 10)||100;zoom+=event.wheelDelta/12;if (zoom>0) o.style.zoom=zoom+'%';
+		return false;
+	}
+	var qid = rexseeHashMap.get('enableq','qid');
+	var rid = rexseeHashMap.get('enableq','rid');
+	var pid = rexseeHashMap.get('enableq','thisPage');
+	var dataRow = eval('('+ getDbRows('SELECT * FROM eq_response_'+qid+' WHERE responseID = '+rid+' LIMIT 1','rexsee:enableq.db') + ')' );
+	if( count(dataRow.rows) == 0 )
+	{
+		alert("Î´ÕÒµ½¶ÔÓ¦µÄµ÷²éÎÊ¾íÊý¾Ý");
+		animationLoad('showdata.html');
+	}
+
+	document.write("<script language='javascript' type='text/javascript' src='"+rexseeStorage.getRoot()+"enableq_offline/script/"+qid+"/jsondata.js'><\/sc" + "ript>");
+	var dataIndex = [];
+	for( var tmp in dataRow.columns )
+	{
+		dataIndex[dataRow.columns[tmp]] = tmp;
+	}
+	var lastURL = "showdata.html";
+	switch( parseInt(dataRow.rows[0][dataIndex['overFlag']]) )  //overFlag
+	{
+		case 0:
+		default:
+			var overFlag = "Î´Íê³É";
+		break;
+		case 1:
+			var overFlag = "Íê³É";
+		break;
+		case 2:
+			var overFlag = "ÎÞÐ§»Ø¸´";
+		break;
+		case 3:
+			var overFlag = "µ¼ÈëÊý¾Ý";
+		break;
+	}
+	function locatLastURL()
+	{
+		animationLoad(lastURL);
+	}
+	function getNextDataId(responseID,flag)
+	{
+		if( flag == 1 )  //ÏÂÒ»Ìõ
+		{
+			var dataRow = eval('('+getDbRows('SELECT responseID FROM eq_response_'+qid+' WHERE responseID > '+responseID+' ORDER BY responseID ASC LIMIT 1','rexsee:enableq.db')+')');
+		}
+		else
+		{
+			var dataRow = eval('('+getDbRows('SELECT responseID FROM eq_response_'+qid+' WHERE responseID < '+responseID+' ORDER BY responseID DESC LIMIT 1','rexsee:enableq.db')+')');
+		}
+		if( count(dataRow.rows) == 0 )
+		{
+			return 0;
+		}
+		else
+		{
+			return parseInt(dataRow.rows[0][0]);
+		}
+	}
+	function locatNextIdURL()
+	{
+		var theNextId = getNextDataId(rid,1);
+		if( theNextId == 0 )
+		{
+			var nextURL = lastURL;
+		}
+		else
+		{
+			rexseeHashMap.remove('enableq','rid');
+			rexseeHashMap.add('enableq','rid',theNextId);
+			var nextURL = "viewdata.html";
+		}
+		animationLoad(nextURL);
+	}
+	function locatLastIdURL()
+	{
+		var theLastId = getNextDataId(rid,2);
+		if( theLastId == 0 )
+		{
+			var lastIdURL = lastURL;
+		}
+		else
+		{
+			rexseeHashMap.remove('enableq','rid');
+			rexseeHashMap.add('enableq','rid',theLastId);
+			var lastIdURL = "viewdata.html";
+		}
+  		animationLoad(lastIdURL);
+	}
+	var survey_content_data_html = '';
+	$(document).ready(function(){
+		for( var tmpm=0;tmpm<count(PagesListArray);tmpm++)
+		{
+			survey_content_data_html = '';
+			for( var tmpk=0;tmpk<count(PagesListArray[tmpm]);tmpk++)
+			{
+				var questionID = PagesListArray[tmpm][tmpk];
+				switch( QtnListArray[questionID].questionType )
+				{
+					case 1:
+						view_yesno_data(questionID);
+					break;
+					case 2:
+						view_radio_data(questionID);
+					break;
+					case 3:
+						view_checkbox_data(questionID);
+					break;
+					case 4:
+						view_text_data(questionID);
+					break;
+					case 5:
+						view_textarea_data(questionID);
+					break;
+					case 6:
+						view_range_data(questionID);
+					break;
+					case 7:
+						view_multiple_data(questionID);
+					break;
+					case 8:
+						continue;
+					case 9:
+						view_info_qtn(questionID);
+					break;
+					break;
+					case 10:
+						view_rank_data(questionID);
+					break;
+					case 11:
+						view_upload_data(questionID);
+					break;
+					case 12:
+					case 13:
+						continue;
+					break;
+					case 14:
+						view_list_data(questionID);
+					break;
+					case 15:
+						view_rating_data(questionID);
+					break;
+					case 16:
+						view_weight_data(questionID);
+					break;
+					case 17:
+						view_auto_data(questionID);
+					break;
+					case 18:
+						view_cond_data(questionID);
+					break;
+					case 19:
+						view_autorange_data(questionID);
+					break;
+					case 20:
+						view_autorank_data(questionID);
+					break;
+					case 21:
+						view_autorating_data(questionID);
+					break;
+					case 22:
+						view_autoweight_data(questionID);
+					break;
+					case 23:
+						view_combtext_data(questionID);
+					break;
+					case 24:
+						view_combradio_data(questionID);
+					break;
+					case 25:
+						view_combcheckbox_data(questionID);
+					break;
+					case 26:
+						view_combrange_data(questionID);
+					break;
+					case 27:
+						view_multipletext_data(questionID);
+					break;
+					case 28:
+						view_automultiple_data(questionID);
+					break;
+					case 29:
+						view_automultipletext_data(questionID);
+					break;
+					case 30:
+						view_empty_data(questionID);
+					break;
+					case 31:
+						view_cascade_data(questionID);
+					break;
+				}//end of switch
+			}//end of for
+			$("#survey_data_container").append(survey_content_data_html);
+		}//end of for
+	});
+	$(window).unload(function(){
+		dataIndex = null;
+		dataRow = null;
+	});
+	window.onException = function(className, message){
+		//alert(unescape(message));
+		var theLogFilePath = rexseeStorage.getRoot()+'enableq_offline/logs/';
+		if( ! rexseeFile.exists(theLogFilePath) )
+		{
+			rexseeFile.newDir(theLogFilePath);
+		}
+		var theLogFile = theLogFilePath +'error.txt';
+		if( !rexseeFile.exists(theLogFile) )
+		{
+			rexseeFile.newFile(theLogFile);
+		}
+		else
+		{
+			if( rexseeFile.size(theLogFile) > 102400 )
+			{
+				rexseeFile.remove(theLogFile);
+				rexseeFile.newFile(theLogFile);
+			}
+		}
+		var theOriFileContent = rexseeFile.getContent(theLogFile,'GBK');
+		rexseeFile.putContent(theLogFile,theOriFileContent+"Error("+date('Y-m-d H:i:s',time())+"):"+className+":"+unescape(message)+"\r\n",'GBK');
+	}
+</script>
+<META content="MSHTML 6.00.3790.0" name=GENERATOR></HEAD>
+
+<body oncontextmenu="return false" style="background:#e5e5e5;color:#666;font-size:14px;margin:0px;overflow:hidden">
+
+<script>
+ if(img == 0 ) 
+ {
+	document.write('<div class="titlebar"><table width=100% style="margin:0px"><tr><td width=51 style="padding:0px"><a href="javascript:locatLastURL();"><img src="resources/back.png" border=0 width=51></a></td><td align=center width=* class="pageTitle" style="padding:0px">Êý¾ÝÏêÏ¸</td><td width=51 style="padding:0px">&nbsp;</td></tr></table></div>');
+ }
+ else
+ {
+	document.write('<div class="titlebar"><table width=100% style="margin:0px"><tr><td width=75 style="padding:0px"><a href="javascript:locatLastURL();"><img src="resources/hback.png" border=0 width=75></a></td><td align=center width=* class="pageTitle" style="padding:0px">Êý¾ÝÏêÏ¸</td><td width=75 style="padding:0px">&nbsp;</td></tr></table></div>');
+ }
+</script>
+
+<div id="androidList" style="padding-top:5px;background: #e5e5e5;overflow:hidden" class="contentPadding">
+
+  <table style="LINE-HEIGHT: 150%;border-collapse:collapse;" class="pertable" cellSpacing=0 cellPadding=0 width="100%" borderColor=#ccc border=1>
+   <tr><td colspan=2 bgcolor="#f5f5f5" class="optiontitle"><b>È«³Ì(Â¼Òô|Â¼Ïñ)ÎÄ¼þ</b></td></tr>
+   <tr><td nowrap width=20% class="option">&nbsp;(Â¼Òô|Â¼Ïñ)ÎÄ¼þ</td>
+       <td class="option">&nbsp;<span id="recFile" style="color:red;">ÎÞÈ«³Ì(Â¼Òô|Â¼Ïñ)ÎÄ¼þ</span></a></td>
+   </tr>
+  </table>
+
+<script>
+	var recordFile = trim(dataRow.rows[0][dataIndex['recordFile']]);
+	var theTmpFilePath = rexseeStorage.getRoot()+'enableq_offline/files/'+qid+'/';
+	if( recordFile != '' )
+	{
+		if( rexseeFile.exists(theTmpFilePath+recordFile) )
+		{
+			var sql = " SELECT isRecord FROM eq_survey_list WHERE surveyID = '"+qid+"';";
+			var surveyRow = eval('('+getDbRows(sql,'rexsee:enableq.db')+')');
+			if( parseInt(surveyRow.rows[0][0] ) == 1 ) //È«³ÌÂ¼Òô
+			{
+				//ÐÞ¶©ÎÄ¼þÃû
+				if( recordFile.split('.').length == 3 )
+				{
+					$("#recFile").html(substr(recordFile,0,-3) + '&nbsp;&nbsp;<a href="javascript:playRecFile();" style="color:blue;"><b>µã»÷²¥·Å</b></a>');
+				}
+				else
+				{
+					$("#recFile").html(recordFile + '&nbsp;&nbsp;<a href="javascript:playRecFile();" style="color:blue;"><b>µã»÷²¥·Å</b></a>');
+				}
+			}
+			else if( parseInt(surveyRow.rows[0][0] ) == 2 )
+			{
+				$("#recFile").html(substr(recordFile,0,-3) + '&nbsp;&nbsp;<a href="javascript:playAllVideoFile();" style="color:blue;"><b>µã»÷²¥·Å</b></a>');
+			}
+		}
+		else
+		{
+			$("#recFile").html(recordFile);
+		}			
+	}
+	function playRecFile()
+	{
+	    rexseeHashMap.remove('enableq','recfile');
+		rexseeHashMap.add('enableq','recfile',theTmpFilePath+recordFile);
+		rexseePopupWindow.show('viewrecfile.html','window-align:center;window-vertical-align:middle;window-style:light;width:300;height:100;border-width:0px;');	
+		//showvideo(theTmpFilePath+recordFile);		
+	}
+	function playAllVideoFile()
+	{
+		showvideo(theTmpFilePath+recordFile);		
+	}
+	function playVideoFile(fileName)
+	{
+		showvideo(theTmpFilePath+fileName);		
+	}
+	function playImgFile(fileName )
+	{
+	    rexseeHashMap.remove('enableq','imgfile');
+		rexseeHashMap.add('enableq','imgfile',theTmpFilePath+fileName);
+		rexseePopupWindow.show('viewimgfile.html','window-align:center;window-vertical-align:middle;window-style:light;width:400;height:400;border-width:0px;');	
+	}		
+</script>
+
+  <table style="LINE-HEIGHT: 150%;border-collapse:collapse;" class="pertable" cellSpacing=0 cellPadding=0 width="100%" borderColor=#ccc border=1>
+   <tr><td colspan=2 bgcolor="#f5f5f5" class="optiontitle"><b>»ù±¾ÐÅÏ¢</b></td></tr>
+   <tr><td nowrap width=20% class="option">&nbsp;»Ø¸´Ê±¼ä(¿ªÊ¼)</td>
+       <td class="option">&nbsp;<script>document.write(date('Y-m-d H:i:s',dataRow.rows[0][dataIndex['joinTime']]));</script></td>
+   </tr>
+   <tr><td nowrap width=20% class="option">&nbsp;»Ø¸´Ê±¼ä(½áÊø)</td>
+       <td class="option">&nbsp;<script>
+			var submitTime = 'No data';
+		    if( typeof dataRow.rows[0][dataIndex['submitTime']] != 'undefined' )
+			{
+				if( parseInt(dataRow.rows[0][dataIndex['submitTime']]) != 0 )
+				{
+					submitTime = date('Y-m-d H:i:s',dataRow.rows[0][dataIndex['submitTime']]);
+				}
+			}
+			document.write(submitTime);
+	   </script>
+	   </td>
+   </tr>
+   <tr><td class="option">&nbsp;ÓÃÊ±</td>
+       <td class="option">&nbsp;<script>document.write(formatSeconds(dataRow.rows[0][dataIndex['overTime']]));</script></td>
+   </tr>
+   <tr><td class="option">&nbsp;Íê³É±ê¼Ç</td>
+       <td class="option">&nbsp;<script>document.write(overFlag);</script></td>
+   </tr>
+   <tr><td class="option">&nbsp;Ñù±¾±êÊ¶</td>
+       <td class="option">&nbsp;<script>document.write(qJsonCharFilter(dataRow.rows[0][dataIndex['administratorsName']]));</script></td>
+   </tr>
+   <tr><td class="option">&nbsp;µØÖ·±êÊ¶</td>
+       <td class="option">&nbsp;<script>document.write(qJsonCharFilter(dataRow.rows[0][dataIndex['ipAddress']]));</script></td>
+   </tr>
+   <tr><td class="option">&nbsp;Â¼ÈëÈËÔ±</td>
+       <td class="option">&nbsp;<script>document.write(dataRow.rows[0][dataIndex['area']]);</script></td>
+   </tr>
+   </table>
+   
+   <table style="LINE-HEIGHT: 150%;border-collapse:collapse;" class="pertable" cellSpacing=0 cellPadding=0 width="100%" borderColor=#ccc border=1>
+    <tr><td colspan=2 bgcolor="#f5f5f5" class="optiontitle"><b>ÎÊ¾í»Ø¸´ÐÅÏ¢</b></td></tr>
+    <tr><td colspan=2 id="survey_data_container" style="padding-top:5px"></td></tr></table>
+
+   <table width=100%>
+   <tr> 
+       <td height="20">
+	   <input name="backTopic" class=btn type="button" value="ÉÏÒ»Ìõ"  onClick="javascript:locatLastIdURL();">
+	   <input name="backTopic" class=btn type="button" value="ÏÂÒ»Ìõ"  onClick="javascript:locatNextIdURL();">
+	   <input name="backTopic" class=btn type="button" value="&nbsp;&nbsp;·µ»Ø&nbsp;&nbsp;" onClick="javascript:locatLastURL();">
+	   </td>
+   </tr>
+   </table>
+</div>
+<script>scroll(0, 0);</script>
+</body></html>

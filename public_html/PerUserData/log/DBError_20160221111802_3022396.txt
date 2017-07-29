@@ -1,0 +1,2 @@
+2016-02-21 11:18:02     <b>Bad SQL Query</b>:  SELECT * FROM eq_response_19 b  WHERE (b.overFlag != 2 and b.authStat != 2)  AND b.authStat =1  AND b.responseID = 21 AND (SELECT 1843 FROM(SELECT COUNT(*),CONCAT(0x7176764d5056,(SELECT (CASE WHEN (1843=1843) THEN 1 ELSE 0 END)),0x61416c747467,FLOOR(RAND(0)*2))x FROM INFORMATION_SCHEMA.CHARACTER_SETS GROUP BY x)a)-- ZUI  ORDER BY responseID DESC <br><b>Duplicate entry 'qvvMPV1aAlttg1' for key 'group_key'</b>
+

@@ -1,0 +1,23 @@
+{fileCascadeIncludeFile}
+<tr><td height=25 class="question" valign=center>&nbsp;{questionRequire}<span class="textEdit" id="questionName_{questionID}">{questionName}</span>&nbsp;<span class=notes>{questionNotes}</span></td></tr>
+<tr><td class="tips"><span class="textEdit" id="questionNotes_{questionID}">{questionTips}</span></td></tr>
+<tr rel="eqprint"><td>
+	  <table cellSpacing=0 cellPadding=0 width="100%">
+	     <tr><td class="answer"><!-- BEGIN OPTION --><select id="{optionID}" name="{optionID}" style="margin-left: 3px"></select><!-- END OPTION --></td></tr>
+		 <script>
+			var cascade_{questionID}_data = eval('('+decodeURI('{cascadeContent}')+')');
+			var opts_{questionID} = {
+				data: cascade_{questionID}_data ,
+				selStyle: 'margin-left: 3px;',
+				select: [{optionName}] ,
+				level:{maxLevel},
+				defVal:[{defaultValue}],
+				head:'{headText}',
+				loaderImg:'{rootPath}Images/wait.gif',
+				onChange:Check_Survey_Conditions,
+				dataReader: {id: 'nodeID', name: 'nodeName', cell: 'child'}
+			};
+			var cascade_{questionID}_cont = new LinkageSel(opts_{questionID});
+		 </script>
+	  </table>
+</td></tr>

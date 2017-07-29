@@ -1,0 +1,19 @@
+    <link rel="stylesheet" type="text/css" href="../CSS/Index.css" />
+	<div class="container clearfix">
+	   <div class="main">
+			<div class="nav">
+					<a href="DesignSurvey.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">调查问题</a>
+					<a href="DesignSurvey.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}&DO=Logic">逻辑关系</a>
+					<a href="ShowValueRelation.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">数值关联</a>
+					<a href="ShowSurveyQuota.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">问卷配额</a>					
+					<a href="../System/AjaxEditSurveyCode.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}" class="cur">基础数据</a>
+			</div>
+			<div class="sub_nav clearfix">
+				<p class="sub_nav_top clearfix">
+					<a href="../System/AjaxEditSurveyAlias.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}"{cur_1}>问题别名</a>
+					<a href="../System/AjaxEditSurveyCode.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}"{cur_2}>选项代码</a>
+					<a href="../System/ShowOptWeight.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}"{cur_3}>选项分值</a>
+					<a href="../System/ShowOptValue.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}"{cur_4}>选项数值</a>
+				</p>
+			</div>
+		    <div class="content">

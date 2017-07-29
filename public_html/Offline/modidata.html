@@ -1,0 +1,179 @@
+<html>
+<head>
+<meta http-equiv=content-type content="text/html; charset=gbk">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<link rel="stylesheet" type="text/css" href="resources/pad.css">
+<script type="text/javascript" src="common/jquery-1.11.2.min.js"></script>
+<script type="text/javascript" src="common/jquery.col.js"></script>
+<script type="text/javascript" src="common/smart-2.11.min.js"></script>
+<script type="text/javascript" src="common/checkquestion.js"></script>
+<script type="text/javascript" src="common/string.js"></script>
+<script type="text/javascript" src="common/cons.js"></script>
+<script type="text/javascript" src="common/ass.js"></script>
+<script type="text/javascript" src="common/quota.js"></script>
+<script type="text/javascript" src="common/relation.js"></script>
+<script type="text/javascript" src="script/user.js"></script>
+<script type="text/javascript" src="common/gpsconfig.js"></script>
+<script type="text/javascript" src="common/gps.js"></script>
+<script type="text/javascript" src="script/animation.js"></script>
+<script type="text/javascript" src="common/modiqtn.js"></script>
+<script type="text/javascript" src="common/picbox.js"></script>
+<link href="resources/box.css" rel="stylesheet" type="text/css">
+<script> var loadingImage = 'resources/loading.gif'; var closeButton = 'resources/closewindow.gif';</script>
+<style>
+#overlay{ background-image: url(resources/overlay.png); }
+* html #overlay{
+	background-color: #333;
+	background-color: transparent;
+	background-image: url(resources/blank.gif);
+	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="resources/overlay.png", sizingMethod="scale");
+	}
+</style>
+<script>
+var img = 0;
+if( ! rexseeDatabase.tableExists('eq_font','rexsee:enableq.db') )
+{
+	var ftsql = "CREATE TABLE eq_font (id int(1) NOT NULL default '1',fontId int(1) NOT NULL default '1');";
+	rexseeDatabase.exec(ftsql,'rexsee:enableq.db');
+	ftsql = " INSERT INTO eq_font (id,fontId) values ('1','1');";
+	rexseeDatabase.exec(ftsql,'rexsee:enableq.db');
+	if( rexseeScreen.getScreenHeight() < 500 || rexseeScreen.getScreenWidth() < 500 )
+	{
+		rexseeScreen.setScreenOrientation('landscape');
+		document.write('<LINK href="resources/minipad.css" type=text/css rel=stylesheet>');
+		img = 0;
+	}
+	else
+	{
+		document.write('<LINK href="resources/pad10.css" type=text/css rel=stylesheet>');
+		img = 1;
+	}
+}
+else
+{
+	var ftsql = " SELECT fontId FROM eq_font WHERE id='1';";
+	var ftRow = eval('('+getDbRows(ftsql,'rexsee:enableq.db')+')');
+	if( parseInt(ftRow.rows[0][0] ) == 1)  //大字体
+	{
+		document.write('<LINK href="resources/pad10.css" type=text/css rel=stylesheet>');
+		img = 1;
+	}
+	else
+	{
+		document.write('<LINK href="resources/minipad.css" type=text/css rel=stylesheet>');
+		img = 0;
+	}
+}
+rexseeApplication.setDefaultEncoding('gbk');
+rexseeScreen.setFullScreen(true);
+var qid = rexseeHashMap.get('enableq','qid');
+document.write("<script language='javascript' type='text/javascript' src='"+rexseeStorage.getRoot()+"enableq_offline/script/"+qid+"/jsondata.js'><\/sc" + "ript>");
+var sql = " SELECT surveyTitle,beginTime,endTime,fields,isRecord,isPanelFlag,userName,isGpsEnable,isFingerDrawing,isProcessBar,isRelZero,isLowRecord FROM eq_survey_list WHERE surveyID = '"+qid+"';";
+var surveyRow = eval('('+getDbRows(sql,'rexsee:enableq.db')+')');
+
+var rid = rexseeHashMap.get('enableq','rid');
+
+function returnPage()
+{
+	//删除所有原取得的GPS记录
+	var sql = " DELETE FROM eq_gps_trace WHERE surveyID = "+qid+" AND flag=0 ;";
+	rexseeDatabase.exec(sql,'rexsee:enableq.db');
+	var sql = " DELETE FROM eq_gps_trace_upload WHERE surveyID = "+qid+" AND flag=0 ;";
+	rexseeDatabase.exec(sql,'rexsee:enableq.db');
+
+	animationLoad('showdata.html');
+}
+window.onException = function(className, message){
+	var theLogFilePath = rexseeStorage.getRoot()+'enableq_offline/logs/';
+	if( ! rexseeFile.exists(theLogFilePath) )
+	{
+		rexseeFile.newDir(theLogFilePath);
+	}
+	var theLogFile = theLogFilePath +'error.txt';
+	if( !rexseeFile.exists(theLogFile) )
+	{
+		rexseeFile.newFile(theLogFile);
+	}
+	else
+	{
+		if( rexseeFile.size(theLogFile) > 102400 )
+		{
+			rexseeFile.remove(theLogFile);
+			rexseeFile.newFile(theLogFile);
+		}
+	}
+	var theOriFileContent = rexseeFile.getContent(theLogFile,'GBK');
+	rexseeFile.putContent(theLogFile,theOriFileContent+"Error("+date('Y-m-d H:i:s',time())+"):"+className+":"+unescape(message)+"\r\n",'GBK');
+}
+function onAudioCaptureInfo(message){
+	var theLogFilePath = rexseeStorage.getRoot()+'enableq_offline/logs/';
+	if( ! rexseeFile.exists(theLogFilePath) )
+	{
+		rexseeFile.newDir(theLogFilePath);
+	}
+	var theLogFile = theLogFilePath +'error.txt';
+	if( !rexseeFile.exists(theLogFile) )
+	{
+		rexseeFile.newFile(theLogFile);
+	}
+	else
+	{
+		if( rexseeFile.size(theLogFile) > 102400 )
+		{
+			rexseeFile.remove(theLogFile);
+			rexseeFile.newFile(theLogFile);
+		}
+	}
+	var theOriFileContent = rexseeFile.getContent(theLogFile,'GBK');
+	rexseeFile.putContent(theLogFile,theOriFileContent+"Error("+date('Y-m-d H:i:s',time())+"):onAudioCaptureInfo:"+unescape(message)+"\r\n",'GBK');
+	alert(unescape(message));
+}
+</script>
+<script type="text/javascript" src="common/modidata.js"></script>
+</head>
+
+<body oncontextmenu="return false" style="background:#e5e5e5;color:#666;margin:0px">
+
+<script>
+ if(img == 0 ) 
+ {
+	document.write('<div class="titlebar"><table width=100%><tr><td width=51 style="padding:0px"><a href="javascript:returnPage();"><img src="resources/back.png" border=0 id="rtnimg" width=51></a></td><td align=center width=* class="pageTitle">数据修改</td><td width=70 id="processValueId" align=right style="padding:0px;font-size:14px">&nbsp;</td></tr></table></div>');
+ }
+ else
+ {
+	document.write('<div class="titlebar"><table width=100%><tr><td width=75 style="padding:0px"><a href="javascript:returnPage();"><img src="resources/hback.png" border=0 id="rtnimg" width=75></a></td><td align=center width=* class="pageTitle">数据修改</td><td width=70 id="processValueId" align=right style="padding:0px;font-size:14px">&nbsp;</td></tr></table></div>');
+ }
+</script>
+
+<!--该调查问卷由科维能动EnableQ在线问卷调查引擎系统生成 -->
+<div id="content-wrap">
+<div id="content-cont">
+<div class="featurebox">
+<div id="processBarContainer"></div>
+<H4>&nbsp;<script>document.write(surveyRow.rows[0][0]);</script></H4>
+<form action="" method="post" name="Survey_Form" id="Survey_Form" onsubmit="return false;" style="margin:0px;padding:0px">
+  <table cellpadding="0" cellspacing="0" width="100%">
+  <tr><td id="survey_content_container"></td></tr>
+  <tr align="left" height=0><td>
+        <input name="thisFields" type="hidden" id="thisFields">
+        <input name="thisType" type="hidden" id="thisType">
+        <input name="thisFiles" type="hidden" id="thisFiles">
+        <input name="thisSizes" type="hidden" id="thisSizes">
+        <input name="thisHidden" type="hidden" id="thisHidden">
+        <input name="allHidden" type="hidden" id="allHidden">
+        <input name="allFields" type="hidden" id="allFields">
+		<input name="thisCheck" type="hidden" id="thisCheck">
+		<input name="thisStep" type="hidden" id="thisStep">
+		<input name="nextStep" type="hidden" id="nextStep">
+		<input name="surveyQuotaFlag" id="surveyQuotaFlag" type="hidden">
+		<input name="Action" type="hidden" id="Action">
+		<span id="hiddenFields"></span>
+		<span id="actionButtonContainer"></span>
+    </td></tr>
+    <tr><td height=12></td></tr>
+   </table>
+</form>
+<!--该调查问卷由科维能动EnableQ在线问卷调查引擎系统生成 -->
+</div></div></div>
+</body>
+</html>

@@ -1,0 +1,164 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gbk" />
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" />
+<title>维护IP对应表 - Eclear在线问卷调查引擎</title>
+<link rel="shortcut icon" href="../Images/enableq.ico" type="image/x-icon" />
+<link rel="stylesheet" type="text/css" href="../CSS/UIBase.css" />
+<link rel="stylesheet" type="text/css" href="../CSS/Index.css" />
+<link href="../CSS/Window.css" type="text/css" rel=stylesheet>
+<script type="text/javascript" src="../JS/Common.js.php"></script>
+<script type="text/javascript" src="../JS/Window.js.php"></script>
+<script type="text/javascript" src="../JS/Jquery.min.js.php"></script>
+<script type="text/javascript" src="../JS/Jquery.notification.js.php"></script>
+<link type="text/css" rel="stylesheet" href="../CSS/Notification.css" />
+<script language=javascript src="../JS/CheckQuestion.js.php"></script>
+<script language=javascript>
+function Check_Form_Validator()
+{
+	if (!CheckNotNull(document.Check_Form.csvFile, "选择导入的文件")) {return false;}
+}
+function CheckExt(obj)
+{
+   	var AllowExt = ".csv|";
+	FileExt = obj.value.substr(obj.value.lastIndexOf(".")).toLowerCase();
+	if( AllowExt.indexOf(FileExt + "|") == -1) 
+	{
+		document.getElementById("submitBtn").disabled = true;
+	    $.notification("上传的导入文件扩展名仅支持CSV");
+		return false;
+	}
+	else
+	{
+		document.getElementById("submitBtn").disabled = false;
+		return true;
+    }    
+}
+function submitForm()
+{
+	if( Check_Form_Validator() != false )
+	{
+		document.getElementById('submitBtn').disabled = true;
+		disabledStyle(document.getElementById('submitBtn'));
+		document.getElementById('resetBtn').disabled = true;
+		disabledStyle(document.getElementById('resetBtn'));
+		document.Check_Form.submit();
+	}
+}
+</script>
+<style>
+input[type=file] {border:1px solid #cacaca;height:20px;font-family: Calibri,"宋体",sans-serif;line-height:20px;vertical-align: middle;}
+</style>
+</head>
+
+<body oncontextmenu="return false">
+ 	<div class="header">
+		<h1 class="logo">Eclear</h1>
+		<div class="sidebar_show"></div>
+		<div class="header_menu">
+			<div class="header_m_1">
+				<a href="../System/ShowMain.php">欢迎您，<font color="#e45857" id="nick_Name_cont"></font></a>
+				<span class="head_menu_icon"></span>
+				<ul class="head_menu_list">
+					<span class="head_menu_top"></span>
+					<li><a href="../System/MyProfile.php">我的账户信息</a></li>
+					<li class="last"><a href="../System/ChangePass.php">修改我的密码</a></li>
+				</ul>
+			</div>
+			<div class="header_m_6" style="margin-left:50px">
+				<a href="../System/ShowMain.php">首页</a>
+			</div>
+			<div class="header_m_2" id="mySetting">
+			</div>
+			<div class="header_m_3" style="margin-left:50px">
+				<a href="../Help/Downs.php">帮助</a>
+				<span class="head_menu_icon"></span>
+				<ul class="head_menu_list">
+					<span class="head_menu_top"></span>
+					<li><a href="../Help/Downs.php">帮助文件下载</a></li>
+					<li><a href="http://doc.itenable.com.cn" target=_blank>在线帮助文档</a></li>
+					<li><a href="http://i.enableq.com" target=_blank>在线讨论社区</a></li>
+					<li class="last"><a href="../System/AdministratorsLogs.php">系统操作日志</a></li>
+				</ul>
+			</div>
+			<div class="header_m_4" style="margin-left:50px">
+				<a href="javascript:void(0);" onclick="javascript:showPopWin('../License/AboutEnableQ.php', 500, 400, null, null,'关于...')">关于</a>
+			</div>
+			<div class="header_m_5">
+				<a href="../System/Logout.php?loginOutURL=../index.php" target=_top>退出</a>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript" src="../JS/MySetting.js.php"></script>
+
+	<div class="container clearfix">
+		<div class="sider_bar">
+			<div class="sider_menu">
+				<a class="sider_menu_title cur" href="javascript:void(0);" onclick="menuToggle('sider_menu_list_1')">系统基础设置</a>
+				<ul class="sider_menu_list" id="sider_menu_list_1">
+					<li><a href="../System/BaseSetting.php">系统基本设置</a></li>
+					<li><a href="../System/MgtIpAllow.php">系统登录允许</a></li>
+					<li><a href="../System/MgtIpLock.php">系统黑白名单</a></li>
+					<li><a href="../System/MgtIpTable.php" class="sel">维护IP对应表</a></li>
+				</ul>
+			</div>
+			<div class="sider_menu">
+				<a class="sider_menu_title" href="javascript:void(0);" onclick="menuToggle('sider_menu_list_2')">辅助系统管理</a>
+				<ul class="sider_menu_list" id="sider_menu_list_2">
+					<li><a class="window-700-450" title="系统运行信息" href="../System/SystemInfo.php">系统运行检测</a></li>
+					<li><a class="window-700-280" title="安全通信标识" href="../License/SecurityFlag.php">安全通信标识</a></li>
+					<li><a class="window-700-450" title="软件版本历史" href="../ReleaseNotes/Release.txt">系统版本历史</a></li>
+					<li><a class="window-700-300" title="检查最新版本" href="../ReleaseNotes/CheckNewVersion.php">检查最新版本</a></li>
+					<li><a class="window-700-300" title="软件许可文件" href="../License/License.php">软件许可文件</a></li>
+				</ul>
+			</div>
+		</div>
+		
+		<div class="main">
+		   <div class="content">
+			<div class="content_tit">
+				<div class="clearfix">
+				<h1>维护IP地址与地域对应表</h1>
+				<span class="total ml10"></span>
+				<span class="btn ml10"></span>
+				</div>
+				<p class="fc_grey">导出/导入IP地址与地域的对应关系表</p>
+			</div>
+			<div class="content_main" style="margin-top:10px">
+				<form name="Check_Form" id="Check_Form" method="post" enctype="multipart/form-data" action="" onsubmit="return false;">
+				 <table class="d_table">
+				   <tr class=coltitle><th align=left><b>&nbsp;关于...</b>&nbsp;<img src="../Images/info.gif" border=0></th></tr>
+				   <tr><td>&nbsp;要想记录调查问卷回复人员的对应地域来源，需对可探测到的来源IP地址进行地域翻译。本界面提供IP地址与地域对应关系数据的维护。</td></tr>
+				   <tr class=coltitle><th align=left><b>&nbsp;原数据导出...</b>&nbsp;<span class=red>[{recCount}记录]</span>&nbsp;<img src="../Images/info.gif" border=0></th></tr>   
+				   <tr><td>&nbsp;<IMG SRC="../Images/excel.gif">&nbsp;<a href="../Export/Export.address.inc.php"><font color=red>导出至CSV</font></a>&nbsp;</td></tr>
+					<tr class=coltitle><th align=left><b>&nbsp;新数据导入...</b>&nbsp;<img src="../Images/info.gif" border=0></th></tr>
+					<tr><td>&nbsp;<b>上传本地格式文件(.csv)</b>&nbsp;<input name="csvFile" type="file" id="csvFile" size=70  onchange="CheckExt(this)"></td>
+					</tr></table>
+					<table width=100% style="border:0px;">
+					<tr><td align=left style="border:0px;">
+					<input name="Action" type="hidden" id="Action" value="ImportSubmit">
+					<input class=inputsubmit type="button" name="submitBtn" id="submitBtn" value="确定" onclick="javascript:submitForm();"> 
+					<input class=inputsubmit type="reset" name="resetBtn" id="resetBtn" value="重置">
+				   </td>
+				 </tr>
+			 </table>
+			  </form> 
+			   <table style="border:0px;margin-top:15px" class="n_table">
+				<tr> 
+				 <td style="border:0px;padding-left:0px;">
+				 <Img src="../Images/notes.gif">：&nbsp;批量导入文件模板请参照示例文件：<!--path=../Help/&file=CSV_Sample_Address.csv--><a href="../WebAPI/Down.php?path=Li4vSGVscC8=&file=Q1NWX1NhbXBsZV9BZGRyZXNzLmNzdg=="><b><font color=red>下载示例文件</font></b></a><br/>
+				 <Img src="../Images/clerk.gif">：&nbsp;批量导入的CSV文件请保留<b>文件标题行(第1行)</b>，并确保上传的CSV文件列的顺序与示例文件保持一致<br/>
+				 <Img src="../Images/clerk.gif">：&nbsp;导入新的IP地址与地域对应数据，将会删除全部原有数据<br>
+				 <Img src="../Images/notes.gif">：&nbsp;系统将不确保数据文件内IP地址的连贯以及对应地域翻译的准确
+			  </td></tr>
+			  </table>
+			</div><!--end of content_main-->
+		   </div><!--end of content-->
+	   </div><!--end of main-->
+    </div><!--end of container-->
+	<!--popmenu -->
+	<script type="text/javascript" src="../JS/PopMenu.js.php"></script>
+</body></html>
+
+

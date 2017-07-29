@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv=content-type content="text/html; charset=gbk">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<title>{surveyTitle}</title>
+	<link href="CSS/LoginUI.css" rel="stylesheet" type="text/css"/>
+	<script type="text/javascript" src="JS/Jquery.min.js.php"></script>
+	<script type="text/javascript" src="JS/Jquery.notification.js.php"></script>
+	<link type="text/css" rel="stylesheet" href="CSS/Notification.css" />
+	<script src="JS/CheckQuestion.en.php"></script>
+	<script src="JS/AjaxLogin.js.php"></script>
+	<script language=javascript>
+	function AJAX_Login_Form_Validator()
+	{
+		if (!CheckNotNull(document.AJAXLoginForm.username, "username")) {return false;}
+		if (!CheckNotNull(document.AJAXLoginForm.password, "password")) {return false;}
+	}
+
+	function Login_Form_Submit()
+	{
+		if( AJAX_Login_Form_Validator() != false)
+		{
+			username = Trim(document.AJAXLoginForm.username.value);
+			password = Trim(document.AJAXLoginForm.password.value);
+			AjaxLoginSubmitRequest('WebAPI/AjaxAdLogin.php?qlang=en&Task=CheckLogin&surveyID={surveyID}&Username='+username+'&Hash='+password);
+		}
+	}
+	</script>
+</head>
+<body style="padding-bottom:50px;">
+	<header class="iheader">
+		<div class="theader">Logining in</div>
+	</header>
+	<div class="content">
+		<form name="AJAXLoginForm" id="AJAXLoginForm" action="" method="post">
+		<ul class="unstyled">
+		<li>
+			<div class="topic_input">
+				<div class="topic_bel"> <i class="ico_u"></i></div>
+				<div class="topic_ipt">
+					<input id="username" type="text" name="username" placeholder="username" />
+				</div>
+			</div>
+		</li>
+		<li>
+			<div class="topic_input">
+				<div class="topic_bel"> <i class="ico_p"></i></div>
+				<div class="topic_ipt">
+					<input id="password" type="password" name="password" placeholder="password" />
+				</div>
+			</div>
+		</li>
+		</ul>
+		<a href="javascript:Login_Form_Submit();" class="button blue">Login</a>
+		  <input type="hidden" name="ajaxRtnValue" id="ajaxRtnValue">
+		  <input type="hidden" name="Action" value="PassPortSubmit">
+		  <input type="hidden" name="isPublic" value="0">
+		  <input type="hidden" name="isUseOriPassport" value="3">
+	  </form>
+	</div>
+</body>
+</html>

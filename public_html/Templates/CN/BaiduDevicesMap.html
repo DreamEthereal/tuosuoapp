@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gbk" />
+<title>访员和安卓设备GPS定位 - {surveyTitle}{siteName}</title>
+<script src="../JS/Jquery.min.js.php"></script>
+<style>
+body, html {width:100%;height:100%;margin:0px;padding:0px;overflow:hidden}
+#load_map {width:77%; height:100%;float:left;overflow:hidden; border:1px solid #999; background:#f5f3f0;margin:0px;padding:0px }
+#load_map .loading {text-align:center;font-size:12px; }
+#load_result{height:100%;width:23%;float:right;font-size:14px;}
+</style>
+</head>
+<body style="margin:0px;padding:0px">
+<div id="load_map">
+	<div class="loading">Loading...</div>
+</div>
+<div id="load-result">
+	<div style="font-family: Calibri; border: 1px solid rgb(153, 153, 153); font-size: 12px;">
+	<div style="background: none repeat rgb(255, 255, 255);overflow:auto;" id="result_cont">
+		<div id="form" style="border-bottom:1px solid #555;padding:2px;">
+			<form action="#" class="search" style="margin:0px;padding:0px">
+				&nbsp;<b>查询：</b><input type="text" size=20 class="filterinput"/>
+			</form>
+		</div>
+		<ol style="list-style: none outside none; padding: 0pt; margin: 0pt;" id="load_result_cont">
+		</ol>
+	</div></div>
+</div>
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=1.4&services=false"></script>
+<script type="text/javascript" src="ChangeMore.js.php"></script>
+<script>
+window.openInfoWinFuns = null;
+// 地图控件及功能
+var map = new BMap.Map("load_map");
+map.addControl(new BMap.NavigationControl());
+map.addControl(new BMap.MapTypeControl());
+map.enableScrollWheelZoom();
+map.enableContinuousZoom();
+
+var thePoint = [];
+// 添加信息窗口
+function addInfoWindow(marker,pointInfo,thispoint,index){
+    var maxLen = 10;
+    // infowindow的标题
+    var infoWindowTitle = '<div style="font-weight:bold;color:#CE5521;font-size:14px;font-family:Calibri;"><b>' + pointInfo.points[index].nickUserName+'</b></span><span style="font-size:11px;font-family: Calibri;">, ' + pointInfo.points[index].gpsTime + '</div>';
+    // infowindow的显示信息
+    var infoWindowHtml = [];
+    infoWindowHtml.push('<table cellspacing="0" style="table-layout:fixed;width:100%;font:12px Calibri"><tbody>');
+    infoWindowHtml.push('<tr>');
+    infoWindowHtml.push('<td style="vertical-align:top;line-height:16px;width:30px;white-space:nowrap;word-break:keep-all;font-size:11px;">设备：</td>');
+    infoWindowHtml.push('<td style="vertical-align:top;line-height:16px;font-family: Calibri;margin-left:0px;font-size:11px;text-align:left">' + pointInfo.points[index].brand + ',' + pointInfo.points[index].model + ',' + pointInfo.points[index].deviceId +' </td>');
+    infoWindowHtml.push('</tr>');
+    infoWindowHtml.push('</tbody></table>');
+    var infoWindow = new BMap.InfoWindow(infoWindowHtml.join(""),{title:infoWindowTitle,width:300}); 
+    var openInfoWinFun = function(){
+        marker.openInfoWindow(infoWindow);
+		// 重置中心点
+		map.centerAndZoom(new BMap.Point(thispoint[0], thispoint[1]), 18);
+        for(var cnt = 0; cnt < maxLen; cnt++){
+            if(!document.getElementById("list" + cnt)){continue;}
+            if(cnt == index){
+                document.getElementById("list" + cnt).style.backgroundColor = "#e5e5e5";
+            }else{
+                document.getElementById("list" + cnt).style.backgroundColor = "#fff";
+            }
+        }
+    }
+    marker.addEventListener("click", openInfoWinFun);
+    return openInfoWinFun;
+}
+// 添加标注
+function addMarker(point, index){
+    var myIcon = new BMap.Icon("../Images/markers.png", new BMap.Size(23, 25), {
+		offset: new BMap.Size(10, 25),
+		imageOffset: new BMap.Size(0,0 - index * 25)
+	});
+	var marker = new BMap.Marker(point, {icon: myIcon});
+	map.addOverlay(marker);
+	//marker.setAnimation(BMAP_ANIMATION_BOUNCE);
+	return marker;
+}
+
+function showDeviceInfo(trans_points)
+{
+    var s = [];
+    //s.push('<div style="font-family: Calibri; border: 1px solid rgb(153, 153, 153); font-size: 12px;">');
+    //s.push('<div style="background: none repeat rgb(255, 255, 255);height:'+document.body.clientHeight+'px;overflow:auto;">');
+    //s.push('<ol style="list-style: none outside none; padding: 0pt; margin: 0pt;">');
+	var pointInfo = {
+		"points" : [{theDevicesInfo}]
+	};
+    openInfoWinFuns = [];
+	for (var i = 0; i < pointInfo.points.length; i ++){
+        var marker = addMarker(trans_points[i],i);
+        var openInfoWinFun = addInfoWindow(marker,pointInfo,thePoint[i],i);
+        openInfoWinFuns.push(openInfoWinFun);
+        // 默认打开第一标注的信息窗口
+        var selected = "";
+        if(i == 0){
+             selected = "background-color:#f0f0f0;";
+             openInfoWinFun();
+        }
+        s.push('<li id="list' + i + '" style="margin: 2px 0pt; padding: 0pt 5px 0pt 3px; cursor: pointer; overflow: hidden; line-height: 17px;' + selected + '" onclick="openInfoWinFuns[' + i + ']()">');
+		if( i <= 11 )
+		{
+			s.push('<span style="width:1px;background:url(../Images/red_labels.gif) 0 ' + ( 2 - i*20 ) + 'px no-repeat;padding-left:10px;margin-right:3px">&nbsp;</span>');
+		}
+		else
+		{
+			s.push('<span style="width:1px;background:url(../Images/red_labels.gif) 0 -218px no-repeat;padding-left:10px;margin-right:3px">&nbsp;</span>');
+		}
+        s.push('<span style="color:#00c;text-decoration:underline;font-size:14px"><a><b>' + pointInfo.points[i].nickUserName+'</b></a></span><span style="font-size:11px;color:#00c;"> ' + pointInfo.points[i].gpsTime + '</span><br/>');
+        s.push('<span style="color:#666;font-size:11px;">&nbsp;&nbsp;&nbsp;' + pointInfo.points[i].brand + ',' + pointInfo.points[i].model + ',' + pointInfo.points[i].deviceId + '</span>');
+        s.push('</li>');
+        s.push('');
+   }
+   //s.push('</ol></div></div>');
+   document.getElementById("load_result_cont").innerHTML = s.join("");
+}
+// 地图轨迹（百度地图API）
+function mapTrack() {
+	var obj = this;
+	// 待转换的坐标组总数
+	var total_xy_group = 0;
+	// 20个为一组（批量转换的api限制每秒只能转换一次，每次20个）
+	var group_xy_num = 20;
+	// 坐标总数
+	var data_length = 0;
+	// 转换前的坐标,2014-01-18修改
+	var points_group = [];
+	//数据类型标记
+	var is_gps = 1;
+	//发送的次数顺序
+	var send_order = 0;
+	// 转换后的坐标
+	var xy_arr = [];
+	// 所有坐标合成的字符串
+	var xy_text = "";
+	// 返回坐标
+	var xyResult = null;	
+
+	// 坐标转换成功后回调（百度 API 回调的 callback 必须为全局函数）
+	window.callback = function (xyResults) {
+		for(var tmp in xyResults){
+			xyResult = xyResults[tmp];
+			if (xyResult.error != 0) {
+				continue;
+			}
+			var point = '["' + xyResult.x + '", "' + xyResult.y + '"],';
+			xy_text = xy_text + point;
+		}
+		var str = xy_text.slice(0, -1);
+		var str_length = str.split("],[").length;
+		$("#trans_all_points").text(str);
+
+		// 坐标转换完成后执行绘图
+		//if (str_length >= data_length) {
+		if( send_order == points_group.length ) {
+			obj.track();
+		}
+		else
+		{
+			//发送新的转换坐标
+			send_order++;
+			reSendPoint();
+		}
+	}
+	
+	// 绘制轨迹
+	this.track = function() {
+		// 把字符串转成数组
+		var str = $("#trans_all_points").text();
+		var arr_str = "[" + str + "]";
+		eval("xy_arr = " + arr_str + ";");
+		// 轨迹
+		var xy_result = null;
+		var trans_points = [];
+		for(var tmp in xy_arr){
+			xy_result = xy_arr[tmp];
+			var point = new BMap.Point(xy_result[0], xy_result[1]);
+			trans_points.push(point);
+			thePoint.push(xy_result);
+		}
+		// 标注
+		showDeviceInfo(trans_points);
+		// 按视野范围把地图缩放至最佳级别，加这个方法后可以不加 centerAndZoom()
+		//map.setViewport(trans_points);
+		// 监听缩放
+		var centerPosition = point;
+		map.addEventListener("zoomstart", function(){
+			centerPosition = map.getCenter();
+		});
+		map.addEventListener("zoomend", function(){
+			// 缩放完成后重置中心点
+			map.setCenter(centerPosition);
+		});
+	}
+	
+	// 发送再次转换的坐标
+	function reSendPoint()
+	{
+		//setTimeout(function(){xyTrans(points_group[send_order-1], is_gps)},1200);
+		xyTrans(points_group[send_order-1], is_gps);
+	}
+
+	// 转换坐标
+	function xyTrans(data, is_gps) {
+		var gps_points = [];
+		$.each(data, function(i, n) {
+			gps_points.push(new BMap.Point(n[0], n[1]));
+		})
+		// 坐标转换成功后回调
+		if (is_gps == 1) {
+			// GPS 经纬度
+			BMap.Convertor.transMore(gps_points, 0, callback);
+		} else if (is_gps == 0) {
+			// google 地图经纬度
+			BMap.Convertor.transMore(gps_points, 2, callback);
+		}
+	}
+	
+	// 获取坐标
+	function transPoints(data) {
+		$("body").append('<span id="trans_all_points" style="display:none;"></span>');
+		//var points_group = [];
+		data_length = data.points.length;
+		total_xy_group = Math.floor(data_length/group_xy_num);
+
+		var tmp = 0;
+		points_group[tmp] = [];
+		 // 添加经纬度
+		$.each(data.points, function(i, n) {
+			
+			if (points_group[tmp].length >= group_xy_num) {
+				tmp ++;
+				points_group[tmp] = [];
+				points_group[tmp].push([n.lng, n.lat]);
+			}
+			else
+			{
+				points_group[tmp].push([n.lng, n.lat]);
+			}
+		})
+		// 无论有几组坐标，默认都执行一次
+		send_order ++;
+		xyTrans(points_group[0], is_gps);
+	}
+	
+	// 原始坐标
+	this.getPoints = function () {
+		// 待转换坐标
+		var data = {
+			"points" : [{gpsPoints}],
+			"is_gps" : 1
+		}
+		is_gps = data.is_gps;
+		// 执行
+		transPoints(data);
+	}
+};
+$(function () {
+	var map = new mapTrack();
+	var trans_points = $("#trans_all_points");
+	if (trans_points.size() == 0) {
+		map.getPoints();
+	} else {
+		// 如果坐标已经转换（用于“切换显示地图选项卡”），则直接从 text 里读已经转换好的坐标
+		map.track();
+	}
+});
+
+(function ($) {
+  jQuery.expr[':'].Contains = function(a,i,m){
+      return (a.textContent || a.innerText || "").toUpperCase().indexOf(m[3].toUpperCase())>=0;
+  };
+ 
+  function live_search(list) { 
+    $(".filterinput")
+      .change( function () {
+        var searchtext = $(this).val();
+        if(searchtext) { 
+          $matches = $(list).find('a:Contains(' + searchtext + ')').parent().parent();
+          $('li', list).not($matches).slideUp();
+          $matches.slideDown(); 
+        } else {
+          $(list).find("li").slideDown(200);
+        }
+        return false;
+      })
+    .keyup( function () {
+        $(this).change();
+    });
+  }
+ 
+  $(function () {
+    document.getElementById("result_cont").style.height = document.body.clientHeight +'px';
+    live_search($("#load_result_cont"));
+  });
+}(jQuery));
+</script>
+</body>
+</html>
+

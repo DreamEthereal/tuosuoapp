@@ -1,0 +1,132 @@
+<tr><td height=25 class="question" valign=center>&nbsp;{questionRequire}<span class="textEdit" id="questionName_{questionID}">{questionName}</span>&nbsp;<span class=notes>{questionNotes}</span></td></tr>
+<tr><td class="tips"><span class="textEdit" id="questionNotes_{questionID}">{questionTips}</span></td></tr>
+<tr><td>
+	  <table cellSpacing=0 cellPadding=0 width="100%">
+	     <tr><td class="answer"><input type="text" readonly id="{optionID}" name="{optionID}" size="{length}" value="{value}"/><span id="upload_{optionID}"></span>&nbsp;<input type="button" value="上传" onclick="fileUpload_{optionID}.startUpload();" class="buttonClass" /></td></tr>
+		 <tr><td id="fsUploadProgress_{optionID}"></td></tr>
+		 <noscript>
+		   <tr><td style="background-color: #FFFF66; border-top: solid 4px #FF9966; border-bottom: solid 4px #FF9966; margin: 10px 25px; padding: 10px 15px;">上传控件加载失败，原因可能是：您可能未开启JavaScript支持！</td></tr>
+		 </noscript>
+		 <tr><td id="divLoadingContent_{optionID}" class="content" style="background-color: #FFFF66; border-top: solid 4px #FF9966; border-bottom: solid 4px #FF9966; margin: 10px 25px; padding: 10px 15px; display: none;">上传控件加载中，请稍候...</td></tr>
+		 <tr><td id="divLongLoading_{optionID}" class="content" style="background-color: #FFFF66; border-top: solid 4px #FF9966; border-bottom: solid 4px #FF9966; margin: 10px 25px; padding: 10px 15px; display: none;">上传控件加载超时，原因可能是：请保证您的flash插件是开启状态，上传控件需要Flash Player 9或以上的支持！</td></tr>
+		 <tr><td id="divAlternateContent_{optionID}" class="content" style="background-color: #FFFF66; border-top: solid 4px #FF9966; border-bottom: solid 4px #FF9966; margin: 10px 25px; padding: 10px 15px; display: none;">上传控件加载失败，原因可能是：您的Flash Player版本过低！您可以访问<a href="http://www.adobe.com/shockwave/download/download.cgi?P1_Prod_Version=ShockwaveFlash">Adobe网站</a>获得最新Flash Player版本。</td></tr>
+		<tr><td><span class=red>*</span> 上传文件扩展名限制为：{allowType}，大小限制为：{maxSize}M<br/><span style="display:{isHaveUpFile}"><span class=red>*</span> <a href="{theFilePath}" target=_blank style="color:red">点击查看原上传文件：{value}</a></span></td></tr>
+	   </table>
+</td></tr>
+{fileUploadIncludeFile}
+<script type="text/javascript">
+var fileUpload_{optionID};
+function Init_{optionID}() {
+	var settings = {
+		flash_url : "JS/swfupload.swf",
+		upload_url: "JS/FileUpload.php",
+		post_params: {"PHPSESSID" : "{session_id}",
+		  "uploadFileName": "{optionID}",
+		  "theSurveyID": "{theSurveyID}",
+		  "uploadFileTime": "{uploadFileTime}"
+		},
+		file_post_name:"{optionID}",
+		file_size_limit : "{maxSize} MB",
+		file_types : "{allowType}",
+		file_types_description : "{allowType}",
+		file_upload_limit : 1,
+		custom_settings : {
+			progressTarget : "fsUploadProgress_{optionID}"
+		},
+		debug: false,
+		prevent_swf_caching:true,
+
+		//Button settings
+		button_image_url: "Images/cnfileselect.png",
+		button_width: "61",
+		button_height: "22",
+		button_placeholder_id: "upload_{optionID}",
+		button_action : SWFUpload.BUTTON_ACTION.SELECT_FILE,
+		
+		swfupload_loaded_handler : swfUploadLoaded_{optionID},
+		file_dialog_start_handler:fileDialogStart_{optionID},
+		file_queued_handler : fileQueued,
+		file_queue_error_handler : fileQueueError,
+		file_dialog_complete_handler : fileDialogComplete,
+		upload_start_handler : uploadStart,
+		upload_progress_handler : uploadProgress,
+		upload_error_handler : uploadError,
+		upload_success_handler : uploadSuccess_{optionID},
+		upload_complete_handler : uploadComplete,
+		
+		//SWFObject settings
+		minimum_flash_version : "9.0.28",
+		swfupload_pre_load_handler : swfUploadPreLoad_{optionID},
+		swfupload_load_failed_handler : swfUploadLoadFailed_{optionID}
+	};
+
+	fileUpload_{optionID}= new SWFUpload(settings);
+}
+
+function swfUploadPreLoad_{optionID}() {
+	var self = this;
+	var loading = function () {
+		document.getElementById("divLoadingContent_{optionID}").style.display = "";
+
+		var longLoad = function () {
+			document.getElementById("divLoadingContent_{optionID}").style.display = "none";
+			document.getElementById("divLongLoading_{optionID}").style.display = "";
+		};
+		this.customSettings.loadingTimeout = setTimeout(function () {
+				longLoad.call(self)
+			},
+			15 * 1000
+		);
+	};
+	
+	this.customSettings.loadingTimeout = setTimeout(function () {
+			loading.call(self);
+		},
+		1*1000
+	);
+}
+function swfUploadLoaded_{optionID}() {
+	var self = this;
+	clearTimeout(this.customSettings.loadingTimeout);
+	document.getElementById("divLoadingContent_{optionID}").style.display = "none";
+	document.getElementById("divLongLoading_{optionID}").style.display = "none";
+	document.getElementById("divAlternateContent_{optionID}").style.display = "none";
+}
+   
+function swfUploadLoadFailed_{optionID}() {
+	clearTimeout(this.customSettings.loadingTimeout);
+	document.getElementById("divLoadingContent_{optionID}").style.display = "none";
+	document.getElementById("divLongLoading_{optionID}").style.display = "none";
+	document.getElementById("divAlternateContent_{optionID}").style.display = "";
+}
+//打开文件选择选择窗口时触发的事件
+function fileDialogStart_{optionID}() {
+    var txt = document.getElementById("{optionID}");
+    txt.value = "";
+	//if( document.getElementById('SurveyNextSubmit') != null ) document.getElementById('SurveyNextSubmit').disabled = true;
+	//if( document.getElementById('SurveyOverSubmit') != null ) document.getElementById('SurveyOverSubmit').disabled = true;
+    this.cancelUpload();
+}
+
+//文件传输完成触发事件
+function uploadSuccess_{optionID}(file, serverData) {
+	try {
+		var progress = new FileProgress(file, this.customSettings.progressTarget);
+		progress.setComplete();
+		progress.setStatus("文件上传完成。");
+		progress.toggleCancel(false);
+
+        this.setButtonDisabled(true);
+		
+		//给文本框赋值
+		var txt = document.getElementById("{optionID}");
+		txt.value = serverData;
+		if( document.getElementById('SurveyNextSubmit') != null ) document.getElementById('SurveyNextSubmit').disabled = false;
+		if( document.getElementById('SurveyOverSubmit') != null ) document.getElementById('SurveyOverSubmit').disabled = false;
+	} catch (ex) {
+		this.debug(ex);
+	}
+}
+//开始执行
+Init_{optionID}();
+</script>

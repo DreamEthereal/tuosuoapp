@@ -1,0 +1,22 @@
+<script type="text/javascript" src="JS/CheckAutoRating.js.php"></script>
+<tr><td height=25 class="question" valign=center>&nbsp;{questionRequire}<span class="textEdit" id="questionName_{questionID}">{questionName}</span>&nbsp;<span class=notes>{questionNotes}</span></td></tr>
+<tr><td class="tips"><span class="textEdit" id="questionNotes_{questionID}">{questionTips}</span></td></tr>
+{ratingIncludeFile}
+<tr><td style="padding-top:10px">
+   <table cellSpacing=0 cellPadding=0>
+    <!-- BEGIN OPTION -->
+	 <tr style="display:none" id="rating_{baseID}_{questionID}_{optionNameID}">
+		<td class="answer" align=right style="padding-bottom: 50px;">&nbsp;&nbsp;<span class="textEdit" id="optionName_21_{questionID}_{optionNameID}">{optionName}</span></td>
+		<td width=15></td>
+		<td class="answer" align=right style="color: #999;padding-bottom: 10px;*padding-bottom: 5px;">{unitTextLeft}</td>
+		<td width=3></td>
+	    <td valign=middle><div class="layout-slider" style="width:350px"><input name="{optionID}" id="{optionID}" type="slider" value="{optionValue}" size=30></div>
+		<script type="text/javascript" charset="utf-8">
+		  jQuery("#{optionID}").slider({ from: {startScale}, to: {endScale}, step: {step}, dimension: '',scale:[{scale}],callback:function(value){Check_Survey_Conditions()}});
+		</script></td>
+ 		<td width=10>&nbsp;</td>
+		<td class="answer" align=left style="color: #999;padding-bottom: 10px;*padding-bottom: 5px;">{unitTextRight}</td>
+   </tr>
+	<!-- END OPTION -->
+   </table>
+</td></tr>

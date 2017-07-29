@@ -1,0 +1,571 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gbk" />
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" />
+<title>修订回复数据 - Eclear在线问卷调查引擎</title>
+<link rel="shortcut icon" href="Images/enableq.ico" type="image/x-icon" />
+<link rel="stylesheet" type="text/css" href="CSS/UIBase.css" />
+<link rel="stylesheet" type="text/css" href="CSS/DataIndex.css" />
+<link href="CSS/Window.css" type="text/css" rel=stylesheet>
+<script type="text/javascript" src="JS/Common.js.php"></script>
+<script type="text/javascript" src="JS/Window.js.php"></script>
+<link rel="stylesheet" type="text/css" href="CSS/Standard.css">
+<link rel="stylesheet" type="text/css" href="CSS/Box.css">
+<script> var loadingImage = 'Images/loading.gif'; var closeButton = 'Images/closewindow.gif';</script>
+<style>
+#overlay{ background-image: url(Images/overlay.png); }
+* html #overlay{
+	background-color: #333;
+	background-color: transparent;
+	background-image: url(Images/blank.gif);
+	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="Images/overlay.png", sizingMethod="scale");
+	}
+</style>
+<script type="text/javascript" src="JS/PicBox.js.php"></script>
+<script type="text/javascript" src="JS/Jquery.min.js.php"></script>
+<script type="text/javascript" src="JS/Jquery.col.js.php"></script>
+<script type="text/javascript" src="JS/Jquery.notification.js.php"></script>
+<link type="text/css" rel="stylesheet" href="CSS/Notification.css" />
+<script type="text/javascript" src="JS/CheckQuestion.js.php"></script>
+<script language=javascript>
+function Survey_Form_Submit()
+{
+	if( Survey_Form_Validator() != false)
+	{
+		var thisCheckStr = document.Survey_Form.thisCheck.value;
+{survey_quota_list}
+		if( thisCheckStr != '')
+		{
+			var thisCheck = thisCheckStr.substr(0,thisCheckStr.length-1).split('|');
+			var theRepIDValue = document.Survey_Form.responseID.value;
+			var ajaxURL = 'JS/AjaxCheckTextRepeat.php?qid={surveyID}&qlang={surveyLang}&hash='+thisCheckStr+'&theResponseID='+theRepIDValue;
+			for(var m=0;m<thisCheck.length;m++)
+			{
+			   var qtnType = thisCheck[m].split('*');
+			   switch(qtnType[0])
+			   {
+					case '4':
+					case '23':
+					   var objValue = eval('document.Survey_Form.'+qtnType[1]+'.value');
+					   ajaxURL += '&'+qtnType[1]+'='+escape(objValue);
+					break;
+					case '0':
+					break;
+					case 's1':
+					    var theFieldsList = qtnType[3].split('$');
+						for(var t=0;t<theFieldsList.length;t++){
+							var objFieldList = theFieldsList[t].split('-');
+							switch(objFieldList[0]){
+								case '1': 
+									if( typeof $('input[id='+objFieldList[1]+']:checked').val() == 'undefined' )
+									{
+										ajaxURL += '&'+objFieldList[1]+'=';
+									}
+									else
+									{
+										ajaxURL += '&'+objFieldList[1]+'='+escape($('input[id='+objFieldList[1]+']:checked').val());
+									}
+								break;
+								case '2':
+									var thisValue = '';
+									var arr = $('input[id='+objFieldList[1]+']:checked');
+									arr = arr.sort(function(a,b){
+										return parseInt($(a).val()) - parseInt($(b).val());
+									});
+									arr.each(function(){
+										thisValue += $(this).val() + ",";
+									});
+									if( thisValue != '' ){
+										thisValue = thisValue.substr(0,thisValue.length-1)
+										var theAllValueStr = ','+thisValue+',';
+										if( theAllValueStr.indexOf(','+objFieldList[2]+',') == -1 ){
+											ajaxURL += '&'+objFieldList[1]+'-'+objFieldList[2]+'=0';
+										}
+										else{
+											ajaxURL += '&'+objFieldList[1]+'-'+objFieldList[2]+'=1';
+										}
+									}
+									else{
+										ajaxURL += '&'+objFieldList[1]+'-'+objFieldList[2]+'=0';
+									}
+								break;
+								case '3':
+									var thisValue = $("#"+objFieldList[1]).val();
+									if(objFieldList.length == 3 ){
+										if( thisValue != '' ){
+											var theAllValueStr = ','+thisValue+',';
+											if( theAllValueStr.indexOf(','+objFieldList[2]+',') == -1 ){
+												ajaxURL += '&'+objFieldList[1]+'-'+objFieldList[2]+'=0';
+											}
+											else{
+												ajaxURL += '&'+objFieldList[1]+'-'+objFieldList[2]+'=1';
+											}
+										}
+										else{
+											ajaxURL += '&'+objFieldList[1]+'-'+objFieldList[2]+'=0';
+										}
+									}
+									else{
+										ajaxURL += '&'+objFieldList[1]+'='+escape(thisValue);
+									}
+								break;
+							}
+						}
+					break;
+					default:
+					   var objField = eval('document.Survey_Form.'+qtnType[1]);
+					   ajaxURL += '&'+qtnType[1]+'='+getRadioCheckBoxValue(objField);
+					break;
+ 			   }
+			}
+			var js = document.createElement( "script" ); 
+			js.type = "text/javascript" ; 
+			js.setAttribute( "src" , ajaxURL);  
+			document.body.appendChild(js);
+		}
+		else
+		{
+			if( document.getElementById('SurveyNextSubmit') != null ) document.getElementById('SurveyNextSubmit').disabled = true;
+			if( document.getElementById('SurveyOverSubmit') != null ) document.getElementById('SurveyOverSubmit').disabled = true;
+			if( document.getElementById('SurveyPreSubmit') != null ) document.getElementById('SurveyPreSubmit').disabled = true;
+			if( document.getElementById('SurveyCacheSubmit') != null ) document.getElementById('SurveyCacheSubmit').disabled = true;
+			if( document.getElementById('SurveyResetSubmit') != null ) document.getElementById('SurveyResetSubmit').disabled = true;			
+			if( document.getElementById('SurveyCancelSubmit') != null ) document.getElementById('SurveyCancelSubmit').disabled = true;			
+			document.Survey_Form.submit();
+		}
+	}
+}
+function Survey_Form_Validator()
+{
+   {paperFlagInfoCheck}
+   {check_survey_form_list}
+}
+function Check_Survey_Conditions()
+{
+	var emptyCheckStr = '';
+{survey_empty_list}
+	if( emptyCheckStr != '')
+	{
+		var emptyCheck = emptyCheckStr.substr(0,emptyCheckStr.length-1).split('|');
+		var ajaxURL = 'JS/AjaxCheckEmpty.php?qid={surveyID}&qlang={surveyLang}&hash='+emptyCheckStr;
+		for(var o=0;o<emptyCheck.length;o++){
+		   var qtnType = emptyCheck[o].split('*');
+		   var theFieldsList = qtnType[3].split('$');
+		   for(var t=0;t<theFieldsList.length;t++){
+				var objFieldList = theFieldsList[t].split('-');
+				switch(objFieldList[0]){
+					case '1': 
+						if( typeof $('input[id='+objFieldList[1]+']:checked').val() == 'undefined' )
+						{
+							ajaxURL += '&'+objFieldList[1]+'=';
+						}
+						else
+						{
+							ajaxURL += '&'+objFieldList[1]+'='+escape($('input[id='+objFieldList[1]+']:checked').val());
+						}
+					break;
+					case '2':
+						var thisValue = '';
+						var arr = $('input[id='+objFieldList[1]+']:checked');
+						arr = arr.sort(function(a,b){
+							return parseInt($(a).val()) - parseInt($(b).val());
+						});
+						arr.each(function(){
+							thisValue += $(this).val() + ",";
+						});
+						if( thisValue != '' ){
+							thisValue = thisValue.substr(0,thisValue.length-1)
+							var theAllValueStr = ','+thisValue+',';
+							if( theAllValueStr.indexOf(','+objFieldList[2]+',') == -1 ){
+								ajaxURL += '&'+objFieldList[1]+'-'+objFieldList[2]+'=0';
+							}
+							else{
+								ajaxURL += '&'+objFieldList[1]+'-'+objFieldList[2]+'=1';
+							}
+						}
+						else{
+							ajaxURL += '&'+objFieldList[1]+'-'+objFieldList[2]+'=0';
+						}
+					break;
+					case '3':
+						var thisValue = $("#"+objFieldList[1]).val();
+						if(objFieldList.length == 3 ){
+							if( thisValue != '' ){
+								var theAllValueStr = ','+thisValue+',';
+								if( theAllValueStr.indexOf(','+objFieldList[2]+',') == -1 ){
+									ajaxURL += '&'+objFieldList[1]+'-'+objFieldList[2]+'=0';
+								}
+								else{
+									ajaxURL += '&'+objFieldList[1]+'-'+objFieldList[2]+'=1';
+								}
+							}
+							else{
+								ajaxURL += '&'+objFieldList[1]+'-'+objFieldList[2]+'=0';
+							}
+						}
+						else{
+							ajaxURL += '&'+objFieldList[1]+'='+escape(thisValue);
+						}
+					break;
+				}
+			}
+		}
+		var js = document.createElement( "script" ); 
+		js.type = "text/javascript" ;
+		js.setAttribute( "src" , ajaxURL);
+		document.body.appendChild(js);
+	}
+	else
+	{
+		Run_Survey_Conditions();
+	}
+}
+function Run_Survey_Conditions()
+{
+   {check_survey_conditions_list}
+}
+function Init()
+{
+   Check_Survey_Conditions();
+   initLightbox();
+}
+var http_request = false;
+function HttpRequest(url)
+{
+	http_request = false;
+	if(window.ActiveXObject)
+	{
+		try  // IE
+		{
+			http_request = new ActiveXObject("Msxml2.XMLHTTP");
+		}
+		catch (e)
+		{
+			try
+			{
+				http_request = new ActiveXObject("Microsoft.XMLHTTP");
+			}
+			catch (e) {}
+		}
+	}
+	else if(window.XMLHttpRequest)
+	{
+		// Mozilla, Safari,...
+		http_request = new XMLHttpRequest();
+		if (http_request.overrideMimeType)
+		{
+			http_request.overrideMimeType('text/xml');
+		}
+	}
+	
+	if (!http_request)
+	{
+		$.notification("Cannot create an XMLHTTP instance");
+		return false;
+	}
+	http_request.onreadystatechange = RtnContents;
+	http_request.open('GET', url, true);
+	http_request.send(null);
+}
+
+function RtnContents()
+{
+	if (http_request.readyState == 4)
+	{
+		if(http_request.status == 200)
+		{
+			if(http_request.responseText == "false")
+			   document.getElementById("surveyInfo").innerHTML="<img src=Images/check_no.gif border=0> <span class=red>输入的卷面标识标记已存在&nbsp;</span>";
+			else if(http_request.responseText == "true")
+			   document.getElementById("surveyInfo").innerHTML="<img src=Images/check_yes.gif border=0> <span class=green>输入的卷面标识标记可使用&nbsp;</span>";
+			else if(http_request.responseText == "null") 
+			   document.getElementById("surveyInfo").innerHTML="<img src=Images/check_no.gif border=0> <span class=red>输入的卷面标识标记为空&nbsp;</span>";
+		}
+		else
+		{
+			$.notification('网络传输问题');
+		}
+	}
+}
+</script>
+
+<style>
+    .t_table{width:99%;margin-bottom:2px;}
+	input[type=checkbox]{vertical-align: middle;margin-right:5px}
+	input[type=radio]{vertical-align: middle;margin-right:5px}
+	.inputsubmit{vertical-align: middle;}
+	a         { color: #999;text-decoration: none }
+	a:link    { color: #999;text-decoration: none }
+	a:visited {	color: #999;text-decoration: none }
+</style>
+</head>
+<body oncontextmenu="return false" style="background: #fff;font-family: Calibri;">
+ 	<div class="header">
+		<h1 class="logo">Eclear</h1>
+		<div class="header_menu">
+			<div class="header_m_1">
+				<a href="../System/ShowMain.php">欢迎您，<font color="#e45857" id="nick_Name_cont"></font></a>
+				<span class="head_menu_icon"></span>
+				<ul class="head_menu_list">
+					<span class="head_menu_top"></span>
+					<li><a href="../System/MyProfile.php">我的账户信息</a></li>
+					<li class="last"><a href="../System/ChangePass.php">修改我的密码</a></li>
+				</ul>
+			</div>
+			<div class="header_m_6" style="margin-left:50px">
+				<a href="../System/ShowMain.php">首页</a>
+			</div>
+			<div class="header_m_2" id="mySetting">
+			</div>
+			<div class="header_m_3" style="margin-left:50px">
+				<a href="../Help/Downs.php">帮助</a>
+				<span class="head_menu_icon"></span>
+				<ul class="head_menu_list">
+					<span class="head_menu_top"></span>
+					<li><a href="../Help/Downs.php">帮助文件下载</a></li>
+					<li><a href="http://doc.itenable.com.cn" target=_blank>在线帮助文档</a></li>
+					<li><a href="http://i.enableq.com" target=_blank>在线讨论社区</a></li>
+					<li class="last"><a href="../System/AdministratorsLogs.php">系统操作日志</a></li>
+				</ul>
+			</div>
+			<div class="header_m_4" style="margin-left:50px">
+				<a href="javascript:void(0);" onclick="javascript:showPopWin('../License/AboutEnableQ.php', 500, 400, null, null,'关于...')">关于</a>
+			</div>
+			<div class="header_m_5">
+				<a href="../System/Logout.php?loginOutURL=../index.php" target=_top>退出</a>
+			</div>
+		</div>
+	</div>
+
+	<div class="datacontainer clearfix">
+	   <div class="datamain">
+			<div class="navmenu">
+				<ul class="navOne">
+					<li>
+						<a href="../Analytics/DataOverview.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">快捷报告<span class="down"></span></a>
+						<ul class="navTwo">
+							<li class="title">快捷报告</li>
+							<li><a href="../Analytics/DataList.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">问卷回复数据</a>
+								<ul class="navThree">
+									<li><a href="../Analytics/DataOverview.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">回复数据概览</a></li>
+									<li><a href="../Analytics/DataList.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">回复数据清单</a></li>
+								</ul>
+							</li>
+							<li><a href="../Analytics/QuotaReCheck.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">问卷执行进度</a>
+								<ul class="navThree">
+									<li id="myTask0"><a href="../Analytics/TaskResult.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">任务执行进度</a></li>
+									<li><a href="../Analytics/QuotaReCheck.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">配额执行进度</a></li>
+									<li id="privateNoCommit0"><a href="../System/PrivateNoCommit.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">尚未回复清单</a></li>
+								</ul>
+							</li>
+							<li><a href="../Analytics/SurveyIndexResult.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}&Does=List">指标数据分析</a>
+								<ul class="navThree">
+									<li><a href="../Analytics/SurveyIndexResult.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">分析数据生成</a></li>
+									<li><a href="../Analytics/SurveyIndexResult.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}&Does=List">指标分析数据</a></li>
+									<li id="surveyIndexRank0"><a href="../Analytics/SurveyIndexResult.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}&Does=Rank">指标分析排名</a></li>
+									<li id="surveyIndexMatch0"><a href="../Analytics/SurveyIndexResult.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}&Does=Match">指标分析对比</a></li>
+								</ul>
+							
+							</li>
+						</ul>
+					</li>
+
+					<li><a href="../Analytics/DataList.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}" id="dataList" class="cur">回复数据</a></li>
+
+					<li>
+						<a href="../Analytics/Frequency.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">常用报告<span class="down"></span></a>
+						<ul class="navTwo">
+							<li class="title">常用报告</li>
+							<li><a href="../Analytics/Frequency.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">频数频率分析</a>
+								<ul class="navThree">
+									<li><a href="../Analytics/Frequency.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">频数频率分析</a></li>
+									<li><a href="../Analytics/DataCross.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">频数交叉分析</a></li>
+								</ul>							
+							</li>
+							<li><a href="../Analytics/DataCross.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">交叉数据分析</a>
+								<ul class="navThree">
+									<li><a href="../Analytics/DataCross.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">频数交叉分析</a></li>
+									<li><a href="../Analytics/MeanCross.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">均值交叉分析</a></li>
+								</ul>						
+							</li>
+							<li><a href="../Analytics/OptionsCoeff.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">均值数据分析</a>
+								<ul class="navThree">
+									<li><a href="../Analytics/OptionsCoeff.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">均值数据分析</a></li>
+									<li><a href="../Analytics/MeanCross.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">均值交叉分析</a></li>
+								</ul>						
+							</li>
+							<li><a href="../Analytics/DataChart.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">数据图形展示</a></li>
+							<li><a href="../Math/SingleVariable.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">高阶数理统计</a>
+								<ul class="navThree">
+									<li><a href="../Math/SingleVariable.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">单变量</a></li>
+									<li><a href="../Math/DoubleVariable.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">双变量</a></li>
+									<li><a href="../Math/ClusterAnalysis.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">聚类分析</a></li>
+								</ul>							
+							</li>
+							<li><a href="../Analytics/DefineReport.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">自定义报告</a></li>								
+						</ul>
+					</li>
+
+					<li><a href="../Analytics/ChiSquare.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">扩展分析<span class="down"></span></a>
+						<ul class="navTwo">
+							<li class="title">扩展分析</li>
+							<li><a href="../Analytics/ChiSquare.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">卡方分布校验</a>
+								<ul class="navThree">
+									<li><a href="../Analytics/ChiSquare.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">卡方分布校验</a></li>
+									<li><a href="../Analytics/ChiSquareCross.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">交叉卡方校验</a></li>
+								</ul>
+							</li>
+							<li><a href="../Analytics/LinearRegression.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">线性回归分析</a>
+								<ul class="navThree">
+									<li><a href="../Analytics/LinearRegression.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">简单线性回归</a></li>
+									<li><a href="../Analytics/MultipleRegression.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">多元线性回归</a></li>
+								</ul>
+							</li>
+							<li><a href="../Analytics/TURF.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">TURF分析</a></li>
+							<li><a href="../Analytics/PSM.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">价格研究模型</a>
+								<ul class="navThree">
+									<li><a href="../Analytics/SimpleGG.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">简单GG法</a></li>
+									<li><a href="../Analytics/ExtendedGG.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">推广GG法</a></li>
+									<li><a href="../Analytics/PSM.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">PSM法</a></li>
+								</ul>
+							</li>
+							<li><a href="../Analytics/CombOptions.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">合并选项报告</a>
+							</li>
+							<li><a href="../Analytics/DataMatching.php?Type=1&surveyID={surveyID}&surveyTitle={survey_URLTitle}">问卷数据对比</a>
+								<ul class="navThree">
+									<li><a href="../Analytics/DataMatching.php?Type=1&surveyID={surveyID}&surveyTitle={survey_URLTitle}">同一问卷对比</a></li>
+									<li><a href="../Analytics/DataMatching.php?Type=2&surveyID={surveyID}&surveyTitle={survey_URLTitle}">不同问卷对比</a></li>
+								</ul>
+							</li>								
+						</ul>
+					</li>
+					<li><a href="../Analytics/SurveyIndexResult.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}&Does=List">辅助分析<span class="down"></span></a>
+						<ul class="navTwo">							
+							<li class="title">辅助分析</li>
+							<li><a href="../Analytics/SurveyIndexResult.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}&Does=List">指标数据分析</a>
+								<ul class="navThree">
+									<li><a href="../Analytics/SurveyIndexResult.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">分析数据生成</a></li>
+									<li><a href="../Analytics/SurveyIndexResult.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}&Does=List">指标分析数据</a></li>
+									<li id="surveyIndexRank1"><a href="../Analytics/SurveyIndexResult.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}&Does=Rank">指标分析排名</a></li>
+									<li id="surveyIndexMatch1"><a href="../Analytics/SurveyIndexResult.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}&Does=Match">指标分析对比</a></li>
+								</ul>
+							
+							</li>
+							<li><a href="../Analytics/PlanResult.php?surveyID={surveyID}&surveyTitle={survey_URLTitle} ">计划执行分析</a></li>
+							<li><a href="../Analytics/PanelArea.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">地域来源分析</a></li>
+							<li><a href="../Stats/index.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">回复时段分析</a>
+								<ul class="navThree">
+									<li><a href="../Stats/index.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">概要信息</a></li>
+									<li><a href="../Stats/YearReport.stats.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">年维度</a></li>
+									<li><a href="../Stats/MonthReport.stats.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">月维度</a></li>
+									<li><a href="../Stats/DayReport.stats.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">日维度</a></li>
+									<li><a href="../Stats/History.stats.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">历史查询</a></li>
+								</ul>
+							</li>						
+						</ul>
+					</li>
+					<li><a href="../Analytics/EventAward.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">调查辅助<span class="down"></span></a>
+						<ul class="navTwo">
+							<li class="title">调查辅助</li>
+							<li><a href="../Analytics/QuotaReCheck.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">问卷执行进度</a>
+								<ul class="navThree">
+									<li id="myTask1"><a href="../Analytics/TaskResult.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">任务执行进度</a></li>
+									<li><a href="../Analytics/QuotaReCheck.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">配额执行进度</a></li>
+									<li id="privateNoCommit1"><a href="../System/PrivateNoCommit.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">尚未回复清单</a></li>
+								</ul>
+							</li>
+							<li><a href="../Analytics/EventAward.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">调查奖励设定</a></li>
+							<li><a id="realSurveyGps" href="../Android/BaiduDevicesMap.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}" target=_blank>访员实时定位</a></li>													
+						</ul>
+					</li>
+					<li><a href="../System/AjaxEditSurveyCode.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">基础数据<span class="down"></span></a>						
+						<ul class="navTwo">
+							<li class="title">基础数据</li>
+							<li><a href="../System/AjaxEditSurveyCode.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">基础数据设定</a>
+								<ul class="navThree">
+									<li><a href="../System/AjaxEditSurveyAlias.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">问题别名</a></li>
+									<li><a href="../System/AjaxEditSurveyCode.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">选项代码</a></li>
+									<li><a href="../System/ShowOptWeight.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">选项分值</a></li>
+									<li><a href="../System/ShowOptValue.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">选项数值</a></li>
+								</ul>
+							</li>
+						</ul>
+					</li>
+				</ul>					
+			</div>
+
+			<div class="datacontent">
+			<div class="content_tit">
+				<div class="clearfix">
+				<h1><span class=redtitle>[{surveyTitle}]</span>修订回复数据</h1>
+				<span class="total ml10"></span>
+				<span class="ml10"></span>
+				</div>
+				<p class="fc_grey">修订样本在调查问卷每个调查问题上的详细回复数据</p>
+			</div>
+			<div class="content_main" style="margin-top:5px">
+			<table class="t_table">
+			  <tr><td align=left valign="top">
+				<!--该调查问卷由科维能动EnableQ在线问卷调查引擎系统生成 -->
+				<div id="content-wrap">
+				<div id="content-cont">
+				<div class="featurebox" style="padding-left:10px;padding-right:10px">
+				{processBar}
+				<H4>&nbsp;{surveyTitle}</H4>
+				<H2>{surveySubTitle}</H2>
+				<H5 style="line-height:20px">{surveyInfo}</H5>
+				<form action="" method="post" name="Survey_Form" id="Survey_Form" onsubmit="return false;">
+				<table class="t_table">
+				 <tr><td height=5 class="surveyclear">&nbsp;</td></tr>
+				 {paperFlagInfo}
+				 <tr><td class="surveybegin">
+				 <!-- BEGIN QUESTION -->
+				 <table width="100%" style="display:{isShowQuestion_{questionID}};" class="pertable" id="question_{questionID}">
+				  {questionList}
+				  <tr><td height=5 class="surveyclear">&nbsp;</td></tr>
+				  </table>
+				 <!-- END QUESTION -->
+				  </td></tr>
+				  <tr><td height=5></td></tr>
+				  <tr align="center"> 
+					 <td>
+						<input name="thisFields" type="hidden" id="thisFields" value="{thisFields}">
+						<input name="thisFiles" type="hidden" id="thisFiles" value="{thisFiles}">
+						<input name="thisSizes" type="hidden" id="thisSizes" value="{thisSizes}">
+						<input name="thisHidden" type="hidden" id="thisHidden" value="{thisHidden}">
+						<input name="allHidden" type="hidden" id="allHidden" value="{allHidden}">
+						<input name="allFields" type="hidden" id="allFields" value="{allFields}">
+						<input name="thisCheck" type="hidden" id="thisCheck" value="{thisCheck}">
+						<input name="thisStep" type="hidden" id="thisStep" value="{thisStep}">
+						<input name="nextStep" type="hidden" id="nextStep">
+						<input name="surveyID" type="hidden" value="{surveyID}">
+						<input name="isPublic" type="hidden" value="{isPublic}">
+						<input name="responseID" type="hidden" value="{responseID}">
+						<input name="overFlag" type="hidden" value="{overFlag}">
+						<input name="passPortType" type="hidden" value="{passPortType}">
+						<input name="surveyQuotaFlag" id="surveyQuotaFlag" type="hidden">
+						<input name="screeningFlag" id="screeningFlag" type="hidden">
+						<input name="surveyQuotaId" id="surveyQuotaId" type="hidden">
+						<input name="area" type="hidden" value="{area}">
+						<input name="createDate" type="hidden" value="{createDate}">
+						{hiddenFields}
+						<input name="Action" type="hidden" id="Action">
+						{actionButton}
+					 </td>
+				   </tr>
+				  <tr><td height=5></td></tr>
+				</table>
+				 </form>
+				</div></div></div>
+		      <!--该调查问卷由科维能动EnableQ在线问卷调查引擎系统生成 -->
+		</div><!--end of content_main-->
+		</div><!--end of content-->
+	   </div><!--end of main-->
+    </div><!--end of container-->
+	<!--popmenu -->
+	<script type="text/javascript" src="JS/MySetting.js.php?surveyID={surveyID}"></script>
+	<script type="text/javascript" src="JS/PopMenu.js.php"></script>
+	<script type="text/javascript" src="JS/MyMenu.js.php"></script>
+	<script>Init();</script>
+</body></html>

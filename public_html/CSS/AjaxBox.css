@@ -1,0 +1,91 @@
+/***** menu div style *****/
+#menu-div{
+	position: absolute;
+	top: 24px; left: 116px;
+}
+#tool-bar .menu-iframe, #tool-bar .menu-div {
+	position: absolute;
+	display: none;
+}
+.menu-div {
+	z-index: 100;
+	width: 330px;
+	border: 2px solid #ccc;
+	padding: 10px 10px 0 10px;
+	background-color: white;
+	font-size:12px;
+}
+.menu-div, .menu-div a, .menu-div td {
+	color: #7e7e7e;
+}
+.menu-div a {
+	text-decoration: underline;
+}
+.menu-div a:hover {
+	color: #CD5F60;
+	text-decoration: underline;
+}
+.menu-div input, .menu-div select, .menu-div textarea {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: #7e7e7e;
+	line-height: 130%;
+	margin: 0px;
+}
+.menu-div textarea {
+	padding: 2px;
+	background-color: white;
+	border: 1px solid #cecece;
+}
+.menu-div select {
+	background-color: white;
+	border: 1px solid #cecece;
+}
+.menu-div input.text {
+	height: 18px;
+	line-height: 16px;
+	background-color: white;
+	border: 1px solid #cecece;
+}
+.menu-div input.text-error {
+	height: 18px;
+	line-height: 16px;
+	padding: 0px 2px 0px;
+	background-color: white;
+	border: 1px solid red;
+}
+.menu-div input.button {
+	height: 20px;
+	line-height: 18px;
+	padding: 0px 5px 0px;
+	background-color: white;
+	border: 1px solid #cecece;
+	cursor: pointer;
+}
+.menu-div input.button-submit {
+		font-size: 12px;
+	color: #FFFFFF;
+	width:80px;
+	background-color: #008AD7;
+	border-width: 2px;
+	border-style: solid;
+	border-top-color: #00C0EC;
+	border-right-color: #0035A4;
+	border-bottom-color: #0035A4;
+	border-left-color: #00C0EC;
+	height:24px;
+}
+.menu-div .redfont {
+	color: #3f5994;
+}
+.menu-div .notice {
+	background-color: #ffffe1;
+	border: 1px solid #ccc;
+	padding: 5px;
+}
+.menu-div div {
+	width: 92%;
+}
+#closeMenu{	float:right;margin:-12px 0px 0  0;width:10px;height:14px; cursor:hand;}
+#closeMenu span { font-size:10px;border:1px solid #888888;padding:0;color:#636363;}
+

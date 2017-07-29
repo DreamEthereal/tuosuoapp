@@ -1,0 +1,184 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gbk" />
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" />
+<title>离线安卓访员App{actionType}操作日志 - Eclear在线问卷调查引擎</title>
+<link rel="shortcut icon" href="../Images/enableq.ico" type="image/x-icon" />
+<link rel="stylesheet" type="text/css" href="../CSS/UIBase.css" />
+<link rel="stylesheet" type="text/css" href="../CSS/Index.css" />
+<link href="../CSS/Window.css" type="text/css" rel=stylesheet>
+<script type="text/javascript" src="../JS/Common.js.php"></script>
+<script type="text/javascript" src="../JS/Window.js.php"></script>
+<script type="text/javascript" src="../JS/Jquery.min.js.php"></script>
+<script type="text/javascript" src="../JS/Calendar.js.php"></script>
+<script language="javascript"> 
+function checkall(form) 
+{
+	if( form.all.checked)
+	{
+		for(var i = 0;i < form.elements.length-1; i++) 
+		{
+			var e = form.elements[i];
+			e.checked = true;
+		}
+	}
+	else
+	{
+		for(var i = 0;i < form.elements.length-1; i++) 
+		{
+			var e = form.elements[i];
+			e.checked = false;
+		}
+    }
+}
+function deleAbnFile(fileURL)
+{
+	if( window.confirm('您真的想删除该异常处理文件吗？本操作不可恢复！') )
+	{
+		self.location.href = fileURL;
+	}
+}
+</script>
+<style>
+input[type=text] {border:1px solid #cacaca;height:18px;font-family: Calibri,"宋体",sans-serif;line-height:18px;vertical-align: middle;}
+select {border:1px solid #cacaca;height:20px;font-family: Calibri,"宋体",sans-serif;vertical-align: middle;}
+</style>
+</head>
+
+<body oncontextmenu="return false">
+ 	<div class="header">
+		<h1 class="logo">Eclear</h1>
+		<div class="sidebar_show"></div>
+		<div class="header_menu">
+			<div class="header_m_1">
+				<a href="../System/ShowMain.php">欢迎您，<font color="#e45857" id="nick_Name_cont"></font></a>
+				<span class="head_menu_icon"></span>
+				<ul class="head_menu_list">
+					<span class="head_menu_top"></span>
+					<li><a href="../System/MyProfile.php">我的账户信息</a></li>
+					<li class="last"><a href="../System/ChangePass.php">修改我的密码</a></li>
+				</ul>
+			</div>
+			<div class="header_m_6" style="margin-left:50px">
+				<a href="../System/ShowMain.php">首页</a>
+			</div>
+			<div class="header_m_2" id="mySetting">
+			</div>
+			<div class="header_m_3" style="margin-left:50px">
+				<a href="../Help/Downs.php">帮助</a>
+				<span class="head_menu_icon"></span>
+				<ul class="head_menu_list">
+					<span class="head_menu_top"></span>
+					<li><a href="../Help/Downs.php">帮助文件下载</a></li>
+					<li><a href="http://doc.itenable.com.cn" target=_blank>在线帮助文档</a></li>
+					<li><a href="http://i.enableq.com" target=_blank>在线讨论社区</a></li>
+					<li class="last"><a href="../System/AdministratorsLogs.php">系统操作日志</a></li>
+				</ul>
+			</div>
+			<div class="header_m_4" style="margin-left:50px">
+				<a href="javascript:void(0);" onclick="javascript:showPopWin('../License/AboutEnableQ.php', 500, 400, null, null,'关于...')">关于</a>
+			</div>
+			<div class="header_m_5">
+				<a href="../System/Logout.php?loginOutURL=../index.php" target=_top>退出</a>
+			</div>
+		</div>
+	</div>
+
+	<div class="container clearfix">
+		<div class="sider_bar">
+			<div class="sider_menu">
+				<a class="sider_menu_title cur" href="javascript:void(0);" onclick="menuToggle('sider_menu_list_1')">离线安卓访员App</a>
+				<ul class="sider_menu_list" id="sider_menu_list_1">
+					<li id="realGPS"><a href="../Android/BaiduDevicesMap.php" target=_blank>访员实时定位</a></li>
+					<li><a href="../Offline/OfflineActionLog.php?type=1" class="sel">访员操作日志</a></li>
+					<li><a class="window-800-360" title="关于离线安卓访员App的说明" href="../Android/AboutAndroid.php">关于访员App</a></li>
+				</ul>
+			</div>
+			<div class="sider_menu">
+				<a class="sider_menu_title" href="javascript:void(0);" onclick="menuToggle('sider_menu_list_2')">在线安卓样本App</a>
+				<ul class="sider_menu_list" id="sider_menu_list_2">
+					<li><a href="../Android/AndroidList.php">管理问卷发布</a></li>
+					<li><a href="../Android/AndroidNotes.php?stat=1">管理推送消息</a></li>
+				</ul>
+			</div>
+			<div class="sider_menu">
+				<a class="sider_menu_title" href="javascript:void(0);" onclick="menuToggle('sider_menu_list_3')">分析安卓应用</a>
+				<ul class="sider_menu_list" id="sider_menu_list_3">
+					<li><a href="../Android/AndroidAnalytics.php">分析安卓应用</a></li>
+				</ul>
+			</div>
+		</div>
+		
+		<div class="main">
+		    <div class="nav">
+			    <a href="../Offline/OfflineActionLog.php?type=1" {actiontype1}>下载问卷</a>
+				<a href="../Offline/OfflineActionLog.php?type=6" {actiontype6}>任务下载</a>
+			    <a href="../Offline/OfflineActionLog.php?type=2" {actiontype2}>数据上行</a>
+			    <a href="../Offline/OfflineActionLog.php?type=3" {actiontype3}>异常处理</a>
+			    <a href="../Offline/OfflineActionLog.php?type=4" {actiontype4}>问卷删除</a>
+			    <a href="../Offline/OfflineActionLog.php?type=5" {actiontype5}>程序更新</a>
+			</div>		
+
+		   <div class="content">
+			<div class="content_tit">
+				<div class="clearfix">
+				<h1>{actionType}操作日志</h1>
+				<span class="total ml10">[{recNum} / {totalNum}记录]</span>
+				<span class="btn ml10"></span>
+				</div>
+				<p class="fc_grey">列出离线安卓访员App的{actionType}操作日志</p>
+			</div>
+			<div class="content_main" style="margin-top:10px">
+				<div class="search_form" style="line-height:30px;height:70px">
+			    <form name="Check_Form" id="Check_Form" method="post" action="">
+				 <span style="float:left">
+				   <IMG SRC="../Images/search.gif"> 查找
+					动作中包含：<input type="text" name="t_name" value="{t_name}" size=15>
+					操作时间：自 <input class="text" name="t_actionTime" size='14' maxlength='10' id='t_actionTime' value='{t_actionTime}' onfocus="if(this.value=='0000-00-00') this.value=''" onclick="javascript:SelectDate(this,'yyyy-MM-dd')"> 至 <input class="text" name="t_actionTimeEnd" size='14' maxlength='10' id='t_actionTimeEnd' value='{t_actionTimeEnd}' onfocus="if(this.value=='0000-00-00') this.value=''" onclick="javascript:SelectDate(this,'yyyy-MM-dd')"><br/>
+				   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<select name="t_administratorsID">
+					 <option value="0">选择操作人...</option>
+						{users_list}
+					</select>
+					的系统操作日志
+					 <input name="Action" type="hidden" id="Action" value="querySubmit"> 
+					 <input type="submit" class=inputsubmit name="Submit" value="查询" style="vertical-align: middle;">
+				 </span>
+				 <span style="float:right"><IMG SRC="../Images/excel.gif">&nbsp;<a href="{exportURL}">导出至CSV</a></span>
+ 			 </div>
+  			 <table class="d_table">
+				  <tr class=coltitle>
+				   <th width=3% noWrap align=left> <input name="all" type="checkbox" id="all" value="all" onclick="checkall(this.form)" style="background-color:#f9f9f9"></th>
+				   <th width="10%" nowrap align=left><b>操作时间</b></td>
+				   <th width="*" align=left><b>操作人动作</b></td>
+				   <th width=5% nowrap align=left><b>操作人</b></td>
+				   <th align=center width="5%" nowrap><b>操作</b></td>
+				 </tr>
+
+				 <!-- BEGIN LOGS -->
+				 <tr> 
+					 <td width=3% noWrap align=left><input name="ID[]" type="checkbox" id="ID[]" value="{ID}"></td>
+					 <td nowrap>{time}</td>
+					 <td>{actionMess}</td>
+					 <td nowrap>{userName}</td>
+					 <td align=center width="5%" nowrap>&nbsp;{actionURL}</td>
+				 </tr>
+				 <!-- END LOGS -->
+				  </table>
+				  <table width=99%>
+					 <tr> 
+					 <td width=3% style="border:0px;"></td>
+					 <td style="border:0px;" colspan=5>
+					 <input type="hidden" name="offlineActionType" id="offlineActionType" value = "{offlineActionType}">
+					 <input class=inputsubmit name="DeleteSubmit" type="submit" id="DeleteSubmit" value="删除记录" onclick="return window.confirm('您真的想删除这些记录吗？本操作不可恢复！')" {adminRoleAction}>&nbsp;<input class=inputsubmit name="clearLogs" type="submit" id="clearLogs" value="清空日志" onclick="return window.confirm('您真的清空操作日志吗？本操作不可恢复！')" {adminRoleAction}></td></tr>
+					 </table>
+				 </form>
+			 <div class="pages">{pagesList}</div>
+			</div><!--end of content_main-->
+		   </div><!--end of content-->
+	   </div><!--end of main-->
+    </div><!--end of container-->
+	<!--popmenu -->
+	<script type="text/javascript" src="../JS/MySetting.js.php"></script>
+	<script type="text/javascript" src="../JS/PopMenu.js.php"></script>
+</body></html>

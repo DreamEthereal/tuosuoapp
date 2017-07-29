@@ -1,0 +1,40 @@
+	<div class="content_tit">
+		<div class="clearfix">
+		<h1><span class=redtitle>[{surveyTitle}]</span>问卷回复计划</h1>
+		<span class="total ml10">[{recNum}记录]</span>
+		<span class="btn ml10"><input class=inputsubmit name="createNew" type="button" id="createNew" value="新增" onclick="javascript:showPopWin('{addURL}', 600, 340, Init, null,'新增问卷回复计划')">&nbsp;</span>
+		</div>
+		<p class="fc_grey">为调查问卷创建回复计划，利用“计划完成情况分析”用以观察实际情形和计划量的对比</p>
+	</div>
+   <div class="content_main" style="margin-top:10px;">
+	 <table class="d_table">
+	 <tr class=coltitle>
+	  <th width=4% align=center noWrap><input name="all" type="checkbox" id="all" value="all" onclick="checkall(this.form)" style="background-color:#f9f9f9"></th>
+	  <th width=11% align=left><B>日期</B></th>
+	  <th width=7% align=center><B>星期</B></th>
+	  <th width=8% noWrap align=center><B>计划回复量</B></th>
+	  <th width=* noWrap align=left><b>关于计划量的说明</b></th>
+	  <th width=7% align=center><B>操作</B></th>
+	</tr>
+	<!-- BEGIN PLAN -->
+	<tr> 
+	  <td width=4% align=center noWrap><input name="planID[]" type="checkbox" id="planID[]" value="{planID}"></td>
+	  <td noWrap>{planDay}<input type="hidden" name="planDay[{planID}]" id="planDay_{planID}" value="{planDay}"></td>
+	  <td align=center noWrap>{weekDay}</td>
+	  <td align=center noWrap>{planNum}</td>
+	  <td>{planDesc}</td>
+	  <td align=center noWrap>{action}</td>
+	</tr>
+	<!-- END PLAN -->
+	<tr style="background-color:#f9f9f9">
+	   <td align=right colspan=3><b>总计划量：</b></td>
+	   <td align=center><b>{totalPlanNum}</b></td>
+	   <td colspan=2>&nbsp;</td>
+	</tr>
+	</table>
+	<table width=100% style="border:0px;margin-bottom:15px">
+	   <tr><td style="border:0px">
+		    <input name="DeletePlanSubmit" class=inputsubmit type="submit" id="DeletePlanSubmit" value="删除" onclick="return window.confirm('您真的想删除当前选中的回复计划吗？本操作不可恢复！')">
+			<input name="UpdatePlanSubmit" class=inputsubmit type="submit" id="UpdatePlanSubmit" value="更新">
+			<input class=inputsubmit name="createNew" type="button" id="createNew" value="新增" onclick="javascript:showPopWin('{addURL}', 600, 310, Init, null,'新增问卷回复计划')">
+	</td></tr></table>

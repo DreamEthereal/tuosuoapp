@@ -1,0 +1,127 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gbk" />
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" />
+<title>列出已完成任务 - Eclear在线问卷调查引擎</title>
+<link rel="shortcut icon" href="../Images/enableq.ico" type="image/x-icon" />
+<link rel="stylesheet" type="text/css" href="../CSS/UIBase.css" />
+<link rel="stylesheet" type="text/css" href="../CSS/DataIndex.css" />
+<link href="../CSS/Window.css" type="text/css" rel=stylesheet>
+<script type="text/javascript" src="../JS/Common.js.php"></script>
+<script type="text/javascript" src="../JS/Window.js.php"></script>
+<script type="text/javascript" src="../JS/Jquery.min.js.php"></script>
+<script>
+function referIframeSrc(theURL) {
+   window.location.href = theURL;
+}
+function checkall(form) 
+{
+	if( form.all.checked)
+	{
+		for(var i = 0;i < form.elements.length-1; i++) 
+		{
+			var e = form.elements[i];
+			e.checked = true;
+		}
+	}
+	else
+	{
+		for(var i = 0;i < form.elements.length-1; i++) 
+		{
+			var e = form.elements[i];
+			e.checked = false;
+		}
+    }
+}
+</script>
+<style>
+	input[type=checkbox]{vertical-align: middle;}
+	input[type=text] {border:1px solid #cacaca;height:20px;font-family: Calibri,"宋体",sans-serif;line-height:20px;vertical-align: middle;}
+	select {border:1px solid #cacaca;font-family: Calibri,"宋体",sans-serif;vertical-align: middle;height:22px;line-height:22px}
+	.classtd{padding-left:0px;padding-right:0px;};
+	.inputsubmit{vertical-align: middle;}
+</style>
+</head>
+
+<body oncontextmenu="return false">
+ 	<div class="header">
+		<h1 class="logo">Eclear</h1>
+		<div class="header_menu">
+			<div class="header_m_1">
+				<a href="../System/ShowMain.php">欢迎您，<font color="#e45857" id="nick_Name_cont"></font></a>
+				<span class="head_menu_icon"></span>
+				<ul class="head_menu_list">
+					<span class="head_menu_top"></span>
+					<li><a href="../System/MyProfile.php">我的账户信息</a></li>
+					<li class="last"><a href="../System/ChangePass.php">修改我的密码</a></li>
+				</ul>
+			</div>
+			<div class="header_m_6" style="margin-left:50px">
+				<a href="../System/ShowMain.php">首页</a>
+			</div>
+			<div class="header_m_2" id="mySetting">
+			</div>
+			<div class="header_m_3" style="margin-left:50px">
+				<a href="../Help/Downs.php">帮助</a>
+				<span class="head_menu_icon"></span>
+				<ul class="head_menu_list">
+					<span class="head_menu_top"></span>
+					<li><a href="../Help/Downs.php">帮助文件下载</a></li>
+					<li><a href="http://doc.itenable.com.cn" target=_blank>在线帮助文档</a></li>
+					<li><a href="http://i.enableq.com" target=_blank>在线讨论社区</a></li>
+					<li class="last"><a href="../System/AdministratorsLogs.php">系统操作日志</a></li>
+				</ul>
+			</div>
+			<div class="header_m_4" style="margin-left:50px">
+				<a href="javascript:void(0);" onclick="javascript:showPopWin('../License/AboutEnableQ.php', 500, 400, null, null,'关于...')">关于</a>
+			</div>
+			<div class="header_m_5">
+				<a href="../System/Logout.php?loginOutURL=../index.php" target=_top>退出</a>
+			</div>
+		</div>
+	</div>
+	<div class="container clearfix">
+	   <div class="main">
+		    <div class="nav">
+				<a href="../System/ShowMain.php">我的问卷</a>
+				<a href="../System/{listURL}&stat=0" {stat0}>未完成任务</a>
+				<a href="../System/{listURL}&stat=1" {stat1}>已完成任务</a>
+				<a href="{listDataURL}">列出录入数据</a>
+			</div>
+
+		    <div class="content">
+			<div class="content_tit">
+				<div class="clearfix">
+				<h1><span class=redtitle>[{surveyTitle}]</span>列出已完成任务</h1>
+				<span class="total ml10">[{recNum}任务]</span>
+				<span class="ml10"></span>
+				</div>
+				<p class="fc_grey">列出您已完成的问卷回复任务</p>
+			</div>
+			<div class="content_main" style="margin-top:5px">
+				<form name="Check_Form" id="Check_Form" method="post" action="">
+				 <table class="d_table">
+					 <tr class=coltitle> 
+					   <th style="padding-left:5px" align=left><b>任务名称与描述</b></th>
+					   <th align=center width=8% nowrap><b>任务代号</b></th>
+					   <th align=center width=8% nowrap><b>操作</b></th>
+					 </tr>
+
+					 <!-- BEGIN TASK -->
+					 <tr> 
+						 <td style="padding-left:5px"><span style="font-weight:bold">{taskName}</span> ({taskDesc})</td>
+						 <td align=center nowrap>{taskID}</td>
+						 <td align=center nowrap>{taskTime}</td>
+					 </tr>
+					 <!-- END TASK -->
+					 </table>
+				 </form>
+			</div><!--end of content_main-->
+		   </div><!--end of content-->
+	   </div><!--end of main-->
+    </div><!--end of container-->
+	<!--popmenu -->
+	<script type="text/javascript" src="../JS/MySetting.js.php?surveyID={surveyID}"></script>
+	<script type="text/javascript" src="../JS/PopMenu.js.php"></script>
+</body></html>

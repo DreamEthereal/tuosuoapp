@@ -1,0 +1,2 @@
+2015-06-10 00:00:40     <b>Bad SQL Query</b>:  SELECT responseID,administratorsName,ipAddress,joinTime,area,overFlag,overFlag0,authStat,version,adminID,appStat,taskID,luru.taskTime,option_266 FROM eq_response_4 b ,eq_data_task luru WHERE  (b.overFlag != 2 and b.authStat != 2) <br><b>Column 'responseID' in field list is ambiguous</b>
+

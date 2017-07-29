@@ -1,0 +1,178 @@
+<link rel="stylesheet" type="text/css" href="CSS/{theme}.css">
+<link rel="stylesheet" type="text/css" href="CSS/Box.css" >
+<script type="text/javascript" src="JS/Jquery.min.js.php"></script>
+<script type="text/javascript" src="JS/Jquery.col.js.php"></script>
+<!--[if IE 6]>
+<link rel="stylesheet" href="CSS/Slider.ie6.css" type="text/css" media="screen">
+<![endif]-->
+<style>
+#overlay{ background-image: url(Images/overlay.png); }
+* html #overlay{
+	background-color: #333;
+	background-color: transparent;
+	background-image: url(Images/blank.gif);
+	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="Images/overlay.png", sizingMethod="scale");
+	}
+.edit_active_table {border:2px solid #cc0000;}
+.edit_inactive_table { border:2px;}
+</style>
+<script> var loadingImage = 'Images/loading.gif'; var closeButton = 'Images/closewindow.gif';</script>
+<script type="text/javascript" src="JS/PicBox.js.php"></script>
+<script type="text/javascript" src="JS/PageEdit.js.php"></script>
+<script type="text/javascript" src="JS/Jquery.notification.js.php"></script>
+<link type="text/css" rel="stylesheet" href="CSS/Notification.css" />
+<script type="text/javascript" src="JS/CheckQuestion.js.php"></script>
+<script language=javascript>
+function Survey_Form_Submit()
+{
+	if( Survey_Form_Validator() != false)
+	{
+		document.Survey_Form.submit();
+	}
+}
+function Survey_Form_Validator()
+{
+   {check_survey_form_list}
+}
+function Check_Survey_Conditions()
+{
+	var emptyCheckStr = '';
+{survey_empty_list}
+	if( emptyCheckStr != '')
+	{
+		var emptyCheck = emptyCheckStr.substr(0,emptyCheckStr.length-1).split('|');
+		var ajaxURL = 'JS/AjaxCheckEmpty.php?qid={surveyID}&qlang={surveyLang}&hash='+emptyCheckStr;
+		for(var o=0;o<emptyCheck.length;o++){
+		   var qtnType = emptyCheck[o].split('*');
+		   var theFieldsList = qtnType[3].split('$');
+		   for(var t=0;t<theFieldsList.length;t++){
+				var objFieldList = theFieldsList[t].split('-');
+				switch(objFieldList[0]){
+					case '1': 
+						if( typeof $('input[id='+objFieldList[1]+']:checked').val() == 'undefined' )
+						{
+							ajaxURL += '&'+objFieldList[1]+'=';
+						}
+						else
+						{
+							ajaxURL += '&'+objFieldList[1]+'='+escape($('input[id='+objFieldList[1]+']:checked').val());
+						}
+					break;
+					case '2':
+						var thisValue = '';
+						var arr = $('input[id='+objFieldList[1]+']:checked');
+						arr = arr.sort(function(a,b){
+							return parseInt($(a).val()) - parseInt($(b).val());
+						});
+						arr.each(function(){
+							thisValue += $(this).val() + ",";
+						});
+						if( thisValue != '' ){
+							thisValue = thisValue.substr(0,thisValue.length-1)
+							var theAllValueStr = ','+thisValue+',';
+							if( theAllValueStr.indexOf(','+objFieldList[2]+',') == -1 ){
+								ajaxURL += '&'+objFieldList[1]+'-'+objFieldList[2]+'=0';
+							}
+							else{
+								ajaxURL += '&'+objFieldList[1]+'-'+objFieldList[2]+'=1';
+							}
+						}
+						else{
+							ajaxURL += '&'+objFieldList[1]+'-'+objFieldList[2]+'=0';
+						}
+					break;
+					case '3':
+						var thisValue = $("#"+objFieldList[1]).val();
+						if(objFieldList.length == 3 ){
+							if( thisValue != '' ){
+								var theAllValueStr = ','+thisValue+',';
+								if( theAllValueStr.indexOf(','+objFieldList[2]+',') == -1 ){
+									ajaxURL += '&'+objFieldList[1]+'-'+objFieldList[2]+'=0';
+								}
+								else{
+									ajaxURL += '&'+objFieldList[1]+'-'+objFieldList[2]+'=1';
+								}
+							}
+							else{
+								ajaxURL += '&'+objFieldList[1]+'-'+objFieldList[2]+'=0';
+							}
+						}
+						else{
+							ajaxURL += '&'+objFieldList[1]+'='+escape(thisValue);
+						}
+					break;
+				}
+			}
+		}
+		var js = document.createElement( "script" ); 
+		js.type = "text/javascript" ;
+		js.setAttribute( "src" , ajaxURL);
+		document.body.appendChild(js);
+	}
+	else
+	{
+		Run_Survey_Conditions();
+	}
+}
+function Run_Survey_Conditions()
+{
+   {check_survey_conditions_list}
+}
+function Init()
+{
+   Check_Survey_Conditions();
+   initLightbox();
+}
+</script>
+
+<!--该调查问卷由科维能动EnableQ在线问卷调查引擎系统生成 -->
+<div id="content-wrap">
+<div id="content-cont">
+<div class="featurebox">
+{processBar}
+<H4>&nbsp;<span class="textEdit" id="surveyTitle_1_{surveyID}">{surveyTitle}</span></H4>
+<H2><span class="textEdit" id="surveyTitle_2_{surveyID}">{surveySubTitle}</span></H2>
+<H5><span class="textEdit" id="surveyTitle_3_{surveyID}">{surveyInfo}</span></H5>
+<form action="" method="post" name="Survey_Form" id="Survey_Form" onsubmit="return false;">
+<table bgcolor="#ffffff" cellpadding="0" cellspacing="0" width="100%">
+ <noscript><tr><td style="background-color: #FFFF66; border-top: solid 4px #FF9966; border-bottom: solid 4px #FF9966; margin: 10px 25px; padding: 10px 15px;">系统检查到您的浏览器可能未开启JavaScript支持，问卷访问部分功能可能会受影响！</td></tr></noscript>
+ <tr><td height=5 class="surveyclear">&nbsp;</td></tr>
+ <tr><td class="surveybegin">
+ <!-- BEGIN QUESTION -->
+ <table width="100%" style="display:{isShowQuestion_{questionID}};" class="edit_inactive_table" id="question_{questionID}" onactivate="OnQuestionFocus(question_{questionID},ajaxAction_{questionID});" ondeactivate="OnQuestionBlur(question_{questionID},ajaxAction_{questionID});">
+   <tr id="ajaxAction_{questionID}" style="display:none">
+     <td>
+	   <span style="float:left" style="color:#cc0000">&nbsp;点击问题或选项文字直接进行修改</span>
+   </td></tr>
+  {questionList}
+  <tr><td height=5 class="surveyclear">&nbsp;</td></tr>
+  </table>
+ <!-- END QUESTION -->
+  </td></tr>
+  <tr><td height=5></td></tr>
+  <tr align="center"> 
+     <td>
+        <input name="thisFields" type="hidden" id="thisFields" value="{thisFields}">
+        <input name="thisFiles" type="hidden" id="thisFiles" value="{thisFiles}">
+        <input name="thisSizes" type="hidden" id="thisSizes" value="{thisSizes}">
+        <input name="thisHidden" type="hidden" id="thisHidden" value="{thisHidden}">
+        <input name="allHidden" type="hidden" id="allHidden" value="{allHidden}">
+        <input name="allFields" type="hidden" id="allFields" value="{allFields}">
+		<input name="thisCheck" type="hidden" id="thisCheck" value="{thisCheck}">
+		<input name="thisStep" type="hidden" id="thisStep" value="{thisStep}">
+		<input name="surveyID" type="hidden" value="{surveyID}">
+		<input name="isPublic" type="hidden" value="{isPublic}">
+		<input name="surveyQuotaFlag" id="surveyQuotaFlag" type="hidden">
+		<input name="screeningFlag" id="screeningFlag" type="hidden">
+		<input name="surveyQuotaId" id="surveyQuotaId" type="hidden">
+		{hiddenFields}
+		<input name="Action" type="hidden" id="Action">
+		{actionButton}
+     </td>
+   </tr>
+  </form>
+</table>
+</div></div></div>
+<!--该调查问卷由科维能动EnableQ在线问卷调查引擎系统生成 -->
+
+<script>Init();</script>

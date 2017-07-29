@@ -1,0 +1,142 @@
+<html>
+<head>
+<meta http-equiv=content-language content=zh-cn>
+<meta http-equiv=content-type content="text/html; charset=gbk">
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7">
+<style>
+ td { padding:2px 5px 2px 5px;}
+ table {margin-bottom:4px;}
+</style>
+<link href="../CSS/Base.css" rel="stylesheet">
+<script type="text/javascript" src="../JS/Jquery.min.js.php"></script>
+<script type="text/javascript" src="../JS/Jquery.notification.js.php"></script>
+<link type="text/css" rel="stylesheet" href="../CSS/Notification.css" />
+<script language=javascript src="../JS/CheckQuestion.js.php"></script>
+<script language=javascript src="../JS/HighLight.js.php"></script>
+<script language=javascript>
+function Check_Form_Validator()
+{
+	if (!CheckNotNull(document.Check_Form.pushTitle,"推送消息主题") ) {return false;}
+	if (!CheckSpecicalChar(document.Check_Form.pushTitle, "推送消息主题")) {return false;}
+	if (!CheckNotNull(document.Check_Form.pushInfo, "推送消息内容")) {return false;}
+	if (!CheckSpecicalChar(document.Check_Form.pushInfo, "推送消息内容")) {return false;}
+	if( document.Check_Form.actionType[1].checked )
+	{
+		if (!CheckNotNull(document.Check_Form.pushURL, "App查看消息的URL链接")) {return false;}
+		if (!CheckURL(document.Check_Form.pushURL, "App查看消息的URL链接")) {return false;}		
+	}
+	if( document.Check_Form.isCommon[1].checked && document.Check_Form.actionType[2].checked )
+	{
+		if (!CheckNotNull(document.Check_Form.surveyID, "App查看消息链接 - 打开问卷")) {return false;}
+	}
+}
+function CheckSpecicalChar(objField, strText)
+{
+	var strErr = "“" + strText + "”不能包含单引号、双引号、反斜线、分号、等于号等非法字符！";
+	var Re = /[\x22\x27\x5C\x3B\x3D]+/ig;
+	if ( Re.test(objField.value))
+	{
+        objField.focus();
+		$.notification(strErr);
+		return false;
+	}
+	return true;
+}
+function submit_form_action()
+{
+	if( Check_Form_Validator() != false )
+	{
+		document.getElementById('Action').value = 'EmailSendSubmit';
+		document.Check_Form.submit();
+	}
+}
+function save_form_action()
+{
+	if( Check_Form_Validator() != false )
+	{
+		document.getElementById('Action').value = 'EmailSaveSubmit';
+		document.Check_Form.submit();
+	}
+}
+function Init()
+{
+	if( document.Check_Form.isCommon[1].checked )
+	{
+	    document.Check_Form.actionType[2].disabled = false;
+		if( document.Check_Form.actionType[0].checked )
+		{
+			document.Check_Form.pushURL.disabled  = true
+			document.Check_Form.surveyID.disabled  = true
+		}
+		if( document.Check_Form.actionType[1].checked )
+		{
+			document.Check_Form.pushURL.disabled  = false
+			document.Check_Form.surveyID.disabled  = true
+		}
+		if( document.Check_Form.actionType[2].checked )
+		{
+			document.Check_Form.pushURL.disabled  = false
+			document.Check_Form.surveyID.disabled  = false
+		}
+	}
+	else
+	{
+	    document.Check_Form.actionType[2].disabled = true;
+		document.Check_Form.surveyID.disabled  = true;
+		if( document.Check_Form.actionType[0].checked )
+		{
+			document.Check_Form.pushURL.disabled  = true;
+		}
+		if( document.Check_Form.actionType[1].checked )
+		{
+			document.Check_Form.pushURL.disabled  = false;
+		}
+	}		
+}
+</script>
+<meta content="mshtml 6.00.3790.0" name=generator></head>
+<body oncontextmenu="return false" onload="javascript:Init();">
+  <form action="" method="post" name="Check_Form" id="Check_Form">
+  <table class=datatable style="line-height: 150%;border-collapse:collapse;" cellspacing=0 cellpadding=0 bordercolor=#cacaca border=1 width=100%>
+   <div class=position>位置：&nbsp; 我的桌面 &raquo; 向安卓App推送消息</div>
+   <tr><td bgcolor="#f9f9f9" colspan=2>&nbsp;<b>关于...</b></td></tr>
+   <tr><td colspan=2><span class=red>*</span> 因前端只能接受最新消息，并且前端检查最新消息有监听周期(3分钟)<br/><span class=red>*</span> 故推送消息的时间间隔不宜过小，否则可能会导致部分消息无法推送</td></tr>
+   <tr><td bgcolor="#f9f9f9" colspan=2>&nbsp;<b>向安卓App推送消息</b></td></tr>
+      <tr> 
+         <td width="17%"><SPAN class=red>*</SPAN>&nbsp;发送人：</td>
+         <td width="83%">&nbsp;{sendName}</td>
+      </tr>
+	  <tr><td height=30 nowrap><SPAN class=red>*</SPAN>&nbsp;消息主题：</td>
+	      <td>&nbsp;<input name="pushTitle" id="pushTitle" size=100 value="{pushTitle}"></td></tr>
+	  <tr><td><SPAN class=red>*</SPAN>&nbsp;消息内容：</td>
+	      <td>&nbsp;<textarea name="pushInfo" Id="pushInfo" rows=6 cols=100>{pushInfo}</textarea></td>
+	  </tr>
+	  <tr><td><SPAN class=red>*</SPAN>&nbsp;接受端：</td>
+	      <td><input name="isCommon" id="isCommon" type="radio" value="3" {isCommon_3} onclick="javascript:Init();">全部&nbsp;<input name="isCommon" id="isCommon" type="radio" value="1" {isCommon_1} onclick="javascript:Init();">安卓样本App&nbsp;<input name="isCommon" id="isCommon" type="radio" value="2" {isCommon_2} onclick="javascript:Init();">安卓访员App</td>
+	  </tr>
+	  <tr><td><SPAN class=red>*</SPAN>&nbsp;App查看<br/>&nbsp;&nbsp;&nbsp;消息的链接：</td>
+	      <td>&nbsp;<input type="radio" name="actionType" id="actionType" value=1 onclick="javascript:Init();" {actionType_1}> 无链接动作<br/>
+		      &nbsp;<input type="radio" name="actionType" id="actionType" value=2 onclick="javascript:Init();" {actionType_2}> 链接URL:&nbsp;<input name="pushURL" id="pushURL" size=60 value="{pushURL}"><br/>
+		      &nbsp;<input type="radio" name="actionType" id="actionType" value=3 onclick="javascript:Init();" {actionType_3}> 打开问卷:&nbsp;<br/>
+			  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<select name="surveyID" id="surveyID" style="width:590px;*width:600px">
+			        <option value=''>请选择...</option>
+					{surveyList}
+				    </select>
+		  </td>
+	  </tr>
+	  </table>
+      <table width=100%>
+      <tr><td width=17%>&nbsp;</td>
+          <td height="23">
+		  <input name="pushID" id="pushID" value="{pushID}" type="hidden">
+		  <input name="stat" id="stat" value="{stat}" type="hidden">
+ 		  <input name="Action" type="hidden" id="Action"> 
+          <input class=inputsubmit type="button" name="submitbutton" id="submitbutton" value="发送" onclick="javascript:submit_form_action();"> 
+          <input class=inputsubmit type="button" name="submitbutton0" id="submitbutton0" value="保存" onclick="javascript:save_form_action();"> 
+          <input class=inputsubmit type="button" name="closebutton" id="closebutton" value="关闭" onClick="javascript:parent.hidePopWin();"> 
+         </td>
+       </tr>
+      </form>       
+   </table>
+ <script type="text/javascript">initInputHighlightScript();</script> 
+</body></html>

@@ -1,0 +1,42 @@
+<div class=actionsTitle>问卷<img src=../Images/arrow_down.gif align=absmiddle>&nbsp;&nbsp;<span class=surveynum style="font-size:12px;color:#000;font-weight:normal;">包含[ <span class=red>{pagesNum}</span> ]页&nbsp;[ <span class=red>{qtnNum}</span> ]问题</span>&nbsp;&nbsp;<input class=stnsubmit name="exportNew" type="button" id="exportNew" value="导出问题" onclick="gId('exportNew').disabled=true;gId('exportNew').style.border='1px solid #DDD';gId('exportNew').style.backgroundColor='#F5F5F5';gId('exportNew').style.color='#3b5888';window.location.href='../Export/Export.text.inc.php?surveyID={surveyID}'"></div>
+<div class=actionsInner style="line-height:130%"> 
+     <div>标题：{survey_Title} [ <span style="color:#0099cc">{survey_Name}</span> ]</div>
+     <div>项目类型：{projectType}&nbsp;&nbsp;|&nbsp;&nbsp;语言：{surveyLang}&nbsp;&nbsp;|&nbsp;&nbsp;类型：{surveyStatus}&nbsp;&nbsp;|&nbsp;&nbsp;创建：{createDate}</div>
+     <div>问卷开始时间：{begin_Time}&nbsp;&nbsp;|&nbsp;&nbsp;结束时间：{end_Time}</div>
+</div>
+
+
+<div class=actionsTitle>操作<img src=../Images/arrow_down.gif align=absmiddle></div>
+<div class=actionsInner style="border-bottom:0px">
+     <a href="{preURL}" target=_blank><div class=inputsubmit style="width:65px;*width:85px;height:16px;float:left;position:relative;margin-right:4px;*margin-right:3px" onmousedown="this.style.left='1px';this.style.top='1px';" onmouseup="this.style.left='0px';this.style.top='0px';" id="preSurvey" name="preSurvey">查看问卷</div></a>
+	 <input class=stnsubmit name="deploySurvey" type="button" id="deploySurvey" value="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;重执行&nbsp;&nbsp;&nbsp;&nbsp;" onclick="if(window.confirm('您确定把已经结束的问卷重新转成执行状态?')){showWaiting();window.location.href='{statusURL}';}">
+	 <input class=stnsubmit name="copySurvey" type="button" id="copySurvey" value="&nbsp;&nbsp;&nbsp;复制问卷&nbsp;&nbsp;&nbsp;" onclick="if(window.confirm('您真的想从该调查问卷复制一份副本吗？')){showWaiting();window.location.href='{copyURL}';}">
+	 <input class=stnsubmit name="archSurvey" type="button" id="archSurvey" value="&nbsp;&nbsp;&nbsp;归档问卷&nbsp;&nbsp;&nbsp;" onclick="if(window.confirm('您真的确定归档该问卷吗？建议您在归档前导出所有问卷数据！归档操作将从数据库中删除该问卷的全部数据，但将该问卷的卷面及结果等整理成系统文件储存。本操作将不可恢复！')){showWaiting();window.location.href='{archURL}';}">
+	 <input class=stnsubmit name="deleSurvey" type="button" id="deleSurvey" value="&nbsp;&nbsp;&nbsp;删除问卷&nbsp;&nbsp;&nbsp;" onclick="if(window.confirm('您真的想删除本调查问卷吗？该问卷的所有数据将被清空，并且不可恢复！?')){showWaiting();window.location.href='{deleteURL}';}">
+ </div>
+
+<div class=actionsTitle>报告<img src=../Images/arrow_down.gif align=absmiddle>&nbsp;&nbsp;<input class=inputsubmit name="surveyDefine" type="button" id="surveyDefine" value="组装" onclick="showWaiting();window.location.href='../Analytics/DefineReport.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}';"></div>
+<div class=actionsInner style="border-bottom:0px">     
+	 <input class=stnsubmit name="recOverview" type="button" id="recOverview" value="频数频率分析"  onclick="showWaiting();window.location.href='../Analytics/Frequency.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}';">
+	 <input class=stnsubmit name="surveyCross" type="button" id="surveyCross" value="交叉数据分析" onclick="showWaiting();window.location.href='../Analytics/DataCross.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}';">
+	 <input class=stnsubmit name="surveyChart" type="button" id="surveyChart" value="数据图形展示" onclick="showWaiting();window.location.href='../Analytics/DataChart.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}';">
+	 <input class=stnsubmit name="surveyChart" type="button" id="surveyChart" value="卡方分布校验" onclick="showWaiting();window.location.href='../Analytics/ChiSquare.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}';">
+	 <input class=stnsubmit name="surveyLine" type="button" id="surveyLine" value="数据报告中心" onclick="showWaiting();window.location.href='../Analytics/DataOverview.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}';">
+ </div>
+
+ <div class=actionsTitle>数据<img src=../Images/arrow_down.gif align=absmiddle>&nbsp;&nbsp;<span class=surveynum style="font-size:12px;color:#000;font-weight:normal;">已有[ <span class=red>{resultNum}</span> ]回复</span></div>
+ <div class=actionsInner style="border-bottom:0px">
+	 <input class=stnsubmit name="dataList" type="button" id="dataList" value="回复数据清单"  onclick="showWaiting();window.location.href='../Analytics/DataList.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}&DO=List';">
+	 <input class=stnsubmit name="spssLabel" type="button" id="spssLabel" value="&nbsp;&nbsp;SPSS标签&nbsp;&nbsp;" {labelURL}>
+	 <input class=stnsubmit name="spssData" type="button" id="spssData" value="SPSS元数据&nbsp;" {spssURL}>
+	 <input class=stnsubmit name="excelData" type="button" id="excelData" value="Excel元数据&nbsp;" {exportURL}>
+ </div>
+
+ <div class=actionsTitle>用户<img src=../Images/arrow_down.gif align=absmiddle>&nbsp;&nbsp;<input class=inputsubmit name="userRight" type="button" id="userRight" value="调整" onclick="showWaiting();window.location.href='../System/ShowSurveyList.php?Action=EditUser&surveyID={surveyID}'"></div>
+ <div class=actionsInner> 
+     <div>谁创建问卷：{ownerUser}</div>
+ </div>
+
+  <div class=actionsTitle>计划<img src=../Images/arrow_down.gif align=absmiddle>&nbsp;&nbsp;<input class=inputsubmit name="surveyPlan" type="button" style="display:{planbtn}" id="surveyPlan" value="分析" onclick="showWaiting();window.location.href='../Analytics/PlanResult.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}';">&nbsp;&nbsp;<span class=surveynum style="font-size:12px;color:#000;font-weight:normal;">问卷回复计划：{havePlan}</span></div>
+
+  <div class=actionsTitle>指标<img src=../Images/arrow_down.gif align=absmiddle>&nbsp;&nbsp;<input class=inputsubmit name="mgtIndex" type="button" id="mgtIndex" value="调整" onclick="showWaiting();javascript:window.location.href='ShowSurveyIndex.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}';">&nbsp;<input class=inputsubmit name="surveyIndex" type="button" style="display:{indexbtn}" id="surveyIndex" value="分析" onclick="showWaiting();window.location.href='../Analytics/SurveyIndexResult.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}';">&nbsp;&nbsp;<span class=surveynum style="font-size:12px;color:#000;font-weight:normal;">问卷指标体系：{haveIndex}</span></div>

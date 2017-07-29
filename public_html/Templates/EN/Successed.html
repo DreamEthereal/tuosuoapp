@@ -1,0 +1,54 @@
+<html>
+<head>
+<title>{successed_title}</title>
+<META http-equiv=Content-Language content=zh-cn>
+<META http-equiv=Content-Type content="text/html">
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7">
+<meta http-equiv="pragma" content="no-cache">
+<meta http-equiv="cache-control" content="no-cache">
+<meta http-equiv="expires" content="0">
+<meta http-equiv="refresh" content="1; url={url}">
+<style>
+ body,td,p {
+	line-height: 145%;
+	font-family: "Î¢ÈíÑÅºÚ",Calibri;
+	font-size: 14px;
+}
+#messtable {
+    position: absolute;
+	top:expression(Math.max(document.body.clientHeight/2-180,80));
+	left:expression(Math.max(document.body.clientWidth/2-200,120));
+}
+</style>
+</head>
+
+<table id=messtable width="400" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr><td bgcolor="#336699">
+    <table width="100%" border="0" cellspacing="2" cellpadding="5">
+        <tr>
+	      <td align="center" width="50"><img src="{path}/succ.gif"></td>
+          <td height="100" bgcolor="#ffffff">
+            <table width="100%" border="0" cellspacing="0" cellpadding="8">
+              <tr>
+                <td align="center"><p>Congratulations! Successfully for <b>{successed_title}</b> </p>
+					<p>Please wait,thanks...<br>
+                    <a href="{url}">Contiune</a></p></td>
+              </tr>
+          </table></td>
+        </tr>
+    </table>
+</td></tr></table>
+<script>
+ var userAgent = navigator.userAgent.toLowerCase();
+ var is_opera = userAgent.indexOf('opera') != -1 && opera.version();
+ var is_moz = (navigator.product == 'Gecko') && userAgent.substr(userAgent.indexOf('firefox') + 8, 3);
+ var is_ie = (userAgent.indexOf('msie') != -1 && !is_opera) && userAgent.substr(userAgent.indexOf('msie') + 5, 3);
+ var is_mac = userAgent.indexOf('mac') != -1;
+ if( is_opera || is_moz || is_mac || is_ie)
+ {
+    document.getElementById("messtable").style.top = Math.max(document.body.clientHeight/2-180,80);
+    document.getElementById("messtable").style.left = Math.max(document.body.clientWidth/2-200,120);
+ }
+</script>
+</body>
+</html>

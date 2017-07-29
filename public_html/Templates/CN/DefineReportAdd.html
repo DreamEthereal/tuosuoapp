@@ -1,0 +1,158 @@
+<html>
+<head>
+<meta http-equiv=content-language content=zh-cn>
+<meta http-equiv=content-type content="text/html; charset=gbk">
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7">
+<style>
+ td { padding:2px 5px 2px 5px;}
+</style>
+<link href="../CSS/Base.css" rel=stylesheet>
+<script type="text/javascript" src="../JS/Jquery.min.js.php"></script>
+<script type="text/javascript" src="../JS/Jquery.notification.js.php"></script>
+<link type="text/css" rel="stylesheet" href="../CSS/Notification.css" />
+<script language=javascript src="../JS/CheckQuestion.js.php"></script>
+<script language=javascript>
+function Check_Form_Validator()
+{
+   if (IsInCheckBox(document.Check_Form.reportType,1) )
+   {
+	   if (!CheckNotNull(document.getElementById("questionID"), "请选择需进行频数频率分析的调查问题")) {return false;}
+   }
+   if (IsInCheckBox(document.Check_Form.reportType,2) )
+   {
+	   if (!CheckNotNull(document.getElementById("questionID2"), "请选择频数交叉数据分析的行变量")) {return false;}
+	   if (!CheckNotNull(document.getElementById("questionID1"), "请选择频数交叉数据分析的列变量")) {return false;}
+	   if (!CheckListMaxSelect(document.getElementById("questionID1"), "请选择频数交叉数据分析的列变量",2)) {return false;}
+   }
+   if (IsInCheckBox(document.Check_Form.reportType,3) )
+   {
+	   if (!CheckNotNull(document.getElementById("questionID3"), "请选择需进行均值分析的调查问题")) {return false;}
+   }
+   if (IsInCheckBox(document.Check_Form.reportType,4) )
+   {
+	   if (!CheckNotNull(document.getElementById("questionID4"), "请选择均值交叉分析的行变量")) {return false;}
+	   if (!CheckNotNull(document.getElementById("questionID5"), "请选择均值交叉分析的列变量")) {return false;}
+	   if (!CheckListMaxSelect(document.getElementById("questionID5"), "请选择均值交叉分析的列变量",2)) {return false;}
+   }
+}
+function Init()
+{
+   if (IsInCheckBox(document.Check_Form.reportType,1) ) //频数
+   {
+		document.getElementById("questionIDHTML").style.display = '';
+		document.getElementById("questionID2HTML").style.display = 'none';
+		document.getElementById("questionID1HTML").style.display = 'none';
+		document.getElementById("questionID3HTML").style.display = 'none';
+		document.getElementById("questionID4HTML").style.display = 'none';
+		document.getElementById("questionID5HTML").style.display = 'none';
+   }
+   if (IsInCheckBox(document.Check_Form.reportType,2) ) //交叉频数
+   {
+		document.getElementById("questionIDHTML").style.display = 'none';
+		document.getElementById("questionID2HTML").style.display = '';
+		document.getElementById("questionID1HTML").style.display = '';
+		document.getElementById("questionID3HTML").style.display = 'none';
+		document.getElementById("questionID4HTML").style.display = 'none';
+		document.getElementById("questionID5HTML").style.display = 'none';
+   }
+   if (IsInCheckBox(document.Check_Form.reportType,3) ) //均值
+   {
+		document.getElementById("questionIDHTML").style.display = 'none';
+		document.getElementById("questionID2HTML").style.display = 'none';
+		document.getElementById("questionID1HTML").style.display = 'none';
+		document.getElementById("questionID3HTML").style.display = '';
+ 		document.getElementById("questionID4HTML").style.display = 'none';
+ 		document.getElementById("questionID5HTML").style.display = 'none';
+  }
+   if (IsInCheckBox(document.Check_Form.reportType,4) ) //均值交叉
+   {
+		document.getElementById("questionIDHTML").style.display = 'none';
+		document.getElementById("questionID2HTML").style.display = 'none';
+		document.getElementById("questionID1HTML").style.display = 'none';
+		document.getElementById("questionID3HTML").style.display = 'none';
+		document.getElementById("questionID4HTML").style.display = '';
+		document.getElementById("questionID5HTML").style.display = '';
+   }
+}		
+function submitForm()
+{
+	if( Check_Form_Validator() != false )
+	{
+		document.getElementById('submitBtn').disabled = true;
+		disabledStyle(document.getElementById('submitBtn'));
+		document.getElementById('close').disabled = true;
+		disabledStyle(document.getElementById('close'));
+		document.Check_Form.submit();
+	}
+}
+</script>
+<meta content="mshtml 6.00.3790.0" name=generator></head>
+<body oncontextmenu="return false" onload="javascript:Init();">
+  <form name="Check_Form" method="post" action="" id="Check_Form" onsubmit="return false;" style="margin:0px;padding:0px;">
+  <table class=datatable style="line-height: 150%;border-collapse:collapse;" cellspacing=0 cellpadding=0 bordercolor=#cacaca border=1 width=100%>
+     <div class=position>位置：&nbsp; 我的问卷 &raquo; 组装分析报告 &raquo; 新增报告定义</div>
+     <tr><td colspan="2" bgcolor="#f9f9f9" height="25"><b>新增报告定义</b></td></tr>
+     <tr>
+      <td width=13% nowrap>该定义作用域：</td>
+	  <td width=87% nowrap><input name="defineShare" id="defineShare" type="radio" value=1 {defineDisabled}>共享 (分享给其他人)&nbsp;<input name="defineShare" id="defineShare" type="radio" value=0 checked>私有 (仅私人使用)</td>
+	 </tr>
+     <tr>
+      <td width=13% nowrap>选择报告类型：</td>
+	  <td width=87% nowrap>
+		  <input name="reportType" id="reportType" value=1 type="radio" checked onclick="javascript:Init();">频数频率分析
+		  <input name="reportType" id="reportType" value=3 type="radio" onclick="javascript:Init();">均值分析
+		  <input name="reportType" id="reportType" value=2 type="radio" onclick="javascript:Init();">频数交叉表
+		  <input name="reportType" id="reportType" value=4 type="radio" onclick="javascript:Init();">均值交叉表
+	  </td>
+    </tr>
+    <tr id="questionIDHTML">
+      <td>选择调查问题：</td>	  
+	  <td><select name="questionID" id="questionID" style="width:665px;*width:675px">
+			<option value=''>请选择需进行频数频率分析的调查问题...</option>
+			{questionList}
+		  </select>
+	  </td>
+   </tr>
+    <tr id="questionID3HTML">
+      <td>选择调查问题：</td>	  
+	  <td><select name="questionID3" id="questionID3" style="width:665px;*width:675px">
+			<option value=''>请选择需进行均值分析的调查问题...</option>
+			{questionList3}
+		  </select>
+	  </td>
+   </tr>
+   <tr id="questionID2HTML"><td valign=center>指定行变量：</td>
+       <td><select name="questionID2" id="questionID2" style="width:665px;*width:675px">
+	       <option value=''>请选择频数交叉数据分析的行变量...</option>
+	       {questionList2}
+		 </select></span>
+    </td></tr>
+    <tr id="questionID1HTML"><td>指定列变量：</td>
+	    <td><select name="questionID1[]" id="questionID1" size=10 multiple align=absmiddle style="width:665px;*width:675px">
+	       <option value=''>请选择频数交叉数据分析的列变量...</option>
+	       {questionList1}
+		 </select></td></tr>
+    <tr id="questionID4HTML"><td valign=center>指定行变量：</td>
+       <td><select name="questionID4[]" id="questionID4" size=10 multiple align=absmiddle style="width:665px;*width:675px">
+	       <option value=''>请选择均值交叉数据分析的行变量...</option>
+	       {questionList4}
+		 </select></span>
+     <tr id="questionID5HTML"><td>指定列变量：</td>
+	    <td><select name="questionID5[]" id="questionID5" size=10 multiple align=absmiddle style="width:665px;*width:675px">
+	       <option value=''>请选择均值交叉数据分析的列变量...</option>
+	       {questionList5}
+		 </select></td></tr>
+   </td></tr>
+   </table>
+   <table width="100%">
+   <tr><td width=13% nowrap>&nbsp;</td>
+  	   <td>
+         <input name="surveyID" type="hidden" id="surveyID" value="{surveyID}"> 
+    	 <input name="Action" type="hidden" id="Action" value="DefineReportAddSubmit"> 
+		 <input class=inputsubmit type="button" name="submitBtn" id="submitBtn" value="确定" onclick="javascript:submitForm();"> 
+		 <input class=inputsubmit type="button" name="close" id="close" value="关闭" onClick="javascript:parent.hidePopWin();">
+      </td>
+    </tr>
+  </form>
+ </table>
+</body></html>

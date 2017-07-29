@@ -1,0 +1,63 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML><HEAD><TITLE>软件许可文件</TITLE>
+<META http-equiv=Content-Language content=zh-cn>
+<META http-equiv=Content-Type content="text/html; charset=gbk">
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7">
+<LINK href="../CSS/Base.css" rel=stylesheet>
+<script type="text/javascript" src="../JS/Jquery.min.js.php"></script>
+<script type="text/javascript" src="../JS/Jquery.notification.js.php"></script>
+<link type="text/css" rel="stylesheet" href="../CSS/Notification.css" />
+<script language=javascript src="../JS/CheckQuestion.js.php"></script>
+<script language=javascript>
+function Check_Form_Validator()
+{
+	if (!CheckNotNull(document.Check_Form.xmlFile, "选择软件许可文件")) {return false;}
+}
+function CheckExt(obj)
+{
+   	var AllowExt = ".xml|";
+	FileExt = obj.value.substr(obj.value.lastIndexOf(".")).toLowerCase();
+	if( AllowExt.indexOf(FileExt + "|") == -1) 
+	{
+		document.getElementById("submitAction").disabled = true;
+	    $.notification("软件许可文件扩展名仅支持XML");
+		return false;
+	}
+	else
+	{
+		document.getElementById("submitAction").disabled = false;
+		return true;
+    }    
+}
+</script>
+<style>
+ td { padding:2px 5px 2px 5px;}
+ table { margin-bottom:4px;}
+</style>
+<META content="MSHTML 6.00.3790.0" name=GENERATOR></HEAD>
+<BODY oncontextmenu="return false">
+<center>
+  
+  <form name="Check_Form" method="post" enctype="multipart/form-data" action="" onsubmit="return Check_Form_Validator(this)">
+ <table style="LINE-HEIGHT: 150%;border-collapse:collapse;" cellSpacing=0 cellPadding=0 width="100%" borderColor=#cacaca border=1>
+    <div class=position>位置：&nbsp; 我的问卷 &raquo; 软件许可文件</div>
+        <tr><td colspan=2 bgcolor="#f9f9f9" style="font-size:12px"><b>基本许可信息</b></td></tr>
+        <tr><td width=40%>&nbsp;&nbsp;<b>用户单位</b></td>
+		    <td>{UserCompany}</td></tr>
+        <tr><td>&nbsp;&nbsp;<b>许可数</b></td>
+		    <td>{licenseNum}</td></tr>
+        <tr><td>&nbsp;&nbsp;<b>许可时间</b></td>
+		    <td>{LimitedTime}</td></tr>
+        <tr><td>&nbsp;&nbsp;<b>主机地址</b></td>
+		    <td>{MasterAddress} ({MinorAddress})</td></tr>
+     <tr><td colspan="2" bgcolor="#f9f9f9"><b>软件许可文件</b></td></tr>
+	  <tr><td colspan=2>&nbsp;&nbsp;<b>上传许可文件(.xml)</b>&nbsp;<input name="xmlFile" type="file" id="xmlFile" size=70  onchange="CheckExt(this)"></td>
+      </table><table width=100% style="border:0px;">
+	    <tr><td align=center style="border:0px;">
+        <input name="Action" type="hidden" id="Action" value="UploadLicenseSubmit">
+		<input type="submit" name="submit" id="submitAction" class=inputsubmit value="确定">&nbsp; 
+		<input class=inputsubmit type="button" name="close" value="关闭" onClick="javascript:parent.hidePopWin();">&nbsp;
+	</form>
+  </table>
+</center>
+</body></html>

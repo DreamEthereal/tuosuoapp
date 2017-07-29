@@ -1,0 +1,24 @@
+{dateIncludeFile}
+<tr><td height=25 class="question" valign=center>&nbsp;<span class="textEdit" id="questionName_{questionID}">{questionName}</span>&nbsp;<span class=notes>{questionNotes}</span></td></tr>
+<tr><td class="tips"><span class="textEdit" id="questionNotes_{questionID}">{questionTips}</span></td></tr>
+<tr><td>
+  <table cellSpacing=0 cellPadding=0 id="qtn_table_{questionID}">
+    <tr height=30 class=tdheight><td>&nbsp;</td>
+	    <td width=8></td>
+		<!-- BEGIN ANSWER -->
+		<td class="answer" align="center" nowrap valign=center><span class="textEdit" id="optionLabel_27_{questionID}_{optionLabelID}">{optionLabelName}</span>&nbsp;{questionRequire}</td>
+		<td width=8></td>
+		<!-- END ANSWER -->
+	</tr>	
+    <!-- BEGIN OPTION -->
+    <tr height=30 class=tdheight id="range_multitext_{optionNameID}_container">
+		<td class="answer" nowrap>&nbsp;&nbsp;<span class="textEdit" id="optionName_27_{questionID}_{optionNameID}">{optionName}</span></td>
+	    <td width=8></td>
+		<!-- BEGIN SUBOPTION -->
+		<td class="answer" align="center" nowrap valign=center><input onblur="Check_Survey_Conditions()" class="answer" type="{inputPrompt}" name="{optionID}" id="{optionID}" size="{length}" value="{value}" {dateTextAction}></td>
+		<td width=8></td>
+		<!-- END SUBOPTION -->
+   </tr>
+	<!-- END OPTION -->
+  </table>
+</td></tr>

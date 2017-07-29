@@ -1,0 +1,36 @@
+.MenuContain {
+	filter:Alpha(Opacity=100);
+  border-top: 1px solid #A7A6AA;
+	border-left: 1px solid #A7A6AA;
+	border-right:3px solid #ABABAB;
+	border-bottom:3px solid #ABABAB;
+	POSITION: absolute;
+	Z-INDEX: 100;
+	FONT-SIZE: 12px; 
+	visibility: hidden; 
+	left:0;
+	top:0;
+	background-color: #ffffff; 
+}
+.MenuOver {
+    background-color: #f9f9f9; COLOR: #5d5d5d; CURSOR: default
+}
+.MenuOut {
+    COLOR: #000000; CURSOR: default
+}
+.menuText {
+    height: 28px; line-height:28px;TEXT-ALIGN: center; WIDTH: 22px;
+}
+.menuFlag {
+    FONT-FAMILY: Webdings; TEXT-ALIGN: right; WIDTH: 45px;font-size:10px;
+}
+.linkEmpty {
+    WIDTH: 46px
+}
+.menuSpace {
+    WIDTH: 4px
+}
+.menuhr {
+    background-color:#aca899;
+	  width:97%;
+}

@@ -1,0 +1,197 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gbk" />
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" />
+<title>问卷微信分发设置 - Eclear在线问卷调查引擎</title>
+<link rel="shortcut icon" href="../Images/enableq.ico" type="image/x-icon" />
+<link rel="stylesheet" type="text/css" href="../CSS/UIBase.css" />
+<link rel="stylesheet" type="text/css" href="../CSS/Index.css" />
+<script type="text/javascript" src="../JS/Calendar.js.php"></script>
+<link href="../CSS/Window.css" type="text/css" rel=stylesheet>
+<script type="text/javascript" src="../JS/Common.js.php"></script>
+<script type="text/javascript" src="../JS/Window.js.php"></script>
+<script type="text/javascript" src="../JS/Jquery.min.js.php"></script>
+<script type="text/javascript" src="../JS/Jquery.notification.js.php"></script>
+<link type="text/css" rel="stylesheet" href="../CSS/Notification.css" />
+<script type="text/javascript" src="../JS/CheckQuestion.js.php"></script>
+<style>
+	input[type=text] {border:1px solid #cacaca;height:18px;font-family: Calibri,"宋体",sans-serif;line-height:20px;vertical-align: middle;text-align:left}
+	select {border:1px solid #cacaca;height:20px;font-family: Calibri,"宋体",sans-serif;vertical-align: middle;}
+    .t_table{width:99%;border:1px solid #cacaca;margin-bottom:5px;}
+    .t_table tr{height:34px;color:#5d5d5d;}
+    .t_table tr th{background-color: #f9f9f9;padding:0 5px;}
+    .t_table tr td{padding:0 5px;}
+    .t_table tr th{font-weight:bold;}
+    .t_table tr th.title,.d_table tr td.title{text-align:left;}    
+    .t_table tr td a{color:#3b5888;}
+    .t_table tr td a:hover{color:#ff7700;}
+    .t_table tr:hover{background-color:transparent}
+	.t_table table{line-height:20px;}
+	.question {height:34px;line-height:20px;border-right:1px solid #cacaca;border-bottom:1px solid #cacaca;+border-bottom:1px solid #cacaca;color:#5d5d5d;background-color: #f9f9f9;padding:0 5px;border-top:1px solid #cacaca;+border-top:1px solid #cacaca;color:#5d5d5d;}
+	input[type=file] {border:1px solid #cacaca;height:22px;font-family: Calibri,"宋体",sans-serif;line-height:22px;vertical-align: middle;}
+	select {border:1px solid #cacaca;font-family: Calibri,"宋体",sans-serif;vertical-align: middle;height:20px;line-height:20px;}
+	input[type=checkbox]{vertical-align: middle;margin-right:5px}
+	input[type=radio]{vertical-align: middle;margin-right:5px}
+</style>
+<script>
+function Check_Form_Validator()
+{
+	//if (!CheckNotNull(document.Check_Form.AppId, "微信开发者ID之AppId")) {return false;}
+	//if (!CheckNotNull(document.Check_Form.AppSecret, "微信开发者ID之AppSecret")) {return false;}
+}
+function Init()
+{
+	if( document.getElementById('getChatUserInfo').checked )
+	{
+		document.getElementById('getChatUserModeCont').style.display = '';
+	}
+	else
+	{
+		document.getElementById('getChatUserModeCont').style.display = 'none';
+	}
+}
+function CheckExt(obj)
+{
+   	var AllowExt = ".png|.jpg|.gif|.jpeg|";
+	FileExt = obj.value.substr(obj.value.lastIndexOf(".")).toLowerCase();
+	if( AllowExt.indexOf(FileExt + "|") == -1) 
+	{
+		document.getElementById("submitBtn").disabled = true;
+	    $.notification("Logo图片文件扩展名仅支持.png|.jpg|.gif|.jpeg|");
+		return false;
+	}
+	else
+	{
+		document.getElementById("submitBtn").disabled = false;
+		return true;
+    }    
+}
+function submitForm()
+{
+	if( Check_Form_Validator() != false )
+	{
+		document.getElementById('submitBtn').disabled = true;
+		disabledStyle(document.getElementById('submitBtn'));
+		document.getElementById('reset').disabled = true;
+		disabledStyle(document.getElementById('reset'));
+		document.Check_Form.submit();
+	}
+}
+function disabledStyle(obj)
+{
+	obj.style.border = '1px solid #DDD';
+	obj.style.backgroundColor = '#F5F5F5';
+	obj.style.color = '#3b5888';
+}
+</script>
+</head>
+<body oncontextmenu="return false" onload="javascript:Init()">
+ 	<div class="header">
+		<h1 class="logo">Eclear</h1>
+		<div class="header_menu">
+			<div class="header_m_1">
+				<a href="../System/ShowMain.php">欢迎您，<font color="#e45857" id="nick_Name_cont"></font></a>
+				<span class="head_menu_icon"></span>
+				<ul class="head_menu_list">
+					<span class="head_menu_top"></span>
+					<li><a href="../System/MyProfile.php">我的账户信息</a></li>
+					<li class="last"><a href="../System/ChangePass.php">修改我的密码</a></li>
+				</ul>
+			</div>
+			<div class="header_m_6" style="margin-left:50px">
+				<a href="../System/ShowMain.php">首页</a>
+			</div>
+			<div class="header_m_2" id="mySetting">
+			</div>
+			<div class="header_m_3" style="margin-left:50px">
+				<a href="../Help/Downs.php">帮助</a>
+				<span class="head_menu_icon"></span>
+				<ul class="head_menu_list">
+					<span class="head_menu_top"></span>
+					<li><a href="../Help/Downs.php">帮助文件下载</a></li>
+					<li><a href="http://doc.itenable.com.cn" target=_blank>在线帮助文档</a></li>
+					<li><a href="http://i.enableq.com" target=_blank>在线讨论社区</a></li>
+					<li class="last"><a href="../System/AdministratorsLogs.php">系统操作日志</a></li>
+				</ul>
+			</div>
+			<div class="header_m_4" style="margin-left:50px">
+				<a href="javascript:void(0);" onclick="javascript:showPopWin('../License/AboutEnableQ.php', 500, 400, null, null,'关于...')">关于</a>
+			</div>
+			<div class="header_m_5">
+				<a href="../System/Logout.php?loginOutURL=../index.php" target=_top>退出</a>
+			</div>
+		</div>
+	</div><!--end of header-->
+	<script type="text/javascript" src="../JS/MySetting.js.php"></script>
+
+	<div class="container clearfix">
+	   <div class="main">
+		<div class="nav">
+			    <a href="ShowSurveyList.php?Action=Edit&surveyID={surveyID}" style="display:{isAdmin6}">属性</a>
+				<a href="TrackCode.php?surveyID={surveyID}" style="display:{isTrackCode}">追踪</a>
+				<a href="GetSurveyCode.php?surveyID={surveyID}" style="display:{isDeployStat}" class="cur">分发</a>
+				<a href="ShowSurveyList.php?Action=EditUser&surveyID={surveyID}">用户</a>
+				<a href="{taskURL}" style="display:{haveTask}">任务</a>
+				<a href="{planURL}" style="display:{havePlan}">计划</a>
+		</div>		
+		
+		<div class="sub_nav clearfix">
+			<p class="sub_nav_top clearfix">
+				<a href="GetSurveyCode.php?surveyID={surveyID}">常规分发</a>
+				<a href="WeChatCode.php?surveyID={surveyID}" class="cur">微信分发</a>
+			</p>
+		</div>
+
+		<div class="content">
+			<div class="content_tit">
+				<div class="clearfix">
+				<h1><span class=redtitle>[{surveyTitle}]</span>问卷微信分发设置</h1>
+				<span class="total ml10"></span>
+				<span class="btn ml10"></span>
+				</div>
+				<p class="fc_grey">通过微信扫一扫将问卷分享到朋友圈或发送给朋友，或通过微信公众号发送</p>
+			</div>
+			<div class="content_main" style="margin-top:10px">
+		    <form name="Check_Form" id="Check_Form" method="post" enctype="multipart/form-data" action="" onsubmit="return false;">
+			<table class="t_table">
+			   <tr><th align=left class="question"><b>&nbsp;关于微信分发...</b>&nbsp;<img src="../Images/info.gif" border=0></th></tr>   
+			   <tr><td>&nbsp;建议购买EnableQ系统<font color=red>“移动设备浏览器问卷UI”</font>扩展许可证<br/>&nbsp;您须拥有经过认证的类型为<font color=red>服务号</font>的微信公众号，并成为开发者<br/>&nbsp;同时须在微信公众号管理系统中将Eclear系统运行的域名在<font color=red>“OAuth2.0网页授权”</font>处配置成<font color=red>“授权回调页面域名”</font></td></tr>
+				<tr>
+					<td height=25 class="question" valign=center><b>微信开发者ID<b/></td>
+				</tr>
+				<tr class="answer">
+				   <td nowrap style="padding-top:10px;padding-bottom:10px">&nbsp;&nbsp;AppId：&nbsp;&nbsp;<input class="textInput" name="AppId" type="text" id="AppId" size="54" value="{AppId}"><br/>&nbsp;&nbsp;AppSecret：&nbsp;&nbsp;&nbsp;<input class="textInput" name="AppSecret" type="text" id="AppSecret" size="50" value="{AppSecret}"></td>
+				</tr>
+				<tr>
+					<td height=25 class="question" valign=center><b>问卷微信分发设置<b/></td>
+				</tr>
+				<tr class="answer">
+				   <td nowrap style="padding-top:10px;padding-bottom:10px">
+				   &nbsp;&nbsp;上传微信内分享问卷时消息图片：<input name="msgImage" type="file" id="msgImage" size=70 onchange="CheckExt(this)"><br/>
+				   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=red>*</span>&nbsp;建议图片的大小为：400px * 400px;<br/>
+				   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=red>*</span>&nbsp;查看现有图片：{msgImageFile}，上传新文件将覆盖旧文件<br/>
+				   &nbsp;&nbsp;<input type="checkbox" style="vertical-align: middle;" name="isOnlyWeChat" id="isOnlyWeChat" {isOnlyWeChat} value="1">&nbsp;&nbsp;问卷仅允许自微信内回复<br/>
+				   &nbsp;&nbsp;<input type="checkbox" style="vertical-align: middle;" name="getChatUserInfo" id="getChatUserInfo" {getChatUserInfo} value="1" onclick="javascript:Init();">&nbsp;&nbsp;获取微信用户的昵称、性别、地区等信息(需要用户授权)
+				   <span id="getChatUserModeCont"><br/>
+				   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" style="vertical-align: middle;" name="getChatUserMode" id="getChatUserMode" {getChatUserMode_2} value="2">&nbsp;&nbsp;必须用户授权才能回复<br/>
+				   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" style="vertical-align: middle;" name="getChatUserMode" id="getChatUserMode" {getChatUserMode_1} value="1">&nbsp;&nbsp;提示用户授权，不授权也可以回复</span></td>
+				</tr>
+			   </table>
+			   <table width=99% style="border:0px;margin-bottom:15px">
+			   <tr><td>
+					 <input name="surveyID" type="hidden" id="surveyID" value="{surveyID}">
+					 <input name="ori_msgImage" type="hidden" value="{msgImage}">
+					 <input name="Action" type="hidden" id="Action" value="EditWeChatSubmit"> 
+					 <input type="button" class=inputsubmit name="submitBtn" id="submitBtn" value="确定" onclick="javascript:submitForm();" style="vertical-align: middle;">
+					 <input name="reset" id="reset" class=inputsubmit type="reset" value="重置" style="vertical-align: middle;">
+				</td></tr>
+			  </form>
+			 </table>
+			 </div><!--end of content_main-->
+		   </div><!--end of content-->
+	   </div><!--end of main-->
+    </div><!--end of container-->
+	<!--popmenu -->
+	<script type="text/javascript" src="../JS/PopMenu.js.php"></script>
+</body></html>

@@ -1,0 +1,309 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gbk" />
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" />
+<title>分配访员执行任务 - Eclear在线问卷调查引擎</title>
+<link rel="shortcut icon" href="../Images/enableq.ico" type="image/x-icon" />
+<link rel="stylesheet" type="text/css" href="../CSS/UIBase.css" />
+<link rel="stylesheet" type="text/css" href="../CSS/Index.css" />
+<link href="../CSS/Window.css" type="text/css" rel=stylesheet>
+<script type="text/javascript" src="../JS/Common.js.php"></script>
+<script type="text/javascript" src="../JS/Window.js.php"></script>
+<script type="text/javascript" src="../JS/Jquery.min.js.php"></script>
+<script type="text/javascript" src="../JS/Jquery.notification.js.php"></script>
+<link type="text/css" rel="stylesheet" href="../CSS/Notification.css" />
+<script type="text/javascript" src="../JS/CheckQuestion.js.php"></script>
+<script>
+function checkall(form) 
+{
+	if( form.all.checked )
+	{
+		for(var i = 0;i < form.elements.length-1; i++) 
+		{
+			var e = form.elements[i];
+			if( ! e.disabled )	e.checked = true;
+		}
+	}
+	else
+	{
+		for(var i = 0;i < form.elements.length-1; i++) 
+		{
+			var e = form.elements[i];
+			if( ! e.disabled )	e.checked = false;
+		}
+    }
+}
+function refreshParent() {
+   //window.location.replace(window.location.href);
+   window.location.reload(true);
+}
+function gId(_sId){
+	return document.getElementById(_sId);
+}
+function checkSelectUser()
+{
+	var strErr = "操作要求必须先选择一个或多个任务！";
+	objField = document.Check_Form.taskID;
+	if( typeof objField != 'undefined' )
+	{
+		if( objField.length == null )
+		{
+			if (! objField.disabled && objField.checked) return true;
+			else
+			{
+				document.Check_Form.all.focus();
+				$.notification(strErr);
+				return false;
+			}
+		}
+		else
+		{
+			for (i=0;i<objField.length;i++){
+				if ( ! objField[i].disabled && objField[i].checked) return true;
+			}
+			document.Check_Form.all.focus();
+			$.notification(strErr);
+			return false;
+		}
+	}
+	else
+	{
+		$.notification(strErr);
+		return false;
+	}
+}
+function checkUserAction( actionValue )
+{
+	if ( checkSelectUser() && CheckListNoSelect(gId('tran_administratorsID'),"选中任务的执行人") ) 
+	{
+		document.getElementById('TranMembersSubmit').disabled = true;
+		disabledStyle(document.getElementById('TranMembersSubmit'));
+		document.getElementById('CancelTaskSubmit').disabled = true;
+		disabledStyle(document.getElementById('CancelTaskSubmit'));
+		gId('formAction').value = actionValue;
+		gId('Check_Form').submit();
+	}
+}
+function cancelUserAction( actionValue )
+{
+	if ( checkSelectUser() ) 
+	{
+		document.getElementById('TranMembersSubmit').disabled = true;
+		disabledStyle(document.getElementById('TranMembersSubmit'));
+		document.getElementById('CancelTaskSubmit').disabled = true;
+		disabledStyle(document.getElementById('CancelTaskSubmit'));
+		gId('formAction').value = actionValue;
+		gId('Check_Form').submit();
+	}
+}
+var http_request = false;
+function AjaxDataListRequest(url)
+{
+	http_request = false;
+	if(window.ActiveXObject){
+		try{ http_request = new ActiveXObject("Msxml2.XMLHTTP");}
+		catch (e){ try{ http_request = new ActiveXObject("Microsoft.XMLHTTP");} catch (e) {}
+		}
+	}
+	else if(window.XMLHttpRequest){
+		http_request = new XMLHttpRequest();
+		if (http_request.overrideMimeType){ http_request.overrideMimeType('text/xml');}
+	}	
+	if (!http_request){ alert("Cannot create an XMLHTTP instance");return false;}
+	http_request.onreadystatechange = function() {
+	  if( http_request.readyState == 4 && http_request.status == 200) {
+			 var theRtn = http_request.responseText.split('######');
+			 if( theRtn[0] == 'false' )
+			 {
+				  $.notification(theRtn[1]);
+				  gId('t_userGroupID_text').focus();
+			 }
+			 else
+			 {
+				$("#t_userGroupID_container").html(theRtn[1]);
+			    gId('SearchUsersSubmit').value = '清空';
+			 }
+		}
+	}
+	http_request.open('GET', url, true);
+	http_request.send(null);
+}
+function AjaxInitRequest(url)
+{
+	http_request = false;
+	if(window.ActiveXObject){
+		try{ http_request = new ActiveXObject("Msxml2.XMLHTTP");}
+		catch (e){ try{ http_request = new ActiveXObject("Microsoft.XMLHTTP");} catch (e) {}
+		}
+	}
+	else if(window.XMLHttpRequest){
+		http_request = new XMLHttpRequest();
+		if (http_request.overrideMimeType){ http_request.overrideMimeType('text/xml');}
+	}	
+	if (!http_request){ alert("Cannot create an XMLHTTP instance");return false;}
+	http_request.onreadystatechange = function() {
+	  if( http_request.readyState == 4 && http_request.status == 200) {
+			 var theRtn = http_request.responseText;
+			 $("#t_userGroupID_container").html(theRtn);
+			 gId('SearchUsersSubmit').value = '清空';
+		}
+	}
+	http_request.open('GET', url, true);
+	http_request.send(null);
+}
+function checkUserSubmit(groupId)
+{
+	if( document.getElementById('t_userGroupID') == null )
+	{
+		if(Trim(gId('t_userGroupID_text').value) == '' )
+		{
+			$.notification("输入节点名中的关键字获得可选择的节点列表!");
+			gId('t_userGroupID_text').focus();
+		}
+		else
+		{
+			AjaxDataListRequest("../System/AjaxUserNodes.php?projectOwner={projectOwner}&surveyID={surveyID}&t_name="+Trim(gId('t_userGroupID_text').value));		
+		}
+	}
+	else
+	{
+		gId('t_userGroupID_container').innerHTML = "<input name=\"t_userGroupID_text\" id=\"t_userGroupID_text\" type=text size=30 style=\"vertical-align: middle;\">";
+		gId('SearchUsersSubmit').value = '检索';
+	}
+}
+function Init()
+{
+	if( {t_userGroupID} != '' )
+	{
+		AjaxInitRequest("../System/AjaxShowUserNode.php?t_userGroupID={t_userGroupID}");
+	}
+}
+</script>
+<script type="text/javascript" src="../JS/Loading.js.php"></script>
+
+<style>
+	input[type=text] {border:1px solid #cacaca;height:20px;font-family: Calibri,"宋体",sans-serif;line-height:20px;vertical-align: middle;}
+	select {border:1px solid #cacaca;font-family: Calibri,"宋体",sans-serif;vertical-align: middle;height:22px;line-height:22px}
+	input[type=checkbox]{vertical-align: middle;margin-right:5px}
+	input[type=radio]{vertical-align: middle;margin-right:5px}
+	textarea{height:80px;border:1px solid #cacaca;font-family: Calibri,"宋体",sans-serif;}
+	.clssel{height:20px}
+	select,img {vertical-align: middle;}
+	.inputsubmit{vertical-align: middle;}
+</style>
+</head>
+<body oncontextmenu="return false" onload="javascript:Init();">
+ 	<div class="header">
+		<h1 class="logo">Eclear</h1>
+		<div class="header_menu">
+			<div class="header_m_1">
+				<a href="../System/ShowMain.php">欢迎您，<font color="#e45857" id="nick_Name_cont"></font></a>
+				<span class="head_menu_icon"></span>
+				<ul class="head_menu_list">
+					<span class="head_menu_top"></span>
+					<li><a href="../System/MyProfile.php">我的账户信息</a></li>
+					<li class="last"><a href="../System/ChangePass.php">修改我的密码</a></li>
+				</ul>
+			</div>
+			<div class="header_m_6" style="margin-left:50px">
+				<a href="../System/ShowMain.php">首页</a>
+			</div>
+			<div class="header_m_2" id="mySetting">
+			</div>
+			<div class="header_m_3" style="margin-left:50px">
+				<a href="../Help/Downs.php">帮助</a>
+				<span class="head_menu_icon"></span>
+				<ul class="head_menu_list">
+					<span class="head_menu_top"></span>
+					<li><a href="../Help/Downs.php">帮助文件下载</a></li>
+					<li><a href="http://doc.itenable.com.cn" target=_blank>在线帮助文档</a></li>
+					<li><a href="http://i.enableq.com" target=_blank>在线讨论社区</a></li>
+					<li class="last"><a href="../System/AdministratorsLogs.php">系统操作日志</a></li>
+				</ul>
+			</div>
+			<div class="header_m_4" style="margin-left:50px">
+				<a href="javascript:void(0);" onclick="javascript:showPopWin('../License/AboutEnableQ.php', 500, 400, null, null,'关于...')">关于</a>
+			</div>
+			<div class="header_m_5">
+				<a href="../System/Logout.php?loginOutURL=../index.php" target=_top>退出</a>
+			</div>
+		</div>
+	</div><!--end of header-->
+	<script type="text/javascript" src="../JS/MySetting.js.php"></script>
+
+	<div class="container clearfix">
+	   <div class="main">
+		<div class="nav">
+			    <a href="ShowSurveyList.php?Action=Edit&surveyID={surveyID}" style="display:{isAdmin6}">属性</a>
+				<a href="TrackCode.php?surveyID={surveyID}" style="display:{isTrackCode}">追踪</a>
+				<a href="GetSurveyCode.php?surveyID={surveyID}" style="display:{isDeployStat}">分发</a>
+				<a href="ShowSurveyList.php?Action=EditUser&surveyID={surveyID}">用户</a>
+				<a href="{taskURL}" style="display:{haveTask}" class="cur">任务</a>
+				<a href="{planURL}" style="display:{havePlan}">计划</a>
+		</div>		
+	    <div class="content">
+			<div class="content_tit">
+				<div class="clearfix">
+				<h1><span class=redtitle>[{surveyTitle}]</span>分配数据录入员任务</h1>
+				<span class="total ml10">[{totalRecNum}任务]</span>
+				<span class="btn ml10"></span>
+				</div>
+				<p class="fc_grey">对于神秘客/暗访/明检等调研对象清楚的调研项目，使用关联客户对象下无子孙节点的节点信息作为任务可分配清单分配给不同的数据录入员执行</p>
+			</div>
+		   <div class="content_main" style="margin-top:10px;">
+			<form name="Check_Form" id="Check_Form" style="margin:0;padding:0" method="POST" action="">
+			   <div class="search_form" style="height:100px;line-height:30px;">
+				   <span style="float:left">
+				   <IMG SRC="../Images/search.gif"> 查找数据录入员：
+					<select name="t_userid" id="t_userid">
+						<option value='all'>请选择数据录入员...</option>
+						{userList}
+					</select>&nbsp;<br/>
+					<span style="display:{isProjectType1}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;任务节点：<span id="t_userGroupID_container"><input name="t_userGroupID_text" id="t_userGroupID_text" type=text size=30 style="vertical-align: middle;"></span>&nbsp;<input name="SearchUsersSubmit" class=inputsubmit type="button" id="SearchUsersSubmit" value="检索" onclick="javascript:checkUserSubmit();" style="vertical-align: middle;"><br/></span>
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;节点情况&nbsp;&nbsp;<input type="submit" class=inputsubmit name="Submit" value="查询" style="vertical-align: middle;"><input name="Action" type="hidden" id="Action" value="querySubmit"></span>
+					<span style="float:right;display:{isProjectType1}"><IMG SRC="../Images/excel.gif">&nbsp;<a href="javascript:void(0);" onclick="javascript:showPopWin('{thisURL}&Action=ImportTask', 630, 280, refreshParent, null,'从CSV文件导入任务分配数据')">导入数据</a></span>
+			  </div>
+  			 <table class="d_table">
+			  <tr class=coltitle>
+				  <th width=3% align=center noWrap><input name="all" type="checkbox" id="all" value="all" onclick="checkall(this.form)" style="BACKGROUND-COLOR:#f9f9f9"></th>
+				  <th width=1% noWrap>&nbsp;</th>
+				  <th width=20% nowrap align=left>&nbsp;<B>任务名称</B></th>
+				  <th width=* align=left><B>任务描述</B></th>
+				  <th width=8% nowrap align=center>&nbsp;<B>任务代号</B></th>
+				  <th width=15% noWrap align=left><b>执行人</b></th>
+			</tr>
+			<!-- BEGIN TASK -->
+			<tr> 
+			  <td width=3% align=center noWrap><input name="taskID[]" type="checkbox" id="taskID" value="{taskID}"></td>
+			  <td width=1% noWrap {bg_color}>&nbsp;</td>
+			  <td nowrap>{taskName}</td>
+			  <td align=left>{taskDesc}</td>
+			  <td align=center nowrap><b>{taskID}</b></td>
+			  <td align=left nowrap>{taskMan}</td>
+			</tr>
+			<!-- END TASK -->
+			</table><table width=100%>
+			<tr><td>选中的任务分配给执行人：
+				   <select name="tran_administratorsID" id="tran_administratorsID">
+					  <option value=''>请选择数据录入员...</option>
+					   {input_user_list}
+				   </select>
+				   <input name="formAction" id="formAction" type="hidden">
+				   <input name="TranMembersSubmit" class=inputsubmit type="button" id="TranMembersSubmit" value="开始" onclick="javascript:checkUserAction('SurveyTaskMatchSubmit');" style="vertical-align: middle;"> 
+				   <input name="CancelTaskSubmit" class=inputsubmit type="button" id="CancelTaskSubmit" value="撤销" onclick="javascript:cancelUserAction('CancelTaskSubmit');" style="vertical-align: middle;"> 
+					<input type="hidden" name="surveyID" id="surveyID" value="{surveyID}">
+					<input type="hidden" name="surveyTitle" id="surveyTitle" value="{surveyTitle}">
+				</td>
+			</tr>
+			</table>
+			</form>
+			 <div class="pages">{pagesList}</div>
+			</div><!--end of content_main-->
+		   </div><!--end of content-->
+	   </div><!--end of main-->
+    </div><!--end of container-->
+	<!--popmenu -->
+	<script type="text/javascript" src="../JS/PopMenu.js.php"></script>
+	<script type="text/javascript">setTimeout("closeDialog()",400);</script>
+</body></html>

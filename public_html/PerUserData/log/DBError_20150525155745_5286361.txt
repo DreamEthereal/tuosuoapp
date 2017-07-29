@@ -1,0 +1,2 @@
+2015-05-25 15:57:45     Could not connect to the database server (127.0.0.1, stores).
+

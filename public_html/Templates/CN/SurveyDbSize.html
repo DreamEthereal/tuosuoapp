@@ -1,0 +1,85 @@
+<html>
+<head>
+<meta http-equiv=content-language content=zh-cn>
+<meta http-equiv=content-type content="text/html; charset=gbk">
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7">
+<style>
+  td { padding:2px 5px 2px 5px;}
+</style>
+<link href="../CSS/Base.css" rel=stylesheet>
+<script language=javascript src="../JS/HighLight.js.php"></script>
+<script type="text/javascript" src="../JS/Jquery.min.js.php"></script>
+<script type="text/javascript" src="../JS/Jquery.notification.js.php"></script>
+<link type="text/css" rel="stylesheet" href="../CSS/Notification.css" />
+<script language=javascript src="../JS/CheckQuestion.js.php"></script>
+<script language=javascript>
+function Check_Form_Validator()
+{
+	if (!CheckNotNull(document.Check_Form.dbSize0, "用来存储其他选项的回复")) {return false;}
+	if (!CheckNumber(document.Check_Form.dbSize0, "用来存储其他选项的回复",0,255)) {return false;}
+	if (!CheckNotNull(document.Check_Form.dbSize1, "用来存储复合题的单项回复")) {return false;}
+	if (!CheckNumber(document.Check_Form.dbSize1, "用来存储复合题的单项回复",0,255)) {return false;}
+	if (!CheckNotNull(document.Check_Form.dbSize2, "用来存储评分理由的回复")) {return false;}
+	if (!CheckNumber(document.Check_Form.dbSize2, "用来存储评分理由的回复",0,255)) {return false;}
+	if (!CheckNotNull(document.Check_Form.dbSize3, "用来存储矩阵填空题的单项回复")) {return false;}
+	if (!CheckNumber(document.Check_Form.dbSize3, "用来存储矩阵填空题的单项回复",0,255)) {return false;}
+	if (!CheckNotNull(document.Check_Form.dbSize4, "用来存储填空题的回复")) {return false;}
+	if (!CheckNumber(document.Check_Form.dbSize4, "用来存储填空题的回复",0,255)) {return false;}
+	if (!CheckNotNull(document.Check_Form.dbSize5, "用来存储枚举题的单项回复")) {return false;}
+	if (!CheckNumber(document.Check_Form.dbSize5, "用来存储枚举题的单项回复",0,255)) {return false;}
+	if (!CheckNotNull(document.Check_Form.dbSize6, "用来存储多选情形下的回复")) {return false;}
+	if (!CheckNumber(document.Check_Form.dbSize6, "用来存储多选情形下的回复",0,255)) {return false;}
+	if (!CheckNotNull(document.Check_Form.dbSize9, "用来存储文件上传情形下的回复")) {return false;}
+	if (!CheckNumber(document.Check_Form.dbSize9, "用来存储文件上传情形下的回复",0,255)) {return false;}
+}
+function submitForm()
+{
+	if( Check_Form_Validator() != false )
+	{
+		document.getElementById('submitBtn').disabled = true;
+		disabledStyle(document.getElementById('submitBtn'));
+		document.getElementById('close').disabled = true;
+		disabledStyle(document.getElementById('close'));
+		document.Check_Form.submit();
+	}
+}
+</script>
+
+<meta content="mshtml 6.00.3790.0" name=generator></head>
+<body oncontextmenu="return false">
+<form style="margin:0px" method="post" action="" name="Check_Form" id="Check_Form" onsubmit="return false;">
+  <table class=datatable style="line-height: 150%;border-collapse:collapse;" cellspacing=0 cellpadding=0 bordercolor=#cacaca border=1 width=100%>
+   <div class=position>位置：&nbsp; 我的问卷 &raquo; 调整数据库存储尺寸</div>
+   <tr><td bgcolor="#f9f9f9" colspan=2><b>调整数据库存储尺寸 [<span class=red>{surveyTitle}</span>]</b></td></tr>
+   <tr><td colspan=2><span class=red>*</span> 用来定义开放题回复的数据存储尺寸，以尽可能回避数据表存储大小限制 (<font color=red>0表示64K字符</font>)</td></tr>
+   <tr><td bgcolor="#f9f9f9" colspan=2><b>调整开放回复存储尺寸</b></td></tr>
+   <tr><td width=25%>用来存储其他选项的回复：</td>
+       <td><input name="dbSize0" id="dbSize0" value="{dbSize0}" size=10> 字符或汉字</td></tr>
+   <tr><td>用来存储复合题的单项回复：</td>
+       <td><input name="dbSize1" id="dbSize1" value="{dbSize1}" size=10> 字符或汉字</td></tr>
+   <tr><td>用来存储评分理由的回复：</td>
+       <td><input name="dbSize2" id="dbSize2" value="{dbSize2}" size=10> 字符或汉字</td></tr>
+   <tr><td>用来存储矩阵填空题的单项回复：</td>
+       <td><input name="dbSize3" id="dbSize3" value="{dbSize3}" size=10> 字符或汉字</td></tr>
+   <tr><td>用来存储填空题的回复：</td>
+       <td><input name="dbSize4" id="dbSize4" value="{dbSize4}" size=10> 字符或汉字</td></tr>
+   <tr><td>用来存储枚举题的单项回复：</td>
+       <td><input name="dbSize5" id="dbSize5" value="{dbSize5}" size=10> 字符或汉字</td></tr>
+    <tr><td bgcolor="#f9f9f9" colspan=2><b>调整系统内部定义存储尺寸</b>(一般不建议调整)</td></tr>
+    <tr><td>用来存储多选情形下的回复：</td>
+       <td><input name="dbSize6" id="dbSize6" value="{dbSize6}" size=10> 字符或汉字</td></tr>
+    <tr><td>用来存储文件上传情形下的回复：</td>
+       <td><input name="dbSize9" id="dbSize9" value="{dbSize9}" size=10> 字符或汉字</td></tr>
+ </table><table width=100%>
+   <tr> 
+  	 <td height="15" style="padding:0px">
+ 		  <input name="surveyID" type="hidden" value="{surveyID}"> 
+ 		  <input name="Action" type="hidden" id="Action" value="DbSizeSubmit"> 
+		  <input class=inputsubmit type="button" name="submitBtn" id="submitBtn" value="确定" onclick="javascript:submitForm();">
+		  <input class=inputsubmit type="button" name="close" id="close" value="关闭" onClick="javascript:parent.hidePopWin();">
+      </td>
+    </tr>
+  </form>
+ </table>
+ <script type="text/javascript">initInputHighlightScript();</script> 
+</body></html>

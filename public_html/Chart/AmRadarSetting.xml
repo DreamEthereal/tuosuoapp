@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<settings> 
+  <data_type>csv</data_type>
+  <type>stacked</type>
+  <csv_separator></csv_separator>
+  <decimals_separator>.</decimals_separator>
+  <background>  
+    <alpha>100</alpha>
+    <border_alpha>15</border_alpha>
+  </background>
+    
+  <radar>
+    <x></x>
+    <y></y>
+    <radius></radius>
+    <grow_time>2</grow_time>
+    <grow_effect></grow_effect>  
+    <sequenced_grow>true</sequenced_grow>
+  </radar>
+  
+  <legend>
+    <enabled>false</enabled>
+  </legend>  
+  
+  <values>
+    <skip_last>true</skip_last>
+    <unit_position>left</unit_position>
+  </values>
+  
+  <balloon>
+    <show>
+       <![CDATA[{value}]]>
+    </show>
+  </balloon>
+ 
+   <labels>
+    <label>
+      <x>0</x>
+      <y>30</y>
+      <rotate>false</rotate>
+      <width></width>
+      <align>center</align>
+      <text_color></text_color>
+      <text_size>14</text_size> 
+      <text>
+        <![CDATA[<b>{questionName}</b>]]>
+      </text>        
+    </label>
+  </labels>
+  
+   <graphs>   
+     <graph gid="1">
+      <title></title>
+      <color></color>
+      <line_alpha></line_alpha>
+      <line_width></line_width>                                  
+      <fill_alpha>50</fill_alpha>
+      <fill_color></fill_color>
+      <balloon_color></balloon_color>
+      <balloon_alpha></balloon_alpha>
+      <balloon_text_color></balloon_text_color>
+      <bullet>round</bullet>
+    </graph>    
+  </graphs>   
+  
+  <export_as_image>
+    <file>../Chart/ChartExport.php</file> 
+    <target>_top</target>
+    <x></x>
+    <y></y>
+    <color></color>
+    <alpha>100</alpha>
+    <text_color></text_color>
+    <text_size></text_size>
+  </export_as_image>
+ 
+  <context_menu>     
+     <default_items>
+       <zoom>false</zoom>
+       <print>false</print>
+     </default_items>
+  </context_menu>  
+
+   <strings>
+    <no_data>尚无符合条件的问卷数据，无法绘制图形</no_data>
+    <export_as_image>以图片格式导出</export_as_image>
+    <collecting_data>收集数据过程中...</collecting_data>
+    <ss></ss>
+    <mm></mm>
+    <hh></hh>
+    <DD></DD>  
+  </strings>  
+  
+</settings>

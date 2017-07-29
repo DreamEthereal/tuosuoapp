@@ -1,0 +1,446 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gbk" />
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" />
+<title>系统基本设置 - Eclear在线问卷调查引擎</title>
+<link rel="shortcut icon" href="../Images/enableq.ico" type="image/x-icon" />
+<link rel="stylesheet" type="text/css" href="../CSS/UIBase.css" />
+<link rel="stylesheet" type="text/css" href="../CSS/Index.css" />
+<link href="../CSS/Window.css" type="text/css" rel=stylesheet>
+<script type="text/javascript" src="../JS/Common.js.php"></script>
+<script type="text/javascript" src="../JS/Window.js.php"></script>
+<script type="text/javascript" src="../JS/Jquery.min.js.php"></script>
+<script type="text/javascript" src="../JS/Jquery.notification.js.php"></script>
+<link type="text/css" rel="stylesheet" href="../CSS/Notification.css" />
+<script language=javascript src="../JS/CheckQuestion.js.php"></script>
+<script language=javascript>
+function CheckPassport()
+{
+	if (document.SettingForm.isUseOriPassport.value == "4" )
+	{
+		if (!CheckNotNull(document.SettingForm.userID, "标识会员ID的变量名称")) {return false;}
+		if (!CheckNotNull(document.SettingForm.userName, "标识会员名称的变量名称")) {return false;}
+		if (!CheckNotNull(document.SettingForm.registerURL, "注册新会员的URL")) {return false;}
+		if (!CheckNotNull(document.SettingForm.loginURL, "会员登陆的URL")) {return false;}
+	}
+	if (document.SettingForm.isUseOriPassport.value == "2" )  //Ajax通行证
+	{
+		//if (!CheckNotNull(document.SettingForm.ajaxResponseURL, "设定私有问卷用户特征条件程序地址")) {return false;}
+		if (!CheckNotNull(document.SettingForm.ajaxCheckURL, "私有问卷提交检验用户身份程序地址")) {return false;}
+		//if (!CheckNotNull(document.SettingForm.ajaxRtnValue, "检验用户身份程序返回值显示名称")) {return false;}
+    }
+	if (document.SettingForm.isUseOriPassport.value == "3" )  //AD通行证
+	{
+		if (!CheckNotNull(document.SettingForm.domainControllers, "目录服务器域名或地址")) {return false;}
+		if (!CheckNotNull(document.SettingForm.adUsername, "连接用户名")) {return false;}
+		if (!CheckNotNull(document.SettingForm.accountSuffix, "连接用户名后缀")) {return false;}
+		<!-- CHECK PASSWORD2 -->
+		if (!CheckNotNull(document.SettingForm.adPassword, "连接用户密码")) {return false;}
+		<!-- END PASSWORD2 -->
+		if (!CheckNotNull(document.SettingForm.baseDN, "baseDN")) {return false;}
+    }
+	if (document.SettingForm.isUseOriPassport.value == "5" )  //LDAP通行证
+	{
+		if (!CheckNotNull(document.SettingForm.domainControllers, "目录服务器域名或地址")) {return false;}
+		if (!CheckNotNull(document.SettingForm.adUsername, "连接用户名")) {return false;}
+		<!-- CHECK PASSWORD -->
+		if (!CheckNotNull(document.SettingForm.adPassword, "连接用户密码")) {return false;}
+		<!-- END PASSWORD -->
+		if (!CheckNotNull(document.SettingForm.baseDN, "baseDN")) {return false;}
+    }
+} 
+function CheckMailServer() 
+{
+	if (!CheckNotNull(document.MailForm.sendFrom, "发送邮件的地址")) {return false;}
+	if (!CheckNotNull(document.MailForm.sendName, "发送邮件的名称")) {return false;}
+	if (!CheckNotNull(document.MailForm.mailServer, "SMTP邮件服务器")) {return false;}
+	if (!CheckNotNull(document.MailForm.smtp25, "SMTP端口号")) {return false;}
+	if ( document.MailForm.isSmtp.value == "y" )
+	{
+		if (!CheckNotNull(document.MailForm.smtpName, "SMTP认证的用户名")) {return false;}
+		<!-- CHECK PASSWORD1 -->
+		if (!CheckNotNull(document.MailForm.smtpPassword, "SMTP认证的密码")) {return false;}
+		<!-- END PASSWORD1 -->
+	}
+}
+
+function checkAuto()
+{ 
+	if (document.SettingForm.isUseOriPassport.value == "4" )  //现有通行证
+	{
+		document.getElementById("isUseCookie_ID").style.display = "";
+		document.getElementById("userID_ID").style.display = "";
+		document.getElementById("userName_ID").style.display = "";
+		document.getElementById("registerURL_ID").style.display = "";
+		document.getElementById("loginURL_ID").style.display = "";
+		document.getElementById("isPostMethod_ID").style.display = "none";
+		document.getElementById("ajaxTokenURL_ID").style.display = "none";
+		document.getElementById("ajaxResponseURL_ID").style.display = "none";
+		document.getElementById("ajaxCheckURL_ID").style.display = "none";
+		document.getElementById("ajaxLoginURL_ID").style.display = "none";
+		document.getElementById("ajaxDeleteURL_ID").style.display = "none";
+		document.getElementById("ajaxOverURL_ID").style.display = "none";
+		document.getElementById("domainControllers_ID").style.display = "none";
+		document.getElementById("adUsername_ID").style.display = "none";
+		document.getElementById("accountSuffix_ID").style.display = "none";
+		document.getElementById("adPassword_ID").style.display = "none";
+		document.getElementById("baseDN_ID").style.display = "none";
+		document.getElementById("SettingForm_Table").style.borderBottom = '1px solid #cacaca';
+	}
+	if (document.SettingForm.isUseOriPassport.value == "1" )  //EnableQ通行证
+	{
+		document.getElementById("isUseCookie_ID").style.display = "none";
+		document.getElementById("userID_ID").style.display = "none";
+		document.getElementById("userName_ID").style.display = "none";
+		document.getElementById("registerURL_ID").style.display = "none";
+		document.getElementById("loginURL_ID").style.display = "none";
+		document.getElementById("isPostMethod_ID").style.display = "none";
+		document.getElementById("ajaxTokenURL_ID").style.display = "none";
+		document.getElementById("ajaxResponseURL_ID").style.display = "none";
+		document.getElementById("ajaxCheckURL_ID").style.display = "none";
+		document.getElementById("ajaxLoginURL_ID").style.display = "none";
+		document.getElementById("ajaxDeleteURL_ID").style.display = "none";
+		document.getElementById("ajaxOverURL_ID").style.display = "none";
+		document.getElementById("domainControllers_ID").style.display = "none";
+		document.getElementById("adUsername_ID").style.display = "none";
+		document.getElementById("accountSuffix_ID").style.display = "none";
+		document.getElementById("adPassword_ID").style.display = "none";
+		document.getElementById("baseDN_ID").style.display = "none";
+		document.getElementById("SettingForm_Table").style.borderBottom = '0px';
+	}
+	if (document.SettingForm.isUseOriPassport.value == "2" )  //Ajax通行证
+	{
+		document.getElementById("isUseCookie_ID").style.display = "none";
+		document.getElementById("userID_ID").style.display = "none";
+		document.getElementById("userName_ID").style.display = "none";
+		document.getElementById("registerURL_ID").style.display = "none";
+		document.getElementById("loginURL_ID").style.display = "none";
+		document.getElementById("isPostMethod_ID").style.display = "";
+		document.getElementById("ajaxTokenURL_ID").style.display = "";
+		document.getElementById("ajaxResponseURL_ID").style.display = "";
+		document.getElementById("ajaxCheckURL_ID").style.display = "";
+		document.getElementById("ajaxLoginURL_ID").style.display = "";
+		document.getElementById("ajaxDeleteURL_ID").style.display = "";
+		document.getElementById("ajaxOverURL_ID").style.display = "";
+		document.getElementById("domainControllers_ID").style.display = "none";
+		document.getElementById("adUsername_ID").style.display = "none";
+		document.getElementById("accountSuffix_ID").style.display = "none";
+		document.getElementById("adPassword_ID").style.display = "none";
+		document.getElementById("baseDN_ID").style.display = "none";
+		document.getElementById("SettingForm_Table").style.borderBottom = '1px solid #cacaca';
+	}
+	if (document.SettingForm.isUseOriPassport.value == "3" )  //AD通行证
+	{
+		document.getElementById("isUseCookie_ID").style.display = "none";
+		document.getElementById("userID_ID").style.display = "none";
+		document.getElementById("userName_ID").style.display = "none";
+		document.getElementById("registerURL_ID").style.display = "none";
+		document.getElementById("loginURL_ID").style.display = "none";
+		document.getElementById("isPostMethod_ID").style.display = "none";
+		document.getElementById("ajaxTokenURL_ID").style.display = "none";
+		document.getElementById("ajaxResponseURL_ID").style.display = "none";
+		document.getElementById("ajaxCheckURL_ID").style.display = "none";
+		document.getElementById("ajaxLoginURL_ID").style.display = "none";
+		document.getElementById("ajaxDeleteURL_ID").style.display = "none";
+		document.getElementById("ajaxOverURL_ID").style.display = "none";
+    	document.getElementById("domainControllers_ID").style.display = "";
+		document.getElementById("adUsername_ID").style.display = "";
+		document.getElementById("accountSuffix_ID").style.display = "";
+		document.getElementById("adPassword_ID").style.display = "";
+		document.getElementById("baseDN_ID").style.display = "";
+		document.getElementById("SettingForm_Table").style.borderBottom = '0px';
+	}
+	if (document.SettingForm.isUseOriPassport.value == "5" )  //LDAP通行证
+	{
+		document.getElementById("isUseCookie_ID").style.display = "none";
+		document.getElementById("userID_ID").style.display = "none";
+		document.getElementById("userName_ID").style.display = "none";
+		document.getElementById("registerURL_ID").style.display = "none";
+		document.getElementById("loginURL_ID").style.display = "none";
+		document.getElementById("isPostMethod_ID").style.display = "none";
+		document.getElementById("ajaxTokenURL_ID").style.display = "none";
+		document.getElementById("ajaxResponseURL_ID").style.display = "none";
+		document.getElementById("ajaxCheckURL_ID").style.display = "none";
+		document.getElementById("ajaxLoginURL_ID").style.display = "none";
+		document.getElementById("ajaxDeleteURL_ID").style.display = "none";
+		document.getElementById("ajaxOverURL_ID").style.display = "none";
+    	document.getElementById("domainControllers_ID").style.display = "";
+		document.getElementById("adUsername_ID").style.display = "";
+		document.getElementById("accountSuffix_ID").style.display = "none";
+		document.getElementById("adPassword_ID").style.display = "";
+		document.getElementById("baseDN_ID").style.display = "";
+		document.getElementById("SettingForm_Table").style.borderBottom = '0px';
+	}
+}
+function checkMailAuto()
+{
+	if (document.MailForm.isSmtp.value == "y" )
+	{
+		document.getElementById("smtpName").style.display = "";
+		document.getElementById("smtpPassword").style.display = "";
+		document.getElementById("MailForm_Table").style.borderBottom = '0px';
+	}
+	else
+	{
+		document.getElementById("smtpName").style.display = "none";
+		document.getElementById("smtpPassword").style.display = "none";
+		document.getElementById("MailForm_Table").style.borderBottom = '1px solid #cacaca';
+	}
+}
+function Init()
+{
+	checkAuto();
+	checkMailAuto();
+}
+</script>
+<style>
+.text_inp {border:1px solid #cacaca;height:18px;font-family: Calibri,"宋体",sans-serif;line-height:18px;vertical-align: middle;}
+.pop_sel{border:1px solid #cacaca;height:20px;font-family: Calibri,"宋体",sans-serif;vertical-align: middle;}
+</style>
+</head>
+
+<body oncontextmenu="return false" onload="javascript:Init()">
+ 	<div class="header">
+		<h1 class="logo">Eclear</h1>
+		<div class="sidebar_show"></div>
+		<div class="header_menu">
+			<div class="header_m_1">
+				<a href="../System/ShowMain.php">欢迎您，<font color="#e45857" id="nick_Name_cont"></font></a>
+				<span class="head_menu_icon"></span>
+				<ul class="head_menu_list">
+					<span class="head_menu_top"></span>
+					<li><a href="../System/MyProfile.php">我的账户信息</a></li>
+					<li class="last"><a href="../System/ChangePass.php">修改我的密码</a></li>
+				</ul>
+			</div>
+			<div class="header_m_6" style="margin-left:50px">
+				<a href="../System/ShowMain.php">首页</a>
+			</div>
+			<div class="header_m_2" id="mySetting">
+			</div>
+			<div class="header_m_3" style="margin-left:50px">
+				<a href="../Help/Downs.php">帮助</a>
+				<span class="head_menu_icon"></span>
+				<ul class="head_menu_list">
+					<span class="head_menu_top"></span>
+					<li><a href="../Help/Downs.php">帮助文件下载</a></li>
+					<li><a href="http://doc.itenable.com.cn" target=_blank>在线帮助文档</a></li>
+					<li><a href="http://i.enableq.com" target=_blank>在线讨论社区</a></li>
+					<li class="last"><a href="../System/AdministratorsLogs.php">系统操作日志</a></li>
+				</ul>
+			</div>
+			<div class="header_m_4" style="margin-left:50px">
+				<a href="javascript:void(0);" onclick="javascript:showPopWin('../License/AboutEnableQ.php', 500, 400, null, null,'关于...')">关于</a>
+			</div>
+			<div class="header_m_5">
+				<a href="../System/Logout.php?loginOutURL=../index.php" target=_top>退出</a>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript" src="../JS/MySetting.js.php"></script>
+
+	<div class="container clearfix">
+		<div class="sider_bar">
+			<div class="sider_menu">
+				<a class="sider_menu_title cur" href="javascript:void(0);" onclick="menuToggle('sider_menu_list_1')">系统基础设置</a>
+				<ul class="sider_menu_list" id="sider_menu_list_1">
+					<li><a href="../System/BaseSetting.php" class="sel">系统基本设置</a></li>
+					<li><a href="../System/MgtIpAllow.php">系统登录允许</a></li>
+					<li><a href="../System/MgtIpLock.php">系统黑白名单</a></li>
+					<li><a href="../System/MgtIpTable.php">维护IP对应表</a></li>
+				</ul>
+			</div>
+			<div class="sider_menu">
+				<a class="sider_menu_title" href="javascript:void(0);" onclick="menuToggle('sider_menu_list_2')">辅助系统管理</a>
+				<ul class="sider_menu_list" id="sider_menu_list_2">
+					<li><a class="window-700-450" title="系统运行信息" href="../System/SystemInfo.php">系统运行检测</a></li>
+					<li><a class="window-700-280" title="安全通信标识" href="../License/SecurityFlag.php">安全通信标识</a></li>
+					<li><a class="window-700-450" title="软件版本历史" href="../ReleaseNotes/Release.txt">系统版本历史</a></li>
+					<li><a class="window-700-300" title="检查最新版本" href="../ReleaseNotes/CheckNewVersion.php">检查最新版本</a></li>
+					<li><a class="window-700-300" title="软件许可文件" href="../License/License.php">软件许可文件</a></li>
+				</ul>
+			</div>
+		</div>
+		
+		<div class="main">
+		   <div class="content">
+			<div class="content_tit">
+				<div class="clearfix">
+				<h1>系统基本设置</h1>
+				<span class="total ml10"></span>
+				<span class="btn ml10"></span>
+				</div>
+				<p class="fc_grey">完成Eclear系统所需要的通行证类型设置和SMTP邮件服务器设置</p>
+			</div>
+			<div class="content_main" style="margin-top:10px">
+			<form action="" method="post" name="SettingForm" id="SettingForm" onsubmit="return CheckPassport();">
+ 			 <table class="d_table" id="SettingForm_Table">
+				   <tr class=coltitle><th colspan=2 align=left><b>通行证类型设置</b></th></tr>
+				   <tr> 
+					   <td height="25" width=31%><SPAN class=red>*</SPAN> 通行证类型：</td>
+					   <td width=69%>
+						  <span style="float:left">
+						   <select name="isUseOriPassport" id="isUseOriPassport" onChange="checkAuto();" class="pop_sel">
+							 <option value="1" {isUseOriPassport1}>使用Eclear通行证</option>
+							 <option value="4" {isUseOriPassport4}>使用Session/Cookie连接现有通行证</option>
+							 <option value="2" {isUseOriPassport2}>使用Web Service连接现有通行证</option>
+							 <option value="3" {isUseOriPassport3}>使用Active Directory通行证</option>
+							 <option value="5" {isUseOriPassport5}>使用LDAP系统通行证</option>
+						   </select></span>
+						  </td>
+				   </tr>
+				   <tr id="isUseCookie_ID"> 
+					   <td height="25"><SPAN class=red>*</SPAN> 记录会员登陆状态：</td>
+					   <td><select name="isUseCookie" id="isUseCookie" class="pop_sel">
+						  <option value="1">使用SESSION</option>
+						  <option value="2" {isUseCookie}>使用Cookie</option>
+						 </select>
+					   </td>
+				   </tr>
+				   <tr id="userID_ID"> 
+					   <td height="25"><SPAN class=red>*</SPAN> 标识会员ID的变量名称：</td>
+					   <td> <input name="userID" type="text" id="userID" value="{userID}" size="20" class="text_inp"> <SPAN class=red>*</SPAN> 区分大小写</td>
+				   </tr>
+				   <tr id="userName_ID"> 
+					   <td height="25"><SPAN class=red>*</SPAN> 标识会员名称的变量名称：</td>
+					   <td> <input name="userName" type="text" id="userName" value="{userName}" size="20" class="text_inp"> <SPAN class=red>*</SPAN> 区分大小写</td>
+				   </tr>
+				   <tr id="isPostMethod_ID"> 
+					   <td height="25">&nbsp;&nbsp;&nbsp;传递接口程序所需参数数据的方式：</td>
+					   <td> <input name="isPostMethod" type="checkbox" id="isPostMethod" value="1" style="vertical-align: middle;" {isPostMethod}>&nbsp;采用POST传递接口数据&nbsp;(默认采用GET)</td>
+				   </tr>
+				   <tr id="ajaxTokenURL_ID"> 
+					   <td height="25">&nbsp;&nbsp;&nbsp;获取参数数据签名所需密钥程序地址：</td>
+					   <td> <input name="ajaxTokenURL" type="text" id="ajaxTokenURL" value="{ajaxTokenURL}" size="60" class="text_inp"></td>
+				   </tr>
+				   <tr id="ajaxResponseURL_ID"> 
+					   <td height="25">&nbsp;&nbsp;&nbsp;设定私有问卷用户特征条件程序地址：</td>
+					   <td> <input name="ajaxResponseURL" type="text" id="ajaxResponseURL" value="{ajaxResponseURL}" size="60" class="text_inp"></td>
+				   </tr>
+				   <tr id="ajaxDeleteURL_ID"> 
+					   <td height="25">&nbsp;&nbsp;&nbsp;删除私有问卷用户特征条件程序地址：</td>
+					   <td> <input name="ajaxDeleteURL" type="text" id="ajaxDeleteURL" value="{ajaxDeleteURL}" size="60" class="text_inp"></td>
+				   </tr>
+				   <tr id="ajaxCheckURL_ID"> 
+					   <td height="25"><SPAN class=red>*</SPAN> 私有问卷提交检验用户身份程序地址：</td>
+					   <td style="padding-top:5px;"> <input name="ajaxCheckURL" type="text" id="ajaxCheckURL" value="{ajaxCheckURL}" size="60" class="text_inp"><br/><input type="checkbox" id="isMd5Pass" name="isMd5Pass" value="1" {isMd5Pass} style="vertical-align: middle;">&nbsp;使用MD5加密传输用户输入密码</td>
+				   </tr>
+				   <tr id="ajaxLoginURL_ID"> 
+					   <td height="25">&nbsp;&nbsp;&nbsp;单点登录返回用户属性数据程序地址：</td>
+					   <td><input name="ajaxLoginURL" type="text" id="ajaxLoginURL" value="{ajaxLoginURL}" size="60" class="text_inp"></td>
+				   </tr>
+				   <tr id="ajaxOverURL_ID"> 
+					   <td height="25">&nbsp;&nbsp;&nbsp;问卷提交完成后续处理逻辑程序地址：</td>
+					   <td> <input name="ajaxOverURL" type="text" id="ajaxOverURL" value="{ajaxOverURL}" size="60" class="text_inp"></td>
+				   </tr>
+				   <tr id="registerURL_ID"> 
+					   <td height="25"><SPAN class=red>*</SPAN> 注册新会员的URL：</td>
+					   <td> <input name="registerURL" type="text" id="registerURL" value="{registerURL}" size="60" class="text_inp"></td>
+				   </tr>
+				   <tr id="loginURL_ID"> 
+					   <td height="25"><SPAN class=red>*</SPAN> 会员登陆的URL：</td>
+					   <td> <input name="loginURL" type="text" id="loginURL" value="{loginURL}" size="60" class="text_inp"></td>
+				   </tr>
+				   <tr id="domainControllers_ID"> 
+					   <td height="25"><SPAN class=red>*</SPAN> 目录服务器域名或地址：</td>
+					   <td> <input name="domainControllers" type="text" id="domainControllers" value="{domainControllers}" size="60" class="text_inp"></td>
+				   </tr>
+				   <tr id="adUsername_ID"> 
+					   <td height="25"><SPAN class=red>*</SPAN> 连接用户名：</td>
+					   <td> <input name="adUsername" type="text" id="adUsername" value="{adUsername}" size="40" class="text_inp"></td>
+				   </tr>
+				   <tr id="accountSuffix_ID"> 
+					   <td height="25"><SPAN class=red>*</SPAN> 连接用户名后缀：</td>
+					   <td> <input name="accountSuffix" type="text" id="accountSuffix" value="{accountSuffix}" size="20" class="text_inp"></td>
+				   </tr>
+				   <tr id="adPassword_ID"> 
+					   <td height="25"><SPAN class=red>*</SPAN> 连接用户密码：</td>
+					   <td> <input name="adPassword" type="password" id="adPassword" value="{adPassword}" size="20" class="text_inp"> {password_notes}</td>
+				   </tr>
+				   <tr id="baseDN_ID"> 
+					   <td height="25"><SPAN class=red>*</SPAN> baseDN：</td>
+					   <td> <input name="baseDN" type="text" id="baseDN" value="{baseDN}" size="60" class="text_inp"></td>
+				   </tr>
+				   </table>
+				   <table width=100% style="border:0px;">
+				   <tr> 
+					  <td width=31% style="border:0px;"></td>
+					  <td style="border:0px;">
+							<input type="hidden" name="Action" value="BaseSettingSubmit">
+							<input type="submit" name="submit" class=inputsubmit value="确定"> 
+							<input name="back2" type="button" class=inputsubmit value="取消" onClick="javascript:window.location.href='{thisProg}'"> 
+					  </td>
+				   </tr>
+			</table>
+			</form>
+
+			<form action="" method="post" name="GpsForm" id="GpsForm">
+ 			 <table class="d_table" id="MailForm_Table" style="margin-top:10px;">
+				   <tr><th height="25" colspan=2 align=left><b>&nbsp;离线访员App开启GPS实时定位</b></th></tr>
+				   <tr><td width=31%>实时定位功能开启</td>
+					  <td> <input name="isRealGps" type="checkbox" value="1" id="isRealGps" {isRealGps} style="vertical-align: middle;"> 开启GPS实时定位</td></tr>
+				   </table>
+				   <table width=100% style="border:0px;">
+				   <tr> 
+					  <td width=31% style="border:0px;"></td>
+					  <td style="border:0px;">
+						   <input type="hidden" name="Action" value="GpsSettingSubmit">
+						   <input type="submit" name="submit" value="确定" class=inputsubmit> 
+						   <input name="back2" type="button" value="取消" class=inputsubmit onClick="javascript:window.location.href='{thisProg}'"> 
+					   </td>
+				   </tr>
+			 </table>
+			</form>
+			
+			<form action="" method="post" name="MailForm" id="MailForm" onsubmit="return CheckMailServer();">
+ 			 <table class="d_table" id="MailForm_Table" style="margin-top:10px;">
+				   <tr><th height="25" colspan=2 align=left><b>&nbsp;SMTP邮件服务器设置</b> <span style="font-weight:normal">(参照Outlook或FoxMail的SMTP服务器设置)</span></th></tr>
+				   <tr> 
+					   <td height="25" width="31%"><SPAN class=red>*</SPAN> 发送邮件的地址：</td>
+					   <td> <input name="sendFrom" type="text" id="sendFrom" value="{sendFrom}" size="40" maxlength="40" class="text_inp"></td>
+				   </tr>
+				   <tr> 
+					   <td height="25"><SPAN class=red>*</SPAN> 发送邮件的名称：</td>
+					   <td> <input name="sendName" type="text" id="sendName" value="{sendName}" size="40" maxlength="40" class="text_inp"></td>
+				   </tr>
+				   <tr> 
+					   <td height="25"><SPAN class=red>*</SPAN> SMTP邮件服务器：</td>
+					   <td> <input name="mailServer" type="text" id="mailServer" value="{mailServer}" size="40" maxlength="40" class="text_inp"></td>
+				   </tr>
+				   <tr> 
+					   <td height="25"><SPAN class=red>*</SPAN> SMTP端口：</td>
+					   <td> <input name="smtp25" type="text" id="smtp25" value="{smtp25}" size="10" maxlength="10" class="text_inp"></td>
+				   </tr>
+				   <tr> 
+					   <td height="25"><SPAN class=red>*</SPAN> 发送需要SMTP认证：</td>
+					   <td><select name="isSmtp" id="isSmtp" onChange="checkMailAuto();" class="pop_sel">
+							 <option value="y">是</option>
+							 <option value="n" {isSmtp}>否</option>
+						   </select></td>
+				   </tr>
+				   <tr id="smtpName"> 
+					   <td height="25">&nbsp;&nbsp;&nbsp;SMTP认证的用户名：</td>
+					   <td> <input name="smtpName" type="text" id="smtpName" value="{smtpName}" size="40" maxlength="40" class="text_inp"></td>
+				   </tr>
+				   <tr id="smtpPassword"> 
+					   <td height="25">&nbsp;&nbsp;&nbsp;SMTP认证的密码：</td>
+					   <td> <input name="smtpPassword" type="password" id="smtpPassword" value="{smtpPassword}" size="40" maxlength="40" class="text_inp"> {password_notes}</td>
+				   </tr></table><table width=100% style="border:0px;">
+				   <tr> 
+					  <td width=31% style="border:0px;"></td>
+					  <td style="border:0px;">
+						   <input type="hidden" name="Action" value="MailSettingSubmit">
+						   <input type="submit" name="submit" value="确定" class=inputsubmit> 
+						   <input name="back2" type="button" value="取消" class=inputsubmit onClick="javascript:window.location.href='{thisProg}'"> 
+					   </td>
+				   </tr>
+			 </table>
+			</form>
+			</div><!--end of content_main-->
+		   </div><!--end of content-->
+	   </div><!--end of main-->
+    </div><!--end of container-->
+	<!--popmenu -->
+	<script type="text/javascript" src="../JS/PopMenu.js.php"></script>
+</body></html>

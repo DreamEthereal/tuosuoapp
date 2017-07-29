@@ -1,0 +1,200 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gbk" />
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" />
+<title>管理附属文件 - Eclear在线问卷调查引擎</title>
+<link rel="shortcut icon" href="../Images/enableq.ico" type="image/x-icon" />
+<link rel="stylesheet" type="text/css" href="../CSS/UIBase.css" />
+<link rel="stylesheet" type="text/css" href="../CSS/Index.css" />
+<link href="../CSS/Window.css" type="text/css" rel=stylesheet>
+<script type="text/javascript" src="../JS/Common.js.php"></script>
+<script type="text/javascript" src="../JS/Window.js.php"></script>
+<script type="text/javascript" src="../JS/Jquery.min.js.php"></script>
+<script>
+function refreshParent() {
+   self.location.reload();
+}
+var http_request = false;
+function AjaxRequest(url)
+{
+	http_request = false;
+	if(window.ActiveXObject)
+	{
+		try  // IE
+		{
+			http_request = new ActiveXObject("Msxml2.XMLHTTP");
+		}
+		catch (e)
+		{
+			try
+			{
+				http_request = new ActiveXObject("Microsoft.XMLHTTP");
+			}
+			catch (e) {}
+		}
+	}
+	else if(window.XMLHttpRequest)
+	{
+		// Mozilla, Safari,...
+		http_request = new XMLHttpRequest();
+		if (http_request.overrideMimeType)
+		{
+			http_request.overrideMimeType('text/xml');
+		}
+	}
+	
+	if (!http_request)
+	{
+		alert("Cannot create an XMLHTTP instance");
+		return false;
+	}
+	http_request.onreadystatechange = RtnContents;
+	http_request.open('GET', url, true);
+	http_request.send(null);
+}
+
+function RtnContents()
+{
+	if (http_request.readyState == 4)
+	{
+		if(http_request.status == 200)
+		{
+			document.getElementById("thePicBox").innerHTML = http_request.responseText;
+		}
+		else
+		{
+			alert('网络传输问题');
+		}
+	}
+}
+</script>
+</head>
+
+<body oncontextmenu="return false">
+ 	<div class="header">
+		<h1 class="logo">Eclear</h1>
+		<div class="sidebar_show"></div>
+		<div class="header_menu">
+			<div class="header_m_1">
+				<a href="../System/ShowMain.php">欢迎您，<font color="#e45857" id="nick_Name_cont"></font></a>
+				<span class="head_menu_icon"></span>
+				<ul class="head_menu_list">
+					<span class="head_menu_top"></span>
+					<li><a href="../System/MyProfile.php">我的账户信息</a></li>
+					<li class="last"><a href="../System/ChangePass.php">修改我的密码</a></li>
+				</ul>
+			</div>
+			<div class="header_m_6" style="margin-left:50px">
+				<a href="../System/ShowMain.php">首页</a>
+			</div>
+			<div class="header_m_2" id="mySetting">
+			</div>
+			<div class="header_m_3" style="margin-left:50px">
+				<a href="../Help/Downs.php">帮助</a>
+				<span class="head_menu_icon"></span>
+				<ul class="head_menu_list">
+					<span class="head_menu_top"></span>
+					<li><a href="../Help/Downs.php">帮助文件下载</a></li>
+					<li><a href="http://doc.itenable.com.cn" target=_blank>在线帮助文档</a></li>
+					<li><a href="http://i.enableq.com" target=_blank>在线讨论社区</a></li>
+					<li class="last"><a href="../System/AdministratorsLogs.php">系统操作日志</a></li>
+				</ul>
+			</div>
+			<div class="header_m_4" style="margin-left:50px">
+				<a href="javascript:void(0);" onclick="javascript:showPopWin('../License/AboutEnableQ.php', 500, 400, null, null,'关于...')">关于</a>
+			</div>
+			<div class="header_m_5">
+				<a href="../System/Logout.php?loginOutURL=../index.php" target=_top>退出</a>
+			</div>
+		</div>
+	</div>
+
+	<div class="container clearfix">
+		<div class="sider_bar">
+			<div class="sider_menu">
+				<a class="sider_menu_title cur" href="javascript:void(0);" onclick="menuToggle('sider_menu_list_1')">调查问卷模版</a>
+				<ul class="sider_menu_list" id="sider_menu_list_1">
+					<li><a href="../System/MgtTplFile.php">管理展示模板</a></li>
+					<li><a href="../System/MgtImageFile.php" class="sel">管理附属文件</a></li>
+				</ul>
+			</div>
+			<div class="sider_menu">
+				<a class="sider_menu_title" href="javascript:void(0);" onclick="menuToggle('sider_menu_list_2')">辅助问卷管理</a>
+				<ul class="sider_menu_list" id="sider_menu_list_2">
+					<li><a href="../System/MgtNormalOption.php">定义常用选项</a></li>
+					<li id="batchSurveyAction"><a href="../System/BatchSurveyAction.php">批量问卷操作</a></li>
+					<li><a href="../System/SurveyDistribution.php">迁移问卷数据</a></li>
+					<li><a href="../System/MgtArchiving.php">问卷归档记录</a></li>
+				</ul>
+			</div>
+			<div class="sider_menu" id="researchReport">
+				<a class="sider_menu_title" href="javascript:void(0);" onclick="menuToggle('sider_menu_list_4')">辅助调研管理</a>
+				<ul class="sider_menu_list" id="sider_menu_list_4">
+					<li><a href="../System/ResearchReport.php">管理调研文件</a></li>
+				</ul>
+			</div>
+			<div class="sider_menu" id="listSurveyApi">
+				<a class="sider_menu_title" href="javascript:void(0);" onclick="menuToggle('sider_menu_list_3')">问卷列表调用</a>
+				<ul class="sider_menu_list" id="sider_menu_list_3">
+					<li><a class="window-700-360" title="问卷列表调用" href="../System/ListSurveyAPI.php">问卷列表调用</a></li>
+				</ul>
+			</div>
+		</div>
+	    <script type="text/javascript" src="../JS/MySetting.js.php"></script>
+
+	   <div class="main">
+		 <div class="content">
+			<div class="content_tit">
+				<div class="clearfix">
+				<h1>管理附属文件</h1>
+				<span class="total ml10">[{recNum}文件]</span>
+				<span class="btn ml10"><input class=stnsubmit name="createNew" type="button" id="createNew" value="上传文件" onclick="javascript:showPopWin('{addURL}', 700, 280, refreshParent, null,'上传附属文件')">&nbsp;</span>
+				</div>
+				<p class="fc_grey">管理公共展示模板或问卷设计时所需的附属文件，包含图片/动画/JS脚本等</p>
+			</div>
+			<div class="content_main" style="margin-top:10px">
+			<form name="Check_Form" id="Check_Form" method="post" action="">
+			   <table class="d_table">
+			   	<tr class=coltitle><th colspan=5 align=left><b>附属文件管理</b></td></tr>
+			    <tr><td colspan=5>&nbsp;附属文件所在目录全路径：<b>{fileDirName}</b></td></tr>
+			    <tr class=coltitle> 
+				   <th noWrap width="30%" align=left><b>文件名称</b></th>
+				   <th align="right" width="10%"><b>大小</b>&nbsp;&nbsp;</th>
+				   <th align="center" width="16%"><b>修改时间</b></th>
+				   <th align="center" width="11%"><b>操作</b></th>
+				   <th vAlign=center align=center width="*" rowspan=300000><div id=thePicBox name=thePicBox>{PicName}</div></th>
+			   </tr>
+				<!-- BEGIN IMAGEFILE -->
+			   <tr> 
+				   <td>{fileName} </td>
+				   <td align=right>{fileSize}K&nbsp;&nbsp;</td>
+				   <td align="center">{time}</td>{dirName}
+				   <td align="center" style="display:{isDir}">&nbsp;&nbsp;
+						<A href="javascript:void(0);" onclick="javascript:AjaxRequest('{viewURL}')" style="display:{isPic}">预览</A>&nbsp;
+						<A href="{deleteURL}" onclick="return window.confirm('您真的想删除文件{fileName}，本操作将不可恢复!?')">删除</A></td>
+				</tr>
+				<!-- END IMAGEFILE -->
+				</table>
+			 </tr>
+			</table>
+			 </form>
+
+			 <table style="border:0px;margin-top:15px;margin-bottom:15px" class="n_table">
+				<tr> 
+				 <td style="border:0px;padding-left:0px;">
+				   <img src="../Images/notes.gif">：附属文件格式只能为：jpg|jpeg|gif|bmp|png|swf|js|css|mp4|flv，大小不建议超过300K<br/>
+				   <img src="../Images/notes.gif">：上传的附属文件名称建议使用英文或数字标识，不建议使用中文标识<br/>
+				   <img src="../Images/clerk.gif">：在问卷设计过程中，问卷题目或答案引用附属文件，其路径应为<span class="red">{FileURL}/*.*</span>（大小写区分）<br/>
+				   <img src="../Images/clerk.gif">：引用图片附属文件，其正确的方法应为<span class="red">&lt;IMG SRC={FileURL}/*.*&gt</span>（没有单引或者双引号）
+				   </td>
+				  </tr>
+			</table>
+			</div><!--end of content_main-->
+		 </div><!--end of content-->
+	  </div><!--end of main-->
+   </div><!--end of container-->
+	<!--popmenu -->
+	<script type="text/javascript" src="../JS/PopMenu.js.php"></script>
+</body>
+</html>

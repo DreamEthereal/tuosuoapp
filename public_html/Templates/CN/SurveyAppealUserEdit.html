@@ -1,0 +1,138 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gbk" />
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" />
+<link rel="stylesheet" type="text/css" href="../CSS/UIBase.css" />
+<link rel="stylesheet" type="text/css" href="../CSS/Index.css" />
+<LINK href="../CSS/Window.css" type=text/css rel=stylesheet>
+<script type="text/javascript" src="../JS/Common.js.php"></script>
+<script type="text/javascript" src="../JS/Window.js.php"></script>
+<script type="text/javascript" src="../JS/Jquery.min.js.php"></script>
+<script type="text/javascript" src="../JS/Jquery.notification.js.php"></script>
+<link type="text/css" rel="stylesheet" href="../CSS/Notification.css" />
+<script>
+function checkall(form) 
+{
+	if( form.all.checked )
+	{
+		for(var i = 0;i < form.elements.length-1; i++) 
+		{
+			var e = form.elements[i];
+			if( ! e.disabled )	e.checked = true;
+		}
+	}
+	else
+	{
+		for(var i = 0;i < form.elements.length-1; i++) 
+		{
+			var e = form.elements[i];
+			if( ! e.disabled )	e.checked = false;
+		}
+    }
+}
+function gId(_sId){
+	return document.getElementById(_sId);
+}
+function checkSelectUser()
+{
+	var strErr = "操作要求必须先选择一个或多个用户！";
+	objField = document.Check_Form.userID;
+	if( typeof objField != 'undefined' )
+	{
+		if( objField.length == null )
+		{
+			if (! objField.disabled && objField.checked) return true;
+			else
+			{
+				document.Check_Form.all.focus();
+				$.notification(strErr);
+				return false;
+			}
+		}
+		else
+		{
+			for (i=0;i<objField.length;i++){
+				if ( ! objField[i].disabled && objField[i].checked) return true;
+			}
+			document.Check_Form.all.focus();
+			$.notification(strErr);
+			return false;
+		}
+	}
+	else
+	{
+		$.notification(strErr);
+		return false;
+	}
+}
+function checkUserAction( actionValue )
+{
+	if ( checkSelectUser() ) 
+	{
+		document.getElementById('AppUserSubmit').disabled = true;
+		disabledStyle(document.getElementById('AppUserSubmit'));
+		document.getElementById('CancelUserSubmit').disabled = true;
+		disabledStyle(document.getElementById('CancelUserSubmit'));
+		document.getElementById('CloseUserSubmit').disabled = true;
+		disabledStyle(document.getElementById('CloseUserSubmit'));
+		gId('formAction').value = actionValue;
+		gId('Check_Form').submit();
+	}
+}
+function refreshParent() {
+   //window.location.replace(window.location.href);
+   window.location.reload(true);
+}
+function disabledStyle(obj)
+{
+	obj.style.border = '1px solid #DDD';
+	obj.style.backgroundColor = '#F5F5F5';
+	obj.style.color = '#3b5888';
+}
+</script>
+</head>
+<style>
+	input[type=text] {border:1px solid #cacaca;height:20px;font-family: Calibri,"宋体",sans-serif;line-height:20px;vertical-align: middle;}
+	select {border:1px solid #cacaca;font-family: Calibri,"宋体",sans-serif;vertical-align: middle;}
+	input[type=checkbox]{vertical-align: middle;margin-right:5px}
+	input[type=radio]{vertical-align: middle;margin-right:5px}
+	.d_table tr{height:25px;line-height:25px;
+</style>
+<body oncontextmenu="return false">
+<div class="container" style="margin-left:5px;margin-top:0px">
+
+<form name="Check_Form" id="Check_Form" method="post" action="" onsubmit="return false;">
+	<table class="d_table" width=100% style="margin-bottom:0px">
+     <div class=position>位置：&nbsp; 我的问卷 &raquo; 调整问卷申诉允许用户</div>
+     <tr><td colspan=3 bgcolor="#ffffff" height=35>
+       <span style="float:left;">
+	     <IMG SRC="../Images/search.gif" style="vertical-align: middle;"> 查找用户：<input name="t_name" id="t_name" size=20 value="{t_name}" style="vertical-align: middle;">&nbsp;<input type="submit" class=inputsubmit name="Submit" value="查询"  style="vertical-align: middle;"><input name="Action" type="hidden" id="Action" value="querySubmit"></span>
+		<span style="float:right;vertical-align: middle;"><IMG SRC="../Images/excel.gif" style="vertical-align: middle;">&nbsp;<a href="javascript:void(0);" onclick="javascript:showPopWin('?Action=ImportAppealUser&surveyID={surveyID}&projectOwner={projectOwner}', 630, 240, refreshParent, null,'从CSV文件导入申诉用户')" style="vertical-align: middle;">导入数据</a></span>
+	</td></tr>
+	<tr class=coltitle bgcolor="#f9f9f9">
+	  <td width=* nowrap colspan=3 height=30>&nbsp;<B>用户</B>(<span class=red>{totalRecNum}</span>)</td>
+	</tr>
+	<!-- BEGIN USER -->
+	<tr> 
+	  <td width=3% align=center noWrap><input name="userID[]" type="checkbox" id="userID" value="{userID}"></td>
+	  <td nowrap width=*>{userName}</td>
+	  <td align=left nowrap width=2%>{isAppealUser}</td>
+	</tr>
+	<!-- END USER -->
+	<tr bgcolor="#f9f9f9">
+	    <td width=3% align=center noWrap height=30><input name="all" type="checkbox" id="all" value="all" onclick="checkall(this.form)" style="BACKGROUND-COLOR:#ffffff"></td>
+		<td width=* colspan=2>
+		   <input name="formAction" id="formAction" type="hidden">
+		   <input name="AppUserSubmit" class=inputsubmit type="button" id="AppUserSubmit" value="选择" onclick="javascript:checkUserAction('AppUserSubmit');"> 
+		   <input name="CancelUserSubmit" class=inputsubmit type="button" id="CancelUserSubmit" value="取消" onclick="javascript:checkUserAction('CancelUserSubmit');"> 
+		   <input name="CloseUserSubmit" class=inputsubmit type="button" id="CloseUserSubmit" value="关闭" onClick="javascript:parent.hidePopWin();"> 
+		</td>
+	</tr>
+	<input type="hidden" name="surveyID" id="surveyID" value="{surveyID}">
+	<input type="hidden" name="surveyTitle" id="surveyTitle" value="{surveyTitle}">
+</table>
+<div class=pages>{pagesList}</div>
+</form>
+</div>
+</body></html>

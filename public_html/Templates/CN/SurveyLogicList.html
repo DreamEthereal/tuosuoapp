@@ -1,0 +1,102 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gbk" />
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" />
+<title>问题关联逻辑关系 - Eclear在线问卷调查引擎</title>
+<link rel="shortcut icon" href="../Images/enableq.ico" type="image/x-icon" />
+<link rel="stylesheet" type="text/css" href="../CSS/UIBase.css" />
+<link rel="stylesheet" type="text/css" href="../CSS/Index.css" />
+<link href="../CSS/Window.css" type="text/css" rel=stylesheet>
+<script type="text/javascript" src="../JS/Common.js.php"></script>
+<script type="text/javascript" src="../JS/Window.js.php"></script>
+<script type="text/javascript" src="../JS/Jquery.min.js.php"></script>
+</head>
+
+<body oncontextmenu="return false" onload="javascript:fnLoad(3);" onunload="javascript:fnUnload(3);">
+ 	<div class="header">
+		<h1 class="logo">Eclear</h1>
+		<div class="header_menu">
+			<div class="header_m_1">
+				<a href="../System/ShowMain.php">欢迎您，<font color="#e45857" id="nick_Name_cont"></font></a>
+				<span class="head_menu_icon"></span>
+				<ul class="head_menu_list">
+					<span class="head_menu_top"></span>
+					<li><a href="../System/MyProfile.php">我的账户信息</a></li>
+					<li class="last"><a href="../System/ChangePass.php">修改我的密码</a></li>
+				</ul>
+			</div>
+			<div class="header_m_6" style="margin-left:50px">
+				<a href="../System/ShowMain.php">首页</a>
+			</div>
+			<div class="header_m_2" id="mySetting">
+			</div>
+			<div class="header_m_3" style="margin-left:50px">
+				<a href="../Help/Downs.php">帮助</a>
+				<span class="head_menu_icon"></span>
+				<ul class="head_menu_list">
+					<span class="head_menu_top"></span>
+					<li><a href="../Help/Downs.php">帮助文件下载</a></li>
+					<li><a href="http://doc.itenable.com.cn" target=_blank>在线帮助文档</a></li>
+					<li><a href="http://i.enableq.com" target=_blank>在线讨论社区</a></li>
+					<li class="last"><a href="../System/AdministratorsLogs.php">系统操作日志</a></li>
+				</ul>
+			</div>
+			<div class="header_m_4" style="margin-left:50px">
+				<a href="javascript:void(0);" onclick="javascript:showPopWin('../License/AboutEnableQ.php', 500, 400, null, null,'关于...')">关于</a>
+			</div>
+			<div class="header_m_5">
+				<a href="../System/Logout.php?loginOutURL=../index.php" target=_top>退出</a>
+			</div>
+		</div>
+	</div><!--end of header-->
+	<script type="text/javascript" src="../JS/MySetting.js.php"></script>
+
+	<div class="container clearfix">
+	   <div class="main">
+			<div class="nav">
+					<a href="{questionListURL}">调查问题</a>
+					<a href="{logicURL}" class="cur">逻辑关系</a>
+					<a href="{relationURL}">数值关联</a>
+					<a href="{quotaURL}">问卷配额</a>
+			</div>
+
+			<div class="sub_nav clearfix">
+				<p class="sub_nav_top clearfix">
+					<a href="{logicURL}" class="cur">问题关联</a>
+					<a href="{optAssURL}">选项关联</a>
+					<a href="{qtnAssURL}">矩阵行关联</a>
+				</p>
+			</div>
+
+		    <div class="content">
+			<div class="content_tit">
+				<div class="clearfix">
+				<h1><span class=redtitle>[{surveyTitle}]</span>问题关联</h1>
+				<span class="total ml10">[{recNum}组关系]</span>
+				<span class="btn ml10"></span>
+				</div>
+				<p class="fc_grey">所谓逻辑关系的问题关联指问卷内的问题与其他问题中的变量之间的依赖关系。存在逻辑关系的问题是先不在问卷上显示的，只有等定义的逻辑条件成立时该问题才显示&nbsp;<a onmouseover="this.T_WIDTH=595;this.T_PADDING=0;this.T_BGCOLOR='#ffffff'; return escape('&nbsp;举例：若您问卷中的第6题需要依赖于第1题性别题目选择男性才会显示提供作答<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;您可以在第6题上创建一个依赖于第1题性别题目的逻辑关系<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;在新增逻辑关系的界面中<问卷中此问题>选择第6题<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<依赖于此问题>选择第1题性别题目，<运算关系与回复值>选择“选择”和“男性”<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;这样您的问卷在初始访问时，第6题是先不显示的，只有在第1题选择男性答案时才会显示并可提供作答')" href="javascript:void(0);"><font color=red><b>[帮助]</font></a></b></p>
+			</div>
+
+			<div class="content_main" style="margin-top:10px">
+  			 <table class="d_table">
+			   <tr class=coltitle><th noWrap align=left>&nbsp;<B>问题显示依赖</B></th></tr>
+			   <!-- BEGIN LOGIC -->
+			   <tr>
+				  <td valign=middle style="line-height:25px;color:#555"><b>{questionName}</b></td>
+			   </tr>
+			   <tr>
+				 <td align=left bgcolor="#f5fafe" height=25 style="padding-left:15px;line-height:25px">{conList}</td>
+			   </tr>
+			   <!-- END LOGIC -->
+			</table>
+			</div><!--end of content_main-->
+		   </div><!--end of content-->
+	   </div><!--end of main-->
+    </div><!--end of container-->
+	<!--popmenu -->
+	<script type="text/javascript" src="../JS/PopMenu.js.php"></script>
+	<script language=javascript src="../JS/Example.js.php"></script>
+	<script type="text/javascript" src="../JS/Position.js.php"></script>
+</body></html>

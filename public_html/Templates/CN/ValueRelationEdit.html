@@ -1,0 +1,217 @@
+<html>
+<head>
+<meta http-equiv=content-language content=zh-cn>
+<meta http-equiv=content-type content="text/html; charset=gbk">
+<style>
+ td { padding:2px 5px 2px 5px;}
+</style>
+<script language=javascript src="../JS/HighLight.js.php"></script>
+<script type="text/javascript" src="../JS/Jquery.min.js.php"></script>
+<script type="text/javascript" src="../JS/Jquery.notification.js.php"></script>
+<link type="text/css" rel="stylesheet" href="../CSS/Notification.css" />
+<script language=javascript src="../JS/CheckQuestion.js.php"></script>
+<script type="text/javascript" src="../JS/Loading.js.php"></script>
+<script language=javascript>
+function Check_Form_Validator()
+{
+	var relationDefine = getRadioCheckBoxValue(document.Check_Form.relationDefine);
+	if ( relationDefine == 2 ) //运算到空题
+	{
+		if (!CheckNotNull(document.Check_Form.emptyId, "数值关联运算至空题的名称")) {return false;}
+		var theEmptyID = getRadioCheckBoxValue(document.Check_Form.emptyId).split('*');
+	}
+	//运算符
+	if (!CheckNotNull(document.Check_Form.opertion0, "运算符")) {return false;}
+	//运算结果
+	if (!CheckRadioNoClick(document.Check_Form.relationMode, "运算结果 - 固定值/回复值")) {return false;}
+	var relationMode = getRadioCheckBoxValue(document.Check_Form.relationMode);
+	if ( relationMode == 1 )
+	{
+		if (!CheckNumber(document.Check_Form.relationNum, "运算结果 - 固定值")) {return false;}
+	}
+	else
+	{
+	 	if (!CheckNotNull(document.Check_Form.relationID, "运算结果 - 回复值")) {return false;}
+		var theReleationID = getRadioCheckBoxValue(document.Check_Form.relationID).split('*');
+		if ( relationDefine == 2 ) //运算到空题
+		{
+			if( parseInt(theEmptyID[0]) > parseInt(theReleationID[0]) )
+			{
+				document.Check_Form.emptyId.focus();
+				$.notification("运算至空题条件：空题不能在运算结果的回复值之后");
+				return false;
+			}
+		}
+	}
+	
+	var theOpertionArray = [];
+
+	//第1个条件
+	if (!CheckNotNull(document.Check_Form.fieldsID_1, "数值运算条件：第1个条件")) {return false;}
+	var theFieldsIDValue = getRadioCheckBoxValue(document.Check_Form.fieldsID_1).split('*');
+	theOpertionArray.push(parseInt(theFieldsIDValue[0]));
+	if( relationMode == 2 )
+	{
+		if( parseInt(theFieldsIDValue[0]) > parseInt(theReleationID[0]) )
+		{
+			document.Check_Form.fieldsID_1.focus();
+			$.notification("数值运算条件：第1个条件不能在运算结果的回复值之后");
+			return false;
+		}
+	}
+
+	var theLength = document.getElementById('theOptionTable').rows.length;
+	for( o=1;o<theLength;o++)
+	{
+		var j = o+1;
+		var theOpertion = eval("document.getElementById('opertion_" + j +"')");
+		var theFieldsID = eval("document.getElementById('fieldsID_" + j +"')");
+        if( theOpertion != null )
+		{
+			if( getRadioCheckBoxValue(theOpertion) != '' )
+			{
+				if (!CheckNotNull(theFieldsID, "数值运算条件：第"+j+"个条件")) {return false;}
+				var theFieldsIDValue = getRadioCheckBoxValue(theFieldsID).split('*');
+				theOpertionArray.push(parseInt(theFieldsIDValue[0]));
+				if( relationMode == 2 )
+				{
+					if( parseInt(theFieldsIDValue[0]) > parseInt(theReleationID[0]) )
+					{
+						theFieldsID.focus();
+						$.notification("数值运算条件：第"+j+"个条件不能在运算结果的回复值之后");
+						return false;
+					}
+				}
+			}
+		}
+	}
+
+	if ( relationDefine == 2 && relationMode == 1 ) //运算到空题
+	{
+		//找出最大的orderByID
+		var theMaxId = Math.max.apply(null,theOpertionArray);
+		if( parseInt(theEmptyID[0]) > theMaxId )
+		{
+			document.Check_Form.emptyId.focus();
+			$.notification("运算至空题条件：空题不能在所有的数值运算条件之后");
+			return false;
+		}
+	}
+}
+function checkIsSelected()
+{
+	if( getRadioCheckBoxValue(document.Check_Form.relationMode) == 1 )
+	{
+		document.Check_Form.relationNum.disabled  = false;
+		document.Check_Form.relationID.disabled  = true;
+	}
+	else
+	{
+		document.Check_Form.relationNum.disabled  = true;
+		document.Check_Form.relationID.disabled  = false;
+	}
+}
+function checkRelationDefine()
+{
+	if( IsInCheckBox(document.Check_Form.relationDefine,1) )  //标准
+	{
+		document.Check_Form.emptyId.disabled  = true
+	}
+	else
+	{
+		document.Check_Form.emptyId.disabled  = false
+	}
+}
+function submitForm()
+{
+	if( Check_Form_Validator() != false )
+	{
+		document.getElementById('submitBtn').disabled = true;
+		disabledStyle(document.getElementById('submitBtn'));
+		document.getElementById('resetBtn').disabled = true;
+		disabledStyle(document.getElementById('resetBtn'));
+		document.getElementById('close').disabled = true;
+		disabledStyle(document.getElementById('close'));
+		document.Check_Form.submit();
+	}
+}
+</script>
+<script src="../JS/AjaxValueRelation.js.php?type=1&surveyID={surveyID}"></script>
+<link href="../CSS/Base.css" rel=stylesheet>
+<meta content="mshtml 6.00.3790.0" name=generator></head>
+<body oncontextmenu="return false" onload="javascript:checkIsSelected();checkRelationDefine();">
+  <form name="Check_Form" method="post" action="" id="Check_Form" onsubmit="return false;">
+  <table class=datatable style="line-height: 150%;border-collapse:collapse;" cellspacing=0 cellpadding=0 bordercolor=#cacaca border=1 width=100%>
+        <div class=position>位置：&nbsp; 我的桌面 &raquo; 修改数值关联定义</div>
+        <tr><td colspan="2" bgcolor="#eeeeee" height=25><b>数值关联作用域</b>&nbsp;<img src="../Images/info.gif" border=0></td></tr>
+		<tr>
+		  <td width=13% nowrap>该定义作用域：</td>
+		  <td width=87% nowrap>
+		   <input name="relationDefine" id="relationDefine" type="radio" value=1 onclick="javascript:checkRelationDefine();" {relationDefine_1}>标准 (用于标准的数值关联关系检查)<br/>
+		   <input name="relationDefine" id="relationDefine" type="radio" value=2 onclick="javascript:checkRelationDefine();" {relationDefine_2}>运算至空题 (用于复杂的问卷逻辑运算关系)<br/>
+		   &nbsp;&nbsp;<select name="emptyId" id="emptyId" style="width:635px;*width:645px">
+			<option value="">请选择对应空题...</option>
+				{emptyNameList}
+			</select>
+		  </td>
+		</tr>
+        <tr><td colspan="2" bgcolor="#f9f9f9" height=25><b>数值运算结果</b>&nbsp;<img src="../Images/info.gif" border=0></td></tr>
+		<tr><td width=13%>运算符：</td>
+		    <td><select name="opertion0" id="opertion0">
+					<option value=''>请选择...</option>
+					<option value=1 {opertion0_1}>等于 =</option>
+					<option value=2 {opertion0_2}>小于 <</option>
+					<option value=3 {opertion0_3}>小于等于 <=</option>
+					<option value=4 {opertion0_4}>大于 ></option>
+					<option value=5 {opertion0_5}>大于等于 >=</option>
+					<option value=6 {opertion0_6}>不等于 !=</option>
+				</select>			
+			</td></tr>
+		<tr><td>运算结果：</td>
+		    <td><input name="relationMode" id="relationMode" type="radio" value=1 onclick="javascript:checkIsSelected();" {relationMode_1}>&nbsp;固定值：<input name="relationNum" id="relationNum" size=15 value="{relationNum}"></br>
+				<input name="relationMode" id="relationMode" type="radio" value=2 onclick="javascript:checkIsSelected();" {relationMode_2}>&nbsp;回复值：<select name="relationID" id="relationID" style="width:570px;*width:580px">
+				        <option value=''>请选择...</option>
+						{releationList}
+						</select>
+			</td>
+		</tr>
+        <tr><td colspan="2" bgcolor="#f9f9f9" height=25><b>数值运算条件</b>&nbsp;<img src="../Images/info.gif" border=0></td></tr>	  
+	    <tr style="border:0px"><td colspan="2" style="padding:0px;margin:0px;border:0px">
+		    <table id="theOptionTable" style="LINE-HEIGHT: 150%;border-collapse:collapse;" cellSpacing=0 cellPadding=0 width="100%" borderColor=#cccccc border=1>
+			 <tr bgcolor="#f9f9f9">
+				 <td width=8% nowrap>&nbsp;<a href="javascript:void(0)" onclick="insertRow(document.getElementById('theOptionTable').rows.length)" title="增加运算条件"><img src="../Images/jia.gif" border=0></a>&nbsp;<a href="javascript:void(0)" onclick="deleteRow()" title="减少运算条件"><img src="../Images/jian.gif" border=0></a></td>
+				 <td align=center width=10% nowrap><b>运算符</b></td>
+				 <td width=*>&nbsp;<b>数据源条件</b></td>
+			  </tr>
+			 <!-- BEGIN OPTION -->
+			 <tr><td align=center>&nbsp;{optionOrderID}：</td>
+			     <td align=center><select name="opertion[{optionOrderID}]" id="opertion_{optionOrderID}" style="display:{isFristOne}">
+				              <option value=''>请选择...</option>
+							  <option value=1 {opertion_1}>加 +</option>
+							  <option value=2 {opertion_2}>减 -</option>
+							  <option value=3 {opertion_3}>乘 *</option>
+							  <option value=4 {opertion_4}>除 /</option>
+				 </select></td>
+			     <td><select name="fieldsID[{optionOrderID}]" id="fieldsID_{optionOrderID}" style="width:604px;*width:614px">
+				      <option value=''>请选择...</option>
+					  {fieldsIDList}
+					 </select>
+				 </td>
+			 </tr>
+			 <!-- END OPTION -->
+			</table>
+		</td></tr>
+        </table><table width=100%>
+        <tr><td><input name="Action" type="hidden" id="Action" value="EditRelSubmit">
+			     <input name="surveyID" type="hidden" id="surveyID" value="{surveyID}">
+			     <input name="relationID0" type="hidden" id="relationID0" value="{relationID}">
+			     <input name="qtnId" type="hidden" id="qtnId" value="{qtnId}">
+				 <input class=inputsubmit type="button" name="submitBtn" id="submitBtn" value="确定" onclick="javascript:submitForm();"> 
+				 <input class=inputsubmit name="resetBtn" id="resetBtn" type="reset" value="重置">
+				 <input class=inputsubmit type="button" name="close" id="close" value="关闭" onClick="javascript:parent.hidePopWin();">
+			 </td>
+		</tr>
+    </form>
+  </table>
+  <script type="text/javascript">initInputHighlightScript();setTimeout("closeDialog()",400);</script> 
+</body></html>

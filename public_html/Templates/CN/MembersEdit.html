@@ -1,0 +1,210 @@
+<html>
+<head>
+<meta http-equiv=content-language content=zh-cn>
+<meta http-equiv=content-type content="text/html; charset=gbk">
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7">
+<link href="../CSS/Base.css" rel="stylesheet">
+<script language=javascript src="../JS/HighLight.js.php"></script>
+<script type="text/javascript" src="../JS/Jquery.min.js.php"></script>
+<script type="text/javascript" src="../JS/Jquery.notification.js.php"></script>
+<link type="text/css" rel="stylesheet" href="../CSS/Notification.css" />
+<script language=javascript src="../JS/CheckQuestion.js.php"></script>
+<style>
+ td { padding:2px 5px 2px 5px;}
+ table {margin-bottom:4px;}
+ #jquery-notification-message {width:100%;}
+</style>
+<script language=javascript>
+function Check_Form_Validator()
+{
+	if (!CheckNotNull(document.Check_Form.administratorsName, "邮件账号")) {return false;}
+	if (!CheckEmail(document.Check_Form.administratorsName,"邮件账号")) {return false;}
+	if (!CheckNotNull(document.Check_Form.nickName, "昵称")) {return false;}
+	<!-- CHECK PASSWORD -->
+	if (!CheckNotNull(document.Check_Form.passWord, "密码")) {return false;}
+	if (!CheckStringLength(document.Check_Form.passWord, "密码",6,20)) {return false;}
+	<!-- END PASSWORD -->
+	if (document.Check_Form.passWord.value != document.Check_Form.passWord2.value) {document.Check_Form.passWord2.focus();$.notification("两次输入的密码不一致");return false;}
+	if (!CheckNotNull(document.Check_Form.answerPass,"密码保护答案")) {return false;}
+	if (!CheckNotNull(document.Check_Form.administratorsGroupID,"样本所属分组")) {return false;}
+	{optionCheckInput}
+}
+var http_request = false;
+function AjaxRequest(url,type)
+{
+	http_request = false;
+	if(window.ActiveXObject)
+	{
+		try  // IE
+		{
+			http_request = new ActiveXObject("Msxml2.XMLHTTP");
+		}
+		catch(e)
+		{
+			try
+			{
+				http_request = new ActiveXObject("Microsoft.XMLHTTP");
+			}
+			catch (e) {}
+		}
+	}
+	else if(window.XMLHttpRequest)
+	{
+		// Mozilla, Safari,...
+		http_request = new XMLHttpRequest();
+		if (http_request.overrideMimeType)
+		{
+			http_request.overrideMimeType('text/xml');
+		}
+	}
+	
+	if (!http_request)
+	{
+		$.notification("Cannot create an XMLHTTP instance");
+		return false;
+	}
+	http_request.onreadystatechange = AjaxNameContents;
+	http_request.open('GET', url, true);
+	http_request.send(null);
+}
+
+function AjaxNameContents()
+{
+	if (http_request.readyState == 4)
+	{
+		if(http_request.status == 200)
+		{
+			if(http_request.responseText == "false")
+			   document.getElementById("userCheckInfo").innerHTML="<img src=../Images/check_no.gif border=0> <span class=red>输入的邮件账号已被注册</span>";
+			else if(http_request.responseText == "true")
+			   document.getElementById("userCheckInfo").innerHTML="<img src=../Images/check_yes.gif border=0> <span class=green>输入的邮件账号可注册</span>";
+			else if(http_request.responseText == "null") 
+			   document.getElementById("userCheckInfo").innerHTML="<img src=../Images/check_no.gif border=0> <span class=red>输入的邮件账号为空</span>";
+			else if(http_request.responseText == "noemail") 
+			   document.getElementById("userCheckInfo").innerHTML="<img src=../Images/check_no.gif border=0> <span class=red>输入Email格式错误</span>";
+		}
+		else
+		{
+			$.notification('网络传输问题');
+		}
+	}
+}
+function submitForm()
+{
+	if( Check_Form_Validator() != false )
+	{
+		document.getElementById('submitBtn').disabled = true;
+		disabledStyle(document.getElementById('submitBtn'));
+		document.getElementById('resetBtn').disabled = true;
+		disabledStyle(document.getElementById('resetBtn'));
+		document.getElementById('close').disabled = true;
+		disabledStyle(document.getElementById('close'));
+		document.Check_Form.submit();
+	}
+}
+$(document).ready(function(){ 
+	jQuery("#administratorsName").blur(function(){
+		AjaxRequest('AjaxCheckName.php?type=1&name='+this.value+'&oldName={administratorsName}',1);
+	});
+});
+</script>
+<meta content="mshtml 6.00.3790.0" name=generator></head>
+<body oncontextmenu="return false">
+  <form action="" method="post" name="Check_Form" id="Check_Form" onsubmit="return false;">
+  <table class=datatable style="line-height: 150%;border-collapse:collapse;" cellspacing=0 cellpadding=0 bordercolor=#cacaca border=1 width=100%>
+      <div class=position>位置：&nbsp; 我的问卷 &raquo; 编辑调查样本资料</div>
+      <tr> 
+         <td colspan="2" height=25 bgcolor="#f9f9f9"><b>样本基本资料</b>&nbsp;<img src="../Images/info.gif" border=0></td>
+      </tr>
+      <tr>
+        <td align=right colspan=2><SPAN style="PADDING-RIGHT: 16px">注：以下带“<SPAN  class=red>*</SPAN>”的为必填项</SPAN></td></tr>
+      <tr> 
+         <td width="17%"><SPAN class=red>*</SPAN> 邮件账号：</td>
+         <td width="83%"><input id=administratorsName name=administratorsName type=text value="{administratorsName}" size=50>&nbsp;&nbsp;&nbsp;&nbsp;<span id="userCheckInfo"></span></td>
+      </tr>
+      <tr> 
+           <td height="25"><SPAN class=red>*</SPAN> 昵称：</td>
+           <td><input name="nickName" type="text" id="nickName" size="30" maxlength="30" value="{nickName}">&nbsp;&nbsp;&nbsp;&nbsp;<span id="nickCheckInfo"></span></td>
+      </tr>
+      <tr> 
+          <td height="23"><SPAN class=red>*</SPAN> 密码：</td>
+          <td><input name="passWord" type="password" id="passWord" size="30" maxlength="30"> {password_notes}</td>
+      </tr>
+      <tr> 
+          <td height="25"><SPAN class=red>*</SPAN> 确认密码：</td>
+          <td><input name="passWord2" type="password" id="passWord2" size="30" maxlength="30"></td>
+      </tr>
+      <tr> 
+           <td height="25"><SPAN class=red>*</SPAN> 密码保护问题：</td>
+           <td><SELECT id=hintPass name=hintPass> 
+				    <OPTION value=1 {option1}>最喜欢的宠物名字？</OPTION> 
+					<OPTION value=2 {option2}>最喜欢的电影名字？</OPTION> 
+					<OPTION value=3 {option3}>最喜欢的歌曲名字？</OPTION> 
+					<OPTION value=4 {option4}>爱人的名字？</OPTION> 
+					<OPTION value=5 {option5}>父亲的名字？</OPTION>
+					<OPTION value=6 {option6}>第一所中学的校名？</OPTION> 
+					<OPTION value=7 {option7}>第一个孩子的爱称？</OPTION> 
+					<OPTION value=8 {option8}>第一部移动电话的牌子？</OPTION> 
+					<OPTION value=9 {option19}>最喜欢的运动项目？</OPTION> 
+					<OPTION value=10 {option10}>最喜欢的运动队名字？</OPTION>
+					<OPTION value=11 {option11}>您的身份证号？</OPTION>
+					<OPTION value=12 {option12}>您的护照号？</OPTION>
+					<OPTION value=13 {option13}>您的驾驶证号？</OPTION>
+					<OPTION value=14 {option14}>您的工作证号？</OPTION>
+					<OPTION value=15 {option15}>您参加工作的日期？</OPTION>
+					<OPTION value=16 {option16}>您的生日？</OPTION>
+				</SELECT></td>
+       </tr>
+       <tr> 
+           <td height="25"><SPAN class=red>*</SPAN> 密码保护答案：</td>
+           <td><INPUT id=answerPass name=answerPass value={answerPass}></td>
+       </tr>
+      <tr> 
+         <td colspan="2" height=25 bgcolor="#f9f9f9"><b>其他附属信息</b>&nbsp;<img src="../Images/info.gif" border=0></td>
+      </tr>
+      {optionList}
+      <tr> 
+         <td colspan="2" height=25 bgcolor="#f9f9f9"><b>其他所属信息</b>&nbsp;<img src="../Images/info.gif" border=0></td>
+      </tr>
+      <tr>
+		  <td height="25"><SPAN class=red>*</SPAN> 样本所属分组：</td>
+	  	  <td><SELECT name="administratorsGroupID">
+		    {members_group_list}
+		  </SELECT>
+		  </td>
+	  </tr>
+      <tr>
+		  <td height="25"><SPAN class=red>*</SPAN> 样本身份激活：</td>
+	  	  <td><SELECT name="isActive">
+		      <option value="1">是</option>
+			  <option value="0" {isActive}>否</option>
+		  </SELECT>
+		  </td>
+	  </tr>
+	  <tr style="display:{isAdd}">
+		  <td height="25">&nbsp;&nbsp;&nbsp;最后登录时间：</td>
+	  	  <td>{lastVisitTime}&nbsp;</td>
+	  </tr>
+	  <tr style="display:{isAdd}">
+		  <td height="25">&nbsp;&nbsp;&nbsp;登录次数：</td>
+	  	  <td>{loginNum}&nbsp;</td>
+	  </tr>
+	  <tr style="display:{isAdd}">
+		  <td height="25">&nbsp;&nbsp;&nbsp;加入时间：</td>
+	  	  <td>{createDate}&nbsp;</td>
+	  </tr></table><table width=100%>
+      <tr><td width=17%></td> 
+          <td>
+ 		  <input name="administratorsID" type="hidden" value="{administratorsID}"> 
+ 		  <input name="ori_administratorsName" type="hidden" value="{administratorsName}"> 
+ 		  <input name="ori_nickName" type="hidden" value="{nickName}"> 
+ 		  <input name="Action" type="hidden" id="Action" value="{Action}"> 
+		  <input class=inputsubmit type="button" name="submitBtn" id="submitBtn" value="确定" onclick="javascript:submitForm();"> 
+		  <input class=inputsubmit name="resetBtn" id="resetBtn" type="reset" value="重置">
+		  <input class=inputsubmit type="button" name="close" id="close" value="关闭" onClick="javascript:parent.hidePopWin();">
+          </td>
+       </tr>
+      </form>       
+   </table>
+   <script type="text/javascript">initInputHighlightScript();</script> 
+</body></html>

@@ -1,0 +1,82 @@
+<html>
+<head>
+<meta http-equiv=content-language content=zh-cn>
+<meta http-equiv=content-type content="text/html; charset=gbk">
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7">
+<style>
+ td { padding:2px 5px 2px 5px;}
+</style>
+<link href="../CSS/Base.css" rel=stylesheet>
+<script type="text/javascript" src="../JS/Jquery.min.js.php"></script>
+<script type="text/javascript" src="../JS/Jquery.notification.js.php"></script>
+<link type="text/css" rel="stylesheet" href="../CSS/Notification.css" />
+<script language=javascript src="../JS/CheckQuestion.js.php"></script>
+<script language=javascript src="../JS/HighLight.js.php"></script>
+<script language=javascript>
+function Check_Form_Validator()
+{
+	if (!CheckNotNull(document.Check_Form.quotaName, "配额名称")) {return false;}
+	if (!CheckSpecicalChar(document.Check_Form.quotaName, "配额名称")) {return false;}
+	if (!CheckNotNull(document.Check_Form.quotaNum, "配额限制")) {return false;}
+	if (!CheckNumber(document.Check_Form.quotaNum, "配额限制",0,10000000)) {return false;}
+	if (!CheckNotNull(document.Check_Form.quotaText, "到达配额的提示信息")) {return false;}
+	if (!CheckSpecicalChar(document.Check_Form.quotaText, "到达配额的提示信息")) {return false;}
+}
+function CheckSpecicalChar(objField, strText)
+{
+	var strErr = "“" + strText + "”不能包含单引号、双引号、反斜线等非法字符！";
+	var Re = /[\x22\x27\x5C]+/ig;
+	if ( Re.test(objField.value))
+	{
+        objField.focus();
+		$.notification(strErr);
+		return false;
+	}
+	return true;
+}
+function submitForm()
+{
+	if( Check_Form_Validator() != false )
+	{
+		document.getElementById('submitBtn').disabled = true;
+		disabledStyle(document.getElementById('submitBtn'));
+		document.getElementById('close').disabled = true;
+		disabledStyle(document.getElementById('close'));
+		document.Check_Form.submit();
+	}
+}
+</script>
+<meta content="mshtml 6.00.3790.0" name=generator></head>
+<body oncontextmenu="return false">
+  <form name="Check_Form" id="Check_Form" method="post" action="" onsubmit="return false;" style="margin:0px;padding:0px;">
+  <table class=datatable style="line-height: 150%;border-collapse:collapse;" cellspacing=0 cellpadding=0 bordercolor=#cacaca border=1 width=100%>
+     <div class=position>位置：&nbsp; 我的问卷 &raquo; 逻辑关系 &raquo; 新增问卷配额定义</div>
+     <tr><td bgcolor="#f9f9f9" colspan=2 height="25">
+	     <span style="float:left"><b>新增问卷配额定义</b></span>
+	     <span style="float:right"><span class=red>*</span> 仍需要为该配额定义指定配额条件</span></td></tr>
+     <tr>
+      <td width=15% nowrap><SPAN class=red>*</SPAN> 配额名称：</td>
+	  <td width=85% nowrap><input name="quotaName" id="quotaName" size=80></td>
+    </tr>
+    <tr>
+      <td><SPAN class=red>*</SPAN> 配额限制：</td>	  
+	  <td><input name="quotaNum" id="quotaNum" size=20> (可为零)</td>
+   </tr>
+     <tr>
+      <td width=15%><SPAN class=red>*</SPAN> 到达配额的<br/>&nbsp;&nbsp;&nbsp;提示信息：</td>
+	  <td nowrap><textarea cols=88 rows=7 name="quotaText" id="quotaText"></textarea></td>
+    </tr>
+   </table>
+   <table width="100%">
+   <tr><td width=15% nowrap>&nbsp;</td>
+  	   <td>
+         <input name="surveyID" type="hidden" id="surveyID" value="{surveyID}"> 
+    	 <input name="Action" type="hidden" id="Action" value="{Action}"> 
+		 <input class=inputsubmit type="button" name="submitBtn" id="submitBtn" value="确定" onclick="javascript:submitForm();"> 
+		 <input class=inputsubmit type="button" name="close" id="close" value="关闭" onClick="javascript:parent.hidePopWin();">
+      </td>
+    </tr>
+  </form>
+ </table>
+ <script type="text/javascript">initInputHighlightScript();</script> 
+</body></html>

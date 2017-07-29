@@ -1,0 +1,2 @@
+2016-02-21 11:57:07     <b>Bad SQL Query</b>:  SELECT * FROM eq_response_19 b  WHERE (b.overFlag != 2 and b.authStat != 2)  AND b.authStat =1  AND b.responseID = 21\'\&amp;quot;&amp;gt;&amp;lt;img src=x onerror=prompt()&amp;gt;  ORDER BY responseID DESC <br><b>You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '\'\&quot;&gt;&lt;img src=x onerror=prompt()&gt;  ORDER BY responseID DESC' at line 1</b>
+

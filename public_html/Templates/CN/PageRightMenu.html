@@ -1,0 +1,37 @@
+<!--该快捷菜单由科维能动EnableQ在线问卷调查引擎系统生成 -->
+<script Language="JavaScript">
+var EQ = new MouseMenu("EQ");
+EQ.addMenu('问卷显示风格');
+	EQ[0].addLink('{theme_Standard}标准的', "javascript:AjaxChangeRequest('System/AjaxChangeStyle.php?type=1&theme=Standard&surveyID={surveyID}&surveyTitle={surveyB64Title}');");
+	EQ[0].addLink('{theme_Coffee}咖啡色的', "javascript:AjaxChangeRequest('System/AjaxChangeStyle.php?type=1&theme=Coffee&surveyID={surveyID}&surveyTitle={surveyB64Title}');");
+	EQ[0].addLink('{theme_PurplePink}紫粉色的', "javascript:AjaxChangeRequest('System/AjaxChangeStyle.php?type=1&theme=PurplePink&surveyID={surveyID}&surveyTitle={surveyB64Title}');");
+	EQ[0].addLink('{theme_BrownBlue}棕蓝色的', "javascript:AjaxChangeRequest('System/AjaxChangeStyle.php?type=1&theme=BrownBlue&surveyID={surveyID}&surveyTitle={surveyB64Title}');");
+	EQ[0].addLink('{theme_RedPink}红粉色的', "javascript:AjaxChangeRequest('System/AjaxChangeStyle.php?type=1&theme=RedPink&surveyID={surveyID}&surveyTitle={surveyB64Title}');");
+	EQ[0].addLink('{theme_RedGray}红灰色的', "javascript:AjaxChangeRequest('System/AjaxChangeStyle.php?type=1&theme=RedGray&surveyID={surveyID}&surveyTitle={surveyB64Title}');");
+	EQ[0].addLink('{theme_PurpleYellow}紫黄色的', "javascript:AjaxChangeRequest('System/AjaxChangeStyle.php?type=1&theme=PurpleYellow&surveyID={surveyID}&surveyTitle={surveyB64Title}');");
+	EQ[0].addLink('{theme_BlueBrown}蓝棕色的', "javascript:AjaxChangeRequest('System/AjaxChangeStyle.php?type=1&theme=BlueBrown&surveyID={surveyID}&surveyTitle={surveyB64Title}');");
+	EQ[0].addLink('{theme_BlueGray}蓝灰色的', "javascript:AjaxChangeRequest('System/AjaxChangeStyle.php?type=1&theme=BlueGray&surveyID={surveyID}&surveyTitle={surveyB64Title}');");
+	EQ[0].addLink('{theme_BlueGrayII}浅蓝灰色', "javascript:AjaxChangeRequest('System/AjaxChangeStyle.php?type=1&theme=BlueGrayII&surveyID={surveyID}&surveyTitle={surveyB64Title}');");
+	EQ[0].addLink('{theme_BlueGreen}蓝绿色的', "javascript:AjaxChangeRequest('System/AjaxChangeStyle.php?type=1&theme=BlueGreen&surveyID={surveyID}&surveyTitle={surveyB64Title}');");
+	EQ[0].addLink('{theme_GreenPink}绿粉色的', "javascript:AjaxChangeRequest('System/AjaxChangeStyle.php?type=1&theme=GreenPink&surveyID={surveyID}&surveyTitle={surveyB64Title}');");
+	EQ[0].addLink('{theme_Spring}春绿色的', "javascript:AjaxChangeRequest('System/AjaxChangeStyle.php?type=1&theme=Spring&surveyID={surveyID}&surveyTitle={surveyB64Title}');");
+	EQ[0].addLink('{theme_Summer}深夏色的', "javascript:AjaxChangeRequest('System/AjaxChangeStyle.php?type=1&theme=Summer&surveyID={surveyID}&surveyTitle={surveyB64Title}');");
+	EQ[0].addLink('{theme_UserDefine}自定义的', "javascript:AjaxChangeRequest('System/AjaxChangeStyle.php?type=1&theme=UserDefine&surveyID={surveyID}&surveyTitle={surveyB64Title}');");
+EQ.addHR();
+EQ.addLink('执行该问卷', "javascript:if(window.confirm('您确定把设计好的问卷开始发布执行？该问卷将不能再执行问卷设计操作！？')) {AjaxPubRequest('System/AjaxChangeStatus.php?type=1&status=1&surveyID={surveyID}&surveyTitle={surveyB64Title}');};");
+EQ.addHR();
+EQ.addLink('刷新', "javascript:document.execCommand('Refresh');", '');
+EQ.addLink('关闭预览', "javascript:if(window.confirm('您确定关闭问卷预览窗口?')) {parent.window.close();}", '');
+EQ.addHR();
+EQ.addMenu('新建问题', "javascript:parent.qtnAddAction();");
+	EQ[4].addLink('是非题', "javascript:parent.showPopWin('System/DesignSurvey.php?surveyID={surveyID}&surveyTitle={surveyEncTitle}&questionType=1&Action=View&isPre=1', 900, 480, parent.createNewQtn, null,'新增是非题');");
+	EQ[4].addLink('单选题', "javascript:parent.showPopWin('System/DesignSurvey.php?surveyID={surveyID}&surveyTitle={surveyEncTitle}&questionType=2&Action=View&isPre=1', 900, 480, parent.createNewQtn, null,'新增单选题');");
+	EQ[4].addLink('多选题', "javascript:parent.showPopWin('System/DesignSurvey.php?surveyID={surveyID}&surveyTitle={surveyEncTitle}&questionType=3&Action=View&isPre=1', 900, 480, parent.createNewQtn, null,'新增多选题');");
+	EQ[4].addLink('填空题', "javascript:parent.showPopWin('System/DesignSurvey.php?surveyID={surveyID}&surveyTitle={surveyEncTitle}&questionType=4&Action=View&isPre=1', 900, 480, parent.createNewQtn, null,'新增填空题');");
+	EQ[4].addLink('多行填空题', "javascript:parent.showPopWin('System/DesignSurvey.php?surveyID={surveyID}&surveyTitle={surveyEncTitle}&questionType=5&Action=View&isPre=1', 900, 480, parent.createNewQtn, null,'新增多行填空题');");
+	EQ[4].addLink('段落小节', "javascript:parent.showPopWin('System/DesignSurvey.php?surveyID={surveyID}&surveyTitle={surveyEncTitle}&questionType=9&Action=View&isPre=1', 900, 480, parent.createNewQtn, null,'新增段落小节');");
+	EQ[4].addLink('更多题型...', "javascript:parent.qtnAddAction();");
+/*EQ.addHR();
+EQ.addLink('问卷属性', "javascript:parent.sendActionURL('System/ShowSurveyList.php?Action=Edit&surveyID={surveyID}&isPre=1','修改问卷属性');");*/
+</script>
+<!--该快捷菜单由科维能动EnableQ在线问卷调查引擎系统生成 -->

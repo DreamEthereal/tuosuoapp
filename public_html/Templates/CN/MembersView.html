@@ -1,0 +1,67 @@
+<html>
+<head>
+<meta http-equiv=content-language content=zh-cn>
+<meta http-equiv=content-type content="text/html; charset=gbk">
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7">
+<style>
+ td { padding:2px 5px 2px 5px;}
+ table {margin-bottom:4px;}
+</style>
+<link href="../CSS/Base.css" rel="stylesheet">
+<meta content="mshtml 6.00.3790.0" name=generator></head>
+<body oncontextmenu="return false">
+  <form action="" method="post" name="Check_Form">
+  <table class=datatable style="line-height: 150%;border-collapse:collapse;" cellspacing=0 cellpadding=0 bordercolor=#cacaca border=1 width=100%>
+      <div class=position>位置：&nbsp; 我的问卷 &raquo; 查看调查样本资料</div>
+      <tr> 
+         <td colspan="2" height=25 bgcolor="#f9f9f9"><b>样本基本资料</b>&nbsp;<img src="../Images/info.gif" border=0></td>
+      </tr>
+      <tr>
+        <td align=right colspan=2><SPAN style="PADDING-RIGHT: 16px">注：以下带“<SPAN  class=red>*</SPAN>”的为必填项</SPAN></td></tr>
+      <tr> 
+         <td width="17%"><SPAN class=red>*</SPAN> 邮件账号：</td>
+         <td width="83%">{administratorsName}</td>
+      </tr>
+      <tr> 
+           <td height="25"><SPAN class=red>*</SPAN> 昵称：</td>
+           <td>{nickName}</td>
+      </tr>
+      <tr> 
+         <td colspan="2" height=25 bgcolor="#f9f9f9"><b>其他所属信息</b>&nbsp;<img src="../Images/info.gif" border=0></td>
+      </tr>
+      {optionList}
+      <tr> 
+         <td colspan="2" height=25 bgcolor="#f9f9f9"><b>系统信息</b>&nbsp;<img src="../Images/info.gif" border=0></td>
+      </tr>
+	  <tr>
+		  <td height="25">&nbsp;&nbsp;&nbsp;最后登录时间：</td>
+	  	  <td>{lastVisitTime}&nbsp;</td>
+	  </tr>
+	  <tr>
+		  <td height="25">&nbsp;&nbsp;&nbsp;登录次数：</td>
+	  	  <td>{loginNum}&nbsp;</td>
+	  </tr>
+	  <tr>
+		  <td height="25">&nbsp;&nbsp;&nbsp;加入时间：</td>
+	  	  <td>{createDate}&nbsp;</td>
+	  </tr>
+      <tr> 
+         <td colspan="2" height=25 bgcolor="#f9f9f9"><b>问卷回复信息</b>&nbsp;<img src="../Images/info.gif" border=0></td>
+      </tr>
+	  <tr>
+	     <td colspan=2 style="padding:3px"><table class=datatable style="line-height: 150%;border-collapse:collapse;" cellspacing=0 cellpadding=0 bordercolor=#d5d5d5 border=1 width=100%>
+		 <!-- BEGIN SURVEY -->
+		 <tr><td width=73%>{surveyName}</td>
+		     <td width=18% align=center style="font-size:11px">{replyTime}</td>
+		     <td width=9% align=center bgcolor="{overFlag}">{surveyFlag}</td>
+		 </tr>
+		 <!-- END SURVEY -->
+		 <tr><td colspan=3><b>合计：{surveyTotal}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;其中：完成 {overFlagNum1}，未完成 {overFlagNum0}，无效回复 {overFlagNum2}，导入 {overFlagNum3}</b></td>
+		 </table>
+	  </td></tr>	  
+	  </table><table width=100%>
+      <tr><td><input class=inputsubmit type="button" name="close" value="关闭" onClick="javascript:parent.hidePopWin();"></td>
+       </tr>
+      </form>       
+   </table>
+</body></html>

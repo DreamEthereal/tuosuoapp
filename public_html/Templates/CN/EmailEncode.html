@@ -1,0 +1,132 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gbk" />
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" />
+<title>邮件地址转码 - Eclear在线问卷调查引擎</title>
+<link rel="shortcut icon" href="../Images/enableq.ico" type="image/x-icon" />
+<link rel="stylesheet" type="text/css" href="../CSS/UIBase.css" />
+<link rel="stylesheet" type="text/css" href="../CSS/Index.css" />
+<script type="text/javascript" src="../JS/Jquery.min.js.php"></script>
+<script type="text/javascript" src="../JS/Jquery.notification.js.php"></script>
+<link type="text/css" rel="stylesheet" href="../CSS/Notification.css" />
+<script language=javascript src="../JS/CheckQuestion.js.php"></script>
+<script language=javascript>
+function Check_Form_Validator()
+{
+	if (!CheckNotNull(document.Check_Form.panelUserName,"接受转码的邮件地址列表") ) {return false;}
+}
+function submitForm()
+{
+	if( Check_Form_Validator() != false )
+	{
+		document.getElementById('submitBtn').disabled = true;
+		disabledStyle(document.getElementById('submitBtn'));
+		document.getElementById('reset').disabled = true;
+		disabledStyle(document.getElementById('reset'));
+		document.Check_Form.submit();
+	}
+}
+function disabledStyle(obj)
+{
+	obj.style.border = '1px solid #DDD';
+	obj.style.backgroundColor = '#F5F5F5';
+	obj.style.color = '#3b5888';
+}
+</script>
+<style>
+	textarea{height:200px;border:1px solid #cacaca;font-family: Calibri,"宋体",sans-serif;}
+    .t_table{width:99%;border:1px solid #cacaca;margin-bottom:5px;}
+    .t_table tr{height:34px;color:#5d5d5d;}
+    .t_table tr th{background-color: #f9f9f9;padding:0 5px;}
+    .t_table tr td{padding:0 5px;}
+    .t_table tr th{font-weight:bold;}
+    .t_table tr th.title,.d_table tr td.title{text-align:left;}    
+    .t_table tr td a{color:#3b5888;}
+    .t_table tr td a:hover{color:#ff7700;}
+    .t_table tr:hover{background-color:transparent}
+	.t_table table{line-height:20px;}
+	.question {height:34px;line-height:20px;border-right:1px solid #cacaca;border-bottom:1px solid #cacaca;+border-bottom:1px solid #cacaca;color:#5d5d5d;background-color: #f9f9f9;padding:0 5px;border-top:1px solid #cacaca;+border-top:1px solid #cacaca;color:#5d5d5d;}
+</style>
+
+<body oncontextmenu="return false">
+ 	<div class="header">
+		<h1 class="logo">Eclear</h1>
+		<div class="header_menu">
+			<div class="header_m_1">
+				<a href="../System/ShowMain.php">欢迎您，<font color="#e45857" id="nick_Name_cont"></font></a>
+				<span class="head_menu_icon"></span>
+				<ul class="head_menu_list">
+					<span class="head_menu_top"></span>
+					<li><a href="../System/MyProfile.php">我的账户信息</a></li>
+					<li class="last"><a href="../System/ChangePass.php">修改我的密码</a></li>
+				</ul>
+			</div>
+			<div class="header_m_6" style="margin-left:50px">
+				<a href="../System/ShowMain.php">首页</a>
+			</div>
+			<div class="header_m_2" id="mySetting">
+			</div>
+			<div class="header_m_3" style="margin-left:50px">
+				<a href="../Help/Downs.php">帮助</a>
+				<span class="head_menu_icon"></span>
+				<ul class="head_menu_list">
+					<span class="head_menu_top"></span>
+					<li><a href="../Help/Downs.php">帮助文件下载</a></li>
+					<li><a href="http://doc.itenable.com.cn" target=_blank>在线帮助文档</a></li>
+					<li><a href="http://i.enableq.com" target=_blank>在线讨论社区</a></li>
+					<li class="last"><a href="../System/AdministratorsLogs.php">系统操作日志</a></li>
+				</ul>
+			</div>
+			<div class="header_m_4" style="margin-left:50px">
+				<a href="javascript:void(0);" onclick="javascript:showPopWin('../License/AboutEnableQ.php', 500, 400, null, null,'关于...')">关于</a>
+			</div>
+			<div class="header_m_5">
+				<a href="../System/Logout.php?loginOutURL=../index.php" target=_top>退出</a>
+			</div>
+		</div>
+	</div><!--end of header-->
+	<script type="text/javascript" src="../JS/MySetting.js.php"></script>
+
+	<div class="container clearfix">
+	   <div class="main">
+		    <div class="nav">
+				<a href="../System/SendSurveyEmail.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">发送邀请邮件</a>
+				<a href="../System/EmailEncode.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}" class="cur">邮件地址转码</a>
+			</div>
+
+		    <div class="content">
+			<div class="content_tit">
+				<div class="clearfix">
+				<h1><span class=redtitle>[{surveyTitle}]</span>邮件地址转码</h1>
+				<span class="total ml10"></span>
+				<span class="btn ml10"></span>
+				</div>
+				<p class="fc_grey"></p>
+			</div>
+
+		    <form name="Check_Form" id="Check_Form" method="post" action="" onsubmit="return false;">
+			<div class="content_main" style="margin-top:10px">
+			<table class="t_table">
+			   <tr><th align=left class="question"><b>&nbsp;关于...</b>&nbsp;<img src="../Images/info.gif" border=0></th></tr>   
+			   <tr><td>若问卷的邀请邮件希望通过其他电子邮件系统来发送，本功能将向您提供用户Email地址的转码字符。<br/>您需要将转码后的字符与下面给出的问卷链接地址相合成，内置在您的邮件正文中。<br/>用户通过最终合成好的链接地址访问问卷，其效果与Eclear系统自身发出的邀请邮件完全一致。</td></tr>
+			   <tr><th align=left class="question"><b>&nbsp;邮件正文内置的问卷链接地址...</b>&nbsp;<img src="../Images/info.gif" border=0></th></tr>   
+			   <tr><td>{surveyURL}&userEmail=<font color=red>用户Email地址对应的转码字符</font></td></tr>
+			   <tr><th align=left class="question"><b>&nbsp;输入需转码的邮件地址...</b>&nbsp;<img src="../Images/info.gif" border=0></th></tr>   
+			   <tr><td><textarea name="panelUserName" Id="panelUserName" rows=7 cols=157 style="margin:2px"></textarea><br/><span class=red>*</span> (多个邮件地址采用英文分号分割)</td></tr>
+			</table>
+			<table width=99% style="border:0px;margin-bottom:15px">
+			   <tr><td>
+				 <input name="Action" type="hidden" id="Action" value="EmailEncodeSubmit"> 
+				 <input type="button" class=inputsubmit name="submitBtn" id="submitBtn" value="确定" onclick="javascript:submitForm();" style="vertical-align: middle;">
+				 <input name="reset" id="reset" class=inputsubmit type="reset" value="重置" style="vertical-align: middle;">
+				</td></tr>
+			  </form>
+			 </table>
+			</div><!--end of content_main-->
+		   </div><!--end of content-->
+	   </div><!--end of main-->
+    </div><!--end of container-->
+	<!--popmenu -->
+	<script type="text/javascript" src="../JS/PopMenu.js.php"></script>
+</body></html>

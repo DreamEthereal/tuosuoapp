@@ -1,0 +1,23 @@
+<div class=actionsTitle>问卷<img src=../Images/arrow_down.gif align=absmiddle>&nbsp;&nbsp;<span class=surveynum style="font-size:12px;color:#000;font-weight:normal;">包含[ <span class=red>{pagesNum}</span> ]页&nbsp;[ <span class=red>{qtnNum}</span> ]问题</span></div>
+<div class=actionsInner style="line-height:130%"> 
+     <div>标题：{survey_Title} [ <span style="color:#0099cc">{survey_Name}</span> ]</div>
+     <div>项目类型：{projectType}</div>
+     <div>语言：{surveyLang}</div>
+     <div>类型：{surveyStatus}</div>
+     <div>创建：{createDate}</div>
+</div>
+
+<div class=actionsTitle>数据<img src=../Images/arrow_down.gif align=absmiddle></div>
+ <div class=actionsInner> 
+	 <div>已有[ <span class=red>{resultNum}</span> ]回复</span></div>
+</div>
+
+ <div class=actionsTitle>用户<img src=../Images/arrow_down.gif align=absmiddle>&nbsp;&nbsp;<input class=inputsubmit name="userRight" type="button" id="userRight" value="调整" onclick="javascript:showWaiting();window.location.href='../System/ShowSurveyList.php?Action=EditUser&surveyID={surveyID}'"></div>
+ <div class=actionsInner style="border-bottom:0px"> 
+     <div>谁创建问卷：{ownerUser}</div>
+ </div>
+
+ <div class=actionsTitle style="display:{haveTaskSurvey}">任务<img src=../Images/arrow_down.gif align=absmiddle>&nbsp;&nbsp;<input class=inputsubmit name="mgtTask" type="button" id="mgtTask" value="调整" onclick="showWaiting();window.location.href='{taskURL}'" style="display:{taskbtn}"></div>
+ <div class=actionsInner style="border-bottom:0px;display:{haveTaskSurvey}"> 
+     <div>问卷回复任务：{haveTask}</div>
+ </div>

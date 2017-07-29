@@ -1,0 +1,111 @@
+<html>
+<head>
+<meta http-equiv=content-language content=zh-cn>
+<meta http-equiv=content-type content="text/html; charset=gbk">
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7">
+<LINK href="../CSS/Base.css" rel=stylesheet>
+<style>
+ td { padding:2px 5px 2px 5px;}
+ table {margin-bottom:4px;}
+</style>
+<script type="text/javascript" src="../JS/Jquery.min.js.php"></script>
+<script type="text/javascript" src="../JS/Jquery.notification.js.php"></script>
+<link type="text/css" rel="stylesheet" href="../CSS/Notification.css" />
+<script type="text/javascript" src="../JS/CheckQuestion.js.php"></script>
+<script language="javascript"> 
+function checkSelectData()
+{
+	var strErr = "操作要求必须先选择一条或多条数据！";
+	objField = document.Ajax_Form.responseID;
+	if( typeof objField == 'undefined' )
+	{
+		$.notification(strErr);
+		return false;
+	}
+	if( objField.length == null )
+	{
+		if (! objField.disabled && objField.checked) return true;
+		else
+		{
+			$.notification(strErr);
+			return false;
+		}
+	}
+	else
+	{
+		for (i=0;i<objField.length;i++){
+			if ( ! objField[i].disabled && objField[i].checked) return true;
+		}
+		$.notification(strErr);
+		return false;
+	}
+}
+function onDeleteSubmit()
+{
+	if ( checkSelectData()) 
+	{
+		if( window.confirm('您真的想删除这些数据吗？本操作不可恢复！') )
+		{
+			submitForm('DeleteSubmit');
+		}
+	}
+}
+function submitForm( actionName )
+{
+	document.getElementById('DeleteSubmit').disabled = true;
+	disabledStyle(document.getElementById('DeleteSubmit'));
+	document.getElementById('closeBtn').disabled = true;
+	disabledStyle(document.getElementById('closeBtn'));	
+	document.getElementById('formAction').value = actionName;
+	document.getElementById('Ajax_Form').submit();
+}
+function disabledStyle(obj)
+{
+	obj.style.border = '1px solid #DDD';
+	obj.style.backgroundColor = '#F5F5F5';
+	obj.style.color = '#3b5888';
+}
+</script>
+<meta content="mshtml 6.00.3790.0" name=generator></head>
+<body oncontextmenu="return false">
+
+<form name="Ajax_Form" id="Ajax_Form" method="post" action="">
+  <table class=datatable style="line-height: 150%;border-collapse:collapse;" cellspacing=0 cellpadding=0 bordercolor=#cacaca border=1 width=100%>
+   <div class=position>位置：&nbsp; 我的问卷 &raquo; 检查重复的样本标识</div>
+   <tr bgcolor="#f9f9f9"> 
+      <td width=3% align=center noWrap>&nbsp;</td>
+	  <td width=11% noWrap align="left">&nbsp;<b>时间</b></td>
+      <td width=6%  noWrap style="text-align:center;"><b>审核</b></td>
+      <td noWrap align="left">&nbsp;<b>样本标识</b></td>
+      <td noWrap align="left">&nbsp;<b>地址标识</b></td>
+      <td noWrap align="left">&nbsp;<b>来源</b></td>
+      <td noWrap align="center" width=3%>&nbsp;<b>操作</b></td>
+  </tr>
+   <!-- BEGIN GROUP -->
+   <tr> 
+      <td align=left colspan=7><b>第{tmp}组：</b></td>
+   </tr>
+   <!-- BEGIN LIST -->
+   <tr> 
+      <td align=center nowrap><input name="responseID[]" type="checkbox" id="responseID" value="{responseID}"></td>
+      <td style="background:{noHaveAll};" nowrap>{joinTime}<input name="createDate[{responseID}]" type="hidden" id="createDate_{responseID}" value="{createDate}"><input name="overFlag[{responseID}]" type="hidden" id="overFlag_{responseID}" value="{overFlag}"><input name="overFlag0[{responseID}]" type="hidden" id="overFlag0_{responseID}" value="{overFlag0}"></td>
+	  <td style="background:{authColor};text-align:center;" nowrap>{authStat}</td>
+      <td>&nbsp;{administratorsName}</td>
+      <td>&nbsp;{ipAddress}</td>
+      <td>&nbsp;{area}</td>
+      <td noWrap align="center"><a href="../Analytics/DataList.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}&Does=View&responseID=26" target=_blank>详细</a></td>
+   </tr>
+   <!-- END LIST -->
+   <!-- END GROUP -->
+   </table>
+   <table width=100% style="border:0px">
+   <tr>
+      <td width=3% style="border:0px"></td>
+      <td colspan="6" style="border:0px;padding:0px;margin:0px"><input name="formAction" type="hidden" id="formAction"><input class=stnsubmit name="DeleteSubmit" type="button" id="DeleteSubmit" value="删除选定记录" onclick="javascript:onDeleteSubmit();" style="vertical-align: middle;">&nbsp;<input class=inputsubmit type="button" name="closeBtn" id="closeBtn" value="  关闭  " onClick="javascript:parent.hidePopWin();" style="vertical-align: middle;">
+</td>
+   </tr>
+   </form>
+  </table>
+  </body></html>
+
+ 

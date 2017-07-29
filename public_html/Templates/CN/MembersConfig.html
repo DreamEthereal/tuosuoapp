@@ -1,0 +1,149 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gbk" />
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" />
+<title>样本管理设置 - Eclear在线问卷调查引擎</title>
+<link rel="shortcut icon" href="../Images/enableq.ico" type="image/x-icon" />
+<link rel="stylesheet" type="text/css" href="../CSS/UIBase.css" />
+<link rel="stylesheet" type="text/css" href="../CSS/Index.css" />
+<link href="../CSS/Window.css" type="text/css" rel=stylesheet>
+<script type="text/javascript" src="../JS/Common.js.php"></script>
+<script type="text/javascript" src="../JS/Window.js.php"></script>
+<script type="text/javascript" src="../JS/Jquery.min.js.php"></script>
+<script type="text/javascript" src="../JS/Jquery.notification.js.php"></script>
+<link type="text/css" rel="stylesheet" href="../CSS/Notification.css" />
+<script language=javascript src="../JS/CheckQuestion.js.php"></script>
+<script language=javascript>
+function Check_Form_Validator()
+{
+	if (!CheckNotNull(document.Check_Form.registerText, "样本注册协议文本")) {return false;}
+	if (!CheckListMaxSelect(document.Check_Form.mainAttribute, "默认样本属性",6)) {return false;}
+}
+</script>
+
+<style>
+	input[type=text] {border:1px solid #cacaca;height:18px;font-family: Calibri,"宋体",sans-serif;line-height:18px;vertical-align: middle;}
+	textarea {border:1px solid #cacaca;height:90px;font-family: Calibri,"宋体",sans-serif;line-height:18px;}
+	select {border:1px solid #cacaca;font-family: Calibri,"宋体",sans-serif;vertical-align: middle;}
+</style>
+</head>
+<body oncontextmenu="return false">
+ 	<div class="header">
+		<h1 class="logo">Eclear</h1>
+		<div class="sidebar_show"></div>
+		<div class="header_menu">
+			<div class="header_m_1">
+				<a href="../System/ShowMain.php">欢迎您，<font color="#e45857" id="nick_Name_cont"></font></a>
+				<span class="head_menu_icon"></span>
+				<ul class="head_menu_list">
+					<span class="head_menu_top"></span>
+					<li><a href="../System/MyProfile.php">我的账户信息</a></li>
+					<li class="last"><a href="../System/ChangePass.php">修改我的密码</a></li>
+				</ul>
+			</div>
+			<div class="header_m_6" style="margin-left:50px">
+				<a href="../System/ShowMain.php">首页</a>
+			</div>
+			<div class="header_m_2" id="mySetting">
+			</div>
+			<div class="header_m_3" style="margin-left:50px">
+				<a href="../Help/Downs.php">帮助</a>
+				<span class="head_menu_icon"></span>
+				<ul class="head_menu_list">
+					<span class="head_menu_top"></span>
+					<li><a href="../Help/Downs.php">帮助文件下载</a></li>
+					<li><a href="http://doc.itenable.com.cn" target=_blank>在线帮助文档</a></li>
+					<li><a href="http://i.enableq.com" target=_blank>在线讨论社区</a></li>
+					<li class="last"><a href="../System/AdministratorsLogs.php">系统操作日志</a></li>
+				</ul>
+			</div>
+			<div class="header_m_4" style="margin-left:50px">
+				<a href="javascript:void(0);" onclick="javascript:showPopWin('../License/AboutEnableQ.php', 500, 400, null, null,'关于...')">关于</a>
+			</div>
+			<div class="header_m_5">
+				<a href="../System/Logout.php?loginOutURL=../index.php" target=_top>退出</a>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript" src="../JS/MySetting.js.php"></script>
+
+	<div class="container clearfix">
+		<div class="sider_bar">
+			<div class="sider_menu">
+				<a class="sider_menu_title cur" onclick="menuToggle('sider_menu_list_1')">管理调查样本</a>
+				<ul class="sider_menu_list" id="sider_menu_list_1">
+					<li><a href="../System/ShowMembersList.php">管理调查样本</a></li>
+					<li><a href="../System/MembersOptionFields.php">定义样本属性</a></li>
+					<li><a href="../System/ShowMemberGroupList.php">管理样本分组</a></li>
+					<li><a href="../System/MembersConfig.php" class="sel">样本管理设置</a></li>
+				</ul>
+			</div>
+		</div>
+		<div class="main">
+		    <div class="nav">
+				<a href="../System/ShowMembersList.php">调查样本</a>
+				<a href="../System/MembersOptionFields.php">样本属性</a>
+				<a href="../System/ShowMemberGroupList.php">样本分组</a>
+				<a href="../System/MembersConfig.php" class="cur">管理设置</a>
+			</div>			
+
+		   <div class="content">
+			<div class="content_tit">
+				<div class="clearfix">
+				<h1>样本管理设置</h1>
+				<span class="total ml10"></span>
+				<span class="btn ml10"></span>
+				</div>
+				<p class="fc_grey">设置或关闭对应的调查样本管理选项</p>
+			</div>
+			<div class="content_main" style="margin-top:10px">
+			 <form action="" method="post" name="Check_Form" id="Check_Form" onsubmit="return Check_Form_Validator()">
+			   	<table class="d_table">
+				  <tr class=coltitle><th colspan="2" height=25 align=left><b>基本设置</b>&nbsp;<img src="../Images/info.gif" border=0></th></tr>
+				  <tr> 
+					  <td width="16%" nowrap align=left><SPAN class=red>*</SPAN>  系统开放样本前台注册：</td>
+					  <td width="84%" align=left><select name="isNotRegister">
+						  <option value="0">是</option>
+						  <option value="1" {isNotRegister}>否</option>
+					  </select></td>
+				  </tr>
+				  <tr>
+					  <td height="25" align=left><SPAN class=red>*</SPAN> 样本默认的所属分组：</td>
+					  <td align=left><SELECT name="administratorsGroupID">
+						{members_group_list}
+					  </SELECT></td>
+				  </tr>
+				  <tr>
+					  <td height="25" align=left><SPAN class=red>*</SPAN> 样本默认身份状态：</td>
+					  <td align=left><SELECT name="isActive">
+						  <option value="1">默认激活</option>
+						  <option value="0" {isActive}>默认屏蔽</option>
+					  </SELECT></td>
+				  </tr>
+				  <tr class=coltitle><th colspan="2" height=25 align=left><b>&nbsp;样本前台注册时注册协议内容：&nbsp;<img src="../Images/info.gif" border=0><b></th></tr>
+				  <tr><td colspan=2 style="padding-top:5px;padding-bottom:5px"><textarea cols=154 rows=8 name="registerText" id="registerText" style="width: 100%;">{registerText}</textarea></td></tr>
+				  <tr class=coltitle><th colspan="2" height=25 align=left><b>&nbsp;默认样本属性设置&nbsp;<img src="../Images/info.gif" border=0><b>&nbsp;&nbsp;<a onmouseover="this.T_WIDTH=460;this.T_PADDING=0;this.T_BGCOLOR='#ffffff'; return escape('&nbsp;默认样本属性的数据来源是样本属性自定义字段中下拉框与单选字段类型的定义<br>&nbsp;在私有问卷设置抽样规则时，将需要指定哪些样本属性的数据与问卷数据一并记录<br>&nbsp;私有问卷数据分析中，这些记录的样本属性数据并可作为数据源分析的过滤条件<br/>&nbsp;单一私有问卷可个性化定义这些样本属性，本功能设置的是这些样本属性的默认值<br>&nbsp;最多可指定6个默认属性')" href="javascript:void(0);"><font color=red><b>[帮助]</font></a></b></b>
+				  <tr>
+					  <td height="25" align=left>&nbsp;默认样本属性：</td>
+					  <td align=left style="padding-top:5px;padding-bottom:5px"><SELECT name="mainAttribute[]" id="mainAttribute" size=6 multiple style="width:350px">
+						{mainAttributeList}
+					  </SELECT></td>
+				  </tr></table>
+				  <table width=100%>
+				  <tr><td height="23">
+					  <input name="administratorsConfigID" type="hidden" value="{administratorsConfigID}"> 
+					  <input name="Action" type="hidden" id="Action" value="ConfigtureSubmit"> 
+					  <input type=submit class=inputsubmit value="确定">&nbsp;<input class=inputsubmit type="reset" name="reset" value="重置" onClick="javascript:parent.hidePopWin();">
+					  </td>
+				   </tr>
+			   </table>
+			  </form>       
+			</div><!--end of content_main-->
+		   </div><!--end of content-->
+	   </div><!--end of main-->
+    </div><!--end of container-->
+	<!--popmenu -->
+	<script type="text/javascript" src="../JS/PopMenu.js.php"></script>
+	<script language=javascript src="../JS/Example.js.php"></script>
+</body></html>

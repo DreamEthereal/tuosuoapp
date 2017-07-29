@@ -1,0 +1,14 @@
+<tr><td height=25 class="question" valign=center>&nbsp;{questionRequire}<span class="textEdit" id="questionName_{questionID}">{questionName}</span>&nbsp;<span class=notes>{questionNotes}</span></td></tr>
+<tr><td class="tips"><span class="textEdit" id="questionNotes_{questionID}">{questionTips}</span></td></tr>
+<tr><td>
+	  <table cellSpacing=0 cellPadding=0 width="98%">
+	   <tr><td class="answer">
+	   <select name="{optionID}" id="{optionID}" onchange="Check_Survey_Conditions()">
+	    <option value=''>«Î—°‘Ò...</option>
+        <!-- BEGIN OPTION -->
+	    <option value="{optionValue}" {isCheck}>{optionName}</option>
+	    <!-- END OPTION -->
+	   </select>
+	   </td></tr>
+	   </table>
+</td></tr>

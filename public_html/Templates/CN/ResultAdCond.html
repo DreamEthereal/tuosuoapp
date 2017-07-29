@@ -1,0 +1,12 @@
+ <tr><td>样本所属分组：
+    &nbsp;<select name="Members[]" id="Members" multiple size=5 style="vertical-align:middle">
+		    {MembersGroupList}		  
+  	</select>
+ </td></tr>
+<!-- BEGIN AJAX -->
+<tr><td>&nbsp;{ajaxRtnValueName}：
+   &nbsp;<select name="ajaxRtnValue_{ajaxRtnID}[]" id="ajaxRtnValue_{ajaxRtnID}" size=5 multiple style="vertical-align:middle">
+      {ajaxRtnValue_List}
+	</select>
+</td></tr>
+<!-- END AJAX -->

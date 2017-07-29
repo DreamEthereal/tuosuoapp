@@ -1,0 +1,59 @@
+<html>
+<head>
+<meta http-equiv=content-language content=zh-cn>
+<meta http-equiv=content-type content="text/html; charset=gbk">
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7">
+<style>
+td { padding:2px 5px 2px 5px;}
+table {margin-bottom:4px;}
+</style>
+<script>
+function submitForm()
+{
+	document.getElementById('submitBtn').disabled = true;
+	disabledStyle(document.getElementById('submitBtn'));
+	document.getElementById('resetBtn').disabled = true;
+	disabledStyle(document.getElementById('resetBtn'));
+	document.getElementById('close').disabled = true;
+	disabledStyle(document.getElementById('close'));
+	document.Check_Form.submit();
+}
+function disabledStyle(obj)
+{
+	obj.style.border = '1px solid #DDD';
+	obj.style.backgroundColor = '#F5F5F5';
+	obj.style.color = '#3b5888';
+}
+</script>
+<link href="../CSS/Base.css" rel=stylesheet>
+<META content="MSHTML 6.00.3790.0" name=GENERATOR></HEAD>
+<body oncontextmenu="return false">
+
+<form name="Check_Form" method="post" action="" id="Check_Form" onsubmit="return false;">
+<table style="LINE-HEIGHT: 150%;border-collapse:collapse;" cellSpacing=0 cellPadding=0 width="100%" borderColor=#cacaca border=1>
+   <div class=position>位置：&nbsp; 我的问卷 &raquo; 自样本库中抽样</div>
+   <tr bgcolor="#f9f9f9" height=25><td colspan=2><b>&nbsp;关于...</b>&nbsp;<img src="../Images/info.gif" border=0></td></tr>
+   <tr><td colspan=2>&nbsp;抽样是指按照某一或某些样本属性从样本库中抽取一部分样本作为调查对象。<br/>&nbsp;在EnableQ系统中，样本属性可自定义新增或修订的。</td></tr>
+   <tr bgcolor="#f9f9f9" height=25><td colspan=2><b>&nbsp;设置样本抽样规则</b>&nbsp;<img src="../Images/info.gif" border=0></td></tr>    
+   <tr><td width=18%>样本分组</td>
+       <td><select name="option_0[]" id="option_0" multiple size=5>
+	   {panel_groups_list}
+	   </select>
+   </td></tr>
+   <!-- BEGIN QUESTION -->
+   <tr><td>{panelname}</td>
+       <td>{panelopt}</td></tr>
+   <!-- END QUESTION -->
+   </table><table width=100%><tr><td>
+         <input name="surveyID" type="hidden" id="surveyID" value="{surveyID}"> 
+    	 <input name="Action" type="hidden" id="Action" value="{Action}"> 
+    	 <input name="this_fields_list" type="hidden" id="this_fields_list" value="{this_fields_list}"> 
+    	 <input name="this_fields_type" type="hidden" id="this_fields_type" value="{this_fields_type}"> 
+		 <input class=inputsubmit type="button" name="submitBtn" id="submitBtn" value="确定" onclick="javascript:submitForm();">
+		 <input class=inputsubmit type="reset" name="resetBtn" id="resetBtn" value="重置">
+		 <input class=inputsubmit type="button" name="close" id="close" value="关闭" onClick="javascript:parent.hidePopWin();">
+      </td>
+    </tr>
+  </form>
+ </table>
+</body></html>

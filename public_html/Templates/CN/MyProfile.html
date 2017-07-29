@@ -1,0 +1,130 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gbk" />
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" />
+<title>我的账户信息 - Eclear在线问卷调查引擎</title>
+<link rel="shortcut icon" href="../Images/enableq.ico" type="image/x-icon" />
+<link rel="stylesheet" type="text/css" href="../CSS/UIBase.css" />
+<link rel="stylesheet" type="text/css" href="../CSS/Index.css" />
+<link href="../CSS/Window.css" type="text/css" rel=stylesheet>
+<script type="text/javascript" src="../JS/Common.js.php"></script>
+<script type="text/javascript" src="../JS/Window.js.php"></script>
+<script type="text/javascript" src="../JS/Jquery.min.js.php"></script>
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?e85922c9036e1d59fd3589c3e2e9b016";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+</head>
+
+<body oncontextmenu="return false">
+ 	<div class="header">
+		<h1 class="logo">Eclear</h1>
+		<div class="header_menu">
+			<div class="header_m_1">
+				<a href="../System/ShowMain.php">欢迎您，<font color="#e45857" id="nick_Name_cont"></font></a>
+				<span class="head_menu_icon"></span>
+				<ul class="head_menu_list">
+					<span class="head_menu_top"></span>
+					<li><a href="../System/MyProfile.php">我的账户信息</a></li>
+					<li class="last"><a href="../System/ChangePass.php">修改我的密码</a></li>
+				</ul>
+			</div>
+			<div class="header_m_6" style="margin-left:50px">
+				<a href="../System/ShowMain.php">首页</a>
+			</div>
+			<div class="header_m_2" id="mySetting">
+			</div>
+			<div class="header_m_3" style="margin-left:50px">
+				<a href="../Help/Downs.php">帮助</a>
+				<span class="head_menu_icon"></span>
+				<ul class="head_menu_list">
+					<span class="head_menu_top"></span>
+					<li><a href="../Help/Downs.php">帮助文件下载</a></li>
+					<li><a href="http://doc.itenable.com.cn" target=_blank>在线帮助文档</a></li>
+					<li><a href="http://i.enableq.com" target=_blank>在线讨论社区</a></li>
+					<li class="last"><a href="../System/AdministratorsLogs.php">系统操作日志</a></li>
+				</ul>
+			</div>
+			<div class="header_m_4" style="margin-left:50px">
+				<a href="javascript:void(0);" onclick="javascript:showPopWin('../License/AboutEnableQ.php', 500, 400, null, null,'关于...')">关于</a>
+			</div>
+			<div class="header_m_5">
+				<a href="../System/Logout.php?loginOutURL=../index.php" target=_top>退出</a>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript" src="../JS/MySetting.js.php"></script>
+
+	<div class="container clearfix">
+	   <div class="main">
+		 <div class="nav">
+			<a href="../System/MyProfile.php" class="cur">我的账户信息</a>
+			<a href="../System/ChangePass.php">修改我的密码</a>
+		 </div>
+		 <div class="content">
+			<div class="content_tit">
+				<div class="clearfix">
+				<h1>我的账户信息</h1>
+				<span class="total ml10"></span>
+				<span class="btn ml10"></span>
+				</div>
+				<p class="fc_grey">列出我的账户信息</p>
+			</div>
+			<div class="content_main" style="margin-top:10px">
+			   <table class="d_table">
+				 <tr class=coltitle>
+					<th align=left colspan=2>我的账户信息</th></tr>
+				  <tr> 
+					 <td width="16%" height="25"><SPAN class=red>*</SPAN> 用户名：</td>
+					 <td width="84%">{administratorsName}</td>
+				  </tr>
+				  <tr> 
+					 <td height="25"><SPAN class=red>*</SPAN> 昵称：</td>
+					 <td>{nickName}</td>
+				  </tr>
+				  <tr> 
+					 <td height="25"><SPAN class=red>*</SPAN> 角色：</td>
+					 <td>{isAdmin}</td>
+				  </tr>
+				  <tr> 
+					 <td height="25"><SPAN class=red>*</SPAN> 所属节点：</td>
+					 <td>{nodeName}</td>
+				  </tr>
+				 <tr class=coltitle>
+					<th align=left colspan=2>账户其他信息</th></tr>
+				  <tr> 
+					 <td height="25"><SPAN class=red>*</SPAN> 由谁创建：</td>
+					 <td>{byUserID}</td>
+				  </tr>
+				  <tr> 
+					 <td height="25"><SPAN class=red>*</SPAN> 创建时间：</td>
+					 <td>{createDate}</td>
+				  </tr>
+				  <tr> 
+					 <td height="25"><SPAN class=red>*</SPAN> 最后登录时间：</td>
+					 <td>{lastVisited}</td>
+				  </tr>
+				  <tr> 
+					 <td height="25"><SPAN class=red>*</SPAN> 最后登录IP：</td>
+					 <td>{ipAddress}</td>
+				  </tr>
+				  <tr> 
+					 <td height="25"><SPAN class=red>*</SPAN> 登录次数：</td>
+					 <td>{loginNum}</td>
+				  </tr>
+				</table>
+			</div><!--end of content_main-->
+		   </div><!--end of content-->
+	   </div><!--end of main-->
+    </div><!--end of container-->
+	<!--popmenu -->
+	<script type="text/javascript" src="../JS/PopMenu.js.php"></script>
+</body></html>
+

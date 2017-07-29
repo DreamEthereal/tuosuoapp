@@ -1,0 +1,18 @@
+<tr>
+    <td height=25 class="question" valign=center>{questionName}</td>
+</tr>
+<tr>
+   <td>
+	  <table cellSpacing=0 cellPadding=0>
+		<!-- BEGIN OPTION -->
+		<tr class="answer">
+			<td nowrap>&nbsp;{optionName}</td>
+			<td width=15></td>
+			<td nowrap align=right>Code：<input size=10 name="option_24_{questionID}_{optionID}" value="{itemCode}"></td>
+			<td width=15></td>
+			<td><input type="checkbox" value="1" name="unkown_24_{questionID}_{optionID}" id="unkown_24_{questionID}_{optionID}" {isUnkown}>&nbsp;"不清楚"选项</td>
+		</tr>
+		<!-- END OPTION -->
+	  </table>
+  </td>
+</tr>

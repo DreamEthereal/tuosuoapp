@@ -1,0 +1,17 @@
+<b class="fl" style="color:#5d5d5d;">当前使用的分析数据源：<span class=red id="nowDataSource1">{nowDataSource}</span></b>
+<span class="analyse_btn fl">
+<a href="javasscript:void(0);" class="analyse_change">更换</a>
+<a href="javascript:void(0);" onclick="javascript:showPopWin('../DataSource/ShowDataSourceEdit.php?surveyID={surveyID}', 800, 480, refreshDataSource, null,'新增数据源定义')" class="analyse_add">新增</a>
+</span>
+<table class="analyse_change_list" id="datasourcecont" cellspacing="0" cellpadding="0">						
+   <tr class="cur"><td colspan="2" valign=middle align=left>
+	<b>当前使用的分析数据源：</b><span id="nowDataSource2">{nowDataSource}</span>
+   </td></tr>
+   <tr><td colspan=2><input type="radio" name="dataSource" id="dataSource" value="0" {dataSource0Check} onclick="javascript:refreshDataSourceName();"  style="vertical-align: middle;"> <span id="dataSource_0_text">全部数据 (除去无效回复与审核未通过)</span></td>
+   </tr>
+   <!-- BEGIN DATA -->
+   <tr><td width=*><input type="radio" name="dataSource" id="dataSource" value="{dataSourceValue}" {dataSourceCheck}  onclick="javascript:refreshDataSourceName();" style="vertical-align: middle;"> <span id="dataSource_{dataSourceValue}_text">{dataSourceName}</span></td>
+	   <td width=3% nowrap align=center>&nbsp;<a href="javascript:void(0);" onclick="javascript:showPopWin('../DataSource/ShowDataSourceEdit.php?Action=Edit&queryID={dataSourceValue}&surveyID={surveyID}', 800, 480, refreshDataSource, null,'修改数据源定义')" style="display:{haveEdit}">修改</a>&nbsp;&nbsp;<a href="javascript:AjaxDelRequest('../DataSource/ShowDataSourceEdit.php?Action=Delete&surveyID={surveyID}&queryID={dataSourceValue}&queryName={dataSourceName_URL}',{surveyID},1);" onclick="return window.confirm('您真的想删除该数据源定义吗？本操作不可恢复！')" style="display:{haveDelete}">删除</a>&nbsp;</td>
+   </tr>
+   <!-- END DATA -->
+</tbody></table>

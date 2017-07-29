@@ -1,0 +1,208 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gbk" />
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" />
+<title>批量问卷操作 - Eclear在线问卷调查引擎</title>
+<link rel="shortcut icon" href="../Images/enableq.ico" type="image/x-icon" />
+<link rel="stylesheet" type="text/css" href="../CSS/UIBase.css" />
+<link rel="stylesheet" type="text/css" href="../CSS/Index.css" />
+<link href="../CSS/Window.css" type="text/css" rel=stylesheet>
+<script type="text/javascript" src="../JS/Common.js.php"></script>
+<script type="text/javascript" src="../JS/Window.js.php"></script>
+<script type="text/javascript" src="../JS/Jquery.min.js.php"></script>
+<script type="text/javascript" src="../JS/Jquery.notification.js.php"></script>
+<link type="text/css" rel="stylesheet" href="../CSS/Notification.css" />
+<script language=javascript src="../JS/CheckQuestion.js.php"></script>
+<script language=javascript>
+function CheckCopy()
+{
+	if (!CheckNotNull(document.CopyForm.theCopySurveyID, "选择需批量复制的问卷")) {return false;}
+	if (!CheckNotNull(document.CopyForm.copyNum, "需复制的数量")) {return false;}
+	if (!CheckNumber(document.CopyForm.copyNum, "需复制的数量",1,50)) {return false;}
+}
+function CheckDeploy()
+{
+	if (!CheckNotNull(document.DeployForm.theDeploySurveyList, "选择需批量执行的问卷")) {return false;}
+	if (!CheckListMaxSelect(document.DeployForm.theDeploySurveyList,"选择需批量执行的问卷",30)){return false;}
+}
+function CheckDelete()
+{
+	if (!CheckNotNull(document.DeleteForm.theDeleteSurveyID, "选择需批量删除的问卷")) {return false;}
+	if (!CheckListMaxSelect(document.DeleteForm.theDeleteSurveyID,"选择需批量删除的问卷",50)){return false;}
+}
+</script>
+<style>
+input[type=text] {border:1px solid #cacaca;height:18px;font-family: Calibri,"宋体",sans-serif;line-height:18px;vertical-align: middle;}
+select {border:1px solid #cacaca;height:150px;font-family: Calibri,"宋体",sans-serif;vertical-align: middle;}
+</style>
+</head>
+
+<body oncontextmenu="return false">
+ 	<div class="header">
+		<h1 class="logo">Eclear</h1>
+		<div class="sidebar_show"></div>
+		<div class="header_menu">
+			<div class="header_m_1">
+				<a href="../System/ShowMain.php">欢迎您，<font color="#e45857" id="nick_Name_cont"></font></a>
+				<span class="head_menu_icon"></span>
+				<ul class="head_menu_list">
+					<span class="head_menu_top"></span>
+					<li><a href="../System/MyProfile.php">我的账户信息</a></li>
+					<li class="last"><a href="../System/ChangePass.php">修改我的密码</a></li>
+				</ul>
+			</div>
+			<div class="header_m_6" style="margin-left:50px">
+				<a href="../System/ShowMain.php">首页</a>
+			</div>
+			<div class="header_m_2" id="mySetting">
+			</div>
+			<div class="header_m_3" style="margin-left:50px">
+				<a href="../Help/Downs.php">帮助</a>
+				<span class="head_menu_icon"></span>
+				<ul class="head_menu_list">
+					<span class="head_menu_top"></span>
+					<li><a href="../Help/Downs.php">帮助文件下载</a></li>
+					<li><a href="http://doc.itenable.com.cn" target=_blank>在线帮助文档</a></li>
+					<li><a href="http://i.enableq.com" target=_blank>在线讨论社区</a></li>
+					<li class="last"><a href="../System/AdministratorsLogs.php">系统操作日志</a></li>
+				</ul>
+			</div>
+			<div class="header_m_4" style="margin-left:50px">
+				<a href="javascript:void(0);" onclick="javascript:showPopWin('../License/AboutEnableQ.php', 500, 400, null, null,'关于...')">关于</a>
+			</div>
+			<div class="header_m_5">
+				<a href="../System/Logout.php?loginOutURL=../index.php" target=_top>退出</a>
+			</div>
+		</div>
+	</div>
+
+	<div class="container clearfix">
+		<div class="sider_bar">
+			<div class="sider_menu">
+				<a class="sider_menu_title" href="javascript:void(0);" onclick="menuToggle('sider_menu_list_1')">调查问卷模版</a>
+				<ul class="sider_menu_list" id="sider_menu_list_1">
+					<li><a href="../System/MgtTplFile.php">管理展示模板</a></li>
+					<li><a href="../System/MgtImageFile.php">管理附属文件</a></li>
+				</ul>
+			</div>
+			<div class="sider_menu">
+				<a class="sider_menu_title cur" href="javascript:void(0);" onclick="menuToggle('sider_menu_list_2')">辅助问卷管理</a>
+				<ul class="sider_menu_list" id="sider_menu_list_2">
+					<li><a href="../System/MgtNormalOption.php">定义常用选项</a></li>
+					<li id="batchSurveyAction"><a href="../System/BatchSurveyAction.php" class="sel">批量问卷操作</a></li>
+					<li><a href="../System/SurveyDistribution.php">迁移问卷数据</a></li>
+					<li><a href="../System/MgtArchiving.php">问卷归档记录</a></li>
+				</ul>
+			</div>
+			<div class="sider_menu" id="researchReport">
+				<a class="sider_menu_title" href="javascript:void(0);" onclick="menuToggle('sider_menu_list_4')">辅助调研管理</a>
+				<ul class="sider_menu_list" id="sider_menu_list_4">
+					<li><a href="../System/ResearchReport.php">管理调研文件</a></li>
+				</ul>
+			</div>
+			<div class="sider_menu" id="listSurveyApi">
+				<a class="sider_menu_title" href="javascript:void(0);" onclick="menuToggle('sider_menu_list_3')">问卷列表调用</a>
+				<ul class="sider_menu_list" id="sider_menu_list_3">
+					<li><a class="window-700-360" title="问卷列表调用" href="../System/ListSurveyAPI.php">问卷列表调用</a></li>
+				</ul>
+			</div>
+		</div>
+	    <script type="text/javascript" src="../JS/MySetting.js.php"></script>
+
+	   <div class="main">
+		 <div class="content">
+			<div class="content_tit">
+				<div class="clearfix">
+				<h1>批量问卷操作</h1>
+				<span class="total ml10"></span>
+				<span class="btn ml10"></span>
+				</div>
+				<p class="fc_grey">对多份调查问卷进行复制、执行和删除等批量操作</p>
+			</div>
+			<div class="content_main" style="margin-top:10px">
+			  <form action="" method="post" name="CopyForm" id="CopyForm" onsubmit="return CheckCopy();">
+			   <table class="d_table">
+				   <tr class=coltitle><th align=left colspan=2><b>批量复制问卷</b></th></tr>
+				   <tr> 
+					   <td height="25" width=18%><SPAN class=red>*</SPAN> 可复制的问卷列表：</td>
+					   <td width=82% style="padding-top:5px;padding-bottom:5px">
+						 <select name="theCopySurveyID" id="theCopySurveyID" size=7 style="width:600px">
+						   <option value='' selected>请选择需批量复制的问卷...</option>
+							{copySurveyIDList}
+						 </select>
+					   </td>
+				   </tr>
+				   <tr><td height="25" width=18%><SPAN class=red>*</SPAN> 需复制的数量：</td>
+					   <td width=82%><input name="copyNum" id="copyNum" size=11></td>
+				   </tr></table><table width=100% style="border:0px;">
+				   <tr> 
+					  <td width=18% style="border:0px;"></td>
+					  <td style="border:0px;">
+							<input type="hidden" name="Action" value="BatchCopySubmit">
+							<input type="submit" name="submit" class=inputsubmit value="确定" onclick="return window.confirm('您确定需要批量复制选中的调查问卷吗？')"> 
+							<input name="back2" type="button" class=inputsubmit value="取消" onClick="javascript:window.location.href='{thisProg}'"> 
+					  </td>
+				   </tr>
+				 </table>
+				</form>
+
+				<form action="" method="post" name="DeployForm" id="DeployForm" onsubmit="return CheckDeploy();">
+			     <table class="d_table" style="margin-top:10px">
+				   <tr class=coltitle><th align=left colspan=2><b>批量执行问卷</b></th></tr>
+				   <tr> 
+					   <td height="25" width=18%><SPAN class=red>*</SPAN> 可执行的问卷列表：</td>
+					   <td width=82% style="padding-top:5px;padding-bottom:5px">
+						 <select name="theDeploySurveyList[]" id="theDeploySurveyList" size=11 multiple style="width:600px">
+						   <option value='' selected>请选择需批量执行的问卷...</option>
+							{deploySurveyIDList}
+						 </select>
+					   </td>
+				   </tr></table><table width=100% style="border:0px;">
+				   <tr> 
+					  <td width=18% style="border:0px;"></td>
+					  <td style="border:0px;">
+						   <input type="hidden" name="Action" value="BatchDeploySubmit">
+						   <input type="submit" name="submit" value="确定" class=inputsubmit onclick="return window.confirm('您确定需要批量把选中的调查问卷转成执行状态吗？')"> 
+						   <input name="back2" type="button" value="取消" class=inputsubmit onClick="javascript:window.location.href='{thisProg}'"> 
+					   </td>
+				   </tr>
+				 </table>
+				</form>
+
+				<form action="" method="post" name="DeleteForm"  id="DeleteForm" onsubmit="return CheckDelete();">
+			     <table class="d_table" style="margin-top:10px">
+				   <tr class=coltitle><th align=left colspan=2><b>批量删除问卷</b></th></tr>
+				   <tr> 
+					   <td height="25" width=18%><SPAN class=red>*</SPAN> 可删除的问卷列表：</td>
+					   <td width=82% style="padding-top:5px;padding-bottom:5px">
+						 <select name="theDeleteSurveyID[]" id="theDeleteSurveyID" size=10 multiple style="width:600px">
+						   <option value='' selected>请选择需批量删除的问卷...</option>
+							{deleteSurveyIDList}
+						 </select>
+					   </td>
+				   </tr></table><table width=100% style="border:0px;">
+				   <tr> 
+					  <td width=18% style="border:0px;"></td>
+					  <td style="border:0px;">
+						   <input type="hidden" name="Action" value="BatchDeleteSubmit">
+						   <input type="submit" name="submit" value="确定" class=inputsubmit onclick="return window.confirm('您确定需要批量删除选中的调查问卷吗？')"> 
+						   <input name="back2" type="button" value="取消" class=inputsubmit onClick="javascript:window.location.href='{thisProg}'"> 
+					   </td>
+				   </tr>
+			 </table>
+			 </form>
+			 
+			 <table style="border:0px;margin-top:15px;;margin-bottom:15px" class="n_table">
+				<tr> 
+				 <td style="border:0px;padding-left:0px;"><B><IMG src="../Images/clerk.gif" alt=已封存 border=0></B>：“批量删除问卷”为防止错误操作产生数据不可恢复的后果，目前仅允许删除“设计”状态的问卷
+				 </td>
+				 </tr>
+			 </table>  
+			</div><!--end of content_main-->
+		   </div><!--end of content-->
+	   </div><!--end of main-->
+    </div><!--end of container-->
+	<!--popmenu -->
+	<script type="text/javascript" src="../JS/PopMenu.js.php"></script>
+</body></html>

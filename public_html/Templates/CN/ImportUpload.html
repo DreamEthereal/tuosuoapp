@@ -1,0 +1,219 @@
+<html>
+<head>
+<meta http-equiv=content-language content=zh-cn>
+<meta http-equiv=content-type content="text/html; charset=gbk">
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7">
+<style>
+ td { padding:2px 5px 2px 5px;}
+</style>
+<link href="../CSS/Base.css" rel=stylesheet>
+<script type="text/javascript" src="../JS/Jquery.min.js.php"></script>
+<script type="text/javascript" src="../JS/Jquery.notification.js.php"></script>
+<link type="text/css" rel="stylesheet" href="../CSS/Notification.css" />
+<script language=javascript src="../JS/CheckQuestion.js.php"></script>
+
+<link href="../CSS/FileUpload.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="../JS/Swfupload.js.php"></script>
+<script type="text/javascript" src="../JS/Swfqueue.js.php"></script>		
+<script type="text/javascript" src="../JS/Swfobject.js.php"></script>		
+<script type="text/javascript" src="../JS/FileProgress.js.php"></script>
+<script type="text/javascript" src="../JS/Swfhandlers.js.php"></script>
+<script language=javascript>
+function Check_Form_Validator()
+{
+	if (!CheckNotNull(document.Check_Form.csvFile, "选择导入的文件")) {return false;}
+}
+function CheckExt(obj)
+{
+   	var AllowExt = ".csv|.zip|";
+	FileExt = obj.value.substr(obj.value.lastIndexOf(".")).toLowerCase();
+	if( AllowExt.indexOf(FileExt + "|") == -1) 
+	{
+		document.getElementById("submitBtn").disabled = true;
+	    $.notification("上传的导入文件扩展名仅支持.csv|.zip");
+		return false;
+	}
+	else
+	{
+		document.getElementById("submitBtn").disabled = false;
+		return true;
+    }    
+}
+function submitForm()
+{
+	if( Check_Form_Validator() != false )
+	{
+		document.getElementById('submitBtn').disabled = true;
+		disabledStyle(document.getElementById('submitBtn'));
+		document.getElementById('resetBtn').disabled = true;
+		disabledStyle(document.getElementById('resetBtn'));
+		document.getElementById('close').disabled = true;
+		disabledStyle(document.getElementById('close'));
+		document.Check_Form.submit();
+	}
+}
+</script>
+<meta content="mshtml 6.00.3790.0" name=generator></head>
+<body oncontextmenu="return false">
+
+<form name="Check_Form" method="post" action="" id="Check_Form" onsubmit="return false;" style="margin:0px;padding:0px">
+<table class=datatable style="line-height: 150%;border-collapse:collapse;" cellspacing=0 cellpadding=0 bordercolor=#cacaca border=1 width=100%>
+   <div class=position>位置：&nbsp; 我的问卷 &raquo; {surveyTitle}</div>
+        <tr><td bgcolor="#e9e9e9"><b>批量更新回复数据对应的附件数据</b></td></tr>
+		<tr bgcolor="#f9f9f9" height=25><td><b>&nbsp;关于...</b>&nbsp;<img src="../Images/info.gif" border=0></td></tr>
+		<tr><td>&nbsp;允许将回复数据的录音、录像、拍照等附属文件上传至自定义的存储路径之后，通过数据导入将原数据中的对应列批量更新。</td></tr>
+		<tr bgcolor="#f9f9f9" height=25><td><b>&nbsp;自定义的附属文件存储路径...</b>&nbsp;<img src="../Images/info.gif" border=0></td></tr>
+		<tr><td>&nbsp;{absPath}PerUserData/user/{custDataPath}/</td></tr>
+		<tr bgcolor="#f9f9f9" height=25><td><b>&nbsp;导出原数据对应的变量列...</b>&nbsp;<img src="../Images/info.gif" border=0></td></tr>   
+		<tr><td>&nbsp;<IMG SRC="../Images/excel.gif">&nbsp;<a href="../Import/ImportUpload.php?Action=ExportSample&surveyID={surveyID}">导出现有问卷数据的对应变量列(.csv)</a>&nbsp;</span>
+  	    <tr bgcolor="#f9f9f9" height=25><td><b>&nbsp;更新数据导入...</b>&nbsp;<img src="../Images/info.gif" border=0></td></tr>
+		<tr><td><table cellSpacing=0 cellPadding=0 width="100%" style="border:0px">
+			   <div><b>上传数据文件：</b><input type="text" readonly id="csvFile" name="csvFile" style="margin-right:5px;vertical-align: middle" size="70"/><span id="upload_csvFile"></span>&nbsp;<input type="button" value="上传" onclick="fileUpload_csvFile.startUpload();" class="buttonClass"  style="vertical-align: middle"/></div>
+			   <div id="fsUploadProgress_csvFile" style="border:0px"></div>
+			   <noscript>
+			   <div style="background-color: #FFFF66; border-top: solid 4px #FF9966; border-bottom: solid 4px #FF9966; margin: 10px 25px; padding: 10px 15px;border:0px">上传控件加载失败，原因可能是：您可能未开启JavaScript支持！</div>
+			   </noscript>
+			   <div id="divLoadingContent_csvFile" class="content" style="background-color: #FFFF66; border-top: solid 4px #FF9966; border-bottom: solid 4px #FF9966; margin: 10px 25px; padding: 10px 15px; display: none;border:0px">上传控件加载中，请稍候...</div>
+			   <div id="divLongLoading_csvFile" class="content" style="background-color: #FFFF66; border-top: solid 4px #FF9966; border-bottom: solid 4px #FF9966; margin: 10px 25px; padding: 10px 15px; display: none;border:0px">上传控件加载超时，原因可能是：请保证您的flash插件是开启状态，上传控件需要Flash Player 9或以上的支持！</div>
+			   <div id="divAlternateContent_csvFile" class="content" style="background-color: #FFFF66; border-top: solid 4px #FF9966; border-bottom: solid 4px #FF9966; margin: 10px 25px; padding: 10px 15px; display: none;border:0px">上传控件加载失败，原因可能是：您的Flash Player版本过低！您可以访问<a href="http://www.adobe.com/shockwave/download/download.cgi?P1_Prod_Version=ShockwaveFlash">Adobe网站</a>获得最新Flash Player版本。</div>
+			   <div><span class=red>*</span> 上传文件扩展名限制为：{allowType}，大小限制为：{maxSize}M</div>
+			   <div><b>导入控制：</b><input name="fileUploaded" id="fileUploaded" value="1" type="checkbox" style="vertical-align: middle" {fileUploaded}>数据附属文件已上传至自定义文件夹 (放弃检查文件是否真实存在)</div>
+		</table></td></tr>
+			   <script type="text/javascript">
+				var fileUpload_csvFile;
+				function Init_csvFile() {
+					var settings = {
+						flash_url : "../JS/swfupload.swf",
+						upload_url: "../JS/RecFileUpload.php",
+						post_params: {"PHPSESSID" : "{session_id}",
+						  "uploadFileName": "csvFile"
+						},
+						file_post_name:"csvFile",
+						file_size_limit : "{maxSize} MB",
+						file_types : "{allowType}",
+						file_types_description : "{allowType}",
+						file_upload_limit : 1,
+						custom_settings : {
+							progressTarget : "fsUploadProgress_csvFile"
+						},
+						debug: false,
+						prevent_swf_caching:true,
+
+						//Button settings
+						button_image_url: "../Images/cnfileselect.png",
+						button_width: "61",
+						button_height: "22",
+						button_placeholder_id: "upload_csvFile",
+						button_action : SWFUpload.BUTTON_ACTION.SELECT_FILE,
+						button_window_mode:"OPAQUE",
+						
+						swfupload_loaded_handler : swfUploadLoaded_csvFile,
+						file_dialog_start_handler:fileDialogStart_csvFile,
+						file_queued_handler : fileQueued,
+						file_queue_error_handler : fileQueueError,
+						file_dialog_complete_handler : fileDialogComplete,
+						upload_start_handler : uploadStart,
+						upload_progress_handler : uploadProgress,
+						upload_error_handler : uploadError,
+						upload_success_handler : uploadSuccess_csvFile,
+						upload_complete_handler : uploadComplete,
+						
+						//SWFObject settings
+						minimum_flash_version : "9.0.28",
+						swfupload_pre_load_handler : swfUploadPreLoad_csvFile,
+						swfupload_load_failed_handler : swfUploadLoadFailed_csvFile
+					};
+
+					fileUpload_csvFile= new SWFUpload(settings);
+				}
+
+				function swfUploadPreLoad_csvFile() {
+					var self = this;
+					var loading = function () {
+						document.getElementById("divLoadingContent_csvFile").style.display = "";
+
+						var longLoad = function () {
+							document.getElementById("divLoadingContent_csvFile").style.display = "none";
+							document.getElementById("divLongLoading_csvFile").style.display = "";
+						};
+						this.customSettings.loadingTimeout = setTimeout(function () {
+								longLoad.call(self)
+							},
+							15 * 1000
+						);
+					};
+					
+					this.customSettings.loadingTimeout = setTimeout(function () {
+							loading.call(self);
+						},
+						1*1000
+					);
+				}
+				function swfUploadLoaded_csvFile() {
+					var self = this;
+					clearTimeout(this.customSettings.loadingTimeout);
+					document.getElementById("divLoadingContent_csvFile").style.display = "none";
+					document.getElementById("divLongLoading_csvFile").style.display = "none";
+					document.getElementById("divAlternateContent_csvFile").style.display = "none";
+				}
+				   
+				function swfUploadLoadFailed_csvFile() {
+					clearTimeout(this.customSettings.loadingTimeout);
+					document.getElementById("divLoadingContent_csvFile").style.display = "none";
+					document.getElementById("divLongLoading_csvFile").style.display = "none";
+					document.getElementById("divAlternateContent_csvFile").style.display = "";
+				}
+				//打开文件选择选择窗口时触发的事件
+				function fileDialogStart_csvFile() {
+					var txt = document.getElementById("csvFile");
+					txt.value = "";
+					this.cancelUpload();
+				}
+
+				//文件传输完成触发事件
+				function uploadSuccess_csvFile(file, serverData) {
+					try {
+						var progress = new FileProgress(file, this.customSettings.progressTarget);
+						progress.setComplete();
+						progress.setStatus("文件上传完成。");
+						progress.toggleCancel(false);
+
+						this.setButtonDisabled(true);
+						
+						//给文本框赋值
+						var txt = document.getElementById("csvFile");
+						txt.value = serverData;
+						if( document.getElementById('submitBtn') != null ) document.getElementById('submitBtn').disabled = false;
+					} catch (ex) {
+						this.debug(ex);
+					}
+				}
+				//开始执行
+				Init_csvFile();
+			 </script>
+</table>
+
+<table width=100% style="border:0px;">
+	    <tr><td align=center style="border:0px;">
+        <input name="surveyID" type="hidden" id="surveyID" value="{surveyID}">
+        <input name="Action" type="hidden" id="Action" value="ImportSubmit">
+		<input class=inputsubmit type="button" name="submitBtn" id="submitBtn" value="确定" onclick="javascript:submitForm();"> 
+		<input class=inputsubmit type="reset" name="resetBtn" id="resetBtn" value="重置">
+		<input class=inputsubmit type="button" name="close" id="close" value="关闭" onClick="javascript:parent.hidePopWin();">
+       </td>
+     </tr>
+  </form> 
+ </table>
+ 
+   <table style="border:0px;">
+    <tr> 
+     <td style="border:0px;padding-left:0px;">
+     <img src="../Images/notes.gif">&nbsp;更新数据的导入必须按照固定的格式，故需要先导出现有问卷数据的对应变量列；<br/>
+	 <img src="../Images/clerk.gif">&nbsp;更新数据的导入文件<b>须保留文件标题行(第1行)</b>，并确保上传的CSV文件与原下载文件列顺序保持一致；<br/>
+     <img src="../Images/clerk.gif">&nbsp;附属文件名建议采用英文和数字命名，文件名建议不包含中文字符；<br/>
+     <img src="../Images/clerk.gif">&nbsp;请自行确保附属文件的唯一性以及附属文件名与回复数据变量列之间的对应关系<br/>
+ </td></tr>
+  </table>
+</body></html>
+
+

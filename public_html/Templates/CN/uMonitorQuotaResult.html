@@ -1,0 +1,103 @@
+	<html>
+	<head>
+	<title>{siteTitle} </title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<style>
+		@media screen and (max-device-width: 320px){body{-webkit-text-size-adjust:none}}
+		@media screen and (max-device-width: 480px){body{-webkit-text-size-adjust:none}}
+		@media only screen and (-webkit-min-device-pixel-ratio: 2){body{-webkit-text-size-adjust:none}}
+		@media only screen and (min-device-width: 768px) and (max-device-width: 1024px){body{-webkit-text-size-adjust:none}}
+	</style>
+	<meta http-equiv=content-type content="text/html; charset=gbk">
+	<LINK href="../CSS/Android.css" type=text/css rel=stylesheet>
+	<LINK href="../Offline/resources/phone.css" type=text/css rel=stylesheet>
+	<SCRIPT type=text/javascript>
+		window.onRexseeReady = function(){
+			//设置横屏
+			rexseeScreen.setScreenOrientation('landscape');
+
+			rexseeMenu.create("mainOptionsMenu1","label:mainOptionsMenu1");
+			rexseeMenu.addItem("mainOptionsMenu1","rexsee:reload","label:刷新;");
+			rexseeMenu.addItem("mainOptionsMenu1","../Monitor/index.php","label:返回;");
+			rexseeMenu.addItem("mainOptionsMenu1","../Monitor/Logout.php","label:注销;");			
+			rexseeMenu.addItem("mainOptionsMenu1","rexsee:quit","label:退出;");
+			rexseeMenu.setOptionsMenuId("mainOptionsMenu1");
+
+			rexseeTitleBar.setStyle('visibility:hidden;');
+			rexseeStatusBar.setStyle('visibility:hidden;');
+			rexseeSpecialKey.enableBackKeyListener(true);
+	}
+</script>
+<style>
+	.titlebar {padding:3px;font-weight:bold;background: -webkit-gradient(linear, left top, right bottom, from(#014e82), to(#4d7496));}
+    .t_table{width:99%;border:1px solid #cacaca;margin-bottom:2px;}
+    .t_table tr{height:34px;color:#5d5d5d;}
+    .t_table tr th{background-color: #f9f9f9;padding:0 5px;}
+    .t_table tr td{padding:0 5px;}
+    .t_table tr th{font-weight:bold;}
+    .t_table tr th.title,.d_table tr td.title{text-align:left;}    
+    .t_table tr td a{color:#3b5888;}
+    .t_table tr td a:hover{color:#ff7700;}
+    .t_table tr:hover{background-color:transparent}
+
+	.r_table tr,r_table tr td{line-height:20px;}
+	input[type=text] {border:1px solid #cacaca;height:20px;font-family: Calibri,"宋体",sans-serif;line-height:20px;vertical-align: middle;}
+	select {border:1px solid #cacaca;font-family: Calibri,"宋体",sans-serif;vertical-align: middle;}
+	input[type=checkbox]{vertical-align: middle;margin-right:5px}
+	input[type=radio]{vertical-align: middle;margin-right:5px}
+    .classtd { padding:2px 5px 2px 5px;font-size:14px}
+</style>
+</head>
+<body style="background:#fff;color:#666" oncontextmenu="return false" oncontextmenu="return false">
+
+<div class="titlebar">
+ <table width=100% style="margin:0px">
+   <tr height=30><td width=30 valign=middle><a href="../Monitor/index.php"><img src="../Images/back.png"></a></td>
+	   <td align=center width=* class="pageTitle">配额进度列表</td>
+	   <td width=30 valign=middle><a href="rexsee:quit"><img src="../Images/exit.png"></a></td>
+  </tr>
+ </table>
+</div>
+
+<div class="notesInfo">【问卷】{surveyTitle}</div>
+
+<div class="invertedshiftdown">
+	<ul>
+	<li><a href="../Analytics/DataOverview.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">数据概览</a></li>
+	<li class="current"><a href="../Monitor/QuotaResult.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">配额进度</a></li>
+	<li><a href="../Monitor/DefineReport.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">定制报告</a></li>
+	</ul>
+</div>
+
+<div id="androidList" style="padding-left:10px;padding-right:10px;margin-top:5px;">
+
+   <table style="LINE-HEIGHT: 150%;border-collapse:collapse;margin-bottom:5px;" cellSpacing=0 cellPadding=0 width="100%" borderColor=#ccc border=0>
+   <tr><td class="classtd" align=right style="font-size:14px;border-top:#ccc 1px solid"></td></tr></table>
+
+	<div style="margin-bottom:10px;">	  
+	  <table style="LINE-HEIGHT: 150%;border-collapse:collapse;" cellSpacing=0 cellPadding=0 width="100%" borderColor=#ccc border=1>
+			   <tr class=coltitle>
+				  <th class="classtd" style="background-color: #f9f9f9" width=* noWrap align=left>&nbsp;<B>配额名称</B></th>
+				  <th class="classtd" style="background-color: #f9f9f9" width=5% nowrap align=center>&nbsp;<B>原设定</B></th>
+				  <th class="classtd" style="background-color: #f9f9f9" width=5% nowrap align=center>&nbsp;<B>已完成</B></th>
+				  <th class="classtd" style="background-color: #f9f9f9" width=5% nowrap align=center>&nbsp;<B>状态</B></th>
+			   </tr>
+			   {isHaveQuotaText}
+			   <!-- BEGIN QUOTA -->
+			   <tr> 
+				  <td class="classtd"><b>{quotaName}</b></td>
+				  <td class="classtd" nowrap align=center>&nbsp;<b>{quotaNum}</b></td>
+				  <td class="classtd" nowrap align=center>&nbsp;<b>{quotaNowNum}</b></td>
+				  <td class="classtd" nowrap align=center>&nbsp;<b>{quotaStat}</b></td>
+			   </tr>
+			   <tr>
+				  <td class="classtd" colspan=4 align=left bgcolor="#f5fafe" height=25 style="line-height:25px">{conList}</td>
+			   </tr>
+			   <!-- END QUOTA -->
+		  </table>
+	</div>
+ </form>
+</div>
+
+<script>scroll(0,0);</script>
+</body></html>

@@ -1,0 +1,88 @@
+<table style="LINE-HEIGHT: 150%;border-collapse:collapse;margin-bottom:5px" cellSpacing=0 cellPadding=0 borderColor=#ffffff border=1>
+ <tr><td>
+	 <div id="flashcontent">
+		<b>浏览器可能需要升级Flash播放器版本</b>
+	 </div>
+
+	<script type="text/javascript">
+	    var chartWidth = {chartWidth};
+		var chartHeight = {chartHeight};
+		var so = new SWFObject("../Chart/AmLine.swf", "amline", chartWidth, chartHeight, "8", "#FFFFFF");
+		so.addVariable("path", "../Chart/");
+		so.addParam("wmode", "transparent");
+		so.addVariable("data_file", escape("../Chart/PSMDataLine.php?surveyID={surveyID}"));
+		so.addVariable("chart_settings", encodeURIComponent("<settings><decimals_separator>.</decimals_separator> <thousands_separator>,</thousands_separator><legend><y>{legendY}</y><text_size>12</text_size> </legend><grid><x><approx_count>{xLineNum}</approx_count><dashed>true</dashed></x><y_left><dashed>true</dashed></y_left></grid><background><color></color><alpha>100</alpha></background><export_as_image><file>../Chart/ChartExport.php</file><target>_top</target><x></x><y></y><color></color><alpha>100</alpha><text_color></text_color><text_size></text_size></export_as_image><strings><no_data>尚无符合条件的问卷数据，无法绘制图形</no_data><export_as_image>以图片格式导出</export_as_image><collecting_data>收集数据过程中...</collecting_data><ss></ss><mm></mm><hh></hh><DD></DD></strings><context_menu><default_items><zoom>false</zoom><print>false</print></default_items></context_menu></settings>"));
+		so.write("flashcontent");
+	</script>
+</td></tr>
+</table>
+
+<table style="border:1px solid #cacaca;margin-bottom:5px" width=99%>
+ <tr style="background-color:#e4e0ea;border-bottom:1px solid #cacaca"><td>
+ <span class=red>*</span> <b>理想价格点OPP(Optimal Pricing Point)</b>，是[太便宜(Too Cheap)]与[太贵(Too Expensive)]两条价格曲线的交点。<br/>&nbsp;&nbsp;&nbsp;在该点，认为价格太便宜和太贵的受访者比例相等。<br/>&nbsp;&nbsp;&nbsp;在该价格上，有最多的消费者可能去购买其产品。即在这一价格点上，市场份额最大；<br/>&nbsp;&nbsp;&nbsp;该价格点是追求市场最大化的理想价格点，而不是企业利润最大化的价格点。</td></tr>
+
+ <tr style="background-color:#e4e0ea;border-bottom:1px solid #cacaca"><td><span class=red>*</span> <b>无差异价格点IPP(Indifference Pricing Point)</b>，是[比较贵(Expensive)]与[便宜(Cheap)]两条价格曲线的交点。<br/>&nbsp;&nbsp;&nbsp;在该点，认为价格比较贵和认为价格便宜的受访者比例相等。<br/>&nbsp;&nbsp;&nbsp;该点通常反应了消费者实际购买所支付的中间价格，或者是市场上的主流价格。<br/>&nbsp;&nbsp;&nbsp;采用低于该价格点和高于该价格点的价格对应的是两种价格策略：<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.&nbsp;一是价廉物美的低价策略；二是物有所值的高品质高价格策略。<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.&nbsp;两种价格策略下，设定的目标消费群体消费价值观是不同的。<br/>&nbsp;&nbsp;&nbsp;IPP越低表示价格意识越高。</td></tr>
+
+ <tr style="background-color:#e4e0ea;border-bottom:1px solid #cacaca"><td><span class=red>*</span> <b>合理定价范围最低点PMC(Point of Marginal Cheapness)</b>，是[太便宜(Too Cheap)]与[比较贵(Expensive)]两条价格曲线的交点。<br/>&nbsp;&nbsp;&nbsp;在该点，认为价格太便宜和比较贵的受访者比例相等。</td></tr>
+ 
+ <tr style="background-color:#e4e0ea;border-bottom:1px solid #cacaca"><td><span class=red>*</span> <b>合理定价范围最高点PME(Point of Marginal Expensiveness)</b>，是[太贵(Too Expensive)]与[便宜(Cheap)]两条价格曲线的交点。<br/>&nbsp;&nbsp;&nbsp;在该点，认为价格太贵和便宜的受访者比例相等。</td></tr>
+
+ <tr style="background-color:#e4e0ea;border-bottom:1px solid #cacaca"><td><span class=red>*</span> 在合理定价范围内的定价是兼顾购买可能性的消费者对价格感受的定价。<br/>&nbsp;&nbsp;&nbsp;低于合理定价范围内的最低点，虽然认为它“比较贵”的人群比例有所减少，但因为它“太便宜”的人群比例更高，从而导致实际的市场份额减少；<br/>&nbsp;&nbsp;&nbsp;而高于合理定价范围内的最高点，认为它“太贵”而不愿意购买的人群在增加，而认为它“便宜”的人群比例在降低，因此对企业而言也是不用考虑的。<br/>&nbsp;&nbsp;&nbsp;合理定价范围的大小往往反映了消费者对于该产品价格预期的差异。<br/>&nbsp;&nbsp;&nbsp;在进行价格决策时，可根据自身的市场占有率目标、消费群体特征等要素，在合理定价范围内选择最合适的价格点或价格范围。
+
+</td></tr></table>
+
+<table style="LINE-HEIGHT: 150%;border-collapse:collapse;margin-bottom:5px" cellSpacing=0 cellPadding=0 borderColor=#ffffff border=1>
+ <tr><td>
+	 <div id="flashcontent0">
+		<b>浏览器可能需要升级Flash播放器版本</b>
+	 </div>
+
+	<script type="text/javascript">
+	    var chartWidth = {chartWidth};
+		var chartHeight = {chartHeight};
+		var so1 = new SWFObject("../Chart/AmLine.swf", "amline", chartWidth, chartHeight, "8", "#FFFFFF");
+		so1.addVariable("path", "../Chart/");
+		so1.addParam("wmode", "transparent");
+		so1.addVariable("data_file", escape("../Chart/PSMDataArea.php?surveyID={surveyID}"));
+		so1.addVariable("chart_settings", encodeURIComponent("<settings><decimals_separator>.</decimals_separator> <thousands_separator>,</thousands_separator><legend><y>{legendY}</y><text_size>12</text_size> </legend><grid><x><approx_count>{xLineNum}</approx_count><dashed>true</dashed></x><y_left><dashed>true</dashed></y_left></grid><axes><y_left><type>stacked</type></y_left></axes><background><color></color><alpha>100</alpha></background><export_as_image><file>../Chart/ChartExport.php</file><target>_top</target><x></x><y></y><color></color><alpha>100</alpha><text_color></text_color><text_size></text_size></export_as_image><strings><no_data>尚无符合条件的问卷数据，无法绘制图形</no_data><export_as_image>以图片格式导出</export_as_image><collecting_data>收集数据过程中...</collecting_data><ss></ss><mm></mm><hh></hh><DD></DD></strings><context_menu><default_items><zoom>false</zoom><print>false</print></default_items></context_menu></settings>"));
+		so1.write("flashcontent0");
+	</script>
+</td></tr>
+</table>
+
+<table style="border:1px solid #cacaca;" width=99%>
+ <tr style="background-color:#e4e0ea;border-bottom:1px solid #cacaca"><td>
+ <span class=red>*</span> 所谓可接受该价格的人数比例是指对于这个价格既不觉得比较贵亦不觉得便宜的人数比例。<br/>&nbsp;&nbsp;&nbsp;所谓有保留地接受该价格的人数比例，是指对于这个价格既不觉得太贵亦不觉得太便宜的人数比例。</td></tr>
+
+ <tr style="background-color:#e4e0ea;border-bottom:1px solid #cacaca"><td>
+ <span class=red>*</span> 通常我们会根据上述两个比例画出：<br/>&nbsp;&nbsp;&nbsp;①价格与可接受人数比例曲线(上图下面的一条曲线)；<br/>&nbsp;&nbsp;&nbsp;②价格与有保留人数比例曲线(上图上面的一条曲线)。<br/>&nbsp;&nbsp;&nbsp;此两条曲线，将消费者分成三类：可接受者、有保留地接受者、不可接受者。</td></tr>
+
+ <tr style="background-color:#e4e0ea;border-bottom:1px solid #cacaca"><td>
+ <span class=red>*</span> 在有些价格点上，当价格稍为增加时，可接受人数骤减，这种价格点称为关键点
+(critical point)。<br/>&nbsp;&nbsp;&nbsp;在关键点上，可接受人数比例曲线的斜率(是负数)的绝对值较大。</td></tr>
+
+</td></tr></table>
+
+<table style="border:1px solid #cacaca;margin-top:5px" id="copyContent" width=99%>
+	<tr style="color:white;"><td bgcolor=#cf1100 align=center>&nbsp;<b>价格</b></td>
+		<td bgcolor=#cf1100 align=center>&nbsp;<b>Q1：便宜(Cheap)</b></td>
+		<td bgcolor=#cf1100 align=center>&nbsp;<b>Q2：比较贵(Expensive)</b></td>
+		<td bgcolor=#cf1100 align=center>&nbsp;<b>Q3：太贵(Too Expensive)</b></td>
+		<td bgcolor=#cf1100 align=center>&nbsp;<b>Q4：太便宜(Too Cheap)</b></td>
+	</tr>
+	<!-- BEGIN LIST -->
+	<tr style="background-color:#e4e0ea;border-bottom:1px solid #cacaca"><td nowrap align=center width=100>&nbsp;{thisPrice}</td>
+		<td nowrap align=center>&nbsp;<b>{theCheapRate}</b></td>
+		<td nowrap align=center>&nbsp;<b>{theExpensiveRate}</b></td>
+		<td nowrap align=center>&nbsp;<b>{theTooExpensiveRate}</b></td>
+		<td nowrap align=center>&nbsp;<b>{theTooCheapRate}</b></td>
+	</tr>
+	<!-- END LIST -->
+</table>
+
+<table style="border:1px solid #cacaca;margin-top:5px" width=99%>
+ <tr style="background-color:#e4e0ea;border-bottom:1px solid #cacaca"><td>
+ <span class=red>*</span> 对于PSM模型，问卷设计时，要求控制回复：Q3的价格 >Q2的价格 >Q1的价格 >Q4的价格。</td></tr>
+ <tr style="background-color:#e4e0ea;border-bottom:1px solid #cacaca"><td>
+ <span class=red>*</span> PSM模型的缺点：<br/>&nbsp;&nbsp;&nbsp;&nbsp;1) 对拟定中的各种价位的销售前景和接受度不能提供可靠的确定性评价<br/>&nbsp;&nbsp;&nbsp;&nbsp;2) 该测试方法没有考虑品牌或竞争对手对购买决策的评价<br/>&nbsp;&nbsp;&nbsp;&nbsp;3) 该方法比较适合与己知道的产品或容易描述的产品，但也需购买者对该产品的价格常识比较好，结果才比较可信<br/>&nbsp;&nbsp;&nbsp;&nbsp;4) 该模型得出的最佳价格定位于市场份额最大化，而不是利润最大化</td></tr>
+</table>

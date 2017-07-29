@@ -1,0 +1,29 @@
+<tr>
+    <td height=25 class="question" valign=center>{questionName}</td>
+</tr>
+<tr>
+   <td>
+	 <table style="border:1px solid #cacaca;">
+		<tr><td colspan=5>&nbsp;样本数：{totalResponseNum}&nbsp;&nbsp;&nbsp;&nbsp;回复数：<b>{rep_answerNum}</b>&nbsp;&nbsp;&nbsp;&nbsp;缺失数：{skip_answerNum}</td>
+		</tr>
+		<tr style="color:white;"><td bgcolor=#cf1100>&nbsp;<b>选项名称</b></td>
+			<td bgcolor=#cf1100 align=center width=50>&nbsp;<b>频数</b></td>
+			<td bgcolor=#cf1100 align=center width=50>&nbsp;<b>Code</b></td>
+			<td bgcolor=#cf1100 align=center width=50>&nbsp;<b>分值</b></td>
+			<td bgcolor=#cf1100 align=center width=50>&nbsp;<b>平均</b></td>
+		</tr>
+		<!-- BEGIN OPTION -->
+		<tr style="background-color:#e4e0ea;border-bottom:1px solid #cacaca"><td nowrap width=300>&nbsp;{optionName}</td>
+			<td nowrap align=center>&nbsp;<b>{answerNum}</b></td>
+			<td nowrap align=center>&nbsp;{optionCoeff}</td>
+			<td nowrap align=center>&nbsp;{optionCoeffNum}</td>
+			<td nowrap align=center>&nbsp;{optionCoeffAvg}</td>
+		</tr>
+		<!-- END OPTION -->
+		<tr><td colspan=3 align=right><b>分值：</b></td>
+			<td nowrap align=center>&nbsp;{total_optionCoeffNum}</td>
+			<td nowrap align=center>&nbsp;<b>{total_optionCoeffAvg}</b></td>
+		</tr>
+	  </table>
+  </td>
+</tr>

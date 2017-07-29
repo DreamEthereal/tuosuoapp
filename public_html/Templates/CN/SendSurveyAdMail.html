@@ -1,0 +1,312 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gbk" />
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+<title>发送邀请邮件 - EnableQ在线问卷调查引擎</title>
+<link rel="shortcut icon" href="../Images/enableq.ico" type="image/x-icon" />
+<link rel="stylesheet" type="text/css" href="../CSS/UIBase.css" />
+<link rel="stylesheet" type="text/css" href="../CSS/Index.css" />
+<link href="../CSS/Actions.css" type="text/css" rel=stylesheet>
+<link href="../CSS/Window.css" type="text/css" rel=stylesheet>
+<script type="text/javascript" src="../JS/Common.js.php"></script>
+<script type="text/javascript" src="../JS/Window.js.php"></script>
+<script type="text/javascript" src="../JS/Actions.js.php"></script>
+<script type="text/javascript" src="../JS/Jquery.min.js.php"></script>
+<style>
+  .actionsTitle {color:#0099cc;font-size:14px;font-weight:bold;margin-bottom:5px;}
+  .actionsInner {font-size:12px;padding-left:10px;margin-bottom:8px;border-bottom:#e5e5e5 1px solid;}
+  .classtd { padding:2px 5px 2px 5px;}
+  #the_tips_iframe {
+		margin: 0px;
+		padding:0px;
+		width: 100%;
+		height: 100%;
+		position: relative;
+		z-index: 20002;
+  }
+</style>
+<script language=javascript src="../JS/Editor.js.php"></script>
+<script type="text/javascript" src="../JS/Jquery.notification.js.php"></script>
+<link type="text/css" rel="stylesheet" href="../CSS/Notification.css" />
+<script language=javascript src="../JS/CheckQuestion.js.php"></script>
+
+<script language=javascript>
+var editTextRange;
+function Check_Form_Validator()
+{
+	if (!CheckNotNull(document.Check_Form.adUserName,"选择接受邮件的身份账户") ) {return false;}
+	var theMailArray = Trim(document.Check_Form.adUserName.value).split(';');
+	if( theMailArray.length >= 500 )
+	{
+		document.Check_Form.adUserName.focus();
+		$.notification("需要发送的邮件过多(>500封)，可能会造成系统执行时间过长，Eclear系统建议您分批发送！");
+		return false;
+	}
+	if (!CheckNotNullNoFocus(document.Check_Form.emailContent, "发送邮件的内容")) {return false;}
+}
+function submit_form_action()
+{
+    savehtml();
+	if( Check_Form_Validator() != false )
+	{
+		gId('submitbutton').disabled = true;
+		gId('reset').disabled = true;
+		//parent.gId('popupControls').style.display = 'none';
+		var x =(document.body.clientWidth-700)/2;		
+		var y = 180;
+		gId('menu-div').style.position = "absolute";
+		gId('menu-div').style.left = Math.ceil(x) + 'px';
+		var scTop = parseInt(getScrollTop(),10);
+		gId('menu-div').style.top = (scTop-50)+"px";
+		gId('menu-div').style.width = '700px';
+		gId('menu-div').style.height = '450px';
+
+		gId('menu-div').style.display = "block";
+		change_style('select', 'hidden');
+		gId('actionControls').innerHTML = "";
+		document.Check_Form.submit();
+	}
+}
+function _showCloseWindowButton()
+{
+	gId('actionControls').innerHTML = "<img src=\"../Images/closewindow.gif\" onclick=\"closeLog('menu-div');\" id=\"actionCloseBox\"/>";
+	//parent.gId('popupControls').style.display = 'block';
+	gId('submitbutton').disabled = false;
+	gId('reset').disabled = false;
+}
+</script>
+<style>
+	select,img {vertical-align: middle;}
+	select {border:1px solid #cacaca;font-family: Calibri,"宋体",sans-serif;vertical-align: middle;}
+	textarea{height:100px;border:1px solid #cacaca;font-family: Calibri,"宋体",sans-serif;}
+    .t_table{border:1px solid #cacaca;margin-bottom:5px;width:99%}
+    .t_table tr{height:34px;color:#5d5d5d;}
+    .t_table tr th{background-color: #f9f9f9;padding:0 5px;}
+    .t_table tr td{padding:0 5px;}
+    .t_table tr th{font-weight:bold;}
+    .t_table tr th.title,.d_table tr td.title{text-align:left;}    
+    .t_table tr td a{color:#3b5888;}
+    .t_table tr td a:hover{color:#ff7700;}
+    .t_table tr:hover{background-color:transparent}
+	.t_table table{line-height:20px}
+</style>
+
+<body oncontextmenu="return false">
+ 	<div class="header">
+		<h1 class="logo">Eclear</h1>
+		<div class="header_menu">
+			<div class="header_m_1">
+				<a href="../System/ShowMain.php">欢迎您，<font color="#e45857" id="nick_Name_cont"></font></a>
+				<span class="head_menu_icon"></span>
+				<ul class="head_menu_list">
+					<span class="head_menu_top"></span>
+					<li><a href="../System/MyProfile.php">我的账户信息</a></li>
+					<li class="last"><a href="../System/ChangePass.php">修改我的密码</a></li>
+				</ul>
+			</div>
+			<div class="header_m_6" style="margin-left:50px">
+				<a href="../System/ShowMain.php">首页</a>
+			</div>
+			<div class="header_m_2" id="mySetting">
+			</div>
+			<div class="header_m_3" style="margin-left:50px">
+				<a href="../Help/Downs.php">帮助</a>
+				<span class="head_menu_icon"></span>
+				<ul class="head_menu_list">
+					<span class="head_menu_top"></span>
+					<li><a href="../Help/Downs.php">帮助文件下载</a></li>
+					<li><a href="http://doc.itenable.com.cn" target=_blank>在线帮助文档</a></li>
+					<li><a href="http://i.enableq.com" target=_blank>在线讨论社区</a></li>
+					<li class="last"><a href="../System/AdministratorsLogs.php">系统操作日志</a></li>
+				</ul>
+			</div>
+			<div class="header_m_4" style="margin-left:50px">
+				<a href="javascript:void(0);" onclick="javascript:showPopWin('../License/AboutEnableQ.php', 500, 400, null, null,'关于...')">关于</a>
+			</div>
+			<div class="header_m_5">
+				<a href="../System/Logout.php?loginOutURL=../index.php" target=_top>退出</a>
+			</div>
+		</div>
+	</div><!--end of header-->
+	<script type="text/javascript" src="../JS/MySetting.js.php"></script>
+
+	<div class="container clearfix">
+	   <div class="main">
+	    <div class="content">
+			<div class="content_tit">
+				<div class="clearfix">
+				<h1><span class=redtitle>[{surveyTitle}]</span>发送邀请邮件</h1>
+				<span class="total ml10"></span>
+				<span class="btn ml10"></span>
+				</div>
+				<p class="fc_grey">向特定调研对象发送电子邮件邀请&nbsp;<a href=http://i.enableq.com/view.php?tid=31 target=_blank><font color=red><b>[帮助]</font></b></a>&nbsp;，“公开”问卷可随意选择身份账户，“私有”问卷仅能向符合抽样规则的样本账户发送</p>
+			</div>
+		   <div class="content_main" style="margin-top:10px;">
+			   <form action="" method="post" name="Check_Form" id="Check_Form" target="the_tips_iframe">
+		       <table class="t_table">
+  				  <tr class=coltitle><th align=left style="border-bottom:1px solid #cacaca;"><b>选择邮件账户</b></th></tr>
+				  <tr><td height="25" style="line-height:20px">
+					 &nbsp;将向下列身份账户发送<span class=red>{surveyTitle}</span>(问卷类型：{surveyType})问卷邀请邮件：<br/>
+					 &nbsp;<textarea name="adUserName" Id="adUserName" rows=7 cols=157 style="margin-bottom:2px" {privateSurvey}>{adUserName}</textarea><br/>
+					 <a href='javascript:void(0)' style="float:left;display:{isPrivate}" onclick="javascript:showPopWin('{LDAPURL}?Field=adUserName', 760, 430, null, null,'选择目录系统中的账户');">&nbsp;<span class=red>>>选择目录系统中的账户</span></a>
+				  </td></tr>
+				  <tr><td bgcolor="#f9f9f9" height=30 style="border-top:1px solid #cacaca;border-bottom:1px solid #cacaca;"><b>以下为邮件发送内容：</b></td></tr>
+				  <tr><td style="padding:0px;line-height:20px">
+						   <div style="background-color:#B7D1F4;border:#B7D1F4 1px solid;">
+							<img SRC="../Images/Editor/head.gif" WIDTH="10" HEIGHT="26">
+							<a href="javascript:void(0)" onclick="doExecCommand('Bold')"><img src="../Images/Editor/bold.gif" WIDTH="20" HEIGHT="20" title="Bold"></a>
+							<a href="javascript:void(0)" onclick="doExecCommand('Italic')"><img src="../Images/Editor/italic.gif" WIDTH="20" HEIGHT="20" title="Italic"></a>
+							<a href="javascript:void(0)" onclick="doExecCommand('Underline')"><img src="../Images/Editor/underline.gif" WIDTH="20" HEIGHT="20" title="Underline"></a>
+							<img src="../Images/Editor/separator.gif" WIDTH="5" HEIGHT="20">
+							<a href="javascript:void(0)" onclick="doExecCommand('Undo')"><img src="../Images/Editor/undo.gif" width="20" height="20" title="Undo"></a>
+							<a href="javascript:void(0)" onclick="doExecCommand('Redo')"><img src="../Images/Editor/redo.gif" width="20" height="20" title="Redo"></a>
+							<img src="../Images/Editor/separator.gif" WIDTH="5" HEIGHT="20">
+							<a href="javascript:void(0)" onclick="doExecCommand('JustifyLeft')"><img src="../Images/Editor/jleft.gif" WIDTH="20" HEIGHT="20" title="JustifyLeft"></a>
+							<a href="javascript:void(0)" onclick="doExecCommand('JustifyCenter')"><img src="../Images/Editor/jcenter.gif" WIDTH="20" HEIGHT="20" title="JustifyCenter"></a>
+							<a href="javascript:void(0)" onclick="doExecCommand('JustifyRight')"><img src="../Images/Editor/jright.gif" WIDTH="20" HEIGHT="20" title="JustifyRight"></a>
+							<img src="../Images/Editor/separator.gif" WIDTH="5" HEIGHT="20">
+							<a href="javascript:void(0)" onclick="doExecCommand('Cut')"><img src="../Images/Editor/cut.gif" WIDTH="20" HEIGHT="20" title="Cut"></a>
+							<a href="javascript:void(0)" onclick="doExecCommand('Copy')"><img src="../Images/Editor/copy.gif" WIDTH="20" HEIGHT="20" title="Copy"></a>
+							<a href="javascript:void(0)" onclick="doExecCommand('Paste')"><img src="../Images/Editor/paste.gif" WIDTH="20" HEIGHT="20" title="Paste"></a>
+							<a href="javascript:void(0)" onclick="doExecCommand('Delete')"><img src="../Images/Editor/delete.gif" WIDTH="16" HEIGHT="16" title="Delete"></a>
+							<img src="../Images/Editor/separator.gif" WIDTH="5" HEIGHT="20">
+							<a href="javascript:void(0)" onclick="doExecCommand('createLink')"><img src="../Images/Editor/link.gif" WIDTH="16" HEIGHT="16" title="CreateLink"></a>
+							<img src="../Images/Editor/separator.gif" WIDTH="5" HEIGHT="20">
+							<a href="javascript:void(0)" onclick="javascript:{var textEditor = document.getElementById('theEditor');textEditor.focus();editTextRange = textEditor.document.selection.createRange();showPopWin('ShowEditorImage.php', 590, 250, null, null,'插入图片与视频');}"><img src="../Images/Editor/image.gif" WIDTH="16" HEIGHT="16" title="InsertImage"></a>
+						   </div>
+						   <div style="background-color:#B7D1F4;border:#B7D1F4 1px solid;">
+							<img SRC="../Images/Editor/head.gif" WIDTH="10" HEIGHT="26">
+							<!--<select onchange="doSelectClick('FormatBlock',this);this.returnValue=false;" style="width: 80px;margin-bottom:4px;">
+							  <option>段落格式</option>
+							  <option VALUE="&lt;P&gt;">普通</option>
+							  <option VALUE="&lt;PRE&gt;">已编排格式</option>
+							  <option VALUE="&lt;H1&gt;">标题一</option>
+							  <option VALUE="&lt;H2&gt;">标题二</option>
+							  <option VALUE="&lt;H3&gt;">标题三</option>
+							  <option VALUE="&lt;H4&gt;">标题四</option>
+							  <option VALUE="&lt;H5&gt;">标题五</option>
+							  <option VALUE="&lt;H6&gt;">标题六</option>
+							  <option VALUE="&lt;H7&gt;">标题七</option>
+							</select>-->
+							<select onchange="doSelectClick('FontName',this);" style="width: 125px;margin-bottom:4px;">
+								<option selected>字体</option>
+								<option value="宋体">宋体</option>
+								<option value="黑体">黑体</option>
+								<option value="楷体">楷体</option>
+								<option value="仿宋">仿宋</option>
+								<option value="隶书">隶书</option>
+								<option value="幼圆">幼圆</option>
+								<option value="Arial">Arial</option>
+								<option value="Arial Black">Arial Black</option>
+								<option value="Arial Narrow">Arial Narrow</option>
+								<option value="Brush Script	MT">Brush Script MT</option>
+								<option value="Century Gothic">Century Gothic</option>
+								<option value="Comic Sans MS">Comic Sans MS</option>
+								<option value="Courier">Courier</option>
+								<option value="Courier New">Courier New</option>
+								<option VALUE="Georgia">Georgia
+								<option VALUE="impact">impact
+								<option value="MS Sans Serif">MS Sans Serif</option>
+								<option value="Script">Script</option>
+								<option value="System">System</option>
+								<option VALUE="Tahoma">Tahoma
+								<option value="Times New Roman">Times New Roman</option>
+								<option value="Calibri">Calibri</option>
+								<option value="Wide	Latin">Wide Latin</option>
+								<option value="Wingdings">Wingdings</option>
+							</select>
+							<select onchange="doSelectClick('FontSize',this);" style="width: 75px;margin-bottom:4px;">
+								 <option>字体大小</option>
+								 <option VALUE="1">8</option>
+								 <option VALUE="2">10</option>
+								 <option VALUE="3">12</option>
+								 <option VALUE="4">14</option>
+								 <option VALUE="5">18</option>
+								 <option VALUE="6">24</option>
+								 <option VALUE="7">36</option>
+						   </select>
+						  <select  name="ForeColor" onChange="doFormat('ForeColor',this[this.selectedIndex].style.color); this.selectedIndex=0" style="width: 80px;margin-bottom:4px;">
+							  <OPTION selected>文字颜色
+							  <OPTION style="BACKGROUND: #000000; Color: #000000">Black</option>
+							  <OPTION style="BACKGROUND: #FFFFFF; Color: #FFFFFF">White</option>
+							  <OPTION style="BACKGROUND: #0000FF; Color: #0000FF">Blue 1</option>
+							  <OPTION style="BACKGROUND: #2222FF; Color: #2222FF">Blue 2</option>
+							  <OPTION style="BACKGROUND: #4444FF; Color: #4444FF">Blue 3</option>
+							  <OPTION style="BACKGROUND: #6666FF; Color: #6666FF">Blue 4</option>
+							  <OPTION style="BACKGROUND: #333333; Color: #333333">Gray 1</option>
+							  <OPTION style="BACKGROUND: #666666; Color: #666666">Gray 2</option>
+							  <OPTION style="BACKGROUND: #999999; Color: #999999">Gray 3</option>
+							  <OPTION style="BACKGROUND: #EEEEEE; Color: #EEEEEE">Gray 4</option>
+							  <OPTION style="BACKGROUND: #004000; Color: #004000">Green 1</option>
+							  <OPTION style="BACKGROUND: #006000; Color: #006000">Green 2</option>
+							  <OPTION style="BACKGROUND: #008000; Color: #008000">Green 3</option>
+							  <OPTION style="BACKGROUND: #00A000; Color: #00A000">Green 4</option>
+							  <OPTION style="BACKGROUND: #FF0000; Color: #FF0000">Red 1</option>
+							  <OPTION style="BACKGROUND: #FF2222; Color: #FF2222">Red 2</option>
+							  <OPTION style="BACKGROUND: #FF4444; Color: #FF4444">Red 3</option>
+							  <OPTION style="BACKGROUND: #FF6666; Color: #FF6666">Red 4</option>
+							  <OPTION style="BACKGROUND: #FFFF00; Color: #FFFF00">Yellow 1</option>
+							  <OPTION style="BACKGROUND: #FFFF33; Color: #FFFF33">Yellow 2</option>
+							  <OPTION style="BACKGROUND: #FFFF66; Color: #FFFF66">Yellow 3</option>
+							  <OPTION style="BACKGROUND: #FFFF99; Color: #FFFF99">Yellow 4</option>
+							</select>
+							<select name="fontbackground" onChange="doFormat('BackColor',this[this.selectedIndex].style.color); this.selectedIndex=0" style="width: 80px;margin-bottom:4px;">
+							  <OPTION selected>文字底色</option>
+							  <OPTION style="BACKGROUND: #000000; Color: #000000">Black</option>
+							  <OPTION style="BACKGROUND: #FFFFFF; Color: #FFFFFF">White</option>
+							  <OPTION style="BACKGROUND: #0000FF; Color: #0000FF">Blue 1</option>
+							  <OPTION style="BACKGROUND: #2222FF; Color: #2222FF">Blue 2</option>
+							  <OPTION style="BACKGROUND: #4444FF; Color: #4444FF">Blue 3</option>
+							  <OPTION style="BACKGROUND: #6666FF; Color: #6666FF">Blue 4</option>
+							  <OPTION style="BACKGROUND: #333333; Color: #333333">Gray 1</option>
+							  <OPTION style="BACKGROUND: #666666; Color: #666666">Gray 2</option>
+							  <OPTION style="BACKGROUND: #999999; Color: #999999">Gray 3</option>
+							  <OPTION style="BACKGROUND: #EEEEEE; Color: #EEEEEE">Gray 4</option>
+							  <OPTION style="BACKGROUND: #004000; Color: #004000">Green 1</option>
+							  <OPTION style="BACKGROUND: #006000; Color: #006000">Green 2</option>
+							  <OPTION style="BACKGROUND: #008000; Color: #008000">Green 3</option>
+							  <OPTION style="BACKGROUND: #00A000; Color: #00A000">Green 4</option>
+							  <OPTION style="BACKGROUND: #FF0000; Color: #FF0000">Red 1</option>
+							  <OPTION style="BACKGROUND: #FF2222; Color: #FF2222">Red 2</option>
+							  <OPTION style="BACKGROUND: #FF4444; Color: #FF4444">Red 3</option>
+							  <OPTION style="BACKGROUND: #FF6666; Color: #FF6666">Red 4</option>
+							  <OPTION style="BACKGROUND: #FFFF00; Color: #FFFF00">Yellow 1</option>
+							  <OPTION style="BACKGROUND: #FFFF33; Color: #FFFF33">Yellow 2</option>
+							  <OPTION style="BACKGROUND: #FFFF66; Color: #FFFF66">Yellow 3</option>
+							  <OPTION style="BACKGROUND: #FFFF99; Color: #FFFF99">Yellow 4</option>
+							</select>		   
+						  </div>
+						  <div id="theEditor" name="theEditor" contentEditable=true style="font-size:100%; overflow:auto;font-family: Calibri;*padding:10px;line-height:140%">{emailContent}</div>
+					  </td>
+				  </tr></table>
+			      <table width=100% style="margin-bottom:15px">
+				  <tr> 
+					  <td height="23">
+					  <input class=inputsubmit type="button" name="submitbutton" id="submitbutton" value="确定" onclick="javascript:submit_form_action();"> 
+					  <input class=inputsubmit type="reset" name="reset" id="reset" value="重置"> 
+					  <input name="surveyID" type="hidden" value="{surveyID}"> 
+					  <input name="isPublic" type="hidden" value="{isPublic}"> 
+					  <input name="passType" type="hidden" value="{passType}"> 
+					  <input name="emailContent" id="emailContent" type="hidden">
+					  <input name="Action" type="hidden" id="Action" value="EmailSendSubmit"> 
+					  </td>
+				   </tr>
+			   </table>
+			</form>       
+			<div id="menu-div" style="width:692px;">
+				<div id="actionInner">
+				  <div id="actionTitleBar">
+					  <div id="actionTitle">发送问卷邀请邮件提示信息</div>
+					  <div id="actionControls"><img src="../Images/closewindow.gif"></div>
+				  </div>
+				  <div style="padding:0px;margin:0px;overflow:hidden;height:430px;width:692px;"><iframe src="" style="width:100%;height:100%;overflow-x:hidden;overflow-y:auto;" frameborder="0" id="the_tips_iframe" name="the_tips_iframe"></iframe></div>
+			   </div>
+			</div>
+			</div><!--end of content_main-->
+		   </div><!--end of content-->
+	   </div><!--end of main-->
+    </div><!--end of container-->
+	<!--popmenu -->
+	<script type="text/javascript" src="../JS/PopMenu.js.php"></script>
+</body></html>

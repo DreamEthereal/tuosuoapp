@@ -1,0 +1,109 @@
+<settings> 
+  <data_type>csv</data_type>
+  <add_time_stamp>true</add_time_stamp>
+  <font>Tahoma</font>                                                                
+  <decimals_separator>.</decimals_separator>
+  <background>  
+    <alpha>100</alpha>
+    <border_alpha>15</border_alpha>
+  </background>
+  <pie>
+    <x>{xvalue}</x>
+    <inner_radius>{inner_radiu}</inner_radius>
+    <height>{height}</height>    
+    <angle>{angle}</angle>
+    <brightness_step>{brightness_step}</brightness_step>
+    <radius>{radius}</radius>
+    <gradient>{gradient}</gradient>
+    <gradient_ratio>{gradient_ratio}</gradient_ratio>
+  </pie> 
+  
+  <data_labels>
+    <radius></radius>
+    <show>
+       <![CDATA[{title}]]>        
+    </show>
+    <line_color>#000000</line_color>           
+    <line_alpha>15</line_alpha>                
+    <hide_labels_percent></hide_labels_percent>                                       
+  </data_labels>  
+  
+  <animation>
+    <start_time>2</start_time>
+    <start_effect>strong</start_effect>
+    <pull_out_time>1.5</pull_out_time>
+    <sequenced>true</sequenced> 
+  </animation>
+  
+  <group>
+    <percent>0</percent>
+    <color></color>
+    <pull_out>true</pull_out>
+    <title>other</title>
+  </group>
+  
+  <balloon>
+    <alpha>80</alpha>
+    <text_color>000000</text_color>
+    <show>
+       <![CDATA[{title}]]>
+    </show>
+  </balloon>
+  
+  <legend>
+    <enabled></enabled>
+    <max_columns>1</max_columns>
+    <x>400</x>
+    <y>80</y>
+    <width>300</width>
+    <spacing>6</spacing>
+    <values>                                        
+      <enabled>true</enabled>             
+      <width>100</width>                   
+     </values>      
+  </legend>
+  
+  <labels>
+    <label>
+      <x>0</x>
+      <y>25</y>
+      <align>center</align>
+      <text_size>14</text_size>
+      <text>
+        <![CDATA[<b>{questionName}<br>(N={totalValue})</b>]]>
+      </text>        
+    </label>
+  </labels>
+
+  <export_as_image>
+    <file>../Chart/ChartExport.php</file> 
+    <target>_top</target>
+    <x></x>
+    <y></y>
+    <color></color>
+    <alpha>100</alpha>
+    <text_color></text_color>
+    <text_size></text_size>
+  </export_as_image>
+ 
+   <context_menu>
+   
+ <default_items>
+
+	   <zoom>false</zoom>
+
+	   <print>false</print>
+
+	</default_items>
+   </context_menu>  
+
+   <strings>
+    <no_data>尚无符合条件的问卷数据，无法绘制图形</no_data>
+    <export_as_image>以图片格式导出</export_as_image>
+    <collecting_data>收集数据过程中...</collecting_data>
+    <ss></ss>
+    <mm></mm>
+    <hh></hh>
+    <DD></DD>  
+  </strings>  
+</settings>

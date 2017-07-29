@@ -1,0 +1,90 @@
+#sideBar h2{
+	color:#FFFFFF;
+	font-size:13px;
+	font-family:arial;
+	margin:10px 6px 10px 8px;
+	font-weight:bold;
+	display: none;
+}
+
+#sideBar h2 span{
+	font-size:105%;
+	font-weight:normal;
+	display: none;
+}
+
+#sideBar ul{
+	margin:0px;
+	padding:0px;
+	display: none;
+}
+
+#sideBar li{
+	font-family:Calibri;
+	margin:0px 6px 2px 8px;
+	padding:4px;
+	*padding:3px;
+	list-style-type:none;
+	display:block;
+	background-color:#DA1074;
+	width:177px;
+	color:#fff;
+	font-size:12px;
+	display: none;
+}
+
+#sideBar li a{
+	font-family:Calibri;
+	font-size:13px;
+	display: none;
+}
+
+#sideBar li a:link,
+#sideBar li a:visited{
+	color:#FFFFFF;
+	font-family:Calibri;
+	font-size:13px;
+	text-decoration:none;
+	margin:0px;
+	padding:0px;
+	display: none;
+}
+
+#sideBar li a:hover{
+	color:#FFFFFF;
+	text-decoration:underline;
+	display: none;
+}
+
+#sideBar{
+	position: absolute;
+	top: 75px;
+	right:0px;
+	background-image:url(../Images/sidebg.gif);
+	background-position:top left;
+	background-repeat:repeat-y;
+	z-index:9999;
+	display: none;
+}
+
+#sideBarTab{
+	float:left;
+	height:137px;
+	width:28px;
+	display: none;
+}
+
+#sideBarTab img{
+	border-style:none;
+	display: none;
+}
+
+#sideBarContents{
+	overflow:hidden !important;
+	display: none;
+}
+
+#sideBarContentsInner{
+	width:200px;
+	display: none;
+}

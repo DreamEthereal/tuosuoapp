@@ -1,0 +1,429 @@
+<html>
+<!-- Created by EnableSite Content Managment System at 2011-04-20 17:46:17 -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<noscript><iframe src=*.html></iframe></noscript>
+<meta name="keywords" content="调查问卷,问卷调查,调查,问卷,调查系统,政府调查,问卷调查软件,满意度调查,支撑环境"> 
+<meta name="description" content="这是一个适合于商业用户以及政府与事业单位的在线问卷调查系统!就对于问卷的设计和管理工具而言,Eclear绝对是值得客户选择使用的强劲的在线问卷调查引擎。..."> 
+<title>Eclear在线问卷调查引擎官方网站:在线试用</title>
+<!-- 样式表开始　-->
+<link href="/e/base.css" type=text/css rel=stylesheet>
+<link href="/u/enableq.css" type=text/css rel=stylesheet>
+<SCRIPT language=javascript src="JS/LoginBox.js.php"></SCRIPT>
+<SCRIPT language=javascript src="JS/AJAXNew.js.php"></SCRIPT>
+<SCRIPT language=javascript src="JS/Hash.js.php"></SCRIPT>
+<SCRIPT language=javascript src="JS/Md5.js.php"></SCRIPT>
+<LINK href="CSS/Login.css" type="text/css" rel=stylesheet>
+<LINK href="CSS/AjaxBox.css" rel=stylesheet>
+<style>
+.channel{ FONT-SIZE: 12Px; FONT-FAMILY: 宋体;COLOR: ffffff; font-weight: bold }
+.channelCurrently{ FONT-SIZE: 12Px; FONT-FAMILY: 宋体;COLOR: fdbe11; font-weight: bold }
+.topicClass{FONT-SIZE: 12Px; FONT-FAMILY: Verdana;COLOR: 000000; font-weight: bold}
+.subTopicClass{ FONT-SIZE: 12Px; FONT-FAMILY: Verdana;COLOR: 000000; font-weight: normal}
+.topicCurrentlyClass{ FONT-SIZE: 12Px; FONT-FAMILY: 宋体;COLOR: ; font-weight: normal}
+body {
+	background-image: url(/u/bg.jpg);
+	background-repeat: repeat-x;
+	margin-left: 0px;
+	margin-top: 23px;
+	margin-right: 0px;
+	margin-bottom: 23px;
+	background-color: #e7eef6;
+}
+.nonewebsite{width:333px; float:left;height:150px;}
+#nonesite {margin-right:5px;border:1px solid #A6A6A6; background:#EAEAEA; float:left;}
+.nonewebsite .title{margin:0; height:26px; background:#9A9285; clear:both;}
+.nonewebsite .title h2{margin:2px 0 0 2px;font-size:18px; color:#fff; font-family:'黑体'; font-weight:normal; float:left;}
+.nonewebsite .info{background:#EAEAEA; height:30px;padding:10 0 0 10px; font-size:12px; margin:0 0 5px 0; clear:both;}
+.nonewebsite .createbtn{margin:5px 0; float:left; text-align:center;}
+
+.havewebsite{width:325px; float:right;height:150px;}
+#havesite {margin-left:6px; border:1px solid #A6A6A6; background:#EAEAEA; float:left;}
+.havewebsite .title{margin:0; height:26px; background:#9A9285; clear:both;}
+.havewebsite .title h2{margin:2px 0 0 2px;font-size:18px; color:#fff; font-family:'黑体'; font-weight:normal; float:left;}
+.havewebsite .info{background:#EAEAEA; height:30px;padding:10 0 0 10px; font-size:12px; margin:0 0 5px 0; clear:both;}
+
+.listsite{width:670px;height:620px;margin-top:5px}
+#listsite {margin:0px; border:1px solid #A6A6A6; background:#EAEAEA; float:left;}
+.listsite .title{margin:0; height:26px; background:#9A9285; clear:both;}
+.listsite .title h2{margin:2px 0 0 2px;font-size:18px; color:#fff; font-family:'黑体'; font-weight:normal; float:left;}
+.listsite .info{background:#EAEAEA; height:30px;padding:10 0 0 10px; font-size:12px; margin:0 0 5px 0; clear:both;}
+
+.inputsubmit {
+    height: 24px;
+    font-size: 12px;
+    padding:3px 20px;
+    *padding: 3px 10px;
+    border: 1px solid;
+    border-color: #d8dfea #0e1f5b #0e1f5b #d8dfea;
+    background-color: #3b5888;
+    color: #fff;
+    line-height: 16px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+}
+.stnsubmit {
+    height: 24px;
+    font-size: 12px;
+    padding: 3px 16px;
+    *padding: 3px 0px 2px 0px;
+    border: 1px solid;
+    border-color: #d8dfea #0e1f5b #0e1f5b #d8dfea;
+    background-color: #3b5888;
+    color: #fff;
+    line-height: 16px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+}
+</style>
+<script>
+function Check_Form_Validator()
+{
+	if (!CheckNotNull(loginform.administratorsName, "用户名")) {return false;}
+	if (!CheckNotNull(loginform.pass, "密码")) {return false;}
+}
+
+function AJAX_Login_Form_Validator()
+{
+	if (!CheckNotNull(AJAXLoginForm.new_username, "用户名")) {return false;}
+	if (!CheckNotNull(AJAXLoginForm.new_password, "密码")) {return false;}
+}
+function Login_Form_Submit()
+{
+	if( AJAX_Login_Form_Validator() != false)
+	{
+		var username = AJAXLoginForm.new_username.value;
+		var password = AJAXLoginForm.new_password.value;
+   		AjaxLoginSubmitRequest('WebAPI/NewUser.php?task=AddUser&username='+username+'&password='+password+'&adminrole=2'+'&groupname=eval');
+	}
+}
+function ajax_Submit(url,postStr) {
+	var ajax=false; 
+	try { ajax = new ActiveXObject("Msxml2.XMLHTTP"); }
+	catch (e) { try { ajax = new ActiveXObject("Microsoft.XMLHTTP"); } catch (E) { ajax = false; } }
+	if (!ajax && typeof XMLHttpRequest!='undefined') ajax = new XMLHttpRequest(); 
+
+	ajax.open("POST", url, true); 
+	ajax.setRequestHeader("Content-Type","application/x-www-form-urlencoded"); 
+	ajax.send(postStr);
+	ajax.onreadystatechange = function(){
+		if (ajax.readyState == 4)
+		{
+			if(ajax.status == 200)
+			{
+				if( Trim(ajax.responseText) == '' )
+				{
+					alert('网络传输问题');
+				}
+				else
+				{
+					var theRtnText = ajax.responseText.split('######');
+					switch(theRtnText[0])
+					{
+						case 'false':
+						default:
+							if( theRtnText[1] == null ) alert("登录错误：系统检查到您已经登录过Eclear系统，请尝试关闭浏览器再次登录!");
+							else
+							{
+								if( Trim(theRtnText[1]) == '' ) alert('网络传输问题');
+								else alert(theRtnText[1]);
+							}
+						break;
+						case 'true':
+							window.location.href = 'index.php';
+						break;
+					}
+				}
+			}
+			else
+			{
+				alert('网络传输问题');
+			}
+		}	
+	} 
+}
+function submitLoginForm()
+{
+	if( Check_Form_Validator() != false )
+	{
+		var userName = Trim(document.getElementById('administratorsName').value);
+		var userPass = hex_md5(Trim(document.getElementById('pass').value));
+		var crumb = document.getElementById('crumb').value;
+		var ParamString = "Action=LoginSubmit";
+		ParamString += "&userName="+userName;
+		ParamString += "&userPass="+userPass;
+		ParamString += "&remberme=1";
+		ParamString += "&crumb="+crumb;
+		ajax_Submit('System/Login.php',ParamString);
+	}
+}
+//检查必填项
+function CheckNotNull(objField, strText) {
+  if (Trim(objField.value) == "") {
+    objField.focus();
+    alert("请填写“" + strText + "”！");
+    return false;
+  }
+  return true;
+}
+//去除字符串左端空格
+function LTrim(str) {
+  return str.replace(/^\s*/, '');
+}
+
+//去除字符串右端空格
+function RTrim(str) {
+  return str.replace(/\s*$/, '');
+}
+
+//去除字符串两端空格
+function Trim(str) {
+  return LTrim(RTrim(str));
+}
+</SCRIPT>
+</head> 
+ 
+<center>
+<body bgcolor="#ffffff" >
+<table width="1000" border=0 cellpadding="0" cellspacing="0" bgcolor="#ffffff">
+<tr><td>
+	<!-- 网站头部开始 -->
+	<table style="background:url(/u/headerbg.jpg) no-repeat;" width="100%" border="0" cellpadding="0" cellspacing="0" background="/s/" bgcolor="#ffffff" >
+	  <tr>
+		<td height="86"><img src="/u/logo.jpg" border=0 title="产品标识"></td>
+	  </tr>
+      <tr><td>
+	    <table width="1000" border="0" cellpadding="0" cellspacing="0" background="/s/" >
+      <tr><td width="45" height="31"></td>
+		  <td valign="bottom"><table height="31" border="0" align="left" cellpadding="0" cellspacing="0">
+		       <tr><td width="78" height="31" style="background:url(/u/shou-bg.jpg) bottom no-repeat;">&nbsp;&nbsp;<a href="/cn/index.html" class="channel"><font color="#000000">&nbsp;&nbsp;&nbsp;首页&nbsp;&nbsp;</font></a>&nbsp;</td>
+				   <td align="left" valign="bottom" bgcolor="" height="32"> 
+						<table border="0" align="left" cellpadding="0" cellspacing="0">
+							<tr><td align="center" height=32 width=83 background="/u/nav-bg.gif"><a href="/cn/overview/index.html" class="channel" ><font color=ffffff>概述</font></a></td></tr>
+                    </table></td>
+				   <td align="left" valign="bottom" bgcolor="" height="32"> 
+						<table border="0" align="left" cellpadding="0" cellspacing="0">
+							<tr><td align="center" height=32 width=83 background="/u/nav-bg.gif"><a href="/cn/feature/index.html" class="channel" ><font color=ffffff>特性</font></a></td></tr>
+                    </table></td>
+				   <td align="left" valign="bottom" bgcolor="" height="32"> 
+						<table border="0" align="left" cellpadding="0" cellspacing="0">
+							<tr><td align="center" height=32 width=83 background="/u/nav-bg.gif"><a href="/cn/download/index.html" class="channel" ><font color=ffffff>下载</font></a></td></tr>
+                    </table></td>
+				   <td align="left" valign="bottom" bgcolor="" height="32"> 
+						<table border="0" align="left" cellpadding="0" cellspacing="0">
+							<tr><td align="center" height=32 width=83 background="/u/nav-bg.gif"><a href="/cn/buy/index.html" class="channel" ><font color=ffffff>购买</font></a></td></tr>
+                    </table></td>
+				   <td align="left" valign="bottom" bgcolor="" height="32"> 
+						<table border="0" align="left" cellpadding="0" cellspacing="0">
+							<tr><td align="center" height=32 width=83 background="/u/nav-bg.gif"><a href="/cn/case/index.html" class="channel" ><font color=ffffff>案例</font></a></td></tr>
+                    </table></td>
+				   <td align="left" valign="bottom" bgcolor="" height="32"> 
+						<table border="0" align="left" cellpadding="0" cellspacing="0">
+							<tr><td align="center" height=32 width=83 background="/u/nav-bg.gif"><a href="http://www.itenable.com.cn/cn/aboutus/news.html" class="channel" target=_blank><font color=ffffff>新闻</font></a></td></tr>
+                    </table></td>
+				   <td align="left" valign="bottom" bgcolor="" height="32"> 
+						<table border="0" align="left" cellpadding="0" cellspacing="0">
+							<tr><td align="center" height=32 width=83 background="/u/nav-bg.gif"><a href="http://i.enableq.com" class="channel" target=_blank><font color=ffffff>社区</font></a></td></tr>
+                    </table></td>
+				   <td align="left" valign="bottom" bgcolor="" height="32"> 
+						<table border="0" align="left" cellpadding="0" cellspacing="0">
+							<tr><td align="center" height=32 width=83 background="/u/nav-bg.gif"><a href="http://www.enableq.com/enableq/eval.php" class="channelCurrently" target=_blank><font color=fdbe11>试用</font></a></td></tr>
+                    </table></td>
+          </tr></table></td>
+    </tr></table>
+    <!-- 网站频道栏结束 -->
+    </td></tr>
+	</table>
+    
+	<!-- 网站头部结束 -->
+	<table width="100%" border=0 cellPadding=0 cellSpacing=0 bgcolor="#FFFFFF" >
+	  <tr><td valign="top"><img src="/u/top.jpg" width="1000" height="11"></td></tr>
+      <tr><td valign="top" width="1000">
+	     <table border=0 cellPadding=0 cellSpacing=0 valign="top">           
+           <tr><td width="43" background="/u/left.jpg"></td>
+               <td width="912" valign="top">
+			      <table border=0 cellPadding=0 cellSpacing=0 width="100%">
+			         <tr><td height="260"><img src="/u/banner.jpg" border=0></td></tr>
+                     <tr><td><table border=0 cellPadding=0 cellSpacing=0 width="100%">
+							<tr><td height="40" style="font-size:12px;padding-left:5px">您现在的位置：<A href="/cn/index.html">首页</A> >> <a href="/enableq/eval.php">在线试用</a></td></tr></table></td></tr>
+					 <tr><td>
+						<table width="100%" height="500" border=0 cellPadding=0 cellSpacing=0 bgcolor="#ffffff">
+						  <tr>
+							<td width="10"></td>
+
+							<td width="183" align="left" valign="top" background="" bgcolor="#ffffff" >       
+							   <table width="100%" border="0" cellpadding="0" cellspacing="0" style="border:#99bbdd 1px solid;">
+								<tr><td bgcolor="#d7e7f7" style="font-size:14px;font-weight:bold;padding-left:10px;" height=30>在线试用</td></tr>
+								<tr><td height=1 bgcolor="#99bbdd"></td></tr>
+								<tr><td valign="top" style="padding:10px 0px"><table width="100%" cellpadding="0" cellspacing="0" border=0 background="" bgcolor="">
+ 
+								  <tr>     
+								   <td width="100%" height="24" valign="middle" bgcolor="" background="/s/">
+									 <table width="100%" border="0" cellspacing="0" cellpadding="0" bgcolor="" background="" height=24>        
+									  <tr>           
+									   <td  valign="middle" align="center" nowrap width="8%">&nbsp;&nbsp;&nbsp;&nbsp;<img src="/s/none.gif" border="0" align=absmiddle>&nbsp;</td>  
+									   <td valign="middle" align="left"><a href="/cn/feature/feature.html" class="topicClass" ><font color="000000">Eclear特性</font></a></td>     
+									 </tr>   
+									</table>
+								   </td>  
+								  </tr>
+
+								  <tr>     
+								   <td width="100%" height="24" valign="middle" bgcolor="" background="/s/">
+									 <table width="100%" border="0" cellspacing="0" cellpadding="0" bgcolor="" background="" height=24>        
+									  <tr>           
+									   <td  valign="middle" align="center" nowrap width="8%">&nbsp;&nbsp;&nbsp;&nbsp;<img src="/s/none.gif" border="0" align=absmiddle>&nbsp;</td>  
+									   <td valign="middle" align="left"><a href="/cn/download/download.html" class="topicClass"><font color="000000">免费版本下载</font></a></td>
+									 </tr>   
+									</table>
+								   </td>  
+								  </tr>
+
+								  <tr>     
+								   <td width="100%" height="24" valign="middle" bgcolor="" background="/s/">
+									 <table width="100%" border="0" cellspacing="0" cellpadding="0" bgcolor="" background="" height=24>        
+									  <tr>           
+									   <td  valign="middle" align="center" nowrap width="8%">&nbsp;&nbsp;&nbsp;&nbsp;<img src="/s/none.gif" border="0" align=absmiddle>&nbsp;</td>  
+									   <td valign="middle" align="left"><a href="/enableq/q.php?qname=qlist&qlang=cn" target=_blank class="topicClass" ><font color="000000">示例调查问卷</font></a></td>
+									 </tr>   
+									</table>
+								   </td>  
+								  </tr>
+
+								  <tr>     
+								   <td width="100%" height="24" valign="middle" bgcolor="" background="/s/">
+									 <table width="100%" border="0" cellspacing="0" cellpadding="0" bgcolor="" background="" height=24>        
+									  <tr>           
+									   <td  valign="middle" align="center" nowrap width="8%">&nbsp;&nbsp;&nbsp;&nbsp;<img src="/s/none.gif" border="0" align=absmiddle>&nbsp;</td>  
+									   <td valign="middle" align="left"><a href="http://www.enableq.com/chart/" class="topicClass"  target=_blank><font color="000000">统计图表示例</font></a></td>
+									 </tr>   
+									</table>
+								   </td>  
+								  </tr>
+
+								  <tr>     
+								   <td width="100%" height="24" valign="middle" bgcolor="" background="/s/">
+									 <table width="100%" border="0" cellspacing="0" cellpadding="0" bgcolor="" background="" height=24>        
+									  <tr>           
+									   <td  valign="middle" align="center" nowrap width="8%">&nbsp;&nbsp;&nbsp;&nbsp;<img src="/s/none.gif" border="0" align=absmiddle>&nbsp;</td>  
+									   <td valign="middle" align="left"><a href="http://doc.itenable.com.cn" class="topicClass" target=_blank><font color="000000">在线文档中心</font></a></td>
+									 </tr>   
+									</table>
+								   </td>  
+								  </tr>
+
+								  <tr>     
+								   <td width="100%" height="24" valign="middle" bgcolor="" background="/s/">
+									 <table width="100%" border="0" cellspacing="0" cellpadding="0" bgcolor="" background="" height=24>        
+									  <tr>           
+									   <td  valign="middle" align="center" nowrap width="8%">&nbsp;&nbsp;&nbsp;&nbsp;<img src="/s/none.gif" border="0" align=absmiddle>&nbsp;</td>  
+									   <td valign="middle" align="left"><a href="http://i.enableq.com" class="topicClass" target=_blank><font color="000000">在线讨论社区</font></a></td>
+									 </tr>   
+									</table>
+								   </td>  
+								  </tr>
+
+								</table>
+								</td></tr>
+							   </table>
+							 </td>
+
+							<td width="10"></td>
+
+							<td width="699" align="center" valign="top" bgcolor="#fffff" style="border:#99BBDD 1px solid;" >       
+							   <table width="100%" border="0" cellpadding="0" cellspacing="0">
+							   <tr><td style="padding:10px;">
+								<div>
+									<div id="nonesite" class="nonewebsite"> 
+									  <div class="title"><h2>还没有创建试用的用户身份</h2></div> 
+									  <div class="info"><p><span class=red>提请注意：</span>我们并不确保试用平台内您的数据安全<br/><span class=red>推荐阅读：</span><a href="http://www.enableq.com/cn/topic/quickguide.html" target=_blank>Eclear在线问卷调查引擎：快速使用指南</a></p></div> 
+									  <div class="createbtn"><a href="javascript:_ShowLoginBox();"><img src="/enableq/Images/create_site.gif" border=0/></a>&nbsp;</div> 
+									</div> 
+							   
+									<div id="havesite" class="havewebsite"> 
+									  <div class="title"><h2>我已经有一个试用用户身份</h2></div>
+									  <div style="text-align:center;">
+										<table border=0 cellpadding=1 cellspacing=0 bgcolor="F9F2DA" class=c1 style="BORDER:#d2b48c 1px solid;margin-top:5px" align=center width=95%>
+										   <tr><td align="left" bgcolor="d2b48c" height=30><font color="#ffffff"><B>&nbsp;用户登录</B></font></td></tr>
+										   <FORM class="loginform" name=loginform id="loginform" action="" method=post onsubmit="return false;" target=_blank>			    
+										   <tr><td style="padding-left:10px;padding-right:10px;">用户名： <INPUT class=inputtext name=administratorsName id=administratorsName style="width:150px"></td></tr>
+										   <tr><td style="padding-left:10px;padding-right:10px;">密&nbsp;&nbsp;&nbsp;码： <INPUT class=inputtext type=password name=pass id=pass style="width:150px"></td></tr>
+										   <tr><td style="padding-left:10px;padding-right:10px;">
+										   <input type="hidden" name="crumb" id="crumb" value="{crumb}">
+										   <INPUT type=hidden value=LoginSubmit name="Action"><INPUT class="inputsubmit" type=submit value="登录" name=Submit onclick="javascript:submitLoginForm();">
+										   </td></tr>
+										   </form>
+										   <tr><td height=2></td></tr>
+										</table>
+									  </div>
+									</div>    
+							   </div>
+
+							   <div id="listsite" class="listsite" style="margin-top:10px"> 
+								  <div class="title"><h2>看看其他网友的试用问卷</h2></div> 
+								  <div class="info">
+									 <!-- BEGIN SURVEY -->
+									 ·<A href="{viewURL}" target=_blank>{viewTitle} </a><br>
+									<!-- END SURVEY -->
+								  </div> 
+							  </div> 
+
+							   </td></tr>
+							   </table>
+						   </td>
+						   
+						   <td width="10"></td>
+					  </tr></table>
+					 </td></tr></table
+			   </td>
+               <td width="45" background="/u/right.jpg"></td>
+            </tr>
+          </table></td>
+	 </tr>
+	</table>
+
+
+	<table width="100%" border=0 cellPadding=0 cellSpacing=0>
+       <tr><td><img src="/u/bottom.jpg"></td></tr>
+	</table>
+
+	<!-- 网站底部开始 -->
+	<table width="1000" border="0" cellpadding="0" cellspacing="0" bgcolor="#4566AB">
+	  <tr><td align="left" valign="middle" style="padding-top:10px"><table width="100%" height="100%" border="0" cellspacing="0" cellpadding="0" bgcolor="" background="/s/" >
+  <tr> 
+    <td align="left" valign="top" height=30 style="padding-left:35px"><font color=white>&copy; 2010-2016年 <A style="COLOR: white" href="http://www.itenable.com.cn/" target=_blank></A>.&nbsp; </font></td>
+  </tr>
+</table>
+
+</td></tr>
+	</table>
+	<!-- 网站底部结束 -->
+</td></tr></table>
+
+<div id="menu-div" class="menu-div" style="display:none"><br/>
+<div id="closeMenu">
+<span onmouseover="this.style.border='1px solid red';this.style.color='red'" onmouseout="this.style.border='1px solid #888888';this.style.color='#636363'" onClick="closedialog();" title="点此关闭" style="line-height:20px;">×</span>
+</div>
+<div id="loginForm">
+    <form name="AJAXLoginForm" id="AJAXLoginForm" action="" method="post">
+    <table border="0" cellspacing="2" cellpadding="0">
+     <tr><td colspan=2><b>注册一个新的试用用户</b></td></tr>
+     <tr><td nowrap="nowrap"><label for="username" class="redfont">用户名：</label></td>
+         <td nowrap><input name="new_username" type="text" id="new_username" style="width:170px"/></td>
+     </tr>
+     <tr><td nowrap="nowrap" class="redfont"><label for="password">密　码：</label></td>
+         <td><input name="new_password" type="password" id="new_password" style="width:170px"/></td>
+     </tr>
+     <tr><td colspan=2><span class=red>*</span>&nbsp;用户注册成功后会关闭此窗口，请再进行登录</td>
+     </tr>
+     <tr><td></td>
+         <td><input type="button" class="inputsubmit" style="color:white" onclick="javasript:Login_Form_Submit();" value="确定" name=Submit></td>
+      </tr>
+    </table></form>
+</div>
+</div>
+</body> 
+</center> 
+</html>

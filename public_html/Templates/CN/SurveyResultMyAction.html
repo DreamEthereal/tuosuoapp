@@ -1,0 +1,34 @@
+<div class=actionsTitle>问卷<img src=../Images/arrow_down.gif align=absmiddle>&nbsp;&nbsp;<span class=surveynum style="font-size:12px;color:#000;font-weight:normal;">包含[ <span class=red>{pagesNum}</span> ]页&nbsp;[ <span class=red>{qtnNum}</span> ]问题</span>&nbsp;</div>
+<div class=actionsInner style="line-height:150%"> 
+     <div>标题：{survey_Title} [ <span style="color:#0099cc">{survey_Name}</span> ]</div>
+     <div>项目类型：{projectType}&nbsp;&nbsp;|&nbsp;&nbsp;语言：{surveyLang}&nbsp;&nbsp;|&nbsp;&nbsp;类型：{surveyStatus}&nbsp;&nbsp;|&nbsp;&nbsp;创建：{createDate}</div>
+     <div>问卷开始时间：{begin_Time}&nbsp;&nbsp;|&nbsp;&nbsp;结束时间：{end_Time}</div>
+</div>
+
+<div class=actionsTitle>报告<img src=../Images/arrow_down.gif align=absmiddle>&nbsp;&nbsp;<input class=inputsubmit name="surveyDefine" type="button" id="surveyDefine" value="组装" onclick="showWaiting();window.location.href='../Analytics/DefineReport.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}';"></div>
+<div class=actionsInner style="border-bottom:0px">
+	 <input class=stnsubmit name="surveyLine" type="button" id="surveyLine" value="回复数据概览" onclick="showWaiting();window.location.href='../Analytics/DataOverview.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}';">
+	 <input class=stnsubmit name="surveyLine" type="button" id="surveyLine" value="任务完成清单" onclick="showWaiting();window.location.href='../Analytics/TaskResult.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}';">	 
+	 <input class=stnsubmit name="recOverview" type="button" id="recOverview" value="频数频率分析"  onclick="showWaiting();window.location.href='../Analytics/Frequency.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}';">
+	 <input class=stnsubmit name="surveyCross" type="button" id="surveyCross" value="交叉数据分析" onclick="showWaiting();window.location.href='../Analytics/DataCross.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}';">
+	 <input class=stnsubmit name="surveyChart" type="button" id="surveyChart" value="数据图形展示" onclick="showWaiting();window.location.href='../Analytics/DataChart.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}';">
+ </div>
+
+ <div class=actionsTitle>数据<img src=../Images/arrow_down.gif align=absmiddle><!--&nbsp;&nbsp;<span class=surveynum style="font-size:12px;color:#000;font-weight:normal;">已有[ <span class=red>{resultNum}</span> ]回复</span>--></div>
+ <div class=actionsInner style="border-bottom:0px">
+	 <input class=stnsubmit name="dataList" type="button" id="dataList" value="回复数据清单"  onclick="showWaiting();window.location.href='../Analytics/DataList.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}&DO=List';">
+	 <span style="display:{isExportData}"><input class=stnsubmit name="spssLabel" type="button" id="spssLabel" value="&nbsp;&nbsp;SPSS标签&nbsp;&nbsp;" {labelURL}>
+	 <input class=stnsubmit name="spssData" type="button" id="spssData" value="SPSS元数据&nbsp;" {spssURL}>
+	 <input class=stnsubmit name="excelData" type="button" id="excelData" value="Excel元数据&nbsp;" {exportURL}></span>
+ </div>
+
+ <div class=actionsTitle>用户<img src=../Images/arrow_down.gif align=absmiddle></div>
+ <div class=actionsInner> 
+     <div>谁创建问卷：{ownerUser}</div>
+ </div>
+
+  <div class=actionsTitle>计划<img src=../Images/arrow_down.gif align=absmiddle>&nbsp;&nbsp;<input class=inputsubmit name="surveyPlan" type="button" style="display:{planbtn}" id="surveyPlan" value="分析" onclick="showWaiting();window.location.href='../Analytics/PlanResult.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}';">&nbsp;&nbsp;<span class=surveynum style="font-size:12px;color:#000;font-weight:normal;">问卷回复计划：{havePlan}</span></div>
+
+  <div class=actionsTitle>任务<img src=../Images/arrow_down.gif align=absmiddle>&nbsp;&nbsp;<input class=inputsubmit name="surveyTask" type="button" style="display:{taskbtn}" id="surveyTask" value="分析" onclick="showWaiting();window.location.href='../Analytics/TaskResult.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}';">&nbsp;&nbsp;<span class=surveynum style="font-size:12px;color:#000;font-weight:normal;">问卷回复任务：{haveTask}</span></div>
+
+  <div class=actionsTitle>指标<img src=../Images/arrow_down.gif align=absmiddle>&nbsp;&nbsp;<input class=inputsubmit name="surveyIndex" type="button" style="display:{indexbtn}" id="surveyIndex" value="分析" onclick="showWaiting();window.location.href='../Analytics/SurveyIndexResult.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}';">&nbsp;&nbsp;<span class=surveynum style="font-size:12px;color:#000;font-weight:normal;">问卷指标体系：{haveIndex}</span></div>

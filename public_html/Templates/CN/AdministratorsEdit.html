@@ -1,0 +1,272 @@
+<html>
+<head>
+<meta http-equiv=content-language content=zh-cn>
+<meta http-equiv=content-type content="text/html; charset=gbk">
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7">
+<link href="../CSS/Base.css" rel=stylesheet>
+<script language=javascript src="../JS/HighLight.js.php"></script>
+<script type="text/javascript" src="../JS/Jquery.min.js.php"></script>
+<script type="text/javascript" src="../JS/Jquery.notification.js.php"></script>
+<link type="text/css" rel="stylesheet" href="../CSS/Notification.css" />
+<script type="text/javascript" src="../JS/Actions.js.php"></script>
+<script language=javascript src="../JS/CheckQuestion.js.php"></script>
+<script language=javascript src="../JS/PwdMeter.js.php"></script>
+<style>
+ td { padding:2px 5px 2px 5px;}
+ #jquery-notification-message {width:100%;}
+</style>
+<script language=javascript>
+function Check_Form_Validator()
+{
+	if (!CheckNotNull(document.Check_Form.administratorsName, "用户名")) {return false;}
+	if (!CheckNotNull(document.Check_Form.nickName, "昵称")) {return false;}
+	//if (!CheckNotNull(document.Check_Form.passWord, "密码")) {return false;}
+	if (!CheckStringLength(document.Check_Form.passWord, "密码",6,20)) {return false;}
+	if (!CheckListNoSelect(getById('isAdmin'),"分配的用户角色")) {return false;}	
+	if( document.getElementById('userGroupID') == null )
+	{
+		$.notification("输入节点名中的关键字获得可选择的节点列表!");
+		gId('t_userGroupID').focus();
+		return false;
+	}
+	else
+	{
+	    if (!CheckListNoSelect(getById('userGroupID'),"用户所属节点")) {return false;}
+	}
+}
+function getById(_sId){
+	return document.getElementById(_sId);
+}
+function CheckListNoSelect(objField, strText)
+{
+	for( i=0;i<objField.options.length;i++ ) {   
+		if(objField.options[i].selected && objField.value != '') {   
+		   return true;   
+		}   
+	} 
+	objField[0].focus();
+    $.notification( "请选择“" + strText + "”！");
+	return false;
+}
+var http_request = false;
+function AjaxDataListRequest(url)
+{
+	http_request = false;
+	if(window.ActiveXObject){
+		try{ http_request = new ActiveXObject("Msxml2.XMLHTTP");}
+		catch (e){ try{ http_request = new ActiveXObject("Microsoft.XMLHTTP");} catch (e) {}
+		}
+	}
+	else if(window.XMLHttpRequest){
+		http_request = new XMLHttpRequest();
+		if (http_request.overrideMimeType){ http_request.overrideMimeType('text/xml');}
+	}	
+	if (!http_request){ alert("Cannot create an XMLHTTP instance");return false;}
+	http_request.onreadystatechange = function() {
+	  if( http_request.readyState == 4 && http_request.status == 200) {
+			 var theRtn = http_request.responseText.split('######');
+			 if( theRtn[0] == 'false' )
+			 {
+				  $.notification(theRtn[1]);
+				  gId('t_userGroupID').focus();
+			 }
+			 else
+			 {
+				$("#admin_role_list").html(theRtn[1]);
+				$("#t_userGroupID_container").html(theRtn[2]);
+			    gId('TranUsersSubmit').value = '清空';
+			 }
+		}
+	}
+	http_request.open('GET', url, true);
+	http_request.send(null);
+}
+function ChangeGroupType(groupType,groupId,isAdmin,isInit)
+{
+	if( document.getElementById('userGroupID') == null )
+	{
+		if(Trim(gId('t_userGroupID').value) != '' )
+		{
+			AjaxDataListRequest("../System/AjaxUserGroup.php?groupType="+groupType+"&groupId="+groupId+"&isAdmin="+isAdmin+"&isInit="+isInit);
+		}
+	}
+	else
+	{
+		gId('t_userGroupID_container').innerHTML = "<input name=\"t_userGroupID\" id=\"t_userGroupID\" size=20>";
+		gId('TranUsersSubmit').value = '检索';
+	}		
+}
+function checkUserSubmit(groupId,isAdmin,isInit)
+{
+	var groupType = getRadioCheckBoxValue(document.Check_Form.groupType);
+	if( document.getElementById('userGroupID') == null )
+	{
+		if(Trim(gId('t_userGroupID').value) == '' )
+		{
+			$.notification("输入节点名中的关键字获得可选择的节点列表!");
+			gId('t_userGroupID').focus();
+		}
+		else
+		{
+			AjaxDataListRequest("../System/AjaxUserGroup.php?groupType="+groupType+"&groupId="+groupId+"&t_name="+Trim(gId('t_userGroupID').value)+"&isAdmin="+isAdmin+"&isInit="+isInit);		
+		}
+	}
+	else
+	{
+		gId('t_userGroupID_container').innerHTML = "<input name=\"t_userGroupID\" id=\"t_userGroupID\" size=20>";
+		gId('TranUsersSubmit').value = '检索';
+	}
+}
+function submitForm()
+{
+	if( Check_Form_Validator() != false )
+	{
+		document.getElementById('{Action}').disabled = true;
+		disabledStyle(document.getElementById('{Action}'));
+		document.getElementById('close').disabled = true;
+		disabledStyle(document.getElementById('close'));
+		document.Check_Form.submit();
+	}
+}
+</script>
+<style>
+#score {
+	color: #000;
+	font-size: 85%;
+	position:absolute;
+	text-align: center;
+	width: 100px;
+	z-index: 10;
+}
+#score,#complexity{
+	font-weight: bold;
+}
+#scorebar {
+	background-image: url(../Images/bg_pwd_meter.jpg);
+	background-repeat: no-repeat;
+	background-position: 0 0;
+	position:absolute;
+	width: 100px;
+	z-index: 0;
+}
+#scorebarBorder {
+	background: #ffffff;
+	height: 16px;
+	margin-bottom: 5px;
+	width: 102px;
+}
+</style>
+<meta content="mshtml 6.00.3790.0" name=generator></head>
+<body oncontextmenu="return false">
+  <form action="" method="post" name="Check_Form" id="Check_Form" onsubmit="return false;">
+  <table class=datatable style="line-height: 150%;border-collapse:collapse;" cellspacing=0 cellpadding=0 bordercolor=#cacaca border=1 width=100%>
+     <div class=position>位置：&nbsp; 我的问卷 &raquo; 编辑系统用户资料</div>
+      <tr><td bgcolor="#f9f9f9" colspan=2>
+		<span style="float:left"><b>用户基本资料</b></span>
+	    <span style="float:right"><a onmouseover="this.T_WIDTH=260;this.T_PADDING=0;this.T_BGCOLOR='#ffffff'; return escape('由谁创建：{byUserID}<br/>创建时间：{createDate}<br/>最后登录时间：{lastVisited}<br/>最后登录IP：{ipAddress}<br/>登录次数：{loginNum}')" href="javascript:void(0);">更多信息</a>&nbsp;<img src="../Images/head_menu_icon.png" border=0 align=absmiddle>&nbsp;</span>
+	  </td></tr>
+      <tr>
+        <td align=right colspan=2><SPAN style="PADDING-RIGHT: 16px">注：以下带“<SPAN  class=red>*</SPAN>”的为必填项</SPAN></td></tr>
+      <tr> 
+         <td width="20%"><SPAN class=red>*</SPAN> 用户名：</td>
+         <td width="80%"> <input name="administratorsName" type="text"  id="administratorsName" size="30" maxlength="40" value="{administratorsName}"></td>
+      </tr>
+      <tr> 
+           <td height="25"><SPAN class=red>*</SPAN> 昵称：</td>
+           <td><input name="nickName" type="text" id="nickName" size="20" maxlength="30" value="{nickName}"></td>
+      </tr>
+      <tr> 
+          <td height="23"><SPAN class=red>*</SPAN> 密码：</td>
+          <td><input name="passWord" type="password" id="passWord" size="20" maxlength="30" autocomplete="off" onkeyup="chkPass(this.value);"> {password_notes}</td>
+      </tr>
+       <tr>
+          <td>&nbsp;&nbsp;&nbsp;密码强度分数：</td>
+          <td>
+             <div id="scorebarBorder">
+             <div id="score">0%</div>
+             <div id="scorebar">&nbsp;</div>
+             </div>
+			 <div id="complexity">太短</div>
+          </td>
+       </tr>
+      <tr><td bgcolor="#f9f9f9" colspan=2><b>用户角色信息</b></td></tr>
+	  <tr>
+	     <td><SPAN class=red>*</SPAN> 用户类型：</td>
+		 <td><input type="radio" value="1" name="groupType" id="groupType" onclick="javascript:ChangeGroupType(1,{groupId},{isAdmin},{Init});" {groupType_1}>单位
+		     <input type="radio" value="2" name="groupType" id="groupType" onclick="javascript:ChangeGroupType(2,{groupId},{isAdmin},{Init});" {groupType_2}>客户
+		 </td>
+	  </tr>
+      <tr>
+		  <td height="25"><SPAN class=red>*</SPAN> 用户所属节点：</td>
+	  	  <td id="users_group_list"><span id="t_userGroupID_container"><select name="userGroupID" id="userGroupID" style="width:385px">
+			 <option value='{rootNodeId}'>{rootNodeName}</option>
+		  </select></span>&nbsp;<input name="TranUsersSubmit" class=inputsubmit type="button" id="TranUsersSubmit" value="清空" onclick="javascript:checkUserSubmit({groupId},{isAdmin},{Init});" >
+		  </td>
+	  </tr>
+      <tr>
+		  <td height="25"><SPAN class=red>*</SPAN> 用户分配角色：</td>
+	  	  <td id="admin_role_list">
+		  <SELECT name="isAdmin" id="isAdmin">
+		   <OPTION value="">请选择...</OPTION>
+		   <OPTION value="1" {option_1}>系统管理员</OPTION>
+		   <OPTION value="6" {option_6}>用户管理员</OPTION>
+		   <OPTION value="5" {option_5}>超级问卷员</OPTION>
+		   <OPTION value="2" {option_2}>问卷设计员</OPTION>
+		   <OPTION value="4" {option_4}>数据录入员</OPTION>
+		   <OPTION value="7" {option_7}>数据审核员</OPTION>
+		   <OPTION value="3" {option_3}>数据查看员</OPTION>
+  		  </SELECT>
+		  </td>
+	  </tr>
+	 </table><table width=100%>
+     <tr><td width=20%></td> 
+          <td>
+ 		  <input name="administratorsID" type="hidden" value="{administratorsID}"> 
+ 		  <input name="ori_administratorsName" type="hidden" value="{administratorsName}"> 
+		  <input name="ori_isAdmin" type="hidden" value="{ori_isAdmin}"> 
+ 		  <input name="Action" type="hidden" id="Action" value="{Action}"> 
+ 		  <input name="Init" type="hidden" id="Init" value="{Init}"> 
+	      <input type="button" class=inputsubmit id="{Action}" name="{Action}" value="确定" onclick="javascript:submitForm();">&nbsp;<input class=inputsubmit type="button" name="close" id="close" value="关闭" onClick="javascript:parent.hidePopWin();">
+          </td>
+       </tr>
+   </table>
+   </form>       
+   <script type="text/javascript">initInputHighlightScript();initPwdChk();</script>
+   <script>
+		var userAdminType = {userAdminType};
+		var userGroupType = {userGroupType};
+
+		if( userGroupType == 1 )  //单位
+		{
+			switch(userAdminType)
+			{
+				case 5:
+					gId('isAdmin').remove(1);
+					gId('isAdmin').remove(1);
+					/*if( {administratorsID} != {isUserId} )
+					{
+						gId('isAdmin').remove(1);
+					}*/
+				break;
+				case 6:
+					gId('isAdmin').remove(1);
+					if( {administratorsID} != {isUserId} )
+					{
+						gId('isAdmin').remove(1);
+					}
+				break;
+			}
+		}
+		else //客户
+		{
+			gId('isAdmin').remove(1);
+			gId('isAdmin').remove(1);
+			gId('isAdmin').remove(1);
+			gId('isAdmin').remove(1);
+			gId('isAdmin').remove(1);
+			gId('isAdmin').remove(1);
+		}			
+   </script>
+ <script language=javascript src="../JS/Example.js.php"></script>
+</center>
+</body></html>

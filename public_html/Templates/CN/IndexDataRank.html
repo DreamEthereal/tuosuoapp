@@ -1,0 +1,25 @@
+<table width="100%">
+<tr>
+    <td height=25 class="question" valign=center>&nbsp;当前用户节点：<font color="#cf1100">{userGroupRoot}</font><br/>&nbsp;当前节点归类：<font color="#cf1100">{userGroupLabel}</font><br/>&nbsp;当前排名指标：<font color="#cf1100">{indexName}</font></td>
+</tr>
+<tr>
+   <td>
+	 <table style="border:1px solid #cacaca;">
+	 <tr style="color:white;">
+	   <td align=center bgcolor=#cf1100 align=center><b>当前排名</b></td>
+	   <td align=center bgcolor=#cf1100 align=center><b>总排名</b></td>
+	   <td align=center bgcolor=#cf1100 align=center><b>用户节点</b></td>
+	   <td align=center bgcolor=#cf1100 align=center><b>总分</b></td>
+	   {indexNameList}
+	</tr>
+	<!-- BEGIN DIM -->
+	<tr style="background-color:#e4e0ea;border-bottom:1px solid #cacaca"> 
+	  <td nowrap align=center>&nbsp;{nowRank}&nbsp;</td>
+	  <td nowrap align=center>&nbsp;{totalRank}&nbsp;</td>
+	  <td nowrap class=classtd>&nbsp;{userGroupName}&nbsp;</td>
+	  <td align=center valign=center width=70 align=center><b>{surveyGrade}</b></td>
+	  {indexValueList}
+	</tr>
+	<!-- END DIM -->
+	</table>
+</td></tr></table>

@@ -1,0 +1,24 @@
+body { margin: 0px 0px 0px 10px;
+	font-family: Arial, Calibri, Helvetica, sans-serif;
+	color: #444444;
+	font-size: 12px;
+	background-color: #ffffff;
+	scrollbar-arrow-color: #FFFFFF; 
+	scrollbar-3dlight-color: #dddddd; 
+	scrollbar-highlight-color: #aaaaaa; 
+	scrollbar-face-color: #aaaaaa; 
+	scrollbar-shadow-color: #aaaaaa;
+	scrollbar-track-color: #cccccc; 
+	scrollbar-darkshadow-color: #666666;
+	}
+
+.body { font-size: 12px;}	
+table,td { color: #444444;font-size: 11px;}
+p {	MARGIN-TOP: 0px;MARGIN-BOTTOM: 10px;}	
+a:link, a:visited {	color: #444444;	font-size: 11px;text-decoration: underline;}
+a:hover { color: #666666;text-decoration: underline;}
+.contentBox { background-color: #efefef;border: 1px #9e9e9e solid;padding: 5px;}
+a.body:link, a.body:visited {color: #444444;font-size: 12px;text-decoration: underline;}		
+a.body:hover {color: #666666;text-decoration: underline;}
+.tm {font-size: 8px;font-family: Calibri;vertical-align:super;}
+	

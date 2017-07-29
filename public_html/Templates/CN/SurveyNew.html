@@ -1,0 +1,144 @@
+<html>
+<head>
+<meta http-equiv=content-language content=zh-cn>
+<meta http-equiv=content-type content="text/html; charset=gbk">
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7">
+<LINK href="../CSS/Base.css" rel=stylesheet>
+<LINK href="../CSS/Window.css" type=text/css rel=stylesheet>
+<style>
+  td { padding:2px 5px 2px 5px;}
+</style>
+<script type="text/javascript" src="../JS/Common.js.php"></script>
+<script type="text/javascript" src="../JS/Window.js.php"></script>
+<script type="text/javascript" src="../JS/Jquery.min.js.php"></script>
+<script type="text/javascript" src="../JS/Jquery.notification.js.php"></script>
+<link type="text/css" rel="stylesheet" href="../CSS/Notification.css" />
+<script language=javascript src="../JS/CheckQuestion.js.php"></script>
+<script language=javascript src="../JS/HighLight.js.php"></script>
+<script language=javascript>
+function Check_Form_Validator()
+{
+	if (!CheckRadioNoClick(document.Check_Form.exitMode,"调查问卷提交后的到达页") ) {return false;}
+	if (IsInCheckBox(document.Check_Form.exitMode,1 ))
+	{
+		if (!CheckNotNull(document.Check_Form.exitPage, "调查问卷提交后的到达页/URL")) {return false;}
+    }
+	if (IsInCheckBox(document.Check_Form.exitMode,2 ))
+	{
+		if (!CheckNotNull(document.Check_Form.exitTitleHead, "调查问卷提交后的到达页/标题")) {return false;}
+		if (!CheckNotNull(document.Check_Form.exitTextBody, "调查问卷提交后的到达页/内容")) {return false;}
+	}
+	if ( document.Check_Form.isCheckIP.value != "0" )
+	{
+		if (!CheckNotNull(document.Check_Form.maxIpTime,"防重复提交的限制间隔")) {return false;}
+		if (!CheckNumber(document.Check_Form.maxIpTime,"防重复提交的限制间隔",5,50000000)) {return false;}
+	}
+	if( document.Check_Form.isPublic.value == "2" )
+	{
+		if (!CheckNotNull(document.Check_Form.tokenCode, "问卷控制令牌")) {return false;}
+    }
+}
+function checkType()
+{ 
+	switch(document.Check_Form.isPublic.value)
+	{
+	   case "1" :  //公开
+		  document.getElementById("onlyToken").style.display = "none";
+	   break;
+	   case "2" :  //令牌
+		  document.getElementById("onlyToken").style.display = "";
+	   break;
+	   case "0":   //私有
+		  document.getElementById("onlyToken").style.display = "none";
+	   break;
+	}
+}
+function checkIpMode()
+{ 
+	if (document.Check_Form.isCheckIP.value != "0" )
+	{
+		document.getElementById("IpTime").style.display = "";
+    }
+	else
+	{
+		document.getElementById("IpTime").style.display = "none";
+	}
+}
+function Init()
+{
+	checkType();
+	checkIpMode();
+}
+function submitForm()
+{
+	if( Check_Form_Validator() != false )
+	{
+		document.getElementById('submitBtn').disabled = true;
+		disabledStyle(document.getElementById('submitBtn'));
+		document.getElementById('close').disabled = true;
+		disabledStyle(document.getElementById('close'));
+		document.Check_Form.submit();
+	}
+}
+</script>
+<meta content="mshtml 6.00.3790.0" name=generator></head>
+<body oncontextmenu="return false" onload="javascript:Init();">
+   <form action="" style="margin:0px;padding:0px" method="post" name="Check_Form" id="Check_Form" onsubmit="return false;">
+    <table class=datatable style="line-height: 150%;border-collapse:collapse;" cellspacing=0 cellpadding=0 bordercolor=#cacaca border=1 width=100%>
+     <div class=position>位置：&nbsp; 我的问卷 &raquo; 新增调查问卷 &raquo; 设置调查问卷属性</div>
+      <tr><td bgcolor="#f9f9f9" colspan=2><b>设置问卷属性 &raquo; {surveyTitle}</b></td></tr>
+      <tr><td align=right colspan=2>注：以下带“<SPAN  class=red>*</SPAN>”的为必填项&nbsp;</td></tr>
+      <tr height=25 bgcolor="#f9f9f9"><td colspan=2><b>&nbsp;设置调查问卷提交后的到达方式</b>&nbsp;<img src="../Images/info.gif" border=0></td></tr>
+      <tr><td><SPAN class=red>*</SPAN> 问卷提交后的到达方式：</td>
+	      <td>
+		     <input type="radio" value="1" name="exitMode" {exitMode_1}>转向网址
+		     <input name="exitPage" type="exitPage" id="exitPage" size="68" value="{exitPage}"> (URL) <br/>
+		     <input type="radio" value="2" name="exitMode" {exitMode_2}>感谢信息<br>
+			 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input name="exitTitleHead" type="exitTitleHead" id="exitTitleHead" size="77" value="{exitTitleHead}"> (标题) <br/>
+			 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<textarea name="exitTextBody" rows=4 cols=77>{exitTextBody}</textarea> (内容) <br/>
+			 <input type="radio" value="4" name="exitMode" {exitMode_4}>回复问卷的统计结果
+	  </td></tr>
+      <tr height=25 bgcolor="#f9f9f9"><td colspan=2><b>&nbsp;设置调查问卷防重复提交措施</b>&nbsp;<img src="../Images/info.gif" border=0></td></tr>
+	  <tr><td height="25" width="22%"><SPAN class=red>*</SPAN> 问卷防重复提交设置：</td>
+		  <td><select name="isCheckIP" id="isCheckIP" onChange="checkIpMode();">
+					<option value="0" {isCheckIP0}>不采用提交问卷防重复限制</option>
+					<option value="1" {isCheckIP1}>使用来源IP地址检测</option>
+					<option value="2" {isCheckIP2}>使用客户端Cookie技术 (推荐，另用于公开问卷的断点续答)</option>
+				</select>
+		  </td>
+	   </tr>
+	   <tr id="IpTime"><td height="25"><SPAN  class=red>*</SPAN> 防重复提交的限制间隔：</td>
+		   <td><input name="maxIpTime" type="text" id="maxIpTime" value="{maxIpTime}" size="6"> 分钟</td>
+	  </tr>
+      <tr height=25 bgcolor="#f9f9f9"><td colspan=2><b>&nbsp;设置调查问卷类型</b>&nbsp;<img src="../Images/info.gif" border=0></td></tr>
+      <tr>
+		  <td height="25" width="17%"><SPAN class=red>*</SPAN> 设置问卷类型：</td>
+	  	  <td>
+		   <span>
+			  <SELECT name="isPublic" id="isPublic" onChange="checkType();">
+			   <OPTION value="1" {option_1}>公开 （所有样本可访问与回复问卷）</OPTION>
+			   <OPTION value="0" {option_0}>私有 （符合抽样规则的样本可访问与回复问卷）</OPTION>
+			   <OPTION value="2" {option_2}>令牌控制 （通过令牌认证的样本可访问与回复问卷）</OPTION>
+			  </SELECT>
+		   </span>
+		  </td>
+	  </tr>
+      <tr id="onlyToken">
+		  <td height="25"><SPAN class=red>*</SPAN> 问卷控制令牌：</td>
+	  	  <td><input name="tokenCode" type="text" id="tokenCode" value="{tokenCode}" size="16"></td>
+	  </tr>
+   </table>
+   <table width=100%>
+      <tr><td width=22%></td>
+	      <td height="23" align="left">
+ 		  <input name="surveyID" type="hidden" value="{surveyID}"> 
+ 		  <input name="surveyTitle" type="hidden" value="{surveyTitle}"> 
+ 		  <input name="Action" type="hidden" id="Action" value="{Action}"> 
+		  <input name="surveyInfo" id="surveyInfo" type="hidden">
+	      <input name="submitBtn" id="submitBtn" type="button" class=inputsubmit value="下一步>>" onclick="javascript:submitForm();">&nbsp;<input class=inputsubmit type="button" name="close" id="close" value="忽略" onClick="javascript:parent.referIframeSrc('DesignSurvey.php?surveyID={surveyID}&surveyTitle={surveyTitle}');"></div>
+           </td>
+       </tr>
+    </table>       
+    </form>       
+ <script type="text/javascript">initInputHighlightScript();</script> 
+</body></html>

@@ -1,0 +1,2 @@
+2016-03-27 07:27:14     <b>Bad SQL Query</b>:  SELECT * FROM eq_response_-1761 b  WHERE  b.authStat =1 and  b.dataSource NOT IN (1,2,3)  ORDER BY responseID DESC <br><b>You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '-1761 b  WHERE  b.authStat =1 and  b.dataSource NOT IN (1,2,3)  ORDER BY respons' at line 1</b>
+

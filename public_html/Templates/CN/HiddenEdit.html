@@ -1,0 +1,110 @@
+<html>
+<head>
+<meta http-equiv=content-language content=zh-cn>
+<meta http-equiv=content-type content="text/html; charset=gbk">
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7">
+<style>
+ td { padding:2px 5px 2px 5px;}
+ select,img {vertical-align: middle;}
+</style>
+<link href="../CSS/Base.css" rel=stylesheet>
+<script language=javascript src="../JS/HighLight.js.php"></script>
+<script type="text/javascript" src="../JS/Jquery.min.js.php"></script>
+<script type="text/javascript" src="../JS/Jquery.notification.js.php"></script>
+<link type="text/css" rel="stylesheet" href="../CSS/Notification.css" />
+<script language=javascript src="../JS/CheckQuestion.js.php"></script>
+<script language=javascript>
+function Check_Form_Validator()
+{
+	if (!CheckNotNull(document.Check_Form.hiddenVarName, "变量名称")) {return false;}
+	if (!CheckNotNull(document.Check_Form.questionName, "显示名称")) {return false;}
+}
+function changeHiddenFromSession()
+{
+	switch(getRadioCheckBoxValue(document.Check_Form.hiddenFromSession))
+	{
+		case '1':
+		case '2':
+		case '3':
+		case '4':
+			document.getElementById('isRequired').disabled = false;
+			document.getElementById('isNeg').disabled = false;
+		break;
+		case '5':
+		default:
+			document.getElementById('isRequired').checked = false;
+			document.getElementById('isRequired').disabled = true;
+			document.getElementById('isNeg').checked = false;
+			document.getElementById('isNeg').disabled = true;
+		break;
+	}
+}
+function submitForm(actionName)
+{
+	if( Check_Form_Validator() != false )
+	{
+		document.getElementById('AddHiddenSubmit').disabled = true;
+		disabledStyle(document.getElementById('AddHiddenSubmit'));
+		document.getElementById('AddHiddenOver').disabled = true;
+		disabledStyle(document.getElementById('AddHiddenOver'));
+		document.getElementById('close').disabled = true;
+		disabledStyle(document.getElementById('close'));
+		document.getElementById('Action').value = actionName;
+		document.Check_Form.submit();
+	}
+}
+</script>
+
+<meta content="mshtml 6.00.3790.0" name=generator></head>
+<body oncontextmenu="return false" onload="javascript:changeHiddenFromSession();">
+   <form method="post" action="" name="Check_Form" id="Check_Form" onsubmit="return false;">
+  <table class=datatable style="line-height: 150%;border-collapse:collapse;" cellspacing=0 cellpadding=0 bordercolor=#cacaca border=1 width=100%>
+   <div class=position>位置：&nbsp; 我的问卷 &raquo; 编辑问卷问题 &raquo; 隐藏变量</div>
+   <tr><td bgcolor="#e9e9e9"><b>编辑问卷问题</b></td></tr>
+   <tr><td>&nbsp;<span style="font-size:14px;font-weight:bold;">隐藏变量</span></td></tr>
+   <tr bgcolor="#f9f9f9" height=25><td><b>&nbsp;关于...</b>&nbsp;<img src="../Images/info.gif" border=0></td></tr>   <tr><td>&nbsp;当用户提交问卷时，可利用对隐藏变量的定义，取得SESSION或COOKIE中已有的数据，或利用POST取得问卷静态页面内定义的隐藏变量，或通过GET取得URL地址中定义的隐藏变量，作为单一问卷回复的特殊标识。Referer是指访问问卷的用户是从哪个网站链接过来的。</td></tr>
+   <tr bgcolor="#f9f9f9" height=25><td><b>&nbsp;定义隐藏变量</b>&nbsp;<img src="../Images/info.gif" border=0></td></tr>
+   <tr><td>
+       <table cellSpacing=0 borderColorDark=#ffffff cellPadding=0>
+	     <tr>
+		  <td>&nbsp;变量名称：</td>
+		  <td><input name="hiddenVarName" value="{hiddenVarName}" size=30></td>
+		 </tr>
+	     <tr>
+		  <td>&nbsp;显示名称：</td>
+		  <td><input name="questionName" value="{questionName}" size=50> (报告中的显示名称)</td>
+		 </tr>
+	     <tr>
+		  <td>&nbsp;使用技术：</td>
+		  <td><select name="hiddenFromSession" id="hiddenFromSession" onchange="javascript:changeHiddenFromSession();">
+		      <option value='5' {hiddenFromSession_5}>Referer</option>
+		      <option value='4' {hiddenFromSession_4}>_GET</option>
+		      <option value='1' {hiddenFromSession_1}>SESSION</option>
+		      <option value='2' {hiddenFromSession_2}>COOKIE</option>
+		      <option value='3' {hiddenFromSession_3}>_POST</option>
+			 </select>
+		  </td>
+		 </tr>
+	    </table>
+	</td></tr>
+	<tr bgcolor="#f9f9f9" height=25 colspan=2><td><b>&nbsp;控制设置</b>&nbsp;<img src="../Images/info.gif" border=0></td></tr>
+	<tr><td colspan=2>
+			&nbsp;&nbsp;<input type="checkbox" value="1" name="isRequired" id="isRequired" {isRequired}> 此变量对应值不能为空 <br/>
+			&nbsp;&nbsp;<input type="checkbox" value="1" name="isNeg" {isNeg}> 对此变量对应值进行查重较验 (唯一性检查) <br/>
+	</td></tr>
+	</table><table width=100% style="margin-bottom:15px">
+   <tr> 
+  	 <td height="15">
+         <input name="surveyID" type="hidden" id="surveyID" value="{surveyID}"> 
+         <input name="questionID" type="hidden" id="questionID" value="{questionID}"> 
+         <input name="orderByID" type="hidden" id="orderByID" value="{orderByID}"> 
+         <input name="Action" type="hidden" id="Action"> 
+         <input class=inputsubmit name="AddHiddenSubmit" type="button" id="AddHiddenSubmit" value="保存，下一个" onclick="javascript:submitForm('AddHiddenSubmit');">
+         <input class=inputsubmit name="AddHiddenOver" type="button" id="AddHiddenOver" value="保存，结束" onclick="javascript:submitForm('AddHiddenOver');"> 
+         <input class=inputsubmit type="button" name="close" id="close" value="  关闭  " onClick="javascript:parent.hidePopWin();">
+      </td>
+    </tr>
+  </form>
+ </table>
+  <script type="text/javascript">initInputHighlightScript();</script> 
+</body></html>

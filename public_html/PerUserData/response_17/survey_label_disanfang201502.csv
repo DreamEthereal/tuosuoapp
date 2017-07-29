@@ -1,0 +1,174 @@
+ VARIABLE LABELS responseNo '序号'.
+ VARIABLE LABELS joinTime '回复时间(开始)'.
+ VARIABLE LABELS submitTime '回复时间(结束)'.
+ VARIABLE LABELS recordFile '全程录音|录像文件'.
+ VARIABLE LABELS submitFlag '完成标记'.
+ VARIABLE LABELS dataAuthStat '审核状态'.
+ VARIABLE LABELS timeSpent '用时'.
+ VARIABLE LABELS dataSource '数据来源'.
+ VARIABLE LABELS ipAddress '地址标识'.
+ VARIABLE LABELS fromArea '来源'.
+ VARIABLE LABELS userName '样本标识'.
+ VARIABLE LABELS VAR1046 '第三方授权服务商类型选择'.
+ VALUE LABELS VAR1046 1 '形象店' 2 '非形象店' .
+ VARIABLE LABELS VAR1047 '成绩卡编号'.
+ VARIABLE LABELS VAR1048 '省'.
+ VALUE LABELS VAR1048 1 '北京' 2 '天津' 3 '上海' 4 '重庆' 5 '河北' 6 '河南' 7 '云南' 8 '辽宁' 9 '黑龙江' 10 '湖南' 11 '安徽' 12 '山东' 13 '新疆' 14 '江苏' 15 '浙江' 16 '江西' 17 '湖北' 18 '广西' 19 '甘肃' 20 '山西' 21 '内蒙古' 22 '陕西' 23 '吉林' 24 '福建' 25 '贵州' 26 '广东' 27 '青海' 28 '西藏' 29 '四川' 30 '宁夏' 31 '海南' .
+ VARIABLE LABELS VAR1049 '机构代码'.
+ VARIABLE LABELS VAR1050 '网点名称'.
+ VARIABLE LABELS VAR1051 '调查日期'.
+ VARIABLE LABELS VAR1052 '进入时间：'.
+ VARIABLE LABELS VAR1053 '离开时间：'.
+ VARIABLE LABELS VAR1054 '网点地址'.
+ VARIABLE LABELS VAR1055 '服务人员人数'.
+ VALUE LABELS VAR1055 1 '1人' 2 '2人' 3 '3人' 4 '4人' 5 '5人' 6 '6人' 7 '7人' 8 '8人' 9 '9人' 10 '10人' 11 '11人' 12 '12人及以上' .
+ VARIABLE LABELS VAR1056 '按照预先设定，我送修的该部手机属于'.
+ VALUE LABELS VAR1056 1 '保内' 2 '保外' .
+ VARIABLE LABELS VAR1057 '手机型号'.
+ VALUE LABELS VAR1057 1 '红米 Note' 2 'Mi2S' 3 '红米1S' 4 'Mi3' 5 'Mi4' 6 'Mi4C' 7 '红米Note2' 8 '红米手机2A' 9 '红米手机2' 10 '小米 Note' 11 '小米盒子' 12 '小米平板' .
+ VARIABLE LABELS VAR1058 '串号'.
+ VARIABLE LABELS VAR1059 '故障现象'.
+ VALUE LABELS VAR1059 1 '不开机' 2 '触摸失灵' 3 '充电异常' 4 'USB接口损坏' 5 '花屏' 6 '黑屏' 7 'LCD浸液' 8 '开关机键异常' 9 '耳机按键异常' 10 '喇叭异常' 11 'SIM卡异常' 12 '扬声器异常' 13 '送话无声' 14 '白米重启' 15 '白米定屏' 16 '相机异常' 17 '摄像头异常' 18 '内屏裂' 19 '死机' 20 '4G信号无信号' 21 '4G信号弱' 22 'WIFI信号弱' 23 '电源按键不良' .
+ VARIABLE LABELS VAR1060 '神秘顾客姓名'.
+ VARIABLE LABELS VAR1061 '神秘顾客联系方式'.
+ VARIABLE LABELS VAR1063 'A1-1门头、灯箱、家具等硬件设施完好'.
+ VALUE LABELS VAR1063 3 '符合' 99 '不符合' .
+ VARIABLE LABELS VAR1063_99_text 'A1-1门头、灯箱、家具等硬件设施完好-不符合-Text'.
+ VARIABLE LABELS VAR1064 'A1-2门窗玻璃清洁明亮'.
+ VALUE LABELS VAR1064 3 '符合' 99 '不符合' .
+ VARIABLE LABELS VAR1064_99_text 'A1-2门窗玻璃清洁明亮-不符合-Text'.
+ VARIABLE LABELS VAR1065 'A1-3网点内地面、墙面干净整洁'.
+ VALUE LABELS VAR1065 3 '符合' 99 '不符合' .
+ VARIABLE LABELS VAR1065_99_text 'A1-3网点内地面、墙面干净整洁-不符合-Text'.
+ VARIABLE LABELS VAR1066 'A1-4工作时间室内家具、硬件灯光全部开启'.
+ VALUE LABELS VAR1066 2 '符合' 99 '不符合' .
+ VARIABLE LABELS VAR1066_99_text 'A1-4工作时间室内家具、硬件灯光全部开启-不符合-Text'.
+ VARIABLE LABELS VAR1067 'A1-5物品摆放整齐有序'.
+ VALUE LABELS VAR1067 2 '符合' 99 '不符合' .
+ VARIABLE LABELS VAR1067_99_text 'A1-5物品摆放整齐有序-不符合-Text'.
+ VARIABLE LABELS VAR1068 'A1-6有服务政策牌，摆放在醒目位置'.
+ VALUE LABELS VAR1068 2 '符合' 99 '不符合' .
+ VARIABLE LABELS VAR1068_99_text 'A1-6有服务政策牌，摆放在醒目位置-不符合-Text'.
+ VARIABLE LABELS VAR1069 'A1-7接待台、休息椅、配件墙等是否统一，无破损状态'.
+ VALUE LABELS VAR1069 2 '符合' 99 '不符合' .
+ VARIABLE LABELS VAR1069_99_text 'A1-7接待台、休息椅、配件墙等是否统一，无破损状态-不符合-Text'.
+ VARIABLE LABELS VAR1070 'A1-8配件柜配件摆放数量饱满，销售小米原装配件'.
+ VALUE LABELS VAR1070 2 '符合' 99 '不符合' .
+ VARIABLE LABELS VAR1070_99_text 'A1-8配件柜配件摆放数量饱满，销售小米原装配件-不符合-Text'.
+ VARIABLE LABELS VAR1071 'A1-9体验台有展示样机（每张台子摆4台机器），且配有产品桌卡'.
+ VALUE LABELS VAR1071 3 '符合' 99 '不符合' .
+ VARIABLE LABELS VAR1071_99_text 'A1-9体验台有展示样机（每张台子摆4台机器），且配有产品桌卡-不符合-Text'.
+ VARIABLE LABELS VAR1072 'A2-1统一着装，干净整洁，无异妆、异发等打扮'.
+ VALUE LABELS VAR1072 2 '符合' 99 '不符合' .
+ VARIABLE LABELS VAR1072_99_text 'A2-1统一着装，干净整洁，无异妆、异发等打扮-不符合-Text'.
+ VARIABLE LABELS VAR1073 'A2-2胸前佩戴胸卡（或统一胸前挂牌）'.
+ VALUE LABELS VAR1073 2 '符合' 99 '不符合' .
+ VARIABLE LABELS VAR1073_99_text 'A2-2胸前佩戴胸卡（或统一胸前挂牌）-不符合-Text'.
+ VARIABLE LABELS VAR1074 'A3-1保持桶内有水 ，且配有一次性水杯'.
+ VALUE LABELS VAR1074 2 '符合' 99 '不符合' .
+ VARIABLE LABELS VAR1074_99_text 'A3-1保持桶内有水 ，且配有一次性水杯-不符合-Text'.
+ VARIABLE LABELS VAR1075 'A3-2电视运行正常'.
+ VALUE LABELS VAR1075 2 '符合' 99 '不符合' .
+ VARIABLE LABELS VAR1075_99_text 'A3-2电视运行正常-不符合-Text'.
+ VARIABLE LABELS VAR1076 'A3-3店内WIFI能够正常使用'.
+ VALUE LABELS VAR1076 2 '符合' 99 '不符合' .
+ VARIABLE LABELS VAR1076_99_text 'A3-3店内WIFI能够正常使用-不符合-Text'.
+ VARIABLE LABELS VAR1077 'A3-4下载台电脑呈打开状态且运作正常'.
+ VALUE LABELS VAR1077 2 '符合' 99 '不符合' .
+ VARIABLE LABELS VAR1077_99_text 'A3-4下载台电脑呈打开状态且运作正常-不符合-Text'.
+ VARIABLE LABELS VAR1094 'B1-1坚守岗位，不擅离职守，前台至少保留有一人接待'.
+ VALUE LABELS VAR1094 3 '符合' 99 '不符合' .
+ VARIABLE LABELS VAR1094_99_text 'B1-1坚守岗位，不擅离职守，前台至少保留有一人接待-不符合-Text'.
+ VARIABLE LABELS VAR1095 'B1-2 工作时间不做或谈论与工作无关的事情'.
+ VALUE LABELS VAR1095 3 '符合' 99 '不符合' .
+ VARIABLE LABELS VAR1095_99_text 'B1-2 工作时间不做或谈论与工作无关的事情-不符合-Text'.
+ VARIABLE LABELS VAR1099 'B2-1服务态度和蔼可亲，真诚'.
+ VALUE LABELS VAR1099 3 '符合' 99 '不符合' .
+ VARIABLE LABELS VAR1099_99_text 'B2-1服务态度和蔼可亲，真诚-不符合-Text'.
+ VARIABLE LABELS VAR1100 'B2-2与客户沟通时保持目光接触'.
+ VALUE LABELS VAR1100 3 '符合' 99 '不符合' .
+ VARIABLE LABELS VAR1100_99_text 'B2-2与客户沟通时保持目光接触-不符合-Text'.
+ VARIABLE LABELS VAR1101 'B2-3礼貌服务，服务过程中使用服务敬语'.
+ VALUE LABELS VAR1101 3 '符合' 99 '不符合' .
+ VARIABLE LABELS VAR1101_99_text 'B2-3礼貌服务，服务过程中使用服务敬语-不符合-Text'.
+ VARIABLE LABELS VAR1102 'B2-4提醒用户刷机前进行备份，或协助用户进行备份'.
+ VALUE LABELS VAR1102 3 '符合' 99 '不符合' .
+ VARIABLE LABELS VAR1102_99_text 'B2-4提醒用户刷机前进行备份，或协助用户进行备份-不符合-Text'.
+ VARIABLE LABELS VAR1103 'B2-5提醒用户1小时快修服务，并执行超期赔付'.
+ VALUE LABELS VAR1103 3 '符合' 99 '不符合' .
+ VARIABLE LABELS VAR1103_99_text 'B2-5提醒用户1小时快修服务，并执行超期赔付-不符合-Text'.
+ VARIABLE LABELS VAR1104 'B2-6拆机前会征得客户的同意'.
+ VALUE LABELS VAR1104 3 '符合' 99 '不符合' .
+ VARIABLE LABELS VAR1104_99_text 'B2-6拆机前会征得客户的同意-不符合-Text'.
+ VARIABLE LABELS VAR1105 'B2-7拆机后的附件放在专用小物品袋中并与客户逐一确认'.
+ VALUE LABELS VAR1105 3 '符合' 99 '不符合' .
+ VARIABLE LABELS VAR1105_99_text 'B2-7拆机后的附件放在专用小物品袋中并与客户逐一确认-不符合-Text'.
+ VARIABLE LABELS VAR1106 'B2-8轻拿轻放客户的手机'.
+ VALUE LABELS VAR1106 3 '符合' 99 '不符合' .
+ VARIABLE LABELS VAR1106_99_text 'B2-8轻拿轻放客户的手机-不符合-Text'.
+ VARIABLE LABELS VAR1107 'B2-9在服务过程中使用标准用语'.
+ VALUE LABELS VAR1107 3 '符合' 99 '不符合' .
+ VARIABLE LABELS VAR1107_99_text 'B2-9在服务过程中使用标准用语-不符合-Text'.
+ VARIABLE LABELS VAR1108 'B2-10双手接递款物、单据'.
+ VALUE LABELS VAR1108 3 '符合' 99 '不符合' .
+ VARIABLE LABELS VAR1108_99_text 'B2-10双手接递款物、单据-不符合-Text'.
+ VARIABLE LABELS VAR1109 'B2-11积极聆听客户需求'.
+ VALUE LABELS VAR1109 3 '符合' 99 '不符合' .
+ VARIABLE LABELS VAR1109_99_text 'B2-11积极聆听客户需求-不符合-Text'.
+ VARIABLE LABELS VAR1110 'B2-12避免使用服务禁语'.
+ VALUE LABELS VAR1110 3 '符合' 99 '不符合' .
+ VARIABLE LABELS VAR1110_99_text 'B2-12避免使用服务禁语-不符合-Text'.
+ VARIABLE LABELS VAR1111 'B2-13不与客户发生争吵'.
+ VALUE LABELS VAR1111 3 '符合' 99 '不符合' .
+ VARIABLE LABELS VAR1111_99_text 'B2-13不与客户发生争吵-不符合-Text'.
+ VARIABLE LABELS VAR1112 'B2-14中断服务，需要客户等待时，礼貌地告知客户'.
+ VALUE LABELS VAR1112 3 '符合' 99 '不符合' .
+ VARIABLE LABELS VAR1112_99_text 'B2-14中断服务，需要客户等待时，礼貌地告知客户-不符合-Text'.
+ VARIABLE LABELS VAR1113 'B2-15使用标准送别语'.
+ VALUE LABELS VAR1113 3 '符合' 99 '不符合' .
+ VARIABLE LABELS VAR1113_99_text 'B2-15使用标准送别语-不符合-Text'.
+ VARIABLE LABELS VAR1114 'B2-16及时回应客户的询问'.
+ VALUE LABELS VAR1114 3 '符合' 99 '不符合' .
+ VARIABLE LABELS VAR1114_99_text 'B2-16及时回应客户的询问-不符合-Text'.
+ VARIABLE LABELS VAR1115 'B2-17坐姿端正自然、不浅仰后靠、不左摇右晃'.
+ VALUE LABELS VAR1115 3 '符合' 99 '不符合' .
+ VARIABLE LABELS VAR1115_99_text 'B2-17坐姿端正自然、不浅仰后靠、不左摇右晃-不符合-Text'.
+ VARIABLE LABELS VAR1116 'B2-18当顾客对服务人员的服务表示不满时，主动致歉'.
+ VALUE LABELS VAR1116 3 '符合' 99 '不符合' .
+ VARIABLE LABELS VAR1116_99_text 'B2-18当顾客对服务人员的服务表示不满时，主动致歉-不符合-Text'.
+ VARIABLE LABELS VAR1117 'B2-19主动关怀等待过长时间用户问题和进展'.
+ VALUE LABELS VAR1117 3 '符合' 99 '不符合' .
+ VARIABLE LABELS VAR1117_99_text 'B2-19主动关怀等待过长时间用户问题和进展-不符合-Text'.
+ VARIABLE LABELS VAR1118 'B2-20提醒用户使用评价系统评价服务质量'.
+ VALUE LABELS VAR1118 3 '符合' 99 '不符合' .
+ VARIABLE LABELS VAR1118_99_text 'B2-20提醒用户使用评价系统评价服务质量-不符合-Text'.
+ VARIABLE LABELS VAR1129_1 '[评分]结合你在该店的个人体验，用10分制来评价以下描述语句。10分表示对此描述完全同意，1分则表示完全不同意。-D1 小米的售后服务人员，是在用真心与客户交朋友！'.
+ VALUE LABELS VAR1129_1 10 '10' 9 '9' 8 '8' 7 '7' 6 '6' 5 '5' 4 '4' 3 '3' 2 '2' 1 '1'  VARIABLE LABELS VAR1129_1_why_text '[评分]结合你在该店的个人体验，用10分制来评价以下描述语句。10分表示对此描述完全同意，1分则表示完全不同意。-D1 小米的售后服务人员，是在用真心与客户交朋友！-理由'.
+ VARIABLE LABELS VAR1129_2 '[评分]结合你在该店的个人体验，用10分制来评价以下描述语句。10分表示对此描述完全同意，1分则表示完全不同意。-D2 在这个店，我觉得他们的维修技术十分专业！'.
+ VALUE LABELS VAR1129_2 10 '10' 9 '9' 8 '8' 7 '7' 6 '6' 5 '5' 4 '4' 3 '3' 2 '2' 1 '1'  VARIABLE LABELS VAR1129_2_why_text '[评分]结合你在该店的个人体验，用10分制来评价以下描述语句。10分表示对此描述完全同意，1分则表示完全不同意。-D2 在这个店，我觉得他们的维修技术十分专业！-理由'.
+ VARIABLE LABELS VAR1129_3 '[评分]结合你在该店的个人体验，用10分制来评价以下描述语句。10分表示对此描述完全同意，1分则表示完全不同意。-D3 门店所在位置，乘坐公共交通工具方便到达！'.
+ VALUE LABELS VAR1129_3 10 '10' 9 '9' 8 '8' 7 '7' 6 '6' 5 '5' 4 '4' 3 '3' 2 '2' 1 '1'  VARIABLE LABELS VAR1129_3_why_text '[评分]结合你在该店的个人体验，用10分制来评价以下描述语句。10分表示对此描述完全同意，1分则表示完全不同意。-D3 门店所在位置，乘坐公共交通工具方便到达！-理由'.
+ VARIABLE LABELS VAR1129_4 '[评分]结合你在该店的个人体验，用10分制来评价以下描述语句。10分表示对此描述完全同意，1分则表示完全不同意。-D4 门店所在楼宇或商场整洁与干净！'.
+ VALUE LABELS VAR1129_4 10 '10' 9 '9' 8 '8' 7 '7' 6 '6' 5 '5' 4 '4' 3 '3' 2 '2' 1 '1'  VARIABLE LABELS VAR1129_4_why_text '[评分]结合你在该店的个人体验，用10分制来评价以下描述语句。10分表示对此描述完全同意，1分则表示完全不同意。-D4 门店所在楼宇或商场整洁与干净！-理由'.
+ VARIABLE LABELS VAR1129_5 '[评分]结合你在该店的个人体验，用10分制来评价以下描述语句。10分表示对此描述完全同意，1分则表示完全不同意。-D5 门店醒目，方便用户寻找！'.
+ VALUE LABELS VAR1129_5 10 '10' 9 '9' 8 '8' 7 '7' 6 '6' 5 '5' 4 '4' 3 '3' 2 '2' 1 '1'  VARIABLE LABELS VAR1129_5_why_text '[评分]结合你在该店的个人体验，用10分制来评价以下描述语句。10分表示对此描述完全同意，1分则表示完全不同意。-D5 门店醒目，方便用户寻找！-理由'.
+ VARIABLE LABELS VAR1217 '送修该部手机，是否有维修记录单？'.
+ VALUE LABELS VAR1217 1 '是' 2 '否' .
+ VARIABLE LABELS VAR1130 '该部手机在该店是否完成了维修？'.
+ VALUE LABELS VAR1130 1 '是' 2 '否' .
+ VARIABLE LABELS VAR1306 '维修方法是什么？'.
+ VARIABLE LABELS VAR1306_99_text '维修方法是什么？-其他方法-Text'.
+ VALUE LABELS VAR1306 1 '刷机' 2 '维修主板' 3 '更换主板' 4 '维修清理扬声器' 5 '更换扬声器' 6 '维修清理摄像头' 7 '更换摄像头' 8 '更换听筒' 9 '更换耳机接口' 10 '更换显示屏'  99 '其他方法' .
+ VARIABLE LABELS VAR1304 '维修费用是多少？'.
+ VARIABLE LABELS VAR1304_99_text '维修费用是多少？-维修费用（元）-Text'.
+ VALUE LABELS VAR1304 1 '保内免费维修'  99 '维修费用（元）' .
+ VARIABLE LABELS VAR1131 '如果最终没有完成维修，请记录原因。'.
+ VARIABLE LABELS VAR1131_99_text '如果最终没有完成维修，请记录原因。-其他-Text'.
+ VALUE LABELS VAR1131 1 '经检测没有故障' 2 '店内当日没有配件，无法维修' 3 '返厂维修或留机' 4 '要求出示凭证否则不予维修' 5 '我送修的手机属于保外，维修需要收费'  99 '其他' .
+ VARIABLE LABELS VAR1132 '是否在附近发现有小米售后山寨店或疑似山寨店。'.
+ VALUE LABELS VAR1132 1 '是的，附近有山寨或疑似山寨店' 2 '本次没有发现' .
+ VARIABLE LABELS VAR1132_1_text '是否在附近发现有小米售后山寨店或疑似山寨店。-是的，附近有山寨或疑似山寨店-Text'.
+ VARIABLE LABELS VAR1215 '小米近日米4换屏价格新政策——“米4换屏价格由原来的890元降至540元”。我们需要了解门店是否在执行米4换屏新价格。请按如下话术询问店内人员：“米4换屏多少钱？”'.
+ VALUE LABELS VAR1215 1 '米4换屏已经执行新价格540元' 2 '米4换屏仍旧执行老价格890元' .
+ VARIABLE LABELS VAR1216 '我如果自己换了一个不是小米手机原装的屏，以后要是再修，你们这里能给换吗？'.
+ VALUE LABELS VAR1216 1 '可以' 2 '不可以' .

@@ -1,0 +1,21 @@
+<tr>
+    <td height=25 class="question" valign=center>{questionName}</td>
+</tr>
+<tr>
+   <td>
+	  <table cellSpacing=0 cellPadding=0>
+		<!-- BEGIN OPTION -->
+		<tr class="answer">
+			<td nowrap>&nbsp;{optionName}</td>
+			<td width=15></td>
+			<td nowrap align=right>数值：<input size=10 name="option_2_{questionID}_{optionID}" id="option_2_{questionID}_{optionID}" value="{optionValue}"></td>
+		</tr>
+		<!-- END OPTION -->
+		<tr style="display:{isHaveOther}" class="answer">
+			<td nowrap>&nbsp;{other_optionName}</td>
+			<td width=15></td>
+			<td nowrap align=right>数值：<input size=10 name="option_2_{questionID}_0" id="option_2_{questionID}_0" value="{otherValue}"></td>
+		</tr>
+	  </table>
+  </td>
+</tr>

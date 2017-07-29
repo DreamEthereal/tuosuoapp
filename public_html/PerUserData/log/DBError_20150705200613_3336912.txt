@@ -1,0 +1,2 @@
+2015-07-05 20:06:13     <b>Bad SQL Query</b>:  SELECT b.responseID,b.administratorsName,b.ipAddress,b.joinTime,b.area,b.overFlag,b.overFlag0,b.authStat,b.version,b.adminID,b.appStat,b.taskID,b.option_266 FROM eq_response_4 b  WHERE  (b.overFlag != 2 and b.authStat != 2)  AND b.responseID = luru.responseID <br><b>Unknown column 'luru.responseID' in 'where clause'</b>
+

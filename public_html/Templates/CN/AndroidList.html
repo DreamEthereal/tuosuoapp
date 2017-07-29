@@ -1,0 +1,185 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gbk" />
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" />
+<title>管理问卷发布 - Eclear在线问卷调查引擎</title>
+<link rel="shortcut icon" href="../Images/enableq.ico" type="image/x-icon" />
+<link rel="stylesheet" type="text/css" href="../CSS/UIBase.css" />
+<link rel="stylesheet" type="text/css" href="../CSS/Index.css" />
+<link href="../CSS/Window.css" type="text/css" rel=stylesheet>
+<script type="text/javascript" src="../JS/Common.js.php"></script>
+<script type="text/javascript" src="../JS/Window.js.php"></script>
+<script type="text/javascript" src="../JS/Jquery.min.js.php"></script>
+<script>
+function move(fbox, tbox) {
+	var arrFbox = new Array();
+	var arrTbox = new Array();
+	var arrLookup = new Array();
+	var i;
+	for (i = 0; i < tbox.options.length; i++) {
+		arrLookup[tbox.options[i].text] = tbox.options[i].value;
+		arrTbox[i] = tbox.options[i].text;
+	}
+	var fLength = 0;
+	var tLength = arrTbox.length;
+	for(i = 0; i < fbox.options.length; i++) {
+		arrLookup[fbox.options[i].text] = fbox.options[i].value;
+		if (fbox.options[i].selected && fbox.options[i].value != "") {
+			arrTbox[tLength] = fbox.options[i].text;
+			tLength++;
+		}
+		else {
+			arrFbox[fLength] = fbox.options[i].text;
+			fLength++;
+		}
+	}
+	//arrFbox.sort();
+	//arrTbox.sort();
+	fbox.length = 0;
+	tbox.length = 0;
+	var c;
+	for(c = 0; c < arrFbox.length; c++) {
+		var no = new Option();
+		no.value = arrLookup[arrFbox[c]];
+		no.text = arrFbox[c];
+		fbox[c] = no;
+	}
+	for(c = 0; c < arrTbox.length; c++) {
+		var no = new Option();
+		no.value = arrLookup[arrTbox[c]];
+		no.text = arrTbox[c];
+		tbox[c] = no;
+	}
+}
+function Check_Form_Validator()
+{
+    var theObj = document.getElementById("cateSurveyList");
+    for(c = 0; c < theObj.options.length; c++) {
+	    theObj.options[c].selected = true;
+    }
+}
+</script>
+<style>
+	select {border:1px solid #cacaca;font-family: Calibri,"宋体",sans-serif;vertical-align: middle;}
+    .d_table{width:708px;border:1px solid #cacaca;border-bottom:0px;margin-bottom:5px}
+    .d_table tr{height:34px;line-height:34px;border-right:1px solid #cacaca;border-bottom:1px solid #cacaca;color:#5d5d5d;}
+    .d_table tr th{background-color: #f9f9f9;padding:0 5px;+border-bottom:1px solid #cacaca;}
+    .d_table tr td{padding:0 5px;+border-bottom:1px solid #cacaca;}
+    .d_table tr th{font-weight:bold;}
+    .d_table tr th.title,.d_table tr td.title{text-align:left;}    
+    .d_table tr td a{color:#3b5888;}
+    .d_table tr td a:hover{color:#ff7700;}
+    .d_table tr:hover{background-color:transparent}
+</style>
+
+</head>
+
+<body oncontextmenu="return false">
+ 	<div class="header">
+		<h1 class="logo">Eclear</h1>
+		<div class="sidebar_show"></div>
+		<div class="header_menu">
+			<div class="header_m_1">
+				<a href="../System/ShowMain.php">欢迎您，<font color="#e45857" id="nick_Name_cont"></font></a>
+				<span class="head_menu_icon"></span>
+				<ul class="head_menu_list">
+					<span class="head_menu_top"></span>
+					<li><a href="../System/MyProfile.php">我的账户信息</a></li>
+					<li class="last"><a href="../System/ChangePass.php">修改我的密码</a></li>
+				</ul>
+			</div>
+			<div class="header_m_6" style="margin-left:50px">
+				<a href="../System/ShowMain.php">首页</a>
+			</div>
+			<div class="header_m_2" id="mySetting">
+			</div>
+			<div class="header_m_3" style="margin-left:50px">
+				<a href="../Help/Downs.php">帮助</a>
+				<span class="head_menu_icon"></span>
+				<ul class="head_menu_list">
+					<span class="head_menu_top"></span>
+					<li><a href="../Help/Downs.php">帮助文件下载</a></li>
+					<li><a href="http://doc.itenable.com.cn" target=_blank>在线帮助文档</a></li>
+					<li><a href="http://i.enableq.com" target=_blank>在线讨论社区</a></li>
+					<li class="last"><a href="../System/AdministratorsLogs.php">系统操作日志</a></li>
+				</ul>
+			</div>
+			<div class="header_m_4" style="margin-left:50px">
+				<a href="javascript:void(0);" onclick="javascript:showPopWin('../License/AboutEnableQ.php', 500, 400, null, null,'关于...')">关于</a>
+			</div>
+			<div class="header_m_5">
+				<a href="../System/Logout.php?loginOutURL=../index.php" target=_top>退出</a>
+			</div>
+		</div>
+	</div>
+
+	<div class="container clearfix">
+		<div class="sider_bar">
+			<div class="sider_menu">
+				<a class="sider_menu_title" href="javascript:void(0);" onclick="menuToggle('sider_menu_list_1')">离线安卓访员App</a>
+				<ul class="sider_menu_list" id="sider_menu_list_1">
+					<li id="realGPS"><a href="../Android/BaiduDevicesMap.php" target=_blank>访员实时定位</a></li>
+					<li><a href="../Offline/OfflineActionLog.php?type=1">访员操作日志</a></li>
+					<li><a class="window-800-360" title="关于离线安卓访员App的说明" href="../Android/AboutAndroid.php">关于访员App</a></li>
+				</ul>
+			</div>
+			<div class="sider_menu">
+				<a class="sider_menu_title cur" href="javascript:void(0);" onclick="menuToggle('sider_menu_list_2')">在线安卓样本App</a>
+				<ul class="sider_menu_list" id="sider_menu_list_2">
+					<li><a href="../Android/AndroidList.php" class="sel">管理问卷发布</a></li>
+					<li><a href="../Android/AndroidNotes.php?stat=1">管理推送消息</a></li>
+				</ul>
+			</div>
+			<div class="sider_menu">
+				<a class="sider_menu_title" href="javascript:void(0);" onclick="menuToggle('sider_menu_list_3')">分析安卓应用</a>
+				<ul class="sider_menu_list" id="sider_menu_list_3">
+					<li><a href="../Android/AndroidAnalytics.php">分析安卓应用</a></li>
+				</ul>
+			</div>
+		</div>
+		
+		<div class="main">
+		   <div class="content">
+			<div class="content_tit">
+				<div class="clearfix">
+				<h1>管理问卷发布</h1>
+				<span class="total ml10"></span>
+				<span class="btn ml10"></span>
+				</div>
+				<p class="fc_grey">选择调查问卷发布到在线安卓样本App</p>
+			</div>
+			<div class="content_main" style="margin-top:10px">
+			  <form action="" method="post" name="Check_Form" id="Check_Form" onsubmit="return Check_Form_Validator()" >
+  				<table class="d_table" width=706px>
+				 <tr class=coltitle><th colspan="2"><span style="float:left"><b>可选择的调查问卷列表</b></span><span style="float:right"><b>已发布的调查问卷</b></th></tr>
+				 <tr><td align=left colspan=2 style="margin:0px;padding:0px">
+					  <table cellspacing=0 cellpadding=0><tr><td style="margin:0px;padding:0px">
+						 <select multiple name="surveyNameList[]" id="surveyNameList" size=25 style="width:353px;">
+							   {surveyNameList}
+						 </select></td>
+						 <td style="margin:0px 2px 0px 2px;padding:0px 2px 0px 2px"><input type="button" class=inputsubmit onClick="move(this.form.surveyNameList,this.form.cateSurveyList)" value=">" style="margin-bottom:2px;*margin-bottom:0px"><br/>
+						 <input type="button" class=inputsubmit onClick="move(this.form.cateSurveyList,this.form.surveyNameList)" value="<"></td>
+						 <td style="margin:0px;padding:0px">
+						 <select name="cateSurveyList[]" id="cateSurveyList" multiple size="25" style="width:353px;">
+							  {cateSurveyList}
+						 </select></td></tr></table>
+				 </td></tr></table>
+				 <table width=706px>
+				 <tr align="center"> 
+					   <td height="15"> 
+						 <input name="Action" type="hidden" value="PubSurveySubmit">
+						 <input name="nowValue" id="nowValue" type="hidden" value="{nowValue}">
+						 <input type=submit class=inputsubmit value="确定">&nbsp;<input type=reset class=inputsubmit value="重置">
+					  </td>
+					</tr>
+			  </table>
+			</form>
+			</div><!--end of content_main-->
+		   </div><!--end of content-->
+	   </div><!--end of main-->
+    </div><!--end of container-->
+	<!--popmenu -->
+	<script type="text/javascript" src="../JS/MySetting.js.php"></script>
+	<script type="text/javascript" src="../JS/PopMenu.js.php"></script>
+</body></html>

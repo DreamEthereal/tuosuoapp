@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chart>
+	<series><!-- BEGIN SERIES -->
+		<value xid="{xid}">{seriesvalue}</value><!-- END SERIES -->
+	</series>
+	<graphs><!-- BEGIN GRAPHS -->
+		<graph color="#{color}" title="{title}"><!-- BEGIN DATA -->
+			<value xid="{order}">{datavalue}</value><!-- END DATA -->
+		</graph><!-- END GRAPHS -->
+	</graphs>
+</chart>

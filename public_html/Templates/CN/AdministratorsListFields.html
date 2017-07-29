@@ -1,0 +1,158 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gbk" />
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" />
+<title>定义样本属性 - Eclear在线问卷调查引擎</title>
+<link rel="shortcut icon" href="../Images/enableq.ico" type="image/x-icon" />
+<link rel="stylesheet" type="text/css" href="../CSS/UIBase.css" />
+<link rel="stylesheet" type="text/css" href="../CSS/Index.css" />
+<link href="../CSS/Window.css" type="text/css" rel=stylesheet>
+<script type="text/javascript" src="../JS/Common.js.php"></script>
+<script type="text/javascript" src="../JS/Window.js.php"></script>
+<script type="text/javascript" src="../JS/Jquery.min.js.php"></script>
+<script language="javascript"> 
+function checkall(form) 
+{
+	if( form.all.checked)
+	{
+		for(var i = 0;i < form.elements.length-1; i++) 
+		{
+			var e = form.elements[i];
+			e.checked = true;
+		}
+	}
+	else
+	{
+		for(var i = 0;i < form.elements.length-1; i++) 
+		{
+			var e = form.elements[i];
+			e.checked = false;
+		}
+    }
+}
+function refreshParent() {
+   self.location.reload(true);
+}
+</script>
+<style>
+	input[type=text] {border:1px solid #cacaca;height:18px;font-family: Calibri,"宋体",sans-serif;line-height:18px;vertical-align: middle;}
+	select {border:1px solid #cacaca;height:20px;font-family: Calibri,"宋体",sans-serif;vertical-align: middle;}
+</style>
+</head>
+<body oncontextmenu="return false">
+ 	<div class="header">
+		<h1 class="logo">Eclear</h1>
+		<div class="sidebar_show"></div>
+		<div class="header_menu">
+			<div class="header_m_1">
+				<a href="../System/ShowMain.php">欢迎您，<font color="#e45857" id="nick_Name_cont"></font></a>
+				<span class="head_menu_icon"></span>
+				<ul class="head_menu_list">
+					<span class="head_menu_top"></span>
+					<li><a href="../System/MyProfile.php">我的账户信息</a></li>
+					<li class="last"><a href="../System/ChangePass.php">修改我的密码</a></li>
+				</ul>
+			</div>
+			<div class="header_m_6" style="margin-left:50px">
+				<a href="../System/ShowMain.php">首页</a>
+			</div>
+			<div class="header_m_2" id="mySetting">
+			</div>
+			<div class="header_m_3" style="margin-left:50px">
+				<a href="../Help/Downs.php">帮助</a>
+				<span class="head_menu_icon"></span>
+				<ul class="head_menu_list">
+					<span class="head_menu_top"></span>
+					<li><a href="../Help/Downs.php">帮助文件下载</a></li>
+					<li><a href="http://doc.itenable.com.cn" target=_blank>在线帮助文档</a></li>
+					<li><a href="http://i.enableq.com" target=_blank>在线讨论社区</a></li>
+					<li class="last"><a href="../System/AdministratorsLogs.php">系统操作日志</a></li>
+				</ul>
+			</div>
+			<div class="header_m_4" style="margin-left:50px">
+				<a href="javascript:void(0);" onclick="javascript:showPopWin('../License/AboutEnableQ.php', 500, 400, null, null,'关于...')">关于</a>
+			</div>
+			<div class="header_m_5">
+				<a href="../System/Logout.php?loginOutURL=../index.php" target=_top>退出</a>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript" src="../JS/MySetting.js.php"></script>
+
+	<div class="container clearfix">
+		<div class="sider_bar">
+			<div class="sider_menu">
+				<a class="sider_menu_title cur" onclick="menuToggle('sider_menu_list_1')">管理调查样本</a>
+				<ul class="sider_menu_list" id="sider_menu_list_1">
+					<li><a href="../System/ShowMembersList.php">管理调查样本</a></li>
+					<li><a href="../System/MembersOptionFields.php" class="sel">定义样本属性</a></li>
+					<li><a href="../System/ShowMemberGroupList.php">管理样本分组</a></li>
+					<li><a href="../System/MembersConfig.php">样本管理设置</a></li>
+				</ul>
+			</div>
+		</div>
+		<div class="main">
+		    <div class="nav">
+				<a href="../System/ShowMembersList.php">调查样本</a>
+				<a href="../System/MembersOptionFields.php" class="cur">样本属性</a>
+				<a href="../System/ShowMemberGroupList.php">样本分组</a>
+				<a href="../System/MembersConfig.php">管理设置</a>
+			</div>			
+
+		   <div class="content">
+			<div class="content_tit">
+				<div class="clearfix">
+				<h1>定义样本属性</h1>
+				<span class="total ml10">[{recNum}字段]</span>
+				<span class="btn ml10"><input class=inputsubmit name="createNew" type="button" id="createNew" value="新增" onClick="javascript:showPopWin('{newURL}', 800, 400, refreshParent, null,'定义样本属性字段');">&nbsp;</span>
+				</div>
+				<p class="fc_grey">样本属性指描述单一样本的属性字段，系统允许创建零个或多个样本属性</p>
+			</div>
+			<div class="content_main" style="margin-top:10px">
+			 <form name="Check_Form" id="Check_Form" method="post" action="">
+  			 <table class="d_table">
+				<tr class=coltitle> 
+				 <th width=3% align=left noWrap><input name="all" type="checkbox" id="all" value="all" onclick="checkall(this.form)" style="background-color:#f9f9f9"></th>
+				 <th align=left><b>字段名称</a></b></td>
+				 <th align=center>&nbsp;<b>字段类型</a></b></td>
+				 <th align=center>&nbsp;<b>显示</a></b></td>
+				 <th align=center>&nbsp;<b>排序</a></b></td>
+				 <th align=center><b>操作</b></td>
+			   </tr>
+
+			   <!-- BEGIN FIELDS -->
+			   <tr>
+				  <td width=3% align=left noWrap><input name="fieldsID[]" type="checkbox" id="fieldsID[]" value="{fieldsID}"></td>
+				  <td width="*">{name}</td>
+				  <td width="12%" nowrap align=center>&nbsp;{types}</td>
+				  <td width="14%" nowrap align=center>&nbsp;{isPublic}&nbsp;
+					<select name="isPublic[{fieldsID}]" id="isPublic[{fieldsID}]">
+					   <option value="1">显示</option>
+					   <option value="0" {is_Public}>隐藏</option>
+					</select></td>
+				  <td width="18%" nowrap align=center>&nbsp;
+					 <A href="{downURL}"><IMG src="../Images/arrow_down.gif" alt=向下排序 border=0></A> 
+					 <A href="{upURL}"><IMG src="../Images/arrow_up.gif" alt=向上排序 border=0></A>&nbsp; 
+					 <input name="orderByID[{fieldsID}]" type="text" id="orderByID[{fieldsID}]" value="{orderByID}" size="5" maxlength="15"></td>
+				  <td width="14%" align=center nowrap><A href="javascript:void(0);" onClick="javascript:showPopWin('{editURL}', 800, 400, refreshParent, null,'定义样本属性字段');">编辑</A>&nbsp;<A href="{deleteURL}" onclick="return window.confirm('您真的想删除该字段吗？本操作不可恢复！')">删除</A></td>
+			   </tr>
+			   <!-- END FIELDS -->
+			   </table><table width=100%>
+			   <tr>
+				   <td width=3%></td>
+				   <td height="15"> 
+					<input class=inputsubmit name="UpdateFieldsSubmit" type="submit" id="UpdateFieldsSubmit" value="更新">
+					<input class=inputsubmit name="DeleteSubmit" type="submit" id="DeleteSubmit" value="删除" onclick="return window.confirm('您真的想删除这些字段吗？本操作不可恢复！')">
+				   </td>
+				</tr>
+			</table>
+			</form>
+			</div><!--end of content_main-->
+		   </div><!--end of content-->
+	   </div><!--end of main-->
+    </div><!--end of container-->
+	<!--popmenu -->
+	<script type="text/javascript" src="../JS/PopMenu.js.php"></script>
+</body></html>
+

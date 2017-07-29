@@ -1,0 +1,106 @@
+<html>
+<head>
+<meta http-equiv=content-language content=zh-cn>
+<meta http-equiv=content-type content="text/html; charset=gbk">
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7">
+<style>
+td { padding:2px 5px 2px 5px;}
+table {margin-bottom:4px;}
+</style>
+<link href="../CSS/Base.css" rel=stylesheet>
+<LINK href="../CSS/Window.css" type=text/css rel=stylesheet>
+<script type="text/javascript" src="../JS/Common.js.php"></script>
+<script type="text/javascript" src="../JS/Window.js.php"></script>
+<script type="text/javascript" src="../JS/Jquery.min.js.php"></script>
+<script type="text/javascript" src="../JS/Jquery.notification.js.php"></script>
+<link type="text/css" rel="stylesheet" href="../CSS/Notification.css" />
+<script language=javascript src="../JS/CheckQuestion.js.php"></script>
+<script language="javascript"> 
+function Check_Form_Validator()
+{
+	if(!CheckNotNull(document.Check_Form.startGrade, "评分规则开始分值")) {return false;}
+	if(!CheckNoFloat(document.Check_Form.startGrade,'评分规则开始分值')){return false;} 
+	if(!CheckNotNull(document.Check_Form.endGrade, "评分规则结束分值")) {return false;}
+	if(!CheckNoFloat(document.Check_Form.endGrade,'评分规则结束分值')){return false;} 
+	if (Number( document.Check_Form.endGrade.value ) <= Number(document.Check_Form.startGrade.value) )
+	{
+		document.Check_Form.endGrade.focus();
+		$.notification('结束分值必须大于开始分值');
+		return false;
+	}
+	if(!CheckNotNull(document.Check_Form.conclusion, "评分规则的结论")) {return false;}
+}
+//检查浮点数
+function CheckNoFloat(objField, strText) {
+    var objValue = objField.value;
+    if (objValue=="") return true;
+	var strErr = "“" + strText + "”不是正确的数据格式！";
+	var reg=/^-?\d+\.?\d*$/;
+	if (!reg.test(objValue)) {
+        objField.focus();
+		$.notification(strErr);
+		return false;
+	}
+	return true;
+}
+function refreshWindow() {
+   self.location.href = '{thisURL}';
+}
+function submitForm()
+{
+	if( Check_Form_Validator() != false )
+	{
+		document.getElementById('submitBtn').disabled = true;
+		disabledStyle(document.getElementById('submitBtn'));
+		document.getElementById('close').disabled = true;
+		disabledStyle(document.getElementById('close'));
+		document.Check_Form.submit();
+	}
+}
+</script> 
+<META content="MSHTML 6.00.3790.0" name=GENERATOR></HEAD>
+<body oncontextmenu="return false">
+
+<table style="LINE-HEIGHT: 150%;border-collapse:collapse;" cellSpacing=0 cellPadding=0 width="100%" borderColor=#cacaca border=1>
+   <div class=position>位置：&nbsp; 我的问卷 &raquo; 设置量表评分规则</div>
+   <tr><td bgcolor="#f9f9f9" colspan=3><b>设置量表评分规则</b></td></tr>
+   <tr><td width=25% align=center noWrap><b>规则</b></td>
+	   <td width=63% align=center noWrap><b>结论</b></td>
+	   <td width=12% noWrap align=center><b>操 作</b> </td>
+   </tr>
+  <!-- BEGIN RULE -->
+  <tr onmouseover="this.style.backgroundColor='#f9f9f9'" onmouseout="this.style.backgroundColor='#ffffff'"> 
+	  <td>&nbsp;{ruleText}</td>
+	  <td>{conclusion}</td>
+	  <td align=center>
+		   <a href="javascript:void(0);" onclick="javascript:showPopWin('{editURL}', 660, 250, refreshWindow, null,'修改量表评分规则');">修改</A>&nbsp;
+		   <a href="{deleteURL}" onclick="return window.confirm('您真的想删除该条评分规则吗？本操作不可恢复！')">删除</A>
+	  </td>
+  </tr>
+ <!-- END RULE -->
+ </table>
+  <form name="Check_Form" method="post" action="" id="Check_Form" onsubmit="return false;">
+  <table style="LINE-HEIGHT: 150%;border-collapse:collapse;" cellSpacing=0 cellPadding=0 width="100%" borderColor=#cacaca border=1>
+   <tr><td bgcolor="#f9f9f9"><b>新增评分规则</b></td></tr>
+	   <tr><td>&nbsp;&nbsp;当量表计算得分&nbsp;&nbsp;
+		 <select id='startOperator' name='startOperator'>
+		   <option value='>='>大于等于</option>
+		   <option value='>'>大于</option>
+		 </select>
+		 <input name='startGrade' id='startGrade' size=8>
+		 &nbsp;&nbsp;同时&nbsp;&nbsp;
+		 <select id='endOperator' name='endOperator'>
+		   <option value='<'>小于</option>
+		   <option value='<='>小于等于</option>
+		 </select>
+		 <input name='endGrade' id='endGrade' size=8><br/>
+		 &nbsp;&nbsp;则结论为：<br/>
+   		 &nbsp;&nbsp;<textarea name='conclusion' id='conclusion' rows=5 cols=97></textarea>
+	</table><table width=100%><tr><td>
+	     &nbsp;<input name="surveyID" type="hidden" id="surveyID" value="{surveyID}"> 
+    	 <input name="Action" type="hidden" id="Action" value="AddGradeRule"> 
+		 <input class=inputsubmit type="button" name="submitBtn" id="submitBtn" value="确定" onclick="javascript:submitForm();"> 
+		 <input class=inputsubmit type="button" name="close" id="close" value="关闭" onClick="javascript:parent.hidePopWin();">
+      </td></tr></table>
+  </form>
+</body></html>

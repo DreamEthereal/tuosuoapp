@@ -1,0 +1,16 @@
+<script type="text/javascript" src="JS/CheckAutoRating.js.php"></script>
+<tr><td height=25 class="question" valign=center>&nbsp;{questionRequire}<span class="textEdit" id="questionName_{questionID}">{questionName}</span>&nbsp;<span class=notes>{questionNotes}</span></td></tr>
+<tr><td class="tips"><span class="textEdit" id="questionNotes_{questionID}">{questionTips}</span></td></tr>
+<tr><td>
+  <table cellSpacing=0 cellPadding=0 width=100% id="qtn_table_{questionID}">
+    <!-- BEGIN OPTION -->
+    <tr style="display:none" id="rating_{baseID}_{questionID}_{optionNameID}">
+		<td class="answer tdheight" align="right" nowrap><input class="answer" type="{inputPrompt}" size=6 name="{optionID}" id="{optionID}" maxlength="8" onKeyUp="this.value=this.value.replace(/[^\d\.\d]/g,'')" onafterpaste="this.value=this.value.replace(/[^\d\.\d]/g,'')" onblur="Check_Survey_Conditions();" value="{optionValue}"></td>
+		<td class="answer" nowrap align=left>{optionName}</td>
+	    <td width=10></td>
+ 		<td style="display:none" id="TextInput_{questionID}_{optionNameID}" class="answer" nowrap>¿Ì”…£∫<input name="TextOtherValue_{questionID}_{optionNameID}" id="TextOtherValue_{questionID}_{optionNameID}" value="{otherValue}" type="text" size=40></td>
+		<td width=99%></td>
+   </tr>
+	<!-- END OPTION -->
+  </table>
+</td></tr>

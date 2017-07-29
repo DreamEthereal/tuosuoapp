@@ -1,0 +1,955 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gbk" />
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+<title>调整调查问卷属性 - EnableQ在线问卷调查引擎</title>
+<link rel="shortcut icon" href="../Images/enableq.ico" type="image/x-icon" />
+<link rel="stylesheet" type="text/css" href="../CSS/UIBase.css" />
+<link rel="stylesheet" type="text/css" href="../CSS/Index.css" />
+<link href="../CSS/Window.css" type="text/css" rel=stylesheet>
+<script type="text/javascript" src="../JS/Common.js.php"></script>
+<script type="text/javascript" src="../JS/Window.js.php"></script>
+<script type="text/javascript" src="../JS/Jquery.min.js.php"></script>
+<script type="text/javascript" src="../JS/Calendar.js.php"></script>
+<script type="text/javascript" src="../JS/Jquery.notification.js.php"></script>
+<link type="text/css" rel="stylesheet" href="../CSS/Notification.css" />
+<script language=javascript src="../JS/CheckQuestion.js.php"></script>
+<script language=javascript src="../JS/HighLight.js.php"></script>
+<script language=javascript src="../JS/Editor.js.php"></script>
+<script language=javascript>
+var editTextRange;
+function Check_Form_Validator()
+{
+	if (!CheckNotNull(document.Check_Form.surveyName, "调查问卷标识名")) {return false;}
+	if (!CheckNoChinese(document.Check_Form.surveyName, "调查问卷标识名")) {return false;}
+	if (!CheckSpecicalChar(document.Check_Form.surveyName, "调查问卷标识名")) {return false;}
+	if (!CheckNotNull(document.Check_Form.surveyTitle, "调查问卷标题")) {return false;}
+	if (!CheckSpecicalChar(document.Check_Form.surveyTitle, "调查问卷标题")) {return false;}
+	if (!CheckIntNumber(document.Check_Form.proofRate, "完成凭证出现的概率",1,100)) {return false;}			
+	if (!CheckIntNumber(document.Check_Form.hongbaoRate, "微信红包出现的概率",1,100)) {return false;}			
+	if (!CheckRadioNoClick(document.Check_Form.exitMode,"调查问卷提交后的到达页") ) {return false;}
+	if (IsInCheckBox(document.Check_Form.exitMode,1 ))
+	{
+		if (!CheckNotNull(document.Check_Form.exitPage, "调查问卷提交后的到达页/URL")) {return false;}
+		if (!CheckURL(document.Check_Form.exitPage, "调查问卷提交后的到达页/URL")) {return false;}
+    }
+	if (IsInCheckBox(document.Check_Form.exitMode,2 ))
+	{
+		if (!CheckNotNull(document.Check_Form.exitTitleHead, "调查问卷提交后的到达页/标题")) {return false;}
+		if (!CheckNotNull(document.Check_Form.exitTextBody, "调查问卷提交后的到达页/内容")) {return false;}
+	}
+	if ( document.Check_Form.isCheckIP.value != "0" )
+	{
+		if (!CheckNotNull(document.Check_Form.maxIpTime,"防重复提交的限制间隔")) {return false;}
+		if (!CheckNumber(document.Check_Form.maxIpTime,"防重复提交的限制间隔",5,50000000)) {return false;}
+	}
+	if (!CheckNotNull(document.Check_Form.beginTime, "调查问卷开始时间")) {return false;}
+	if (!CheckDate(document.Check_Form.beginTime, "调查问卷开始时间")) {return false;}	
+	if (!CheckNotNull(document.Check_Form.endTime, "调查问卷结束时间")) {return false;}
+	if (!CheckDate(document.Check_Form.endTime, "调查问卷结束时间")) {return false;}
+	if ( document.Check_Form.beginTime.value >= document.Check_Form.endTime.value )
+	{
+		document.Check_Form.endTime.focus();
+		$.notification('开始时间止不应在结束时间后');
+		return false;
+    }
+	if (!CheckNumber(document.Check_Form.maxResponseNum,"问卷收到对应的回收份数结束",20,50000)) {return false;}
+	if (document.Check_Form.isWaiting.checked )
+	{
+		if (!CheckNumber(document.Check_Form.waitingTime,"每问卷分页要求最短回复时间",1,200)) {return false;}
+    }
+	if (document.Check_Form.isLimited.checked )
+	{
+		if (!CheckNumber(document.Check_Form.limitedTime,"问卷回复最长回复时间",20,20000)) {return false;}
+    }
+	var isUseOriPassportCheck = {isUseOriPassportCheck};
+	if (document.Check_Form.isPublic.value == "0" && (isUseOriPassportCheck == '3' || isUseOriPassportCheck == '5') )
+    {
+		if (!CheckNotNull(document.Check_Form.adUserName, "目录系统中的账户")) {return false;}
+	}
+	if (document.Check_Form.isPublic.value == "0" && isUseOriPassportCheck == '1' )
+    {
+ 		if( document.Check_Form.mainAttribute.options.length != 0 )
+		{
+			if (!CheckListMaxSelect(document.Check_Form.mainAttribute, "主要样本属性",6)) {return false;}
+		}
+	}
+	if( document.Check_Form.isPublic.value == "2" )
+	{
+		if (!CheckNotNull(document.Check_Form.tokenCode, "问卷控制令牌")) {return false;}
+    }
+	if (!CheckURL(document.Check_Form.apiURL, "与其他项目管理平台的对接URL")) {return false;}
+}
+function CheckSpecicalChar(objField, strText)
+{
+    var objValue = Trim(objField.value);
+    if (objValue=="") return true;
+	var strErr = "“" + strText + "”不能包含单引号、双引号、反斜线等非法字符！";
+	var Re = /[\x22\x27\x5C\x3F\x23\x25\x2B\x2F]+/ig;
+	if ( Re.test(objField.value))
+	{
+        objField.focus();
+		$.notification(strErr);
+		return false;
+	}
+	return true;
+}
+function CheckIntNumber(objField, strText, numMinValue, numMaxValue) {
+  if(objField.value == "") return true;
+  if(isNaN(objField.value)){
+    objField.focus();
+    $.notification("“" + strText + "”中只能填写数字！");
+    return false;
+  }
+  var numValue = parseInt(objField.value);
+  if(numMinValue != null){
+    if(numValue < numMinValue){
+      objField.focus();
+      $.notification("“" + strText + "”的值不能小于 " + numMinValue.toString() + " ！");
+      return false;
+    }
+  }
+  if(numMaxValue != null){
+    if(numValue > numMaxValue){
+      objField.focus();
+      $.notification("“" + strText + "”的值不能大于 " + numMaxValue.toString() + " ！");
+      return false;
+    }
+  }
+  return true;
+}
+function checkValid()
+{
+	if (event.keyCode<48 || event.keyCode>126)
+	{
+		event.keyCode=0;
+	}
+}
+function checkType()
+{ 
+	var isUseOriPassportCheck = {isUseOriPassportCheck};
+	var isUseAjaxPassportCheck = {isUseAjaxPassportCheck};
+
+    document.getElementById("onlyMembers").style.display  = "none";
+    document.getElementById("adUsers").style.display = "none";
+	document.getElementById("onlyMainAttribute").style.display  = "none";
+	switch(document.Check_Form.isPublic.value)
+	{
+	   case "1" :  //公开
+		  document.getElementById("onlyMembers").style.display  = "none";
+		  document.getElementById("onlyMainAttribute").style.display  = "none";
+		  document.getElementById("onlyToken").style.display = "none";
+		  document.getElementById("ajaxResponseURL_ID").style.display = "none";	
+	   break;
+	   case "2" :  //令牌
+		  document.getElementById("onlyToken").style.display = "";
+		  document.getElementById("onlyMembers").style.display  = "none";
+		  document.getElementById("onlyMainAttribute").style.display  = "none";
+		  document.getElementById("ajaxResponseURL_ID").style.display = "none";
+	   break;
+	   case "0":   //私有
+		  document.getElementById("onlyToken").style.display = "none";
+		  if( isUseOriPassportCheck == '1' )   //EnableQ
+		  {
+			 document.getElementById("onlyMembers").style.display  = "";
+			 document.getElementById("onlyMainAttribute").style.display  = "";
+			 document.getElementById("adUsers").style.display = "none";
+		  }
+		  else
+		  {
+			  if( isUseOriPassportCheck == '3' || isUseOriPassportCheck == '5' )   //AD
+			  {
+				 document.getElementById("onlyMembers").style.display  = "none";
+				 document.getElementById("onlyMainAttribute").style.display  = "none";
+				 document.getElementById("adUsers").style.display = "";
+			  }
+		  }
+		  if( isUseAjaxPassportCheck == '1' )  //ajax
+		  {
+			  document.getElementById("ajaxResponseURL_ID").style.display = "";
+		  }
+		  else
+		  {
+			  document.getElementById("ajaxResponseURL_ID").style.display = "none";
+		  }		
+	   break;
+	}
+}
+
+function checkIpMode()
+{ 
+	if (document.Check_Form.isCheckIP.value != "0" )
+	{
+		document.getElementById("IpTime").style.display = "";
+    }
+	else
+	{
+		document.getElementById("IpTime").style.display = "none";
+	}
+}
+
+function checkWaiting()
+{
+	if (document.getElementById("isWaiting").checked )
+	{
+		document.getElementById("waitingTime").disabled = false;
+		document.getElementById("isLimited").disabled = true;
+    }
+	else
+	{
+		document.getElementById("waitingTime").disabled = true;
+		document.getElementById("isLimited").disabled = false;
+	}
+
+	if (document.getElementById("isLimited").checked )
+	{
+		document.getElementById("limitedTime").disabled = false;
+		document.getElementById("isWaiting").disabled = true;
+    }
+	else
+	{
+		document.getElementById("limitedTime").disabled = true;
+		document.getElementById("isWaiting").disabled = false;
+	}
+}
+function selProof()
+{
+	if (document.getElementById("isShowProof").checked )
+	{
+		document.getElementById("isHongBao").checked = false;
+    }
+}
+function selHongBao()
+{
+	if (document.getElementById("isHongBao").checked )
+	{
+		document.getElementById("isShowProof").checked = false;
+    }
+}
+function Check_Survey_Lang(objValue)
+{
+   var str = document.getElementById("exitPage").value;
+   var replacestr = '';
+   if( objValue == 'cn' )
+   {
+		replacestr = str.replace(/qlang=en/g,'qlang=cn'); 
+   }
+   else
+   {
+		replacestr = str.replace(/qlang=cn/g,'qlang=en'); 
+   }
+   document.getElementById("exitPage").value = replacestr;
+}
+function checkViewResult()
+{
+	if (document.getElementById("isViewResult").checked )
+	{
+		document.getElementById("isShowResultBut").disabled = false;
+	}
+	else
+	{
+		document.getElementById("isShowResultBut").disabled = true;
+	}
+}
+function checkSystemTpl()
+{
+	switch(document.Check_Form.panelID.value)
+	{
+		case '30001':
+		case '30002':
+		case '30003':
+		case '30004':
+		case '30005':
+		case '30006':
+			document.getElementById("theme").disabled = true;
+		break;
+		default:
+			document.getElementById("theme").disabled = false;
+		break;
+	}
+}
+function checkRecFile()
+{
+	if (document.getElementById("isRecord1").checked ) //录音
+	{
+		//document.getElementById("isRecord2").disabled = true;
+		//document.getElementById("isRecord2").checked = false;
+		document.getElementById("isLowRecord").disabled = false;
+		document.getElementById("isUploadRec").disabled = false;
+		document.getElementById("isOfflineModi").disabled = false;
+	}
+	/*else if (document.getElementById("isRecord2").checked ) //录像
+	{
+		document.getElementById("isRecord1").disabled = true;
+		document.getElementById("isRecord1").checked = false;
+		document.getElementById("isLowRecord").disabled = false;
+		document.getElementById("isUploadRec").disabled = true;
+		document.getElementById("isUploadRec").checked = false;
+		document.getElementById("isOfflineModi").disabled = true;
+		document.getElementById("isOfflineModi").checked = false;
+	}*/
+	else
+	{
+		//document.getElementById("isRecord1").disabled = false;
+		//document.getElementById("isRecord2").disabled = false;
+		document.getElementById("isLowRecord").disabled = true;
+		document.getElementById("isLowRecord").checked = false;
+		document.getElementById("isUploadRec").disabled = true;
+		document.getElementById("isUploadRec").checked = false;
+		document.getElementById("isOfflineModi").disabled = false;
+	}
+}
+function Init()
+{
+	checkType();
+	checkIpMode();
+	checkWaiting();
+	checkViewResult();
+	selProof();selHongBao();
+	checkRecFile();
+	checkSystemTpl();
+}
+var http_request = false;
+function AjaxRequest(url)
+{
+	http_request = false;
+	if(window.ActiveXObject){
+		try{
+			http_request = new ActiveXObject("Msxml2.XMLHTTP");
+		}
+		catch (e){
+			try{
+				http_request = new ActiveXObject("Microsoft.XMLHTTP");
+			}
+			catch (e) {}
+		}
+	}
+	else if(window.XMLHttpRequest){
+		http_request = new XMLHttpRequest();
+		if (http_request.overrideMimeType){
+			http_request.overrideMimeType('text/xml');
+		}
+	}
+	
+	if (!http_request){
+		$.notification("Cannot create an XMLHTTP instance");
+		return false;
+	}
+	http_request.onreadystatechange = NotesContents;
+	http_request.open('GET', url, true);
+	http_request.send(null);
+}
+
+function NotesContents()
+{
+	if (http_request.readyState == 4){
+		if(http_request.status == 200){
+			if(http_request.responseText == "false")
+			   document.getElementById("surveyNameInfo").innerHTML="<img src=../Images/check_no.gif border=0> <span class=red>输入的调查问卷标识名已存在&nbsp;</span>";
+			else if(http_request.responseText == "true")
+			   document.getElementById("surveyNameInfo").innerHTML="<img src=../Images/check_yes.gif border=0> <span class=green>输入的调查问卷标识名可使用&nbsp;</span>";
+			else if(http_request.responseText == "null") 
+			   document.getElementById("surveyNameInfo").innerHTML="<img src=../Images/check_no.gif border=0> <span class=red>输入的调查问卷标识名为空&nbsp;</span>";
+		}
+		else{
+			$.notification('网络传输问题');
+		}
+	}
+}
+function refreshParent() {
+   //window.location.replace(window.location.href);
+   window.location.reload(true);
+}
+function submitForm()
+{
+	if( Check_Form_Validator() != false )
+	{
+		savesurveyinfo();
+		document.getElementById('submitBtn').disabled = true;
+		disabledStyle(document.getElementById('submitBtn'));
+		document.getElementById('resetBtn').disabled = true;
+		disabledStyle(document.getElementById('resetBtn'));
+		document.getElementById('rtnBtn').disabled = true;
+		disabledStyle(document.getElementById('rtnBtn'));
+		document.Check_Form.submit();
+	}
+}
+</script>
+<style>
+	input[type=text] {border:1px solid #cacaca;height:20px;font-family: Calibri,"宋体",sans-serif;line-height:20px;vertical-align: middle;}
+	select {border:1px solid #cacaca;font-family: Calibri,"宋体",sans-serif;vertical-align: middle;}
+	input[type=checkbox]{vertical-align: middle;margin-right:5px}
+	input[type=radio]{vertical-align: middle;margin-right:5px}
+	textarea{height:80px;border:1px solid #cacaca;font-family: Calibri,"宋体",sans-serif;}
+	.clssel{height:20px}
+	select,img {vertical-align: middle;}
+    .d_table tr:hover{background-color:transparent;}
+</style>
+</head>
+<body oncontextmenu="return false" onload="javascript:Init();">
+ 	<div class="header">
+		<h1 class="logo">Eclear</h1>
+		<div class="header_menu">
+			<div class="header_m_1">
+				<a href="../System/ShowMain.php">欢迎您，<font color="#e45857" id="nick_Name_cont"></font></a>
+				<span class="head_menu_icon"></span>
+				<ul class="head_menu_list">
+					<span class="head_menu_top"></span>
+					<li><a href="../System/MyProfile.php">我的账户信息</a></li>
+					<li class="last"><a href="../System/ChangePass.php">修改我的密码</a></li>
+				</ul>
+			</div>
+			<div class="header_m_6" style="margin-left:50px">
+				<a href="../System/ShowMain.php">首页</a>
+			</div>
+			<div class="header_m_2" id="mySetting">
+			</div>
+			<div class="header_m_3" style="margin-left:50px">
+				<a href="../Help/Downs.php">帮助</a>
+				<span class="head_menu_icon"></span>
+				<ul class="head_menu_list">
+					<span class="head_menu_top"></span>
+					<li><a href="../Help/Downs.php">帮助文件下载</a></li>
+					<li><a href="http://doc.itenable.com.cn" target=_blank>在线帮助文档</a></li>
+					<li><a href="http://i.enableq.com" target=_blank>在线讨论社区</a></li>
+					<li class="last"><a href="../System/AdministratorsLogs.php">系统操作日志</a></li>
+				</ul>
+			</div>
+			<div class="header_m_4" style="margin-left:50px">
+				<a href="javascript:void(0);" onclick="javascript:showPopWin('../License/AboutEnableQ.php', 500, 400, null, null,'关于...')">关于</a>
+			</div>
+			<div class="header_m_5">
+				<a href="../System/Logout.php?loginOutURL=../index.php" target=_top>退出</a>
+			</div>
+		</div>
+	</div><!--end of header-->
+	<script type="text/javascript" src="../JS/MySetting.js.php"></script>
+
+	<div class="container clearfix">
+	   <div class="main">
+		<div class="nav">
+			    <a href="ShowSurveyList.php?Action=Edit&surveyID={surveyID}" class="cur">属性</a>
+				<a href="TrackCode.php?surveyID={surveyID}" style="display:{isTrackCode}">追踪</a>
+				<a href="GetSurveyCode.php?surveyID={surveyID}" style="display:{isDeployStat}">分发</a>
+				<a href="ShowSurveyList.php?Action=EditUser&surveyID={surveyID}">用户</a>
+				<a href="{taskURL}" style="display:{haveTask}">任务</a>
+				<a href="{planURL}" style="display:{havePlan}">计划</a>
+		</div>		
+	    <div class="content">
+			<div class="content_tit">
+				<div class="clearfix">
+				<h1><span class=redtitle>[{surveyTitle}]</span>问卷属性</h1>
+				<span class="total ml10"></span>
+				<span class="btn ml10"></span>
+				</div>
+				<p class="fc_grey">依据不同项目要求，选择开启或关闭对应控制选项，以达到个性化调整调查问卷属性的目的</p>
+			</div>
+		   <div class="content_main" style="margin-top:10px;">
+		   <form action="" method="post" id="Check_Form" name="Check_Form" id="Check_Form" onsubmit="return false;">
+		   <table class="d_table">
+			 <tr class=coltitle><th colspan=2 align=left>调查问卷基本信息&nbsp;<img src="../Images/info.gif" border=0></th></tr>
+			 <tr height="28" valign=center> 
+				<td width="17%"><span class=red>*</span> 调查问卷标识名：</td>
+				<td width="83%" valign=center>
+				 <input type=text class="textInput" name="surveyName" type="text" id="surveyName" size="25" onkeypress="checkValid()"  style="ime-mode:disabled" onPaste="return false;" onKeyUp="AjaxRequest('AjaxCheckSurveyName.php?surveyName='+this.value+'&oldName={surveyName}');"  value="{surveyName}">&nbsp;* 使用汉语拼音或者英文名称&nbsp;&nbsp;
+				 <span id="surveyNameInfo"></span>
+		　　　</td></tr>
+			  <tr> 
+				   <td height="25"><SPAN class=red>*</SPAN> 问卷语言版本：</td>
+				   <td><input type="radio" value="cn" name="language"  onclick="Check_Survey_Lang('cn');" {surveyLang_cn}> 中文 &nbsp;&nbsp;<input type="radio" value="en" name="language" onclick="Check_Survey_Lang('en');" {surveyLang_en} > 英文</td>
+			  </tr>
+			  <tr> 
+				   <td height="25"><SPAN class=red>*</SPAN> 调查问卷标题：</td>
+				   <td><input class="textInput" name="surveyTitle" type="text" id="surveyTitle" size="80" maxlength="200" value="{surveyTitle}"></td>
+			  </tr>
+			  <tr> 
+				  <td height="23">&nbsp;&nbsp;&nbsp;调查问卷副标题：</td>
+				  <td><input class="textInput" name="surveySubTitle" type="text" id="surveySubTitle" size="125" value="{surveySubTitle}"></td>
+			  </tr>
+  			  <tr> 
+				  <td height="23">&nbsp;&nbsp;&nbsp;任务范围：</td>
+				  <td><input class="textInput" name="task_scope" type="text" id="task_scope" size="125" value="{task_scope}"></td>
+			  </tr>
+			  <tr> 
+				  <td height="23">&nbsp;&nbsp;&nbsp;任务目标：</td>
+				  <td><input class="textInput" name="task_objectives" type="text" id="task_objectives" size="125" value="{task_objectives}"></td>
+			  </tr>
+			  <tr> 
+				  <td height="23">&nbsp;&nbsp;&nbsp;任务价钱：</td>
+				  <td><input class="textInput" name="task_price" type="text" id="task_price" size="125" value="{task_price}"></td>
+			  </tr>
+			  <tr>
+				  <td height="23">&nbsp;&nbsp;&nbsp;有关调查问卷说明：</td>
+				  <td style="padding-right:0px"><div style="background-color:#B7D1F4;border:#B7D1F4 1px solid;line-height:120%">
+						<img SRC="../Images/Editor/head.gif" WIDTH="10" HEIGHT="26">
+						<a href="javascript:void(0)" onclick="doExecCommand('Bold');"><img src="../Images/Editor/bold.gif" WIDTH="20" HEIGHT="20" title="Bold"></a>
+						<a href="javascript:void(0)" onclick="doExecCommand('Italic')"><img src="../Images/Editor/italic.gif" WIDTH="20" HEIGHT="20" title="Italic"></a>
+						<a href="javascript:void(0)" onclick="doExecCommand('Underline')"><img src="../Images/Editor/underline.gif" WIDTH="20" HEIGHT="20" title="Underline"></a>
+						<img src="../Images/Editor/separator.gif" WIDTH="5" HEIGHT="20">
+						<a href="javascript:void(0)" onclick="doExecCommand('Undo')"><img src="../Images/Editor/undo.gif" width="20" height="20" title="Undo"></a>
+						<a href="javascript:void(0)" onclick="doExecCommand('Redo')"><img src="../Images/Editor/redo.gif" width="20" height="20" title="Redo"></a>
+						<img src="../Images/Editor/separator.gif" WIDTH="5" HEIGHT="20">
+						<a href="javascript:void(0)" onclick="doExecCommand('JustifyLeft')"><img src="../Images/Editor/jleft.gif" WIDTH="20" HEIGHT="20" title="JustifyLeft"></a>
+						<a href="javascript:void(0)" onclick="doExecCommand('JustifyCenter')"><img src="../Images/Editor/jcenter.gif" WIDTH="20" HEIGHT="20" title="JustifyCenter"></a>
+						<a href="javascript:void(0)" onclick="doExecCommand('JustifyRight')"><img src="../Images/Editor/jright.gif" WIDTH="20" HEIGHT="20" title="JustifyRight"></a>
+						<img src="../Images/Editor/separator.gif" WIDTH="5" HEIGHT="20">
+						<a href="javascript:void(0)" onclick="doExecCommand('Cut')"><img src="../Images/Editor/cut.gif" WIDTH="20" HEIGHT="20" title="Cut"></a>
+						<a href="javascript:void(0)" onclick="doExecCommand('Copy')"><img src="../Images/Editor/copy.gif" WIDTH="20" HEIGHT="20" title="Copy"></a>
+						<a href="javascript:void(0)" onclick="doExecCommand('Paste')"><img src="../Images/Editor/paste.gif" WIDTH="20" HEIGHT="20" title="Paste"></a>
+						<a href="javascript:void(0)" onclick="doExecCommand('Delete')"><img src="../Images/Editor/delete.gif" WIDTH="16" HEIGHT="16" title="Delete"></a>
+						<a href="javascript:void(0)" onclick="javascript:document.getElementById('theEditor').innerHTML=''"><img src="../Images/Editor/clear.png" WIDTH="16" HEIGHT="16" title="Clear"></a>
+						<img src="../Images/Editor/separator.gif" WIDTH="5" HEIGHT="20">
+						<a href="javascript:void(0)" onclick="doExecCommand('createLink')"><img src="../Images/Editor/link.gif" WIDTH="16" HEIGHT="16" title="CreateLink"></a>
+						<img src="../Images/Editor/separator.gif" WIDTH="5" HEIGHT="20">
+						<a href="javascript:void(0)" onclick="javascript:{var textEditor = document.getElementById('theEditor');textEditor.focus();editTextRange = textEditor.document.selection.createRange();showPopWin('ShowEditorImage.php', 590, 250, null, null,'插入图片与视频');}"><img src="../Images/Editor/image.gif" WIDTH="16" HEIGHT="16" title="InsertImage"></a>
+					   </div>
+					   <div style="background-color:#B7D1F4;border:#B7D1F4 1px solid;line-height:120%">
+						<img SRC="../Images/Editor/head.gif" WIDTH="10" HEIGHT="26">
+						<!--<select class="clssel" onchange="doSelectClick('FormatBlock',this);this.returnValue=false;" style="width: 80px;margin-bottom:4px;">
+						  <option>段落格式</option>
+						  <option VALUE="&lt;P&gt;">普通</option>
+						  <option VALUE="&lt;PRE&gt;">已编排格式</option>
+						  <option VALUE="&lt;H1&gt;">标题一</option>
+						  <option VALUE="&lt;H2&gt;">标题二</option>
+						  <option VALUE="&lt;H3&gt;">标题三</option>
+						  <option VALUE="&lt;H4&gt;">标题四</option>
+						  <option VALUE="&lt;H5&gt;">标题五</option>
+						  <option VALUE="&lt;H6&gt;">标题六</option>
+						  <option VALUE="&lt;H7&gt;">标题七</option>
+						</select>-->
+						<select class="clssel" onchange="doSelectClick('FontName',this);" style="width: 125px;margin-bottom:4px;">
+							<option selected>字体</option>
+							<option value="宋体">宋体</option>
+							<option value="黑体">黑体</option>
+							<option value="楷体">楷体</option>
+							<option value="仿宋">仿宋</option>
+							<option value="隶书">隶书</option>
+							<option value="幼圆">幼圆</option>
+							<option value="Arial">Arial</option>
+							<option value="Arial Black">Arial Black</option>
+							<option value="Arial Narrow">Arial Narrow</option>
+							<option value="Brush Script	MT">Brush Script MT</option>
+							<option value="Century Gothic">Century Gothic</option>
+							<option value="Comic Sans MS">Comic Sans MS</option>
+							<option value="Courier">Courier</option>
+							<option value="Courier New">Courier New</option>
+							<option VALUE="Georgia">Georgia
+							<option VALUE="impact">impact
+							<option value="MS Sans Serif">MS Sans Serif</option>
+							<option value="Script">Script</option>
+							<option value="System">System</option>
+							<option VALUE="Tahoma">Tahoma
+							<option value="Times New Roman">Times New Roman</option>
+							<option value="Calibri">Calibri</option>
+							<option value="Wide	Latin">Wide Latin</option>
+							<option value="Wingdings">Wingdings</option>
+						</select>
+						<select class="clssel" onchange="doSelectClick('FontSize',this);" style="width: 75px;margin-bottom:4px;">
+							 <option>字体大小</option>
+							 <option VALUE="1">8</option>
+							 <option VALUE="2">10</option>
+							 <option VALUE="3">12</option>
+							 <option VALUE="4">14</option>
+							 <option VALUE="5">18</option>
+							 <option VALUE="6">24</option>
+							 <option VALUE="7">36</option>
+					   </select>
+					  <select class="clssel" name="ForeColor" onChange="doFormat('ForeColor',this[this.selectedIndex].style.color); this.selectedIndex=0" style="width: 80px;margin-bottom:4px;">
+						  <OPTION selected>文字颜色
+						  <OPTION style="BACKGROUND: #000000; Color: #000000">Black</option>
+						  <OPTION style="BACKGROUND: #FFFFFF; Color: #FFFFFF">White</option>
+						  <OPTION style="BACKGROUND: #0000FF; Color: #0000FF">Blue 1</option>
+						  <OPTION style="BACKGROUND: #2222FF; Color: #2222FF">Blue 2</option>
+						  <OPTION style="BACKGROUND: #4444FF; Color: #4444FF">Blue 3</option>
+						  <OPTION style="BACKGROUND: #6666FF; Color: #6666FF">Blue 4</option>
+						  <OPTION style="BACKGROUND: #333333; Color: #333333">Gray 1</option>
+						  <OPTION style="BACKGROUND: #666666; Color: #666666">Gray 2</option>
+						  <OPTION style="BACKGROUND: #999999; Color: #999999">Gray 3</option>
+						  <OPTION style="BACKGROUND: #EEEEEE; Color: #EEEEEE">Gray 4</option>
+						  <OPTION style="BACKGROUND: #004000; Color: #004000">Green 1</option>
+						  <OPTION style="BACKGROUND: #006000; Color: #006000">Green 2</option>
+						  <OPTION style="BACKGROUND: #008000; Color: #008000">Green 3</option>
+						  <OPTION style="BACKGROUND: #00A000; Color: #00A000">Green 4</option>
+						  <OPTION style="BACKGROUND: #FF0000; Color: #FF0000">Red 1</option>
+						  <OPTION style="BACKGROUND: #FF2222; Color: #FF2222">Red 2</option>
+						  <OPTION style="BACKGROUND: #FF4444; Color: #FF4444">Red 3</option>
+						  <OPTION style="BACKGROUND: #FF6666; Color: #FF6666">Red 4</option>
+						  <OPTION style="BACKGROUND: #FFFF00; Color: #FFFF00">Yellow 1</option>
+						  <OPTION style="BACKGROUND: #FFFF33; Color: #FFFF33">Yellow 2</option>
+						  <OPTION style="BACKGROUND: #FFFF66; Color: #FFFF66">Yellow 3</option>
+						  <OPTION style="BACKGROUND: #FFFF99; Color: #FFFF99">Yellow 4</option>
+						</select>
+						<select class="clssel" name="fontbackground" onChange="doFormat('BackColor',this[this.selectedIndex].style.color); this.selectedIndex=0" style="width: 80px;margin-bottom:4px;">
+						  <OPTION selected>文字底色</option>
+						  <OPTION style="BACKGROUND: #000000; Color: #000000">Black</option>
+						  <OPTION style="BACKGROUND: #FFFFFF; Color: #FFFFFF">White</option>
+						  <OPTION style="BACKGROUND: #0000FF; Color: #0000FF">Blue 1</option>
+						  <OPTION style="BACKGROUND: #2222FF; Color: #2222FF">Blue 2</option>
+						  <OPTION style="BACKGROUND: #4444FF; Color: #4444FF">Blue 3</option>
+						  <OPTION style="BACKGROUND: #6666FF; Color: #6666FF">Blue 4</option>
+						  <OPTION style="BACKGROUND: #333333; Color: #333333">Gray 1</option>
+						  <OPTION style="BACKGROUND: #666666; Color: #666666">Gray 2</option>
+						  <OPTION style="BACKGROUND: #999999; Color: #999999">Gray 3</option>
+						  <OPTION style="BACKGROUND: #EEEEEE; Color: #EEEEEE">Gray 4</option>
+						  <OPTION style="BACKGROUND: #004000; Color: #004000">Green 1</option>
+						  <OPTION style="BACKGROUND: #006000; Color: #006000">Green 2</option>
+						  <OPTION style="BACKGROUND: #008000; Color: #008000">Green 3</option>
+						  <OPTION style="BACKGROUND: #00A000; Color: #00A000">Green 4</option>
+						  <OPTION style="BACKGROUND: #FF0000; Color: #FF0000">Red 1</option>
+						  <OPTION style="BACKGROUND: #FF2222; Color: #FF2222">Red 2</option>
+						  <OPTION style="BACKGROUND: #FF4444; Color: #FF4444">Red 3</option>
+						  <OPTION style="BACKGROUND: #FF6666; Color: #FF6666">Red 4</option>
+						  <OPTION style="BACKGROUND: #FFFF00; Color: #FFFF00">Yellow 1</option>
+						  <OPTION style="BACKGROUND: #FFFF33; Color: #FFFF33">Yellow 2</option>
+						  <OPTION style="BACKGROUND: #FFFF66; Color: #FFFF66">Yellow 3</option>
+						  <OPTION style="BACKGROUND: #FFFF99; Color: #FFFF99">Yellow 4</option>
+						</select>		   
+					  </div>
+					  <div id="theEditor" name="theEditor" contentEditable=true designmode="on" style="font-size:100%; overflow:auto;font-family: Calibri;border-left:#cacaca 1px solid;*padding:10px;height:150px;line-height:140%">{surveyInfo}</div>
+			  </td></tr>
+			  </table>
+			  
+			  <table class="d_table">
+			  <tr class=coltitle><th align=left>问卷提交后的到达方式&nbsp;<img src="../Images/info.gif" border=0></th></tr>
+			  <tr><td bgcolor="#fefefe" style="border-top:0px" valign=top><b>常规到达方式</b> [ <span class=red>3</span> 种 ]</td></tr>
+			  <tr><td style="line-height:220%">
+					 <input type="radio" value="1" name="exitMode" {exitMode_1}>转向网址
+					 <input type=text name="exitPage" type="exitPage" id="exitPage" size="129" value="{exitPage}"> (URL) <br/>
+					 <input type="radio" value="2" name="exitMode" {exitMode_2}>感谢信息<br>
+					 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type=text name="exitTitleHead" type="exitTitleHead" id="exitTitleHead" size="139" value="{exitTitleHead}"> (标题) <br/>
+					 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<textarea name="exitTextBody" rows=4 cols=139>{exitTextBody}</textarea> (内容) <br/>
+					 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type=checkbox name="isShowProof" id="isShowProof" value="1" {isShowProof}  onclick="javascript:selProof();">显示回复完成凭证(仅适用于网络调查)&nbsp;&nbsp;&nbsp;<input class=stnsubmit name="setProof" type="button" id="setProof" value="预定义凭证" onclick="javascript:showPopWin('AjaxSurveyProof.php?surveyID={surveyID}&surveyTitle={surveyTitle}', 850, 470, null, null,'预定义问卷回复完成凭证');" style="vertical-align: middle;">
+					 &nbsp;&nbsp;&nbsp;完成凭证出现的概率：<input type=text name="proofRate" type="text" id="proofRate" value="{proofRate}" size="6">%<br/>
+					 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type=checkbox name="isHongBao" id="isHongBao" value="1" {isHongBao}  onclick="javascript:selHongBao();">下发微信红包(仅适用于微信内回复)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input class=stnsubmit name="setHongBao" type="button" id="setHongBao" value="预定义参数" onclick="javascript:showPopWin('AjaxHongBao.php?surveyID={surveyID}&surveyTitle={surveyTitle}', 850, 470, null, null,'微信红包参数定义');" style="vertical-align: middle;">
+					 &nbsp;&nbsp;&nbsp;微信红包出现的概率：<input type=text name="hongbaoRate" type="text" id="hongbaoRate" value="{hongbaoRate}" size="6">%<br/>
+					 <input type="radio" value="4" name="exitMode" {exitMode_4}>回复问卷的统计结果（需在个性设置处开启“允许答题者查看基于问题的回复结果统计”配置）
+			  </td></tr>
+			  <tr><td bgcolor="#fefefe"><b>扩展到达方式</b> [ <span class=red>2</span> 种 ]</td></tr>
+			  <tr><td style="line-height:230%">扩展到达方式依赖于对问题选项分值的设定&nbsp;<input class=inputsubmit name="setGrade" type="button" id="setGrade" value="选项分值" onclick="javascript:window.location.href='ShowOptWeight.php?surveyID={surveyID}&surveyTitle={surveyTitle}';" style="vertical-align: middle;"><br/>
+					 <input type="radio" value="3" name="exitMode" {exitMode_3}>评分量表计算结果&nbsp;&nbsp;<input class=inputsubmit name="setGrade" type="button" id="setGrade" value="设置规则" onclick="javascript:showPopWin('AjaxSurveyGrade.php?surveyID={surveyID}&surveyTitle={surveyTitle}', 850, 450, null, null,'设置量表评分规则');" style="vertical-align: middle;"><br/>
+					 <input type="radio" value="5" name="exitMode" {exitMode_5}>指标体系运算结果&nbsp;&nbsp;<input class=inputsubmit name="setIndex" type="button" id="setIndex" value="指标设定" onclick="javascript:window.location.href='ShowSurveyIndex.php?surveyID={surveyID}&surveyTitle={surveyTitle}';"  style="vertical-align: middle;">
+				  </td>
+			  </tr>
+			  </table>
+		  
+			  <table class="d_table" style="margin-top:5px">
+			  <tr class=coltitle><th colspan=2 align=left>调查问卷有效性要素&nbsp;<img src="../Images/info.gif" border=0></th></tr>
+			  <tr><td height="25" width="17%"><SPAN class=red>*</SPAN> 问卷防重复提交设置：</td>
+				  <td><select class="clssel" name="isCheckIP" id="isCheckIP" onChange="checkIpMode();">
+							<option value="0" {isCheckIP0}>不采用提交问卷防重复限制</option>
+							<option value="1" {isCheckIP1}>使用来源IP地址检测</option>
+							<option value="2" {isCheckIP2}>使用客户端Cookie技术 (推荐，另用于公开问卷的断点续答)</option>
+						</select>
+				  </td>
+			   </tr>
+			   <tr id="IpTime"><td height="25"><SPAN  class=red>*</SPAN> 防重复提交的限制间隔：</td>
+				   <td><input type=text name="maxIpTime" type="text" id="maxIpTime" value="{maxIpTime}" size="6"> 分钟</td>
+			  </tr>
+			  <tr><td height="25"><SPAN class=red>*</SPAN> 设置问卷访问的IP地址段：</td>
+				  <td><input class=inputsubmit name="mgtAllow" type="button" id="mgtAllow" value="设置" onclick="javascript:showPopWin('AjaxSurveyAllowIP.php?surveyID={surveyID}&surveyTitle={surveyTitle}', 660, 450, null, null,'设置访问问卷的IP地址段');"></td>		  
+			   </tr>
+			  <tr><td align=left><SPAN  class=red>*</SPAN> 问卷开始时间：</td>
+				   <td align=left><input class="text" name="beginTime" size='12' maxlength='10' id='beginTime' value='{beginTime}' onfocus="if(this.value=='0000-00-00') this.value=''" onclick="javascript:SelectDate(this,'yyyy-MM-dd')"> 00:00:00</td>
+			   </tr>
+			  <tr><td align=left><SPAN class=red>*</SPAN> 问卷结束时间：</td>
+				   <td align=left><input class="text" name="endTime" size='12' maxlength='10' id='endTime' value='{endTime}' onfocus="if(this.value=='0000-00-00') this.value=''" onclick="javascript:SelectDate(this,'yyyy-MM-dd')"> 00:00:00</td>
+			   </tr>
+			   <tr><td height="25">&nbsp;&nbsp;&nbsp;问卷以回复份数结束：</td>
+				   <td><input name="maxResponseNum" type="text" id="maxResponseNum" value="{maxResponseNum}" size="6"> 份 (为空表示不采用此结束条件)</td>
+			  </tr>
+			  </table>
+
+			  <table class="d_table" style="margin-top:5px">
+			  <tr class=coltitle><th colspan=2 align=left>调查问卷个性化设置&nbsp;<img src="../Images/info.gif" border=0></th></tr>
+			  <tr> 
+				 <td colspan=2>&nbsp;&nbsp;&nbsp;<input type=checkbox name="isProperty" value="1" {isProperty}>显示问题所属类型(是否在问题的题目文字后显示题型名称)</td>
+			  </tr>
+			  <tr> 
+				 <td colspan=2>&nbsp;&nbsp;&nbsp;<input type=checkbox name="isPreStep" value="1"  {isPreStep}>显示“上一页”按钮(是否允许答题者在回复问卷的过程中向前翻页)</td>
+			  </tr>
+			  <tr> 
+				 <td colspan=2>&nbsp;&nbsp;&nbsp;<input type=checkbox name="isProcessBar" value="1"  {isProcessBar}>显示问卷回复进度状态条(仅适用多页调查问卷)</td>
+			  </tr>
+			  <tr> 
+				 <td colspan=2>&nbsp;&nbsp;&nbsp;<input type=checkbox name="isViewResult" id="isViewResult" value="1" onclick="javascript:checkViewResult();" {isViewResult}>是否允许答题者查看基于问题的回复结果统计</td>
+			  </tr>
+			  <tr> 
+				 <td colspan=2>&nbsp;&nbsp;&nbsp;<input type=checkbox name="isShowResultBut" id="isShowResultBut" value="1"  {isShowResultBut}>显示“查看结果”按钮(是否在调查问卷第一页显示“查看结果”按钮)</td>
+			  </tr>
+			  <tr> 
+				 <td colspan=2>&nbsp;&nbsp;&nbsp;<input type=checkbox name="isSecureImage" value="1" {isSecureImage}>使用验证码防止机器人填写问卷(仅适用于单页调查问卷)</td>
+			  </tr>
+			  <tr> 
+				 <td colspan=2>&nbsp;&nbsp;&nbsp;<input type=checkbox name="isWaiting" id="isWaiting" value="1" onclick="javascript:checkWaiting()" {isWaiting}>开启最短回复时间限制：每问卷分页要求最短回复时间 <input type=text name="waitingTime" type="text" id="waitingTime" value="{waitingTime}" size="6"> 秒(在该时间内问卷分页不允许提交)</td>
+			  </tr>
+			  <tr> 
+				 <td colspan=2>&nbsp;&nbsp;&nbsp;<input type=checkbox name="isLimited" id="isLimited" value="1" onclick="javascript:checkWaiting()" {isLimited}>开启最长回复时间限制：问卷回复最长回复时间 <input name="limitedTime" type="text" id="limitedTime" value="{limitedTime}" size="10"> 秒(问卷须在该时间范围内全部完成)</td>
+			  </tr>
+			  <tr> 
+				 <td colspan=2>&nbsp;&nbsp;&nbsp;<input type=checkbox name="isDisRefresh" value="1"  {isDisRefresh}>开启问卷数据提交防刷新处理(同一IP地址来源20秒内禁止重复提交)</td>
+			  </tr>
+			  <tr> 
+				 <td colspan=2>&nbsp;&nbsp;&nbsp;<input type=checkbox name="isAllData" value="1"  {isAllData}>回复数据明细中强制显示所有问题数据(默认不显示未回复和逻辑关系不成立的问题数据)</td>
+			  </tr>
+			  <tr>
+				 <td colspan=2><SPAN class=red>*</SPAN> PC端展示模板：&nbsp;&nbsp;<input class=inputsubmit name="mgtTpl" type="button" id="mgtTpl" value="调整" onclick="window.location.href='MgtTplFile.php';" style="vertical-align: middle;">&nbsp;&nbsp;<select class="clssel" name="panelID" id="panelID" onchange="javascript:checkSystemTpl();">
+				   {panelList}
+				  </select>
+				 </td>
+			  </tr>
+			  <tr>
+				 <td colspan=2><SPAN class=red>*</SPAN> PC端问卷显示风格：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<select class="clssel" name="theme" id="theme" style="width:200px">
+					<option value="Standard" {theme_Standard}>标准的</option>
+					<option value="Coffee" {theme_Coffee}>咖啡色的</option>
+					<option value="PurplePink" {theme_PurplePink}>紫粉色的</option>
+					<option value="BrownBlue" {theme_BrownBlue}>棕蓝色的</option>
+					<option value="RedPink" {theme_RedPink}>红粉色的</option>
+					<option value="RedGray" {theme_RedGray}>红灰色的</option>		    
+					<option value="PurpleYellow" {theme_PurpleYellow}>紫黄色的</option>
+					<option value="BlueBrown" {theme_BlueBrown}>蓝棕色的</option>
+					<option value="BlueGray" {theme_BlueGray}>蓝灰色的</option>
+					<option value="BlueGrayII" {theme_BlueGrayII}>浅蓝灰色的</option>
+					<option value="BlueGreen" {theme_BlueGreen}>蓝绿色的</option>
+					<option value="GreenPink" {theme_GreenPink}>绿粉色的</option>
+					<option value="Spring" {theme_Spring}>春绿色的</option>
+					<option value="Summer" {theme_Summer}>深夏色的</option>
+					<option value="UserDefine" {theme_UserDefine}>自定义的</option>
+				  </select>
+				 </td>
+			  </tr>
+			  <tr>
+				 <td colspan=2><SPAN class=red>*</SPAN> 移动端问卷显示风格：&nbsp;&nbsp;<select class="clssel" name="uitheme" id="uitheme" style="width:200px">
+					<option value="Phone" {uitheme_Phone}>蓝黄色的</option>
+					<option value="DeepRedUI" {uitheme_DeepRedUI}>深红色的</option>
+					<option value="LightBlueUI" {uitheme_LightBlueUI}>浅蓝色的</option>
+					<option value="DeepBlueUI" {uitheme_DeepBlueUI}>深蓝色的</option>
+					<option value="BrightYellowUI" {uitheme_BrightYellowUI}>明黄色的</option>
+					<option value="DeepBlackUI" {uitheme_DeepBlackUI}>深黑色的</option>
+					<option value="LightGreenUI" {uitheme_LightGreenUI}>浅绿色的</option>
+					<option value="DeepGreenUI" {uitheme_DeepGreenUI}>深绿色的</option>
+					<option value="OrangeUI" {uitheme_OrangeUI}>橙红色的</option>
+					<option value="PinkUI" {uitheme_PinkUI}>粉红色的</option>
+					<option value="PurpleUI" {uitheme_PurpleUI}>浅紫色的</option>
+					<option value="PurpleRedUI" {uitheme_PurpleRedUI}>紫红色的</option>
+				  </select>
+				 </td>
+			  </tr>
+			  
+			  </table>
+
+			  <table class="d_table" style="margin-top:5px">
+			  <tr class=coltitle><th colspan=2 align=left>调查问卷运算规则设置&nbsp;<img src="../Images/info.gif" border=0></th></tr>
+			  <tr> 
+				 <td colspan=2>&nbsp;&nbsp;&nbsp;<input type=checkbox name="isGeolocation" value="1"  {isGeolocation}>允许基于浏览器获取样本地理位置(仅适用HTML5浏览器并需用户确认同意)</td>
+			  </tr>
+			  <tr> 
+				 <td colspan=2>&nbsp;&nbsp;&nbsp;<input type=checkbox name="isCheckStat0" value="1"  {isCheckStat0}>问卷内配额与唯一性检查的数据运算范围包含未完成数据</td>
+			  </tr>
+			  <tr> 
+				 <td colspan=2>&nbsp;&nbsp;&nbsp;<input type=checkbox name="isRelZero" value="1"  {isRelZero}>问卷内数值关联表达式运算时变量跳过以“零”填充(默认抛弃该关联表达式)</td>
+			  </tr>
+			  <tr> 
+				 <td colspan=2>&nbsp;&nbsp;&nbsp;<input type=checkbox name="isRateIndex" value="1"  {isRateIndex}>问卷内指标分析运算时采用合格率计算模式(默认采用实际得分计算模式)</td>
+			  </tr>
+			  </table>
+
+			  <table class="d_table" style="margin-top:5px;border-bottom:1px solid #cacaca;">
+			  <tr class=coltitle><th colspan=2 align=left>调查问卷类型与抽样规则&nbsp;<img src="../Images/info.gif" border=0></th></tr>
+			  <tr>
+				  <td height="25" width="17%"><SPAN class=red>*</SPAN> 设置问卷类型：</td>
+				  <td>
+				   <span>
+					  <SELECT class="clssel" name="isPublic" id="isPublic" onChange="checkType();">
+					   <OPTION value="1" {option_1}>公开 （所有样本可查看与回复问卷）</OPTION>
+					   <OPTION value="0" {option_0}>私有 （符合抽样规则的样本可查看与回复问卷）</OPTION>
+					   <OPTION value="2" {option_2}>令牌控制 （通过令牌认证的样本可查看与回复问卷）</OPTION>
+					  </SELECT>
+				   </span>
+				   <span style="display:{isAjaxPassport}" id="ajaxResponseURL_ID">&nbsp;
+				   <input class=inputsubmit name="panelSetting" type="button" id="panelSetting" value="样本抽样规则" onclick="javascript:showModalDialog('{ajaxResponseURL}&surveyID={surveyID}&surveyTitle={surveyTitleURL}&hash={hashCode}&beginTime={beginTime}&endTime={endTime}&username={userName}', window, 'dialogWidth:700px;dialogHeight:500px;help:no;scroll:auto;status:no;');"></span>
+				  </td>
+			  </tr>
+			  <tr id="onlyToken">
+				  <td height="25"><SPAN class=red>*</SPAN> 问卷控制令牌：</td>
+				  <td><input type=text name="tokenCode" type="text" id="tokenCode" value="{tokenCode}" size="16"></td>
+			  </tr>
+			  <tr id="onlyMembers">
+				  <td height="25" style="display:{isUseOriPassport}"><SPAN class=red>*</SPAN> 设置样本抽样规则：</td>
+				  <td style="display:{isUseOriPassport}"><input class=inputsubmit name="setPanel" type="button" id="setPanel" value="样本抽样规则" onclick="javascript:showPopWin('ShowPanelReg.php?surveyID={surveyID}&surveyTitle={surveyTitle}', 690, 450, null, null,'私有问卷样本抽样规则');">
+				 </td>
+			  </tr>
+			  <tr id="onlyMainAttribute">
+				  <td height="25" style="display:{isUseOriPassport};line-height:20px"><SPAN class=red>*</SPAN> 设置主要样本属性：<b><br/>&nbsp;&nbsp;&nbsp;<a onmouseover="this.T_WIDTH=480;this.T_PADDING=0;this.T_BGCOLOR='#ffffff'; return escape('&nbsp;主要样本属性的数据来源是样本属性自定义字段中下拉框与单选字段类型的定义<br>&nbsp;在私有问卷设置抽样规则时，将需要指定哪些样本属性的数据与问卷数据一并记录<br>&nbsp;私有问卷数据分析中，这些记录的样本属性数据并可作为数据源分析的过滤条件<br/>&nbsp;单一私有问卷可个性化定义这些样本属性<br/>&nbsp;其默认值来自样本管理配置中的默认样本属性设置<br>&nbsp;最多可指定6个主要样本属性')" href="javascript:void(0);"><font color=red><b>[帮助]</font></a></b></td>
+				  <td style="display:{isUseOriPassport}"><select name="mainAttribute[]" id="mainAttribute" size=6 multiple>
+					 {mainAttributeList}
+				   </select>
+				 </td>
+			  <tr id="adUsers">
+				  <td height="25"><SPAN class=red>*</SPAN> 提取目录系统账户：</td>
+				  <td><textarea name="adUserName" id="adUserName" rows=6 cols=86>{adUserName}</textarea>
+					  <br/><a href='javascript:void(0)' onclick="javascript:showPopWin('{LDAPActionURL}?Field=adUserName', 760, 420, null, null,'选择目录系统中的账户');"><span class=red>>>选择目录系统中的账户</span></a>
+				  </td>
+			  </tr>
+			  </table>
+
+			  <table class="d_table" style="margin-top:5px">
+			  <tr class=coltitle><th colspan=2 align=left>调查问卷唯一性回复地址&nbsp;<img src="../Images/info.gif" border=0></th></tr>
+			  <tr style="height:25px;line-height:25px;"> 
+				 <td colspan=2 style="padding-bottom:5px">&nbsp;&nbsp;&nbsp;每个样本拥有该调查问卷唯一的访问地址(URL)，使用该URL以实现问卷回复过程的断点续答<br/>
+							   &nbsp;&nbsp;&nbsp;将问卷转回设计状态等动作将使原已生成的URL失效<br/>
+							   &nbsp;&nbsp;&nbsp;设定(再次)生成URL的数量：<input type=text name="uniCodeNum" id="uniCodeNum" value="" size=10 onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')">&nbsp;&nbsp;<input class=stnsubmit name="uniCodeMake" type="button" id="uniCodeMake" value="生成并下载" style="vertical-align: middle;" onclick="javascript:makeUniCode();" {isCloseStatus}>&nbsp;<input class=stnsubmit name="uniCodeImport" type="button" id="uniCodeImport" style="vertical-align: middle;" value="导入并下载" onclick="javascript:showPopWin('?Action=ImportUniCode&surveyID={surveyID}', 630, 240, refreshParent, null,'从CSV文件导入调查问卷唯一的访问地址')" {isCloseStatus}>&nbsp;<input class=stnsubmit name="uniCodeCheck" type="button" id="uniCodeCheck" style="vertical-align: middle;" value="检查与分析" onclick="javascript:showPopWin('?Action=CheckUniCode&surveyID={surveyID}', 850, 480, refreshParent, null,'检查与分析调查问卷唯一的访问地址(URL)')" {isHaveUniCode}>&nbsp;(系统中已有数量：<span class=red id="haveUniCodeNumId">{haveUniCodeNum}</span>&nbsp;&nbsp;&nbsp;<a href="javascript:AjaxKeyRequest('AjaxUniKey.php?qid={surveyID}');" onclick="return window.confirm('您真的想删除系统中已生成的唯一访问地址(URL)吗？本操作不可恢复！')">删除</a>)
+				 </td>
+			  </tr>
+			  </table>
+			  <script>
+				function makeUniCode(){
+					if( uniCodeNumValid() != false )
+					{
+						window.location.href= 'MakeUniCode.php?qid={surveyID}&uniCodeNum='+document.getElementById('uniCodeNum').value;
+					}
+				}
+				function uniCodeNumValid()
+				{
+					if (!CheckNotNull(document.getElementById('uniCodeNum'),"设定生成URL的数量")) {return false;}
+					if (!CheckNumber(document.getElementById('uniCodeNum'),"设定生成URL的数量",0,50000000)) {return false;}
+				}
+				var http_request = false;
+				function AjaxKeyRequest(url)
+				{
+					http_request = false;
+					if(window.ActiveXObject){
+						try{ http_request = new ActiveXObject("Msxml2.XMLHTTP");}
+						catch (e){ try{ http_request = new ActiveXObject("Microsoft.XMLHTTP");} catch (e) {}
+						}
+					}
+					else if(window.XMLHttpRequest){
+						http_request = new XMLHttpRequest();
+						if (http_request.overrideMimeType){ http_request.overrideMimeType('text/xml');}
+					}	
+					if (!http_request){ $.notification("Cannot create an XMLHTTP instance");return false;}
+					http_request.onreadystatechange = function() {
+					  if( http_request.readyState == 4 && http_request.status == 200) {
+							 $('#haveUniCodeNumId').html('0');
+							 $.notification('系统中已生成的唯一访问地址(URL)成功删除');
+						}
+					}
+					http_request.open('GET', url, true);
+					http_request.send(null);
+				}
+			  </script>
+			  
+			  <table class="d_table" style="margin-top:5px">
+			  <tr class=coltitle><th colspan=2 align=left>数据录入员安卓端控制&nbsp;<img src="../Images/info.gif" border=0></th></tr>
+			  <!--<tr> 
+				 <td colspan=2>&nbsp;&nbsp;&nbsp;<input type=checkbox name="isRecord" id="isRecord2" value="2" onclick="javascript:checkRecFile();" {isRecord_2}>离线安卓端需要对调查问卷回复过程全程录像(为存储尺寸考虑建议使用低质量参数)<font color=red>(</font>设备兼容性问题突出，建议先测试再生产<font color=red>)</font></td>
+			  </tr>-->
+			  <tr> 
+				 <td colspan=2>&nbsp;&nbsp;&nbsp;<input type=checkbox name="isRecord" id="isRecord1" value="1" onclick="javascript:checkRecFile();" {isRecord_1}>离线安卓端需要对调查问卷回复过程全程录音</td>
+			  </tr>
+			  <tr> 
+				 <td colspan=2>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type=checkbox name="isUploadRec" id="isUploadRec" value="1" {isUploadRec}>离线安卓端需要全程录音文件与回复数据一并上行</td>
+			  </tr>
+			  <tr> 
+				 <td colspan=2>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type=checkbox name="isLowRecord" id="isLowRecord" value="1" {isLowRecord}><!--采用低质量录音(和录像)参数以适用安卓设备内低端录音机(与照相机)硬件-->采用低质量录音参数以适用安卓设备内低端录音机硬件</td>
+			  </tr>
+			  <tr style="height:20px;line-height:20px"><td height="25" width="22%" align=center>离线安卓端<br/>需进行简单数据统计的调查问题：<br/>(按住Ctrl键点击鼠标进行多重选择)</td>
+				  <td><select name="offlineCount[]" id="offlineCount" size=8 multiple style="width:750px">
+					   {offlineCountList}
+					  </select>
+				  </td>
+			  </tr>
+			  <tr> 
+				 <td colspan=2>&nbsp;&nbsp;&nbsp;<input type=checkbox name="isOfflineModi" id="isOfflineModi" value="1" {isOfflineModi}>离线安卓端允许数据录入员修改问卷回复数据</td>
+			  </tr>
+			  <tr> 
+				 <td colspan=2>&nbsp;&nbsp;&nbsp;<input type=checkbox name="isOfflineDele" id="isOfflineDele" value="1" {isOfflineDele}>离线安卓端禁止数据录入员删除问卷回复数据</td>
+			  </tr>
+			  <tr> 
+				  <td colspan=2>&nbsp;&nbsp;&nbsp;<input type=checkbox name="isGpsEnable" id="isGpsEnable" value="1" {isGpsEnable}>需要离线安卓端强行开启GPS定位(需确认设备拥有GPS模块)</td>
+			  </tr>
+			  <tr> 
+				  <td colspan=2>&nbsp;&nbsp;&nbsp;<input type=checkbox name="isPanelFlag" id="isPanelFlag" value="1" {isPanelFlag}>问卷起始需要“样本标识标记”字段以区分不同回复数据</td>
+			  </tr>
+			  <tr> 
+				  <td colspan=2>&nbsp;&nbsp;&nbsp;<input type=checkbox name="isFingerDrawing" id="isFingerDrawing" value="1" {isFingerDrawing}>问卷结尾需要开启数据录入员手写签名确认</td>
+			  </tr>
+			  </table>
+
+			  <table class="d_table" style="margin-top:5px">
+			  <tr class=coltitle><th colspan=2 align=left>数据录入员角色权限控制&nbsp;<img src="../Images/info.gif" border=0></th></tr>
+			  <tr> 
+				 <td colspan=2>&nbsp;&nbsp;&nbsp;<input type=checkbox name="isImportData" value="1" {isImportData}>禁止数据录入员自CSV导入问卷回复数据</td>
+			  </tr>
+			  <tr> 
+				 <td colspan=2>&nbsp;&nbsp;&nbsp;<input type=checkbox name="isModiData" id="isModiData" value="1" {isModiData}>禁止数据录入员修改问卷已录入数据(仅适用在线端)</td>
+			  </tr>
+			  <tr> 
+				 <td colspan=2>&nbsp;&nbsp;&nbsp;<input type=checkbox name="isDeleteData" id="isDeleteData" value="1" {isDeleteData}>禁止数据录入员删除问卷已录入数据(仅适用在线端)</td>
+			  </tr>
+			  <tr> 
+				 <td colspan=2>&nbsp;&nbsp;&nbsp;<input type=checkbox name="isOneData" id="isOneData" value="1" {isOneData}>仅允许数据录入员录入单份回复数据(仅适用面访类型项目PC端)</td>
+			  </tr>
+			  </table>
+
+			  <table class="d_table" style="margin-top:5px">
+			  <tr class=coltitle><th colspan=2 align=left>数据查看员角色权限控制&nbsp;<img src="../Images/info.gif" border=0></th></tr>
+			  <tr style="height:20px;line-height:20px"><td height="25" width="22%" align=center>数据查看员<br/><font color=red>被禁止</font>查看详细数据的调查问题：<br/>(按住Ctrl键点击鼠标进行多重选择)</td>
+				  <td><select name="forbidViewId[]" id="forbidViewId" size=10 multiple style="width:750px">
+						<option value='t1' {t1}>地域来源信息</option>
+						<option value='t2' {t2}>样本以及附属信息</option>
+						<option value='t3' {t3}>全程录音|录像文件信息</option>
+						<option value='t4' {t4}>终端设备和GPS信息</option>
+					   {forbidViewIdList}
+					  </select>
+				  </td>
+			  </tr>
+			  <tr> 
+				 <td colspan=2>&nbsp;&nbsp;&nbsp;<input type=checkbox name="isViewAuthData" value="1" {isViewAuthData}>数据查看员仅能查看审核通过的回复数据</td>
+			  </tr>
+			  <tr> 
+				 <td colspan=2>&nbsp;&nbsp;&nbsp;<input type=checkbox name="isViewAuthInfo" value="1" {isViewAuthInfo}>允许数据查看员查看所有审核信息明细</td>
+			  </tr>
+			  <tr> 
+				 <td colspan=2>&nbsp;&nbsp;&nbsp;<input type=checkbox name="isExportData" value="1" {isExportData}>禁止数据查看员导出问卷回复数据明细</td>
+			  </tr>
+			  <tr> 
+				 <td colspan=2>&nbsp;&nbsp;&nbsp;<input type=checkbox name="isFailReApp" id="isFailReApp" value="1" {isFailReApp}>允许用户申诉被驳回后可再行发起申诉</td>
+			  </tr>
+			  <tr style="height:20px;line-height:20px"><td height="25" width="22%" align=center>数据查看员<br/><font color=red>被禁止</font>提请申诉的调查问题：<br/>(按住Ctrl键点击鼠标进行多重选择)</td>
+				  <td><select name="forbidAppId[]" id="forbidAppId" size=10 multiple style="width:750px">
+					   {forbidAppIdList}
+					  </select>
+				  </td>
+			  </tr>
+			  </table>
+
+			  <table class="d_table" style="margin-top:5px">
+			  <tr class=coltitle><th align=left>对接其他项目管理平台&nbsp;<img src="../Images/info.gif" border=0></th></tr>
+			  <tr style="height:25px;line-height:25px"><td>项目管理平台的对接URL：&nbsp;<input type=text name="apiURL" type="apiURL" id="apiURL" size="94" value="{apiURL}"><br/>
+			  项目管理平台的对接变量：<input type=text name="apiVarName" type="apiVarName" id="apiVarName" size="94" value="{apiVarName}"><br/><span class=red>*</span> 对接变量的格式：问卷标识ID#问卷标识名#问卷标识语言#样本标识ID#样本回复开始时间#样本回复结束时间#样本回复监控标记[#c|s|q]
+			  </td></tr>
+			  </table>
+		  
+			  <table width=100% style="margin-bottom:15px"><tr><td align=left>
+				  <input name="ori_adUserName" type="hidden" value="{adUserName}">
+				  <input name="passportType" type="hidden" value="{passportType}"> 
+				  <input name="surveyID" type="hidden" value="{surveyID}"> 
+				  <input name="ori_surveyName" type="hidden" value="{surveyName}"> 
+				  <input name="isPre" type="hidden" value="{isPre}"> 
+				  <input name="Action" type="hidden" id="Action" value="{Action}"> 
+				  <input name="surveyInfo" id="surveyInfo" type="hidden">
+				  <input name="scriptPath" id="scriptPath" type="hidden" value="{scriptPath}"> 
+				  <input class=inputsubmit type="button" name="submitBtn" id="submitBtn" value="确定" onclick="javascript:submitForm();"> 
+				  <input class=inputsubmit name="resetBtn" id="resetBtn" type="reset" value="重置">
+				  <input class=inputsubmit name="rtnBtn" id="rtnBtn" type="button" value="返回"  onClick="javascript:window.location.href='{surveyListURL}'"></td></tr></table>
+			</form>       
+			</div><!--end of content_main-->
+		 </div><!--end of content-->
+	  </div><!--end of main-->
+   </div><!--end of container-->
+   <script language=javascript src="../JS/Example.js.php"></script>
+   <!--popmenu -->
+   <script type="text/javascript" src="../JS/PopMenu.js.php"></script>
+</body>
+</html>

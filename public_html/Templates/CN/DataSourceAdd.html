@@ -1,0 +1,236 @@
+<html>
+<head>
+<meta http-equiv=content-language content=zh-cn>
+<meta http-equiv=content-type content="text/html; charset=gbk">
+<style>
+ td { padding:2px 5px 2px 5px;}
+</style>
+<script language=javascript src="../JS/HighLight.js.php"></script>
+<script type="text/javascript" src="../JS/Jquery.min.js.php"></script>
+<script type="text/javascript" src="../JS/Jquery.notification.js.php"></script>
+<link type="text/css" rel="stylesheet" href="../CSS/Notification.css" />
+<script language=javascript src="../JS/CheckQuestion.js.php"></script>
+<script type="text/javascript" src="../JS/Calendar.js.php"></script>
+<script language=javascript>
+function Check_Form_Validator()
+{
+	if (!CheckNotNull(document.Check_Form.queryName, "数据源名称")) {return false;}
+	if (!CheckSpecicalChar(document.Check_Form.queryName, "数据源名称")) {return false;}
+	if (!CheckRadioNoClick(document.Check_Form.overFlag, "数据完成标记")) {return false;} 
+	if (!CheckRadioNoClick(document.Check_Form.authStat, "数据审核状态")) {return false;} 
+	if (!CheckNotNull(document.Check_Form.beginTime, "从时间开始")) {return false;}
+	if (!CheckNotNull(document.Check_Form.endTime, "至时间结束")) {return false;}
+	if ( document.Check_Form.beginTime.value >= document.Check_Form.endTime.value )
+	{
+		document.Check_Form.endTime.focus();
+		$.notification('开始时间不应在结束时间后');
+		return false;
+    }
+	if (!CheckNumber(document.Check_Form.beginOverTime, "用时大于等于",0)) {return false;}
+	if (!CheckNumber(document.Check_Form.endOverTime, "用时小于等于",0)) {return false;}
+    var theObj = document.getElementById("Cates");
+    for(c = 0; c < theObj.options.length; c++) {
+	    theObj.options[c].selected = true;
+    }
+}
+function CheckSpecicalChar(objField, strText)
+{
+	var strErr = "“" + strText + "”不能包含单引号、双引号、反斜线等非法字符！";
+	var Re = /[\x22\x27\x5C]+/ig;
+	if ( Re.test(objField.value))
+	{
+        objField.focus();
+		$.notification(strErr);
+		return false;
+	}
+	return true;
+}
+var condRequest = false;
+function AjaxCondRequest(url,objId)
+{
+	condRequest = false;
+	if(window.ActiveXObject)
+	{
+		try  // IE
+		{
+			condRequest = new ActiveXObject("Msxml2.XMLHTTP");
+		}
+		catch (e)
+		{
+			try
+			{
+				condRequest = new ActiveXObject("Microsoft.XMLHTTP");
+			}
+			catch (e) {}
+		}
+	}
+	else if(window.XMLHttpRequest)
+	{
+		// Mozilla, Safari,...
+		condRequest = new XMLHttpRequest();
+		if (condRequest.overrideMimeType)
+		{
+			condRequest.overrideMimeType('text/xml');
+		}
+	}
+	
+	if (!condRequest)
+	{
+		alert("Cannot create an XMLHTTP instance");
+		return false;
+	}
+	condRequest.onreadystatechange = function(){	
+		if (condRequest.readyState == 4)
+		{
+			if(condRequest.status == 200)
+			{
+				var thisObj = eval("document.getElementById('QuestionCond_"+objId+"')");
+				thisObj.innerHTML = condRequest.responseText;
+			}
+			else
+			{
+				alert('网络传输问题');
+			}
+		}
+	};
+	condRequest.open('GET', url, true);
+	condRequest.send(null);
+}
+function ShowQuestionCond(obj,objId)
+{
+	var url = "../DataSource/AjaxShowQutCond.php?surveyID={surveyID}&thisId="+getRadioCheckBoxValue(obj)+"&thisNo="+objId+"&randid="+Math.random();
+	AjaxCondRequest(url,objId);
+}
+function move(fbox, tbox) {
+	var arrFbox = new Array();
+	var arrTbox = new Array();
+	var arrLookup = new Array();
+	var i;
+	for (i = 0; i < tbox.options.length; i++) {
+		arrLookup[tbox.options[i].text] = tbox.options[i].value;
+		arrTbox[i] = tbox.options[i].text;
+	}
+	var fLength = 0;
+	var tLength = arrTbox.length;
+	for(i = 0; i < fbox.options.length; i++) {
+		arrLookup[fbox.options[i].text] = fbox.options[i].value;
+		if (fbox.options[i].selected && fbox.options[i].value != "") {
+			arrTbox[tLength] = fbox.options[i].text;
+			tLength++;
+		}
+		else {
+			arrFbox[fLength] = fbox.options[i].text;
+			fLength++;
+		}
+	}
+	//arrFbox.sort();
+	//arrTbox.sort();
+	fbox.length = 0;
+	tbox.length = 0;
+	var c;
+	for(c = 0; c < arrFbox.length; c++) {
+		var no = new Option();
+		no.value = arrLookup[arrFbox[c]];
+		no.text = arrFbox[c];
+		fbox[c] = no;
+	}
+	for(c = 0; c < arrTbox.length; c++) {
+		var no = new Option();
+		no.value = arrLookup[arrTbox[c]];
+		no.text = arrTbox[c];
+		tbox[c] = no;
+	}
+}
+function submitForm()
+{
+	if( Check_Form_Validator() != false )
+	{
+		document.getElementById('submitBtn').disabled = true;
+		disabledStyle(document.getElementById('submitBtn'));
+		document.getElementById('resetBtn').disabled = true;
+		disabledStyle(document.getElementById('resetBtn'));
+		document.getElementById('close').disabled = true;
+		disabledStyle(document.getElementById('close'));
+		document.Check_Form.submit();
+	}
+}
+</script>
+ <script src="../JS/AjaxDataSource.js.php?type=1&surveyID={surveyID}"></script>
+<link href="../CSS/Base.css" rel=stylesheet>
+<meta content="mshtml 6.00.3790.0" name=generator></head>
+<body oncontextmenu="return false" style="margin-bottom:15px">
+  <form name="Check_Form" method="post" action="" id="Check_Form" onsubmit="return false;">
+  <table class=datatable style="line-height: 150%;border-collapse:collapse;" cellspacing=0 cellpadding=0 bordercolor=#cacaca border=1 width=100%>
+        <div class=position>位置：&nbsp; 我的桌面 &raquo; 定义分析数据源</div>
+        <tr><td colspan="2" bgcolor="#eeeeee" height=25><b>数据源名称</b>&nbsp;<img src="../Images/info.gif" border=0></td></tr>
+		<tr><td width=13%>数据源名称：</td>
+		    <td><input name="queryName" id="queryName" size=100 value='{queryName}'></td></tr>
+		<tr>
+		  <td width=13% nowrap>该定义作用域：</td>
+		  <td width=87% nowrap><input name="defineShare" id="defineShare" type="radio" value=1 {defineDisabled}>共享 (分享给其他人)&nbsp;<input name="defineShare" id="defineShare" type="radio" value=0 checked>私有 (仅私人使用)</td>
+		</tr>
+        <tr><td colspan="2" bgcolor="#eeeeee" height=25><b>基础数据源条件</b>&nbsp;<img src="../Images/info.gif" border=0></td></tr>
+	    <tr style="border:0px"><td colspan="2" style="padding:0px;margin:0px;border:0px">
+		    <table style="LINE-HEIGHT: 150%;border-collapse:collapse;" cellSpacing=0 cellPadding=0 width="100%" borderColor=#cccccc border=1>
+			  <tr><td>回复时间：
+					&nbsp;<input class="text" name="beginTime" size='25' maxlength='20' id='beginTime' value="{beginTime}" readonly onfocus="if(this.value=='0000-00-00-00-00') this.value=''" onclick="javascript:SelectDate(this,'yyyy-MM-dd-hh-mm')">&nbsp;至时间结束&nbsp;<input class="text" name="endTime" size='25' maxlength='20' id='endTime' value="{endTime}" readonly onfocus="if(this.value=='0000-00-00-00-00') this.value=''" onclick="javascript:SelectDate(this,'yyyy-MM-dd-hh-mm')"></td>
+			 </tr>
+			<tr><td>完成标记：&nbsp;<input type=checkbox name="overFlag[]" id="overFlag" value=1 checked>已完成的回复数据&nbsp;&nbsp;<input type=checkbox name="overFlag[]" id="overFlag" value=0 checked>未完成的回复数据&nbsp;&nbsp;<input type=checkbox name="overFlag[]" id="overFlag" value=2>无效回复的数据&nbsp;&nbsp;<input type=checkbox name="overFlag[]" id="overFlag" value=3 checked>导入数据
+			</td></tr>
+			<tr><td>审核状态：&nbsp;<input type=checkbox name="authStat[]" id="authStat" value=0 checked>未处理的回复数据&nbsp;&nbsp;<input type=checkbox name="authStat[]" id="authStat" value=3 checked>审核中的回复数据&nbsp;&nbsp;<input type=checkbox name="authStat[]" id="authStat" value=1 checked>审核通过的回复数据&nbsp;&nbsp;<input type=checkbox name="authStat[]" id="authStat" value=2>审核未通过的回复数据
+			</td></tr>
+ 			<tr><td>回复用时：
+				&nbsp;大于等于&nbsp;<input class="text" name="beginOverTime" size='10' maxlength='10' id='beginOverTime' value="{beginOverTime}">&nbsp秒&nbsp;&nbsp并且小于等于&nbsp;<input class="text" name="endOverTime" size='14' id='endOverTime' value="{endOverTime}">&nbsp秒
+			</td></tr>
+ 			<tr style="display:{haveCate}"><td valign=top  style="display:{haveCate}">问卷分类：
+			  <table cellspacing=0 cellpadding=0><tr><td style="margin:0px;padding:0px">
+				 <select multiple name="surveyCateList[]" id="surveyCateList" size=7 style="width:345px;*width:355px">
+					<option value='0'>无所属分类</option>
+					   {SurveyCatesList}
+				 </select></td>
+				 <td style="margin:0px 2px 0px 2px;padding:0px 2px 0px 2px"><input type="button" class=inputsubmit onClick="move(this.form.surveyCateList,this.form.Cates)" value=">" style="margin-bottom:2px;"><br/>
+				 <input type="button" class=inputsubmit onClick="move(this.form.Cates,this.form.surveyCateList)" value="<" style="margin-bottom:2px;"></td>
+				 <td style="margin:0px;padding:0px">
+				  <select name="Cates[]" id="Cates" multiple size=7 style="vertical-align:middle;width:345px;*width:355px">{catesList}</select>
+				  </td></tr></table>
+			</td></tr>
+		</table></td></tr>
+        <tr style="display:{havePrivate}"><td colspan="2" bgcolor="#eeeeee" height=25 style="display:{havePrivate}"><b>样本数据源条件</b>&nbsp;<img src="../Images/info.gif" border=0></td></tr>
+	    <tr style="display:{havePrivate}"><td colspan="2" style="padding:0px;margin:0px" style="display:{havePrivate}">
+		    <table style="LINE-HEIGHT: 150%;border-collapse:collapse;" cellSpacing=0 cellPadding=0 width="100%" borderColor=#cccccc border=1>
+		    {privateQueryCon}
+		</table></td></tr>
+
+        <tr><td colspan="2" bgcolor="#eeeeee" height=25><b>扩展数据源条件</b>&nbsp;<img src="../Images/info.gif" border=0></td></tr>	  
+	    <tr style="border:0px"><td colspan="2" style="padding:0px;margin:0px;border:0px">
+		    <table id="theOptionTable" style="LINE-HEIGHT: 150%;border-collapse:collapse;" cellSpacing=0 cellPadding=0 width="100%" borderColor=#cccccc border=1>
+			 <tr bgcolor="#f9f9f9">
+				 <td width=8% nowrap>&nbsp;<a href="javascript:void(0)" onclick="insertRow(document.getElementById('theOptionTable').rows.length)" title="增加数据源条件"><img src="../Images/jia.gif" border=0></a>&nbsp;<a href="javascript:void(0)" onclick="deleteRow()" title="减少数据源条件"><img src="../Images/jian.gif" border=0></a></td>
+				 <td width=*>&nbsp;<b>数据源条件</b></td>
+			  </tr>
+			 <!-- BEGIN OPTION -->
+			 <tr><td align=center>&nbsp;{optionOrderID}：</td>
+			     <td><select name="fieldsID[{optionOrderID}]" id="fieldsID_{optionOrderID}" onchange="javascript:ShowQuestionCond(this,{optionOrderID})" style="width:690px;width:700px">
+				      <option value=''>请选择...</option>
+					  {questionList}
+					 </select><br/>
+					 <span id="QuestionCond_{optionOrderID}"></span>
+			 </tr>
+			 <!-- END OPTION -->
+			</table>
+		</td></tr>
+        </table><table width=100%>
+        <tr><td width=13%></td> 
+             <td><input name="Action" type="hidden" id="Action" value="{Action}">
+			     <input name="queryID" type="hidden" id="queryID" value="{queryID}">
+			     <input name="surveyID" type="hidden" id="surveyID" value="{surveyID}">
+ 				 <input name="isPublic" type="hidden" value="{isPublic}"> 
+				 <input class=inputsubmit type="button" name="submitBtn" id="submitBtn" value="确定" onclick="javascript:submitForm();"> 
+				 <input class=inputsubmit name="resetBtn" id="resetBtn" type="reset" value="重置">
+				 <input class=inputsubmit type="button" name="close" id="close" value="关闭" onClick="javascript:parent.hidePopWin();">
+			 </td>
+		</tr>
+    </form>
+  </table>
+  <script type="text/javascript">initInputHighlightScript();</script> 
+</body></html>

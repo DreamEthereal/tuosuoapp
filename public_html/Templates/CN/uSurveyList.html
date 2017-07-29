@@ -1,0 +1,45 @@
+<!--该调查问卷列表由科维能动EnableQ在线问卷调查引擎系统生成 -->
+<style>
+    .datalist {
+	    zoom: 1;padding-left:20px;padding-right:30px;
+	}
+	.datalist table {
+		border-right: #b5cfd9 1px solid; border-top: #b5cfd9 1px solid; margin-bottom: 4px; border-left: #b5cfd9 1px solid; width: 100%; border-bottom: #b5cfd9 1px solid;
+	}
+	.datalist td {
+		border-right: #b5cfd9 1px solid; padding-right: 5px; border-top: #b5cfd9 1px solid; padding-left: 5px; font-weight: 400; padding-bottom: 4px; border-left: #b5cfd9 1px solid; padding-top: 4px; border-bottom: #b5cfd9 1px solid
+	}
+	.datalist .datatable {
+		margin-bottom: 10px
+	}
+	.datalist .datatable {
+		border-top-width: 1px; border-left-width: 0px; border-bottom-width: 1px; border-right-width: 0px
+	}
+	.datalist .datatable td {
+		border-top-width: 0px; border-left-width: 0px; border-bottom-width: 1px; border-right-width: 0px;line-height:20px;
+	}
+    a.linkblue,a.linkblue:visited{ color:#046ABD; font-weight:bold;font-family:Calibri;text-decoration: none;font-size:14px;}
+	.info { font-family:Calibri;font-size:12px;}
+
+	.pages {text-align:left;padding-left:20px}
+	.pages a {height:30px;text-align:center;border: 1px solid; margin-right: 2px;font-family: Calibri;padding:4px;vertical-align: middle;}
+	.pages strong {height:30px;text-align:center;border: 1px solid; margin-right: 2px;font-family: Calibri;padding:4px;vertical-align: middle;}
+	.pages a { border-color: #b5cfd9; color: #0099cc;background-color: #fff;font-family: Calibri;text-decoration: none;}
+	.pages a:hover {text-decoration: none;border-color: #0099cc;font-family: Calibri;}
+	.pages strong {font-weight: 700; border-color: #0099cc;color: #fff;background-color: #0099cc;font-family: Calibri;}
+	
+	.red {color:red;font-weight:bold;}
+    .pageinfo { padding-left:20px;font-size:12px;font-family:Calibri;margin-bottom:15px}
+</style>
+
+<div class="datalist">
+  <table class=datatable id="datatable" style="border-bottom:0px;" cellspacing=0 cellpadding=0>
+   <!-- BEGIN SURVEY -->
+   <tr><td><a href="{surveyURL}" target=_blank class="linkblue">{surveyTitle}</a></td></tr>
+   <tr><td style="display:{isHaveInfo};padding-left:15px;" class="info">{surveyInfo}</td></tr>
+   <!-- END SURVEY -->
+</table>
+</div>
+<div class=pageinfo>共<span class=red>{totalNum}</span>张问卷，每页<span class=red>{numPerPage}</span>条，共<span class=red>{numPage}</span>页</div>
+<div class=pages>{pagesList}</div>
+<!--该调查问卷列表由科维能动EnableQ在线问卷调查引擎系统生成 -->

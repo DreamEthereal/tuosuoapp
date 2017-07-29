@@ -1,0 +1,2 @@
+2016-05-12 16:36:33     <b>Bad SQL Query</b>:  SELECT * FROM eq_response_107 b  WHERE (b.overFlag != 2 and b.authStat != 2)  AND b.authStat =1  AND b.responseID = 94  ORDER BY responseID DESC <br><b>Table 'eclear.eq_response_107' doesn't exist</b>
+

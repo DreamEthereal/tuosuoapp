@@ -1,0 +1,179 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gbk" />
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" />
+<title>获得问卷分发代码 - Eclear在线问卷调查引擎</title>
+<link rel="shortcut icon" href="../Images/enableq.ico" type="image/x-icon" />
+<link rel="stylesheet" type="text/css" href="../CSS/UIBase.css" />
+<link rel="stylesheet" type="text/css" href="../CSS/Index.css" />
+<script type="text/javascript" src="../JS/Calendar.js.php"></script>
+<link href="../CSS/Window.css" type="text/css" rel=stylesheet>
+<script type="text/javascript" src="../JS/Common.js.php"></script>
+<script type="text/javascript" src="../JS/Window.js.php"></script>
+<script type="text/javascript" src="../JS/Jquery.min.js.php"></script>
+<script type="text/javascript" src="../JS/Jquery.notification.js.php"></script>
+<link type="text/css" rel="stylesheet" href="../CSS/Notification.css" />
+<style>
+ .code{ margin: 0.5em; line-height: 1em; }
+ .code { color: #666; font: 12px "Calibri", Courier, monospace; display: block; padding: 5px; }
+ .d_table tr:hover{background-color:transparent;}
+</style>
+<script language=javascript src="../JS/AjaxGetSurveyCode.js.php"></script>
+<script>
+function copycode(obj) {
+	SelectText(obj);
+}
+function SelectText(element) {
+    //var text = document.getElementById(element);
+	var text = element;
+    if ($.browser.msie) {
+        var range = document.body.createTextRange();
+        range.moveToElementText(text);
+        range.select();
+		range.execCommand("Copy");
+		range.collapse(false);
+		$.notification("复制到剪贴板成功");
+    } else if ($.browser.mozilla || $.browser.opera) {
+        var selection = window.getSelection();
+        var range = document.createRange();
+        range.selectNodeContents(text);
+        selection.removeAllRanges();
+        selection.addRange(range);
+		range.execCommand("Copy");
+		range.collapse(false);
+		$.notification("复制到剪贴板成功");
+    } else if ($.browser.safari) {
+        var selection = window.getSelection();
+        selection.setBaseAndExtent(text, 0, text, 1);
+		$.notification("请再使用CTRL+C进行复制");
+    }
+}
+function gId(_sId){
+	return document.getElementById(_sId);
+}
+</script>
+
+</head>
+<body onload="javascript:AjaxChangeRequest('GetSurveyCode.php?Action=GetCode&surveyID={surveyID}');">
+ 	<div class="header">
+		<h1 class="logo">Eclear</h1>
+		<div class="header_menu">
+			<div class="header_m_1">
+				<a href="../System/ShowMain.php">欢迎您，<font color="#e45857" id="nick_Name_cont"></font></a>
+				<span class="head_menu_icon"></span>
+				<ul class="head_menu_list">
+					<span class="head_menu_top"></span>
+					<li><a href="../System/MyProfile.php">我的账户信息</a></li>
+					<li class="last"><a href="../System/ChangePass.php">修改我的密码</a></li>
+				</ul>
+			</div>
+			<div class="header_m_6" style="margin-left:50px">
+				<a href="../System/ShowMain.php">首页</a>
+			</div>
+			<div class="header_m_2" id="mySetting">
+			</div>
+			<div class="header_m_3" style="margin-left:50px">
+				<a href="../Help/Downs.php">帮助</a>
+				<span class="head_menu_icon"></span>
+				<ul class="head_menu_list">
+					<span class="head_menu_top"></span>
+					<li><a href="../Help/Downs.php">帮助文件下载</a></li>
+					<li><a href="http://doc.itenable.com.cn" target=_blank>在线帮助文档</a></li>
+					<li><a href="http://i.enableq.com" target=_blank>在线讨论社区</a></li>
+					<li class="last"><a href="../System/AdministratorsLogs.php">系统操作日志</a></li>
+				</ul>
+			</div>
+			<div class="header_m_4" style="margin-left:50px">
+				<a href="javascript:void(0);" onclick="javascript:showPopWin('../License/AboutEnableQ.php', 500, 400, null, null,'关于...')">关于</a>
+			</div>
+			<div class="header_m_5">
+				<a href="../System/Logout.php?loginOutURL=../index.php" target=_top>退出</a>
+			</div>
+		</div>
+	</div><!--end of header-->
+	<script type="text/javascript" src="../JS/MySetting.js.php"></script>
+
+	<div class="container clearfix">
+	   <div class="main">
+		<div class="nav">
+			    <a href="ShowSurveyList.php?Action=Edit&surveyID={surveyID}" style="display:{isAdmin6}">属性</a>
+				<a href="TrackCode.php?surveyID={surveyID}" style="display:{isTrackCode}">追踪</a>
+				<a href="GetSurveyCode.php?surveyID={surveyID}" style="display:{isDeployStat}" class="cur">分发</a>
+				<a href="ShowSurveyList.php?Action=EditUser&surveyID={surveyID}">用户</a>
+				<a href="{taskURL}" style="display:{haveTask}">任务</a>
+				<a href="{planURL}" style="display:{havePlan}">计划</a>
+		</div>		
+		
+		<div class="sub_nav clearfix">
+			<p class="sub_nav_top clearfix">
+				<a href="GetSurveyCode.php?surveyID={surveyID}" class="cur">常规分发</a>
+				<a href="WeChatCode.php?surveyID={surveyID}">微信分发</a>
+			</p>
+		</div>
+
+		<div class="content">
+			<div class="content_tit">
+				<div class="clearfix">
+				<h1><span class=redtitle>[{surveyTitle}]</span>问卷分发代码</h1>
+				<span class="total ml10"></span>
+				<span class="btn ml10"></span>
+				</div>
+				<p class="fc_grey">选择不同的调查问卷发布方式，并获取其对应方式的代码，仅执行状态的问卷方能进行回复</p>
+			</div>
+		   <div class="content_main" style="margin-top:10px;">
+			<table width=100% style="border:0px;margin:0px;padding:0px"> 			
+			 <tr><td width=50% valign=top style="border:0px">
+			   <table class="d_table">
+				 <tr><td bgcolor="#f9f9f9">
+					 <span style="float:left"><b>问卷URL链接代码</b></span>
+					 <span style="float:right"><a href="javascript:void(0)" onclick="copycode(gId('code0'));">复制内容到剪贴板</a>&nbsp;</span>		 
+				 </td></tr>
+				 <tr><td height=60 valign=top><code id="code0" class="code"></code></td></tr>
+			   </table>
+
+			    <table class="d_table">
+				 <tr><td bgcolor="#f9f9f9">
+					 <span style="float:left"><b>页面IFrame嵌套代码</b></span>
+					 <span style="float:right"><a href="javascript:void(0)" onclick="copycode(gId('code1'));">复制内容到剪贴板</a>&nbsp;</span>		 
+				 </td></tr>
+				 <tr><td height=70 valign=top><code id="code1" class="code"></code></td></tr>
+			   </table>
+
+			    <table class="d_table">
+				 <tr><td bgcolor="#f9f9f9">
+					 <span style="float:left"><b>页面内置弹出窗口代码</b></span>
+					 <span style="float:right"><a href="javascript:void(0)" onclick="copycode(gId('code3'));">复制内容到剪贴板</a>&nbsp;</span>		 
+				 </td></tr>
+				 <tr><td height=140 valign=top><code id="code3" class="code"></code></td></tr>
+			   </table>
+		   </td>
+		   <td width=50% valign=top style="border:0px">
+			   <table class="d_table">
+				 <tr><td bgcolor="#f9f9f9">
+					 <span><b>问卷页面静态HTML代码</b>&nbsp;(下载的HTML文件可重新编辑)</span>
+				 </td></tr>
+				 <tr><td height=60 valign=top><code id="code2" class="code"></code></td></tr>
+			   </table>
+
+			    <table class="d_table">
+				 <tr><td bgcolor="#f9f9f9">
+					 <span><b>向调研对象发送电子邮件邀请</b></span>
+				 </td></tr>
+				 <tr><td height=70 valign=top><code id="code5" class="code"><a href="SendSurveyEmail.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}"><b>发送问卷邀请邮件</b></a></code></td></tr>
+			   </table>
+
+			    <table class="d_table">
+				 <tr><td bgcolor="#f9f9f9">
+					 <span><b>二维码</b>&nbsp;(鼠标右键选择"图片另存为...")</span>
+				 </td></tr>
+				 <tr><td height=140 valign=top><code id="code4" class="code" style="padding:2px;margin:0px">{QR_Code}</code></td></tr>
+			   </table>
+		   </td></tr></table>
+			</div><!--end of content_main-->
+		   </div><!--end of content-->
+	   </div><!--end of main-->
+    </div><!--end of container-->
+	<!--popmenu -->
+	<script type="text/javascript" src="../JS/PopMenu.js.php"></script>
+</body></html>

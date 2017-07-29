@@ -1,0 +1,454 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gbk" />
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" />
+<title>迁移问卷数据 - Eclear在线问卷调查引擎</title>
+<link rel="shortcut icon" href="../Images/enableq.ico" type="image/x-icon" />
+<link rel="stylesheet" type="text/css" href="../CSS/UIBase.css" />
+<link rel="stylesheet" type="text/css" href="../CSS/Index.css" />
+<link href="../CSS/Window.css" type="text/css" rel=stylesheet>
+<script type="text/javascript" src="../JS/Common.js.php"></script>
+<script type="text/javascript" src="../JS/Window.js.php"></script>
+<script type="text/javascript" src="../JS/Jquery.min.js.php"></script>
+<script type="text/javascript" src="../JS/Jquery.notification.js.php"></script>
+<link type="text/css" rel="stylesheet" href="../CSS/Notification.css" />
+<script language=javascript src="../JS/CheckQuestion.js.php"></script>
+
+<link href="../CSS/FileUpload.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="../JS/Swfupload.js.php"></script>
+<script type="text/javascript" src="../JS/Swfqueue.js.php"></script>		
+<script type="text/javascript" src="../JS/Swfobject.js.php"></script>		
+<script type="text/javascript" src="../JS/FileProgress.js.php"></script>
+<script type="text/javascript" src="../JS/Swfhandlers.js.php"></script>
+
+<script language=javascript>
+function CheckExportSurvey()
+{
+	if (!CheckNotNull(document.exportSurveyForm.exportSurvey, "需要进行问卷迁出的调查问卷")) {return false;}
+} 
+function CheckImportSurvey()
+{
+	if (!CheckNotNull(document.importSurveyForm.importSurveyFile, "需要进行问卷迁入的数据文件")) {return false;}
+} 
+function CheckExportData()
+{
+	if (!CheckNotNull(document.exportDataForm.exportData, "需要进行回复数据迁出的调查问卷")) {return false;}
+}
+function CheckImportData()
+{
+	if (!CheckNotNull(document.importDataForm.importData, "需要进行回复数据迁入的调查问卷")) {return false;}
+	if (!CheckNotNull(document.importDataForm.importDataFile, "需要进行回复数据迁入的数据文件")) {return false;}
+}
+</script>
+<style>
+select {border:1px solid #cacaca;height:20px;font-family: Calibri,"宋体",sans-serif;vertical-align: middle;}
+input[type=text] {border:1px solid #cacaca;height:18px;font-family: Calibri,"宋体",sans-serif;line-height:18px;vertical-align: middle;}
+.swfupload {
+	vertical-align: middle;
+}
+</style>
+
+<body oncontextmenu="return false">
+ 	<div class="header">
+		<h1 class="logo">Eclear</h1>
+		<div class="sidebar_show"></div>
+		<div class="header_menu">
+			<div class="header_m_1">
+				<a href="../System/ShowMain.php">欢迎您，<font color="#e45857" id="nick_Name_cont"></font></a>
+				<span class="head_menu_icon"></span>
+				<ul class="head_menu_list">
+					<span class="head_menu_top"></span>
+					<li><a href="../System/MyProfile.php">我的账户信息</a></li>
+					<li class="last"><a href="../System/ChangePass.php">修改我的密码</a></li>
+				</ul>
+			</div>
+			<div class="header_m_6" style="margin-left:50px">
+				<a href="../System/ShowMain.php">首页</a>
+			</div>
+			<div class="header_m_2" id="mySetting">
+			</div>
+			<div class="header_m_3" style="margin-left:50px">
+				<a href="../Help/Downs.php">帮助</a>
+				<span class="head_menu_icon"></span>
+				<ul class="head_menu_list">
+					<span class="head_menu_top"></span>
+					<li><a href="../Help/Downs.php">帮助文件下载</a></li>
+					<li><a href="http://doc.itenable.com.cn" target=_blank>在线帮助文档</a></li>
+					<li><a href="http://i.enableq.com" target=_blank>在线讨论社区</a></li>
+					<li class="last"><a href="../System/AdministratorsLogs.php">系统操作日志</a></li>
+				</ul>
+			</div>
+			<div class="header_m_4" style="margin-left:50px">
+				<a href="javascript:void(0);" onclick="javascript:showPopWin('../License/AboutEnableQ.php', 500, 400, null, null,'关于...')">关于</a>
+			</div>
+			<div class="header_m_5">
+				<a href="../System/Logout.php?loginOutURL=../index.php" target=_top>退出</a>
+			</div>
+		</div>
+	</div>
+
+	<div class="container clearfix">
+		<div class="sider_bar">
+			<div class="sider_menu">
+				<a class="sider_menu_title" href="javascript:void(0);" onclick="menuToggle('sider_menu_list_1')">调查问卷模版</a>
+				<ul class="sider_menu_list" id="sider_menu_list_1">
+					<li><a href="../System/MgtTplFile.php">管理展示模板</a></li>
+					<li><a href="../System/MgtImageFile.php">管理附属文件</a></li>
+				</ul>
+			</div>
+			<div class="sider_menu">
+				<a class="sider_menu_title cur" href="javascript:void(0);" onclick="menuToggle('sider_menu_list_2')">辅助问卷管理</a>
+				<ul class="sider_menu_list" id="sider_menu_list_2">
+					<li><a href="../System/MgtNormalOption.php">定义常用选项</a></li>
+					<li id="batchSurveyAction"><a href="../System/BatchSurveyAction.php">批量问卷操作</a></li>
+					<li><a href="../System/SurveyDistribution.php" class="sel">迁移问卷数据</a></li>
+					<li><a href="../System/MgtArchiving.php">问卷归档记录</a></li>
+				</ul>
+			</div>
+			<div class="sider_menu" id="researchReport">
+				<a class="sider_menu_title" href="javascript:void(0);" onclick="menuToggle('sider_menu_list_4')">辅助调研管理</a>
+				<ul class="sider_menu_list" id="sider_menu_list_4">
+					<li><a href="../System/ResearchReport.php">管理调研文件</a></li>
+				</ul>
+			</div>
+			<div class="sider_menu" id="listSurveyApi">
+				<a class="sider_menu_title" href="javascript:void(0);" onclick="menuToggle('sider_menu_list_3')">问卷列表调用</a>
+				<ul class="sider_menu_list" id="sider_menu_list_3">
+					<li><a class="window-700-360" title="问卷列表调用" href="../System/ListSurveyAPI.php">问卷列表调用</a></li>
+				</ul>
+			</div>
+		</div>
+	   <script type="text/javascript" src="../JS/MySetting.js.php"></script>
+
+	   <div class="main">
+		 <div class="content">
+			<div class="content_tit">
+				<div class="clearfix">
+				<h1>迁移问卷数据</h1>
+				<span class="total ml10"></span>
+				<span class="btn ml10"></span>
+				</div>
+				<p class="fc_grey">调查问卷以及回复数据在不同的Eclear系统服务器之间进行迁移</p>
+			</div>
+			<div class="content_main" style="margin-top:10px">
+
+			  <form action="" method="post" name="exportSurveyForm" id="exportSurveyForm"  onsubmit="return CheckExportSurvey();">
+				  <table class="d_table">
+				  <tr class=coltitle><th align=left><b>选择调查问卷进行问卷迁出</b></th></tr>
+				   <tr><td><select name="exportSurvey" id="exportSurvey" style="width:730px">
+					   <option value=''>请选择调查问卷...</option>
+					   {exportSurveyList}
+					   </select>
+				   </td></tr>
+			  </table><table width=100% style="border:0px;">
+				   <tr><td style="border:0px;">
+							<input type="hidden" name="Action" value="exportSurveySubmit">
+							<input type="submit" name="submit" class=stnsubmit value="开始迁出问卷"> 
+					  </td>
+				   </tr>
+			  </table>  
+			  </form>
+
+			  <form action="" method="post" name="importSurveyForm" id="importSurveyForm"  onsubmit="return CheckImportSurvey();">
+				  <table class="d_table" style="margin-top:10px">
+				  <tr class=coltitle><th align=left><b>选择调查问卷进行问卷迁入</b></th></tr>
+				   <tr><td><table cellSpacing=0 cellPadding=0 width="100%" style="border:0px">
+					   <div><b>上传问卷文件：</b><input type="text" readonly id="importSurveyFile" name="importSurveyFile" style="margin-right:5px;vertical-align: middle" size="70"/><span id="upload_importSurveyFile"></span>&nbsp;<input type="button" value="上传" onclick="fileUpload_importSurveyFile.startUpload();" class="buttonClass"  style="vertical-align: middle"/></div>
+					   <div id="fsUploadProgress_importSurveyFile" style="border:0px"></div>
+					   <noscript>
+					   <div style="background-color: #FFFF66; border-top: solid 4px #FF9966; border-bottom: solid 4px #FF9966; margin: 10px 25px; padding: 10px 15px;border:0px">上传控件加载失败，原因可能是：您可能未开启JavaScript支持！</div>
+					   </noscript>
+					   <div id="divLoadingContent_importSurveyFile" class="content" style="background-color: #FFFF66; border-top: solid 4px #FF9966; border-bottom: solid 4px #FF9966; margin: 10px 25px; padding: 10px 15px; display: none;border:0px">上传控件加载中，请稍候...</div>
+					   <div id="divLongLoading_importSurveyFile" class="content" style="background-color: #FFFF66; border-top: solid 4px #FF9966; border-bottom: solid 4px #FF9966; margin: 10px 25px; padding: 10px 15px; display: none;border:0px">上传控件加载超时，原因可能是：请保证您的flash插件是开启状态，上传控件需要Flash Player 9或以上的支持！</div>
+					   <div id="divAlternateContent_importSurveyFile" class="content" style="background-color: #FFFF66; border-top: solid 4px #FF9966; border-bottom: solid 4px #FF9966; margin: 10px 25px; padding: 10px 15px; display: none;border:0px">上传控件加载失败，原因可能是：您的Flash Player版本过低！您可以访问<a href="http://www.adobe.com/shockwave/download/download.cgi?P1_Prod_Version=ShockwaveFlash">Adobe网站</a>获得最新Flash Player版本。</div>
+					   <div><span class=red>*</span> 上传文件扩展名限制为：{allowType}，大小限制为：{maxSize}M</div>
+				  </table></td></tr>
+
+			  </table><table width=100% style="border:0px;">
+				   <tr><td style="border:0px;">
+							<input type="hidden" name="Action" value="importSurveySubmit">
+							<input type="submit" name="importSurveySubmit" id="importSurveySubmit" class=stnsubmit value="开始迁入问卷"> 
+					  </td>
+				   </tr>
+			  </table>  
+			  </form>
+
+			   <script type="text/javascript">
+				var fileUpload_importSurveyFile;
+				function Init_importSurveyFile() {
+					var settings = {
+						flash_url : "../JS/swfupload.swf",
+						upload_url: "../JS/DistributionUpload.php",
+						post_params: {"PHPSESSID" : "{session_id}",
+						  "uploadFileName": "importSurveyFile"
+						},
+						file_post_name:"importSurveyFile",
+						file_size_limit : "{maxSize} MB",
+						file_types : "{allowType}",
+						file_types_description : "{allowType}",
+						file_upload_limit : 1,
+						custom_settings : {
+							progressTarget : "fsUploadProgress_importSurveyFile"
+						},
+						debug: false,
+						prevent_swf_caching:true,
+
+						//Button settings
+						button_image_url: "../Images/cnfileselect.png",
+						button_width: "61",
+						button_height: "22",
+						button_placeholder_id: "upload_importSurveyFile",
+						button_action : SWFUpload.BUTTON_ACTION.SELECT_FILE,
+						button_window_mode:"OPAQUE",
+						
+						swfupload_loaded_handler : swfUploadLoaded_importSurveyFile,
+						file_dialog_start_handler:fileDialogStart_importSurveyFile,
+						file_queued_handler : fileQueued,
+						file_queue_error_handler : fileQueueError,
+						file_dialog_complete_handler : fileDialogComplete,
+						upload_start_handler : uploadStart,
+						upload_progress_handler : uploadProgress,
+						upload_error_handler : uploadError,
+						upload_success_handler : uploadSuccess_importSurveyFile,
+						upload_complete_handler : uploadComplete,
+						
+						//SWFObject settings
+						minimum_flash_version : "9.0.28",
+						swfupload_pre_load_handler : swfUploadPreLoad_importSurveyFile,
+						swfupload_load_failed_handler : swfUploadLoadFailed_importSurveyFile
+					};
+
+					fileUpload_importSurveyFile= new SWFUpload(settings);
+				}
+
+				function swfUploadPreLoad_importSurveyFile() {
+					var self = this;
+					var loading = function () {
+						document.getElementById("divLoadingContent_importSurveyFile").style.display = "";
+
+						var longLoad = function () {
+							document.getElementById("divLoadingContent_importSurveyFile").style.display = "none";
+							document.getElementById("divLongLoading_importSurveyFile").style.display = "";
+						};
+						this.customSettings.loadingTimeout = setTimeout(function () {
+								longLoad.call(self)
+							},
+							15 * 1000
+						);
+					};
+					
+					this.customSettings.loadingTimeout = setTimeout(function () {
+							loading.call(self);
+						},
+						1*1000
+					);
+				}
+				function swfUploadLoaded_importSurveyFile() {
+					var self = this;
+					clearTimeout(this.customSettings.loadingTimeout);
+					document.getElementById("divLoadingContent_importSurveyFile").style.display = "none";
+					document.getElementById("divLongLoading_importSurveyFile").style.display = "none";
+					document.getElementById("divAlternateContent_importSurveyFile").style.display = "none";
+				}
+				   
+				function swfUploadLoadFailed_importSurveyFile() {
+					clearTimeout(this.customSettings.loadingTimeout);
+					document.getElementById("divLoadingContent_importSurveyFile").style.display = "none";
+					document.getElementById("divLongLoading_importSurveyFile").style.display = "none";
+					document.getElementById("divAlternateContent_importSurveyFile").style.display = "";
+				}
+				//打开文件选择选择窗口时触发的事件
+				function fileDialogStart_importSurveyFile() {
+					var txt = document.getElementById("importSurveyFile");
+					txt.value = "";
+					this.cancelUpload();
+				}
+
+				//文件传输完成触发事件
+				function uploadSuccess_importSurveyFile(file, serverData) {
+					try {
+						var progress = new FileProgress(file, this.customSettings.progressTarget);
+						progress.setComplete();
+						progress.setStatus("文件上传完成。");
+						progress.toggleCancel(false);
+
+						this.setButtonDisabled(true);
+						
+						//给文本框赋值
+						var txt = document.getElementById("importSurveyFile");
+						txt.value = serverData;
+						if( document.getElementById('importSurveySubmit') != null ) document.getElementById('importSurveySubmit').disabled = false;
+					} catch (ex) {
+						this.debug(ex);
+					}
+				}
+				//开始执行
+				Init_importSurveyFile();
+			 </script>
+
+			 <form action="" method="post" name="exportDataForm" id="exportDataForm"  onsubmit="return CheckExportData();">
+			  <table class="d_table" style="margin-top:10px">
+				  <tr class=coltitle><th align=left><b>选择调查问卷进行回复数据迁出</b></th></tr>
+				   <tr><td><select name="exportData" id="exportData" style="width:730px">
+					   <option value=''>请选择调查问卷...</option>
+					   {exportDataList}
+					   </select>
+				   </td></tr>
+			  </table><table width=100% style="border:0px;">
+				   <tr><td style="border:0px;">
+							<input type="hidden" name="Action" value="exportDataSubmit">
+							<input type="submit" name="submit" class=stnsubmit value="开始迁出数据"> 
+					  </td>
+				   </tr>
+			  </table>  
+			  </form>
+
+			  <form action="" method="post" name="importDataForm" id="importDataForm"  onsubmit="return CheckImportData();">
+				  <table class="d_table" style="margin-top:10px">
+				  <tr class=coltitle><th align=left><b>选择调查问卷进行回复数据迁入</b></th></tr>
+				   <tr><td><table cellSpacing=0 cellPadding=0 width="100%" style="border:0px">
+					   <div style="margin-top:5px"><select name="importData" id="importData" style="width:730px">
+						   <option value=''>请选择调查问卷...</option>
+						   {importDataList}
+						   </select>
+					   </div>
+					   <div><b>上传数据文件：</b><input type="text" readonly id="importDataFile" name="importDataFile" size="70" style="margin-right:5px;vertical-align: middle"/><span id="upload_importDataFile"></span>&nbsp;<input type="button" value="上传" onclick="fileUpload_importDataFile.startUpload();" class="buttonClass" style="vertical-align: middle"/></div>
+					   <div id="fsUploadProgress_importDataFile" style="border:0px"></div>
+					   <noscript>
+					   <div style="background-color: #FFFF66; border-top: solid 4px #FF9966; border-bottom: solid 4px #FF9966; margin: 10px 25px; padding: 10px 15px;border:0px">上传控件加载失败，原因可能是：您可能未开启JavaScript支持！</div>
+					   </noscript>
+					   <div id="divLoadingContent_importDataFile" class="content" style="background-color: #FFFF66; border-top: solid 4px #FF9966; border-bottom: solid 4px #FF9966; margin: 10px 25px; padding: 10px 15px; display: none;border:0px">上传控件加载中，请稍候...</div>
+					   <div id="divLongLoading_importDataFile" class="content" style="background-color: #FFFF66; border-top: solid 4px #FF9966; border-bottom: solid 4px #FF9966; margin: 10px 25px; padding: 10px 15px; display: none;border:0px">上传控件加载超时，原因可能是：请保证您的flash插件是开启状态，上传控件需要Flash Player 9或以上的支持！</div>
+					   <div id="divAlternateContent_importDataFile" class="content" style="background-color: #FFFF66; border-top: solid 4px #FF9966; border-bottom: solid 4px #FF9966; margin: 10px 25px; padding: 10px 15px; display: none;border:0px">上传控件加载失败，原因可能是：您的Flash Player版本过低！您可以访问<a href="http://www.adobe.com/shockwave/download/download.cgi?P1_Prod_Version=ShockwaveFlash">Adobe网站</a>获得最新Flash Player版本。</div>
+					   <div><span class=red>*</span> 上传文件扩展名限制为：{allowType}，大小限制为：{maxSize}M</div>
+				  </table></td></tr>
+
+			  </table><table width=100% style="border:0px;margin-bottom:20px">
+				   <tr><td style="border:0px;">
+							<input type="hidden" name="Action" value="importDataSubmit">
+							<input type="submit" name="importDataSubmit" id="importDataSubmit" class=stnsubmit value="开始迁入数据"> 
+					  </td>
+				   </tr>
+			  </table>  
+			  </form>
+
+			  <script type="text/javascript">
+				var fileUpload_importDataFile;
+				function Init_importDataFile() {
+					var settings = {
+						flash_url : "../JS/swfupload.swf",
+						upload_url: "../JS/DistributionUpload.php",
+						post_params: {"PHPSESSID" : "{session_id}",
+						  "uploadFileName": "importDataFile"
+						},
+						file_post_name:"importDataFile",
+						file_size_limit : "{maxSize} MB",
+						file_types : "{allowType}",
+						file_types_description : "{allowType}",
+						file_upload_limit : 1,
+						custom_settings : {
+							progressTarget : "fsUploadProgress_importDataFile"
+						},
+						debug: false,
+						prevent_swf_caching:true,
+
+						//Button settings
+						button_image_url: "../Images/cnfileselect.png",
+						button_width: "61",
+						button_height: "22",
+						button_placeholder_id: "upload_importDataFile",
+						button_action : SWFUpload.BUTTON_ACTION.SELECT_FILE,
+						button_window_mode:"OPAQUE",
+						
+						swfupload_loaded_handler : swfUploadLoaded_importDataFile,
+						file_dialog_start_handler:fileDialogStart_importDataFile,
+						file_queued_handler : fileQueued,
+						file_queue_error_handler : fileQueueError,
+						file_dialog_complete_handler : fileDialogComplete,
+						upload_start_handler : uploadStart,
+						upload_progress_handler : uploadProgress,
+						upload_error_handler : uploadError,
+						upload_success_handler : uploadSuccess_importDataFile,
+						upload_complete_handler : uploadComplete,
+						
+						//SWFObject settings
+						minimum_flash_version : "9.0.28",
+						swfupload_pre_load_handler : swfUploadPreLoad_importDataFile,
+						swfupload_load_failed_handler : swfUploadLoadFailed_importDataFile
+					};
+
+					fileUpload_importDataFile= new SWFUpload(settings);
+				}
+
+				function swfUploadPreLoad_importDataFile() {
+					var self = this;
+					var loading = function () {
+						document.getElementById("divLoadingContent_importDataFile").style.display = "";
+
+						var longLoad = function () {
+							document.getElementById("divLoadingContent_importDataFile").style.display = "none";
+							document.getElementById("divLongLoading_importDataFile").style.display = "";
+						};
+						this.customSettings.loadingTimeout = setTimeout(function () {
+								longLoad.call(self)
+							},
+							15 * 1000
+						);
+					};
+					
+					this.customSettings.loadingTimeout = setTimeout(function () {
+							loading.call(self);
+						},
+						1*1000
+					);
+				}
+				function swfUploadLoaded_importDataFile() {
+					var self = this;
+					clearTimeout(this.customSettings.loadingTimeout);
+					document.getElementById("divLoadingContent_importDataFile").style.display = "none";
+					document.getElementById("divLongLoading_importDataFile").style.display = "none";
+					document.getElementById("divAlternateContent_importDataFile").style.display = "none";
+				}
+				   
+				function swfUploadLoadFailed_importDataFile() {
+					clearTimeout(this.customSettings.loadingTimeout);
+					document.getElementById("divLoadingContent_importDataFile").style.display = "none";
+					document.getElementById("divLongLoading_importDataFile").style.display = "none";
+					document.getElementById("divAlternateContent_importDataFile").style.display = "";
+				}
+				//打开文件选择选择窗口时触发的事件
+				function fileDialogStart_importDataFile() {
+					var txt = document.getElementById("importDataFile");
+					txt.value = "";
+					this.cancelUpload();
+				}
+
+				//文件传输完成触发事件
+				function uploadSuccess_importDataFile(file, serverData) {
+					try {
+						var progress = new FileProgress(file, this.customSettings.progressTarget);
+						progress.setComplete();
+						progress.setStatus("文件上传完成。");
+						progress.toggleCancel(false);
+
+						this.setButtonDisabled(true);
+						
+						//给文本框赋值
+						var txt = document.getElementById("importDataFile");
+						txt.value = serverData;
+						if( document.getElementById('importDataSubmit') != null ) document.getElementById('importDataSubmit').disabled = false;
+					} catch (ex) {
+						this.debug(ex);
+					}
+				}
+				//开始执行
+				Init_importDataFile();
+			 </script>
+			</div><!--end of content_main-->
+		   </div><!--end of content-->
+	   </div><!--end of main-->
+    </div><!--end of container-->
+	<!--popmenu -->
+	<script type="text/javascript" src="../JS/PopMenu.js.php"></script>
+</body></html>

@@ -1,0 +1,75 @@
+<html>
+<head><title>{page_title}</title>
+<meta http-equiv=content-type content="text/html; charset=gbk">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<link rel="stylesheet" type="text/css" href="CSS/{uitheme}.css">
+<style>
+	@media screen and (max-device-width: 320px){body{-webkit-text-size-adjust:none}}
+	@media screen and (max-device-width: 480px){body{-webkit-text-size-adjust:none}}
+	@media only screen and (-webkit-min-device-pixel-ratio: 2){body{-webkit-text-size-adjust:none}}
+	@media only screen and (min-device-width: 768px) and (max-device-width: 1024px){body{-webkit-text-size-adjust:none}}
+</style>
+<body oncontextmenu="return false">
+	 <div class="titlebar">
+	 <table width=100%>
+	   <tr>
+	   <td align=left width=* class="pageTitle">THE SURVEY END</td>
+	   <td nowrap id="processValueId" align=right valign=bottom style="color:#fff;font-size:14px">100%</td>
+	   </tr>
+	 </table>
+	 </div>
+	 <table width="100%" class="pertable" style="padding-bottom:10px">
+	 <tr><td style="padding-left:8px;font-size:18px"><b>{notes_title}</b></td></tr>
+	 <tr><td style="padding-left:8px;padding-top:8px">{notes_content}</td></tr>
+	 </table>
+
+<div style="width:0px;height:0px"><img id="WeixinImg" src="{msgImage}" width=0 height=0></div>
+<script>
+  //微信分享
+  var imgUrl = document.getElementById('WeixinImg').src;
+  var lineLink = "{fullPath}q.php?qid={surveyID}&qlang={surveyLang}";
+  var descContent = '{surveyDesc}';
+  var shareTitle = '{surveyTitle}';
+  var appid = '{app_id}';        
+  function shareFriend() {
+      WeixinJSBridge.invoke('sendAppMessage',{
+         "appid": appid,
+         "img_url": imgUrl,
+         "img_width": "200",
+         "img_height": "200",
+         "link": lineLink,
+         "desc": descContent,
+         "title": shareTitle
+      }, function(res) {})
+  }
+  function shareTimeline() {
+      WeixinJSBridge.invoke('shareTimeline',{
+         "img_url": imgUrl,
+         "img_width": "200",
+         "img_height": "200",
+         "link": lineLink,
+         "desc": descContent,
+         "title": shareTitle
+      }, function(res) {});
+  }
+  function shareWeibo() {
+      WeixinJSBridge.invoke('shareWeibo',{
+         "content": descContent,
+         "url": lineLink,
+      }, function(res) {});
+  }
+  document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+      WeixinJSBridge.on('menu:share:appmessage', function(argv){
+         shareFriend();
+      });
+      WeixinJSBridge.on('menu:share:timeline', function(argv){
+         shareTimeline();
+      });
+      WeixinJSBridge.on('menu:share:weibo', function(argv){
+         shareWeibo();
+      });
+  }, false);
+</script>
+<script>scroll(0,0);</script>
+</body>
+</html>

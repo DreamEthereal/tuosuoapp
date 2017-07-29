@@ -1,0 +1,62 @@
+<html>
+<head>
+<meta http-equiv=content-language content=zh-cn>
+<meta http-equiv=content-type content="text/html; charset=gbk">
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7">
+<style>
+ td { padding:2px 5px 2px 5px;}
+</style>
+<link href="../CSS/Base.css" rel=stylesheet>
+<script language=javascript src="../JS/HighLight.js.php"></script>
+<script type="text/javascript" src="../JS/Jquery.min.js.php"></script>
+<script type="text/javascript" src="../JS/Jquery.notification.js.php"></script>
+<link type="text/css" rel="stylesheet" href="../CSS/Notification.css" />
+<script language="javascript">
+function Check_Form_Validator(theform)
+{
+	if (theform.tplTagName.value == "") 
+	{
+        theform.tplTagName.focus();
+        $.notification("请填写模板标识名称!");
+        return false;
+    }
+	if (theform.tplName.value == "") 
+	{
+        theform.tplName.focus();
+        $.notification("请选择本地模板文件!");
+        return false;
+    }
+}
+</script>
+<meta content="mshtml 6.00.3790.0" name=generator></head>
+<body oncontextmenu="return false">
+ <form action="" method="post" enctype="multipart/form-data" onsubmit="return Check_Form_Validator(this);">
+  <table class=datatable style="line-height: 150%;border-collapse:collapse;" cellspacing=0 cellpadding=0 bordercolor=#cacaca border=1 width=100%>
+   <div class=position>位置：&nbsp; 我的问卷 &raquo; 公共展示模板 &raquo; 新增展示模板</div>
+   <tr><td colspan="2" bgcolor="#f9f9f9"><b>上传展示模板</b></td></tr>
+   <tr> 
+       <td  align=center width="25%">模板标识名称：</td>
+       <td noWrap width="75%"><input type=text name="tplTagName" size="50"></td>
+   </tr>
+   <tr> 
+       <td  align=center width="25%">选择本地模板文件：</td>
+       <td noWrap width="75%"><input type=file name="tplName" size="60"></td>
+   </tr></table><table width=100%>
+   <tr><td width=25%></td>
+       <td>
+	   <input type=hidden name="Action" value="AddSubmit">
+	   <input type=submit class=inputsubmit value="确定">&nbsp;<input class=inputsubmit type="button" name="close" value="关闭" onClick="javascript:parent.hidePopWin();"></td>
+    </tr>
+   </form>
+  </table>  
+  <table width="100%">
+   <tr>
+     <td style="padding-left:0px"><b>
+	   <img src="../Images/notes.gif">：</B>上传的模板文件仅支持.html/.htm格式<br/>
+	   <b><img src="../Images/notes.gif">：</B>模板文件假如引用到图片/动画文件，请使用“附属文件管理”上传该文件<br/>
+	   <B><img src="../Images/clerk.gif"></B>：图片文件在模板文件内的引用路径请用<span class="red">{FileURL}/*.*</span>（大小写区分）
+	</td>
+   </tr>
+</table>
+ <script type="text/javascript">initInputHighlightScript();</script> 
+</body></html>

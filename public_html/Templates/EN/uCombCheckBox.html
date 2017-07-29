@@ -1,0 +1,14 @@
+{dateIncludeFile}
+<tr><td height=25 class="question" valign=center>&nbsp;{questionRequire}<span class="textEdit" id="questionName_{questionID}">{questionName}</span>&nbsp;<span class=notes>{questionNotes}</span></td></tr>
+<tr><td class="tips"><span class="textEdit" id="questionNotes_{questionID}">{questionTips}</span></td></tr>
+<tr><td>
+	<table cellSpacing=0 cellPadding=0>
+       <!-- BEGIN OPTION -->
+	   <tr id="option_checkbox_{optionID}_container"><td width=8></td>
+	       <td><input onclick="Check_Survey_Conditions()" type="checkbox" value="{optionID}" name="option_{questionID}[]" id="option_{questionID}" {isCheck}></td>
+	       <td class="answer"><span class="textEdit" id="optionName_25_{questionID}_{optionID}">{optionName}</span></td>
+		   <td width=8></td>
+	       <td style="display:{isHaveText}"><input name="TextOtherValue_{questionID}_{optionID}" type="text" size="{length}" id="TextOtherValue_{questionID}_{optionID}" value="{value}" onblur="Check_Survey_Conditions();" {dateTextAction}>&nbsp;{unitText}&nbsp;</td></tr>
+	   <!-- END OPTION -->
+	</table>
+</td></tr>

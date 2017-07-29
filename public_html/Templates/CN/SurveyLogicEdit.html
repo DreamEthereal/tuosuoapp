@@ -1,0 +1,387 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gbk" />
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" />
+<title>单一问题关联逻辑关系 - Eclear在线问卷调查引擎</title>
+<link rel="shortcut icon" href="../Images/enableq.ico" type="image/x-icon" />
+<link rel="stylesheet" type="text/css" href="../CSS/UIBase.css" />
+<link rel="stylesheet" type="text/css" href="../CSS/Index.css" />
+<link href="../CSS/Window.css" type="text/css" rel=stylesheet>
+<script type="text/javascript" src="../JS/Common.js.php"></script>
+<script type="text/javascript" src="../JS/Window.js.php"></script>
+<script type="text/javascript" src="../JS/Jquery.min.js.php"></script>
+<script>
+function refreshParent() {
+   self.location.href = '{surveyLogicURL}';
+}
+var ajax_request = false;
+function HttpRequest(questionID,isLogicAnd)
+{
+    var url = "../System/AjaxShowQtnLogic.php?Action=SetQtnLogicRel&surveyID={surveyID}&questionID=" + questionID + "&isLogicAnd=" + isLogicAnd +"&randid="+Math.random();
+	if(window.ActiveXObject){
+		try{
+			ajax_request = new ActiveXObject("Msxml2.XMLHTTP");
+		}
+		catch (e){
+			try{
+				ajax_request = new ActiveXObject("Microsoft.XMLHTTP");
+			}
+			catch (e) {}
+		}
+	}
+	else if(window.XMLHttpRequest){
+		ajax_request = new XMLHttpRequest();
+		if (ajax_request.overrideMimeType){
+			ajax_request.overrideMimeType('text/xml');
+		}
+	}
+	
+	if (!ajax_request){
+		alert("Cannot create an XMLHTTP instance");
+		return false;
+	}
+	ajax_request.onreadystatechange = function() {
+	  if( ajax_request.readyState == 4 && ajax_request.status == 200) {
+			AjaxRequest(questionID,isLogicAnd);
+	   }	
+	};
+	ajax_request.open('GET', url, true);
+	ajax_request.send(null);
+}
+
+var http_request = false;
+function AjaxRequest(questionID,isLogicAnd)
+{
+	var theLogicObj = eval("document.getElementById('conList_"+questionID+"')");
+	theLogicObj.innerHTML = "<div id=\"preloading\" style=\"background-color:#f0f0f0;width:160px;overflow:hidden;white-space:nowrap;color:black;font-weight:bold;-moz-border-radius-bottomright:5px;-webkit-border-bottom-right-radius:5px;-khtml-border-bottom-right-radius:5px;border-bottom-right-radius:5px;\">&nbsp;<img src=\"..\/Images\/wait.gif\" width=\"16px\" height=\"16px\">&nbsp;正在加载数据&nbsp;<\/div>";
+    var url = "../System/AjaxShowQtnLogic.php?surveyID={surveyID}&questionID=" + questionID + "&isLogicAnd=" + isLogicAnd + "&randid="+Math.random();
+	if(window.ActiveXObject){
+		try{
+			http_request = new ActiveXObject("Msxml2.XMLHTTP");
+		}
+		catch (e){
+			try{
+				http_request = new ActiveXObject("Microsoft.XMLHTTP");
+			}
+			catch (e) {}
+		}
+	}
+	else if(window.XMLHttpRequest){
+		http_request = new XMLHttpRequest();
+		if (http_request.overrideMimeType){
+			http_request.overrideMimeType('text/xml');
+		}
+	}
+	
+	if (!http_request){
+		alert("Cannot create an XMLHTTP instance");
+		return false;
+	}
+	http_request.onreadystatechange = function() {
+	  if( http_request.readyState == 4 && http_request.status == 200) {
+			theLogicObj.innerHTML = http_request.responseText;
+	   }	
+	};
+	http_request.open('GET', url, true);
+	http_request.send(null);
+}
+function qtnAssRequest(questionID,qtnID,questionType,isLogicAnd)
+{
+    var url = "../System/AjaxShowQtnAssociate.php?Action=SetQtnLogicRel&surveyID={surveyID}&questionID="+questionID+"&qtnID="+qtnID+"&questionType="+questionType+"&isLogicAnd=" + isLogicAnd +"&randid="+Math.random();
+	if(window.ActiveXObject){
+		try{
+			ajax_request = new ActiveXObject("Msxml2.XMLHTTP");
+		}
+		catch (e){
+			try{
+				ajax_request = new ActiveXObject("Microsoft.XMLHTTP");
+			}
+			catch (e) {}
+		}
+	}
+	else if(window.XMLHttpRequest){
+		ajax_request = new XMLHttpRequest();
+		if (ajax_request.overrideMimeType){
+			ajax_request.overrideMimeType('text/xml');
+		}
+	}
+	
+	if (!ajax_request){
+		alert("Cannot create an XMLHTTP instance");
+		return false;
+	}
+	ajax_request.onreadystatechange = function() {
+	  if( ajax_request.readyState == 4 && ajax_request.status == 200) {
+			qtnAssAjaxRequest(questionID,isLogicAnd,qtnID);
+	   }	
+	};
+	ajax_request.open('GET', url, true);
+	ajax_request.send(null);
+}
+
+var http_request = false;
+function qtnAssAjaxRequest(questionID,isLogicAnd,qtnID)
+{
+	var theLogicObj = eval("document.getElementById('qasList_"+questionID+"_"+qtnID+"')");
+	theLogicObj.innerHTML = "<div id=\"preloading\" style=\"background-color:#f0f0f0;width:160px;overflow:hidden;white-space:nowrap;color:black;font-weight:bold;-moz-border-radius-bottomright:5px;-webkit-border-bottom-right-radius:5px;-khtml-border-bottom-right-radius:5px;border-bottom-right-radius:5px;\">&nbsp;<img src=\"..\/Images\/wait.gif\" width=\"16px\" height=\"16px\">&nbsp;正在加载数据&nbsp;<\/div>";
+    var url = "../System/AjaxShowQtnAssociate.php?surveyID={surveyID}&ajaxType=2&questionID="+questionID+"&qtnID="+qtnID+"&isLogicAnd="+isLogicAnd+"&randid="+Math.random();
+	if(window.ActiveXObject){
+		try{
+			http_request = new ActiveXObject("Msxml2.XMLHTTP");
+		}
+		catch (e){
+			try{
+				http_request = new ActiveXObject("Microsoft.XMLHTTP");
+			}
+			catch (e) {}
+		}
+	}
+	else if(window.XMLHttpRequest){
+		http_request = new XMLHttpRequest();
+		if (http_request.overrideMimeType){
+			http_request.overrideMimeType('text/xml');
+		}
+	}
+	
+	if (!http_request){
+		alert("Cannot create an XMLHTTP instance");
+		return false;
+	}
+	http_request.onreadystatechange = function() {
+	  if( http_request.readyState == 4 && http_request.status == 200) {
+			theLogicObj.innerHTML = http_request.responseText;
+	   }	
+	};
+	http_request.open('GET', url, true);
+	http_request.send(null);
+}
+function optAssRequest(questionID,optionID,questionType,isLogicAnd)
+{
+    var url = "../System/AjaxShowOptAssociate.php?Action=SetQtnLogicRel&surveyID={surveyID}&questionID="+questionID+"&optionID="+optionID+"&questionType="+questionType+"&isLogicAnd=" + isLogicAnd +"&randid="+Math.random();
+	if(window.ActiveXObject){
+		try{
+			ajax_request = new ActiveXObject("Msxml2.XMLHTTP");
+		}
+		catch (e){
+			try{
+				ajax_request = new ActiveXObject("Microsoft.XMLHTTP");
+			}
+			catch (e) {}
+		}
+	}
+	else if(window.XMLHttpRequest){
+		ajax_request = new XMLHttpRequest();
+		if (ajax_request.overrideMimeType){
+			ajax_request.overrideMimeType('text/xml');
+		}
+	}
+	
+	if (!ajax_request){
+		alert("Cannot create an XMLHTTP instance");
+		return false;
+	}
+	ajax_request.onreadystatechange = function() {
+	  if( ajax_request.readyState == 4 && ajax_request.status == 200) {
+			optAssAjaxRequest(questionID,isLogicAnd,optionID);
+	   }	
+	};
+	ajax_request.open('GET', url, true);
+	ajax_request.send(null);
+}
+
+var http_request = false;
+function optAssAjaxRequest(questionID,isLogicAnd,optionID)
+{
+	var theLogicObj = eval("document.getElementById('oasList_"+questionID+"_"+optionID+"')");
+	theLogicObj.innerHTML = "<div id=\"preloading\" style=\"background-color:#f0f0f0;width:160px;overflow:hidden;white-space:nowrap;color:black;font-weight:bold;-moz-border-radius-bottomright:5px;-webkit-border-bottom-right-radius:5px;-khtml-border-bottom-right-radius:5px;border-bottom-right-radius:5px;\">&nbsp;<img src=\"..\/Images\/wait.gif\" width=\"16px\" height=\"16px\">&nbsp;正在加载数据&nbsp;<\/div>";
+    var url = "../System/AjaxShowOptAssociate.php?surveyID={surveyID}&ajaxType=2&questionID="+questionID+"&optionID="+optionID+"&isLogicAnd="+isLogicAnd+"&randid="+Math.random();
+	if(window.ActiveXObject){
+		try{
+			http_request = new ActiveXObject("Msxml2.XMLHTTP");
+		}
+		catch (e){
+			try{
+				http_request = new ActiveXObject("Microsoft.XMLHTTP");
+			}
+			catch (e) {}
+		}
+	}
+	else if(window.XMLHttpRequest){
+		http_request = new XMLHttpRequest();
+		if (http_request.overrideMimeType){
+			http_request.overrideMimeType('text/xml');
+		}
+	}
+	
+	if (!http_request){
+		alert("Cannot create an XMLHTTP instance");
+		return false;
+	}
+	http_request.onreadystatechange = function() {
+	  if( http_request.readyState == 4 && http_request.status == 200) {
+			theLogicObj.innerHTML = http_request.responseText;
+	   }	
+	};
+	http_request.open('GET', url, true);
+	http_request.send(null);
+}
+</script>
+
+<style>
+	input[type=radio] {vertical-align: middle;}
+	input[type=checkbox] {vertical-align: middle;}
+</style>
+
+</head>
+
+<body oncontextmenu="return false" onload="javascript:fnLoad(12);" onunload="javascript:fnUnload(12);">
+ 	<div class="header">
+		<h1 class="logo">Eclear</h1>
+		<div class="header_menu">
+			<div class="header_m_1">
+				<a href="../System/ShowMain.php">欢迎您，<font color="#e45857" id="nick_Name_cont"></font></a>
+				<span class="head_menu_icon"></span>
+				<ul class="head_menu_list">
+					<span class="head_menu_top"></span>
+					<li><a href="../System/MyProfile.php">我的账户信息</a></li>
+					<li class="last"><a href="../System/ChangePass.php">修改我的密码</a></li>
+				</ul>
+			</div>
+			<div class="header_m_6" style="margin-left:50px">
+				<a href="../System/ShowMain.php">首页</a>
+			</div>
+			<div class="header_m_2" id="mySetting">
+			</div>
+			<div class="header_m_3" style="margin-left:50px">
+				<a href="../Help/Downs.php">帮助</a>
+				<span class="head_menu_icon"></span>
+				<ul class="head_menu_list">
+					<span class="head_menu_top"></span>
+					<li><a href="../Help/Downs.php">帮助文件下载</a></li>
+					<li><a href="http://doc.itenable.com.cn" target=_blank>在线帮助文档</a></li>
+					<li><a href="http://i.enableq.com" target=_blank>在线讨论社区</a></li>
+					<li class="last"><a href="../System/AdministratorsLogs.php">系统操作日志</a></li>
+				</ul>
+			</div>
+			<div class="header_m_4" style="margin-left:50px">
+				<a href="javascript:void(0);" onclick="javascript:showPopWin('../License/AboutEnableQ.php', 500, 400, null, null,'关于...')">关于</a>
+			</div>
+			<div class="header_m_5">
+				<a href="../System/Logout.php?loginOutURL=../index.php" target=_top>退出</a>
+			</div>
+		</div>
+	</div><!--end of header-->
+	<script type="text/javascript" src="../JS/MySetting.js.php"></script>
+
+	<div class="container clearfix">
+	   <div class="main">
+			<div class="nav">
+					<a href="{questionListURL}">调查问题</a>
+					<a href="{logicURL}" class="cur">逻辑关系</a>
+					<a href="{relationURL}">数值关联</a>
+					<a href="{quotaURL}">问卷配额</a>
+					<a href="../System/AjaxEditSurveyCode.php?surveyID={surveyID}&surveyTitle={survey_URLTitle}">基础数据</a>
+			</div>
+
+			<div class="sub_nav clearfix">
+				<p class="sub_nav_top clearfix">
+					<a href="{logicURL}">问题关联</a>
+					<a href="{optAssURL}">选项关联</a>
+					<a href="{qtnAssURL}">矩阵行关联</a>
+				</p>
+			</div>
+
+		    <div class="content">
+			<div class="content_tit">
+				<div class="clearfix">
+				<h1><span class=redtitle>[{surveyTitle}]</span>单一问题逻辑关系</h1>
+				<span class="total ml10"></span>
+				<span class="btn ml10"></span>
+				</div>
+				<p class="fc_grey">调查问题：{questionName}</p>
+			</div>
+
+			<div class="content_main" style="margin-top:10px">
+			
+  			 <table class="d_table">
+			   <tr class=coltitle><th colspan=4 align=left><b>问题的显示依赖</b>&nbsp;&nbsp;<input class=stnsubmit style="vertical-align:middle" name="createNew" type="button" id="createNew" value="新增定义" onclick="javascript:showPopWin('{newQtnLogicURL}', 900, 470, refreshParent, null,'新增单一问题逻辑关系定义')"></th></tr>
+			   <tr style="display:{isNoHaveLogic}"><td colspan=4 align=left height=25 bgcolor="#ffffff">尚无问题的显示依赖关系</td></tr>
+			   <tr style="display:{isHaveLogic}"><td colspan=4 align=left bgcolor="#ffffff"><b>设定题间运算关系：</b><input type=radio name="isLogicAnd_{questionID}" id="isLogicAnd_{questionID}" value="1" onclick="javascript:HttpRequest({questionID},1);" {isLogicAnd1}><b>&nbsp;与</b>&nbsp;<input type=radio name="isLogicAnd_{questionID}" id="isLogicAnd_{questionID}" value="0" onclick="javascript:HttpRequest({questionID},0);" {isLogicAnd0}><b>&nbsp;或</b>&nbsp;</td></tr>
+			   <tr style="display:{isHaveLogic}">
+				 <td colspan=4 align=left bgcolor="#f5fafe" height=25 id="conList_{questionID}" style="line-height:25px">{conList}</td>
+			   </tr>
+			   <tr class=coltitle style="display:{isHaveLogic}">
+				  <th width=64% noWrap align=left style="padding-left:5px"><B>依赖于此问题</B>&nbsp;[ <span class=red>{recNum}</span> 组关系 ]</th>
+				  <th width=7% noWrap align=center>&nbsp;<B>运算关系</B></th>
+				  <th width=23% noWrap align=left>&nbsp;<B>回复值</B></th>
+				  <th width=6% noWrap align=center><b>操 作</b> </th>
+			   </tr>
+			   <!-- BEGIN LOGIC -->
+			   <tr> 
+				  <td style="line-height:25px;padding-left:5px">{conName}</td>
+				  <td align=center>&nbsp;{opertion}</td>
+				  <td>&nbsp;{optionName}</td>
+				  <td noWrap align=center><A href="{deleteURL}" onclick="return window.confirm('您真的想删除该条逻辑关系吗？本操作不可恢复！')">删除</A></td>
+			   </tr>
+			   <!-- END LOGIC -->
+			</table>
+
+			 <table class="d_table" style="display:{isHaveOptAssLogic}">
+			   <tr class=coltitle><th colspan=4 align=left><b>选项的隐藏依赖</b>&nbsp;&nbsp;<input class=stnsubmit style="vertical-align:middle" name="createNew0" type="button" id="createNew0" value="新增定义" onclick="javascript:showPopWin('{newOptAssURL}', 900, 540, refreshParent, null,'新增单一问题的选项关联定义')"></th></tr>
+			   <tr style="display:{isNoHaveOptAssLogic}" bgcolor="#ffffff"><td colspan=4 align=left bgcolor="#f5fafe" height=25>尚无选项的隐藏依赖关系</td></tr>
+			   <!-- BEGIN OPTASSLOGIC -->
+			   <tr><td colspan=4 align=left bgcolor="#ffffff"><b>设定题间运算关系：</b><input type=radio name="isLogicAnd_{questionID}_{oas_optionID}" id="isLogicAnd_{questionID}_{oas_optionID}" value="1" onclick="javascript:optAssRequest({questionID},{oas_optionID},{oas_questionType},1);" {oas_isLogicAnd1}><b>&nbsp;与</b>&nbsp;<input type=radio name="isLogicAnd_{questionID}_{oas_optionID}" id="isLogicAnd_{questionID}_{oas_optionID}" value="0" onclick="javascript:optAssRequest({questionID},{oas_optionID},{oas_questionType},0);" {oas_isLogicAnd0}><b>&nbsp;或</b>&nbsp;</td></tr>
+			   <tr>
+				 <td colspan=4 align=left bgcolor="#f5fafe" height=35 style="line-height:35px;"><span style="background:#f6e06a;height:35px;padding:10px;line-height:40px;"><b>{oas_optName}</b></span><br/><span  id="oasList_{questionID}_{oas_optionID}" style="line-height:25px">{oas_conList}</span></td>
+			   </tr>
+			   <tr class=coltitle>
+				  <th width=64% noWrap align=left style="padding-left:5px"><B>依赖于此问题</B>&nbsp;[ <span class=red>{oas_recNum}</span> 组关系 ]</td>
+				  <th width=7% noWrap align=center>&nbsp;<B>运算关系</B></td>
+				  <th width=23% noWrap align=left>&nbsp;<B>回复值</B></td>
+				  <th width=6% noWrap align=center><b>操 作</b> </td>
+			   </tr>
+			   <!-- BEGIN OPTLOGIC -->
+			   <tr> 
+				  <td style="line-height:25px;padding-left:5px">{oas_conName}</td>
+				  <td align=center>&nbsp;{oas_opertion}</td>
+				  <td>&nbsp;{oas_optionName}</td>
+				  <td noWrap align=center><A href="{oas_deleteURL}" onclick="return window.confirm('您真的想删除该条逻辑关系吗？本操作不可恢复！')">删除</A></td>
+			   </tr>
+			   <!-- END OPTLOGIC -->
+			   <!-- END OPTASSLOGIC -->
+			</table>
+
+			 <table class="d_table" style="display:{isHaveQtnAssLogic}">
+			   <tr class=coltitle><th colspan=4 align=left><b>矩阵行隐藏依赖</b>&nbsp;&nbsp;<input class=stnsubmit style="vertical-align:middle" name="createNew1" type="button" id="createNew1" value="新增定义" onclick="javascript:showPopWin('{newQtnAssURL}', 900, 540, refreshParent, null,'新增单一问题的矩阵行关联定义')"></th></tr>
+			   <tr style="display:{isNoHaveQtnAssLogic}" bgcolor="#ffffff"><td colspan=4 align=left bgcolor="#f5fafe" height=25>尚无矩阵行隐藏依赖关系</td></tr>
+			   <!-- BEGIN QTNASSLOGIC -->
+			   <tr><td colspan=4 align=left bgcolor="#ffffff"><b>设定题间运算关系：</b><input type=radio name="isLogicAnd_{questionID}_{qas_qtnID}" id="isLogicAnd_{questionID}_{qas_qtnID}" value="1" onclick="javascript:qtnAssRequest({questionID},{qas_qtnID},{qas_questionType},1);" {qas_isLogicAnd1}><b>&nbsp;与</b>&nbsp;<input type=radio name="isLogicAnd_{questionID}_{qas_qtnID}" id="isLogicAnd_{questionID}_{qas_qtnID}" value="0" onclick="javascript:qtnAssRequest({questionID},{qas_qtnID},{qas_questionType},0);" {qas_isLogicAnd0}><b>&nbsp;或</b>&nbsp;</td></tr>
+			   <tr>
+				 <td colspan=4 align=left bgcolor="#f5fafe" height=25 style="line-height:35px;"><span style="background:#f6e06a;height:35px;padding:10px;line-height:40px;"><b>{qas_qtnRangeName}</b></span><br/><span  id="qasList_{questionID}_{qas_qtnID}" style="line-height:25px">{qas_conList}</span></td>
+			   </tr>
+			   <tr class=coltitle>
+				  <th width=64% noWrap align=left style="padding-left:5px"><B>依赖于此问题</B>&nbsp;[ <span class=red>{qas_recNum}</span> 组关系 ]</th>
+				  <th width=7% noWrap align=center>&nbsp;<B>运算关系</B></th>
+				  <th width=23% noWrap align=left>&nbsp;<B>回复值</B></th>
+				  <th width=6% noWrap align=center><b>操 作</b> </th>
+			   </tr>
+			   <!-- BEGIN QTNLOGIC -->
+			   <tr> 
+				  <td style="line-height:25px;padding-left:5px">{qas_conName}</td>
+				  <td align=center>&nbsp;{qas_opertion}</td>
+				  <td>&nbsp;{qas_optionName}</td>
+				  <td noWrap align=center><A href="{qas_deleteURL}" onclick="return window.confirm('您真的想删除该条逻辑关系吗？本操作不可恢复！')">删除</A></td>
+			   </tr>
+			   <!-- END QTNLOGIC -->
+			   <!-- END QTNASSLOGIC -->
+			</table>
+
+			</div><!--end of content_main-->
+		   </div><!--end of content-->
+	   </div><!--end of main-->
+    </div><!--end of container-->
+	<!--popmenu -->
+	<script type="text/javascript" src="../JS/PopMenu.js.php"></script>
+	<script type="text/javascript" src="../JS/Position.js.php"></script>
+</body></html>

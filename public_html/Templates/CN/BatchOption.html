@@ -1,0 +1,255 @@
+<html>
+<head>
+<meta http-equiv=content-language content=zh-cn>
+<meta http-equiv=content-type content="text/html; charset=gbk">
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7">
+<style>
+ td { padding:2px 5px 2px 5px;}
+</style>
+<link href="../CSS/Base.css" rel=stylesheet>
+<script type="text/javascript" src="../JS/Jquery.min.js.php"></script>
+<script type="text/javascript" src="../JS/Jquery.notification.js.php"></script>
+<link type="text/css" rel="stylesheet" href="../CSS/Notification.css" />
+<script language=javascript src="../JS/CheckQuestion.js.php"></script>
+<script language=javascript src="../JS/HighLight.js.php"></script>
+<script language=javascript>
+function Check_Form_Validator()
+{
+	if (!CheckNotNull(document.getElementById("optionName"), "批量增加的内容")) {return false;}
+}
+
+function SubmitCallBack() {
+    if( Check_Form_Validator() != false )
+	{
+		switch( document.Check_Form.isRange.value )
+		{
+			case '0':  //普通单选、多选
+				var theValue = Trim(document.getElementById("optionName").value);
+				//var theValueString = theValue.replace(/\r\n/g,"######");
+				var theValueString = theValue.replace(/\n/g,"######");
+				var theStringArray = theValueString.split("######");
+				var theLength = parent.document.getElementById('theOptionTable').rows.length;
+				for( i=0;i<theStringArray.length;i++)
+				{
+					var j = i+1;
+					var theObj = eval("parent.document.getElementById('optionID_" + j +"')");
+					if( theStringArray[i] != '' ){
+						if( theObj != null )
+						{
+							theObj.value = theStringArray[i] ;
+						}
+						else
+						{
+							parent.insertRow(parent.document.getElementById('theOptionTable').rows.length);
+							theObj = eval("parent.document.getElementById('optionID_" + j +"')");
+							theObj.value = theStringArray[i] ;
+						}
+					}
+				}
+				for( k=theStringArray.length+1;k<=theLength;k++)
+				{
+					var theObj = eval("parent.document.getElementById('optionID_" + k +"')");
+					if( theObj != null ){
+					   theObj.value = '';
+					}
+				}   
+				parent.hidePopWin();
+			break;
+			case '1':  //组合填空
+				var theValue = Trim(document.getElementById("optionName").value);
+				//var theValueString = theValue.replace(/\r\n/g,"######");
+				var theValueString = theValue.replace(/\n/g,"######");
+				var theStringArray = theValueString.split("######");
+				var theLength = parent.document.getElementById('theOptionTable').rows.length;
+				for( i=0;i<theStringArray.length;i++)
+				{
+					var j = i+1;
+					var theObj = eval("parent.document.getElementById('optionID_" + j +"')");
+					if( theStringArray[i] != '' ){
+						if( theObj != null )
+						{
+							theObj.value = theStringArray[i] ;
+						}
+						else
+						{
+							parent.insertCombTextRow(parent.document.getElementById('theOptionTable').rows.length);
+							theObj = eval("parent.document.getElementById('optionID_" + j +"')");
+							theObj.value = theStringArray[i] ;
+						}
+					}
+				}
+				for( k=theStringArray.length+1;k<=theLength;k++)
+				{
+					var theObj = eval("parent.document.getElementById('optionID_" + k +"')");
+					if( theObj != null ){
+					   theObj.value = '';
+					}
+				}   
+				parent.hidePopWin();
+			break;
+			case '2': //复合单选
+				var theValue = Trim(document.getElementById("optionName").value);
+				//var theValueString = theValue.replace(/\r\n/g,"######");
+				var theValueString = theValue.replace(/\n/g,"######");
+				var theStringArray = theValueString.split("######");
+				var theLength = parent.document.getElementById('theOptionTable').rows.length;
+				for( i=0;i<theStringArray.length;i++)
+				{
+					var j = i+1;
+					var theObj = eval("parent.document.getElementById('optionID_" + j +"')");
+					if( theStringArray[i] != '' ){
+						if( theObj != null )
+						{
+							theObj.value = theStringArray[i] ;
+						}
+						else
+						{
+							parent.insertCombRadioRow(parent.document.getElementById('theOptionTable').rows.length);
+							theObj = eval("parent.document.getElementById('optionID_" + j +"')");
+							theObj.value = theStringArray[i] ;
+						}
+					}
+				}
+				for( k=theStringArray.length+1;k<=theLength;k++)
+				{
+					var theObj = eval("parent.document.getElementById('optionID_" + k +"')");
+					if( theObj != null ){
+					   theObj.value = '';
+					}
+				}   
+				parent.hidePopWin();
+			break;
+			case '3': //复合多选
+				var theValue = Trim(document.getElementById("optionName").value);
+				//var theValueString = theValue.replace(/\r\n/g,"######");
+				var theValueString = theValue.replace(/\n/g,"######");
+				var theStringArray = theValueString.split("######");
+				var theLength = parent.document.getElementById('theOptionTable').rows.length;
+				for( i=0;i<theStringArray.length;i++)
+				{
+					var j = i+1;
+					var theObj = eval("parent.document.getElementById('optionID_" + j +"')");
+					if( theStringArray[i] != '' ){
+						if( theObj != null )
+						{
+							theObj.value = theStringArray[i] ;
+						}
+						else
+						{
+							parent.insertCombCheckBoxRow(parent.document.getElementById('theOptionTable').rows.length);
+							theObj = eval("parent.document.getElementById('optionID_" + j +"')");
+							theObj.value = theStringArray[i] ;
+						}
+					}
+				}
+				for( k=theStringArray.length+1;k<=theLength;k++)
+				{
+					var theObj = eval("parent.document.getElementById('optionID_" + k +"')");
+					if( theObj != null ){
+					   theObj.value = '';
+					}
+				}   
+				parent.hidePopWin();
+			break;
+			case '4': //矩阵填空
+				var theValue = Trim(document.getElementById("optionName").value);
+				//var theValueString = theValue.replace(/\r\n/g,"######");
+				var theValueString = theValue.replace(/\n/g,"######");
+				var theStringArray = theValueString.split("######");
+				var theLength = parent.document.getElementById('theOptionTable').rows.length;
+				for( i=0;i<theStringArray.length;i++)
+				{
+					var j = i+1;
+					var theObj = eval("parent.document.getElementById('optionID_" + j +"')");
+					if( theStringArray[i] != '' ){
+						if( theObj != null )
+						{
+							theObj.value = theStringArray[i] ;
+						}
+						else
+						{
+							parent.insertMultipleTextRow(parent.document.getElementById('theOptionTable').rows.length);
+							theObj = eval("parent.document.getElementById('optionID_" + j +"')");
+							theObj.value = theStringArray[i] ;
+						}
+					}
+				}
+				for( k=theStringArray.length+1;k<=theLength;k++)
+				{
+					var theObj = eval("parent.document.getElementById('optionID_" + k +"')");
+					if( theObj != null ){
+					   theObj.value = '';
+					}
+				}   
+				parent.hidePopWin();
+			break;
+			case '7': //矩阵多选
+				var theValue = Trim(document.getElementById("optionName").value);
+				//var theValueString = theValue.replace(/\r\n/g,"######");
+				var theValueString = theValue.replace(/\n/g,"######");
+				var theStringArray = theValueString.split("######");
+				var theLength = parent.document.getElementById('theOptionTable').rows.length;
+				for( i=0;i<theStringArray.length;i++)
+				{
+					var j = i+1;
+					var theObj = eval("parent.document.getElementById('optionID_" + j +"')");
+					if( theStringArray[i] != '' ){
+						if( theObj != null )
+						{
+							theObj.value = theStringArray[i] ;
+						}
+						else
+						{
+							parent.insertMultipleRow(parent.document.getElementById('theOptionTable').rows.length);
+							theObj = eval("parent.document.getElementById('optionID_" + j +"')");
+							theObj.value = theStringArray[i] ;
+						}
+					}
+				}
+				for( k=theStringArray.length+1;k<=theLength;k++)
+				{
+					var theObj = eval("parent.document.getElementById('optionID_" + k +"')");
+					if( theObj != null ){
+					   theObj.value = '';
+					}
+				}   
+				parent.hidePopWin();
+			break;
+		}
+	}
+}
+function Init(){   
+   var theLength = parent.document.getElementById('theOptionTable').rows.length;
+   var theInitValue = '';
+   for( i=1;i<theLength;i++)
+   {
+       var theObj = eval("parent.document.getElementById('optionID_" + i +"')");
+	   if( theObj != null)
+	   {
+	       if( theObj.value != '' ) theInitValue += theObj.value + "\n";
+	   }
+   }
+   document.getElementById("optionName").value = theInitValue;
+}
+</script>
+<meta content="mshtml 6.00.3790.0" name=generator></head>
+<body oncontextmenu="return false" onload="javascript:Init();">
+   <form name="Check_Form" method="post" action="">
+  <table class=datatable style="line-height: 150%;border-collapse:collapse;" cellspacing=0 cellpadding=0 bordercolor=#cacaca border=1 width=100%>
+   <div class=position>位置：&nbsp; 我的问卷 &raquo; 编辑问题 &raquo; 批量增加</div>
+   <tr><td bgcolor="#f9f9f9"><b>批量增加</b></td></tr>
+   <tr><td>&nbsp;(在此输入文本，每个对应文本一行)
+          &nbsp;<textarea rows=12 cols=86 name="optionName" id="optionName"></textarea>      
+	  </td>
+   </tr><table><table width=100%>
+   <tr> 
+  	 <td>
+		 <input name="isRange" type="hidden" value="{isRange}">
+         <input class=inputsubmit name="Action" type="button" id="submit" value="确定" onClick="javascript:SubmitCallBack();"> 
+         <input class=inputsubmit type="button" name="close" value="关闭" onClick="javascript:parent.hidePopWin();">
+      </td>
+    </tr>
+  </form>
+ </table>
+ <script type="text/javascript">initInputHighlightScript();</script> 
+</body></html>

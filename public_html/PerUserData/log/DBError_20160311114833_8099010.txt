@@ -1,0 +1,2 @@
+2016-03-11 11:48:33     <b>Bad SQL Query</b>:  SELECT * FROM eq_response_17 b  WHERE (b.overFlag != 2 and b.authStat != 2)  AND b.authStat =1  AND   ORDER BY responseID DESC <br><b>You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'ORDER BY responseID DESC' at line 1</b>
+

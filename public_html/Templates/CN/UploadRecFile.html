@@ -1,0 +1,172 @@
+<html>
+<head>
+<meta http-equiv=content-language content=zh-cn>
+<meta http-equiv=content-type content="text/html; charset=gbk">
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7">
+<link href="../CSS/Base.css" rel=stylesheet>
+<script type="text/javascript" src="../JS/Jquery.min.js.php"></script>
+<script type="text/javascript" src="../JS/Jquery.notification.js.php"></script>
+<link type="text/css" rel="stylesheet" href="../CSS/Notification.css" />
+<script language=javascript src="../JS/CheckQuestion.js.php"></script>
+
+<link href="../CSS/FileUpload.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="../JS/Swfupload.js.php"></script>
+<script type="text/javascript" src="../JS/Swfqueue.js.php"></script>		
+<script type="text/javascript" src="../JS/Swfobject.js.php"></script>		
+<script type="text/javascript" src="../JS/FileProgress.js.php"></script>
+<script type="text/javascript" src="../JS/Swfhandlers.js.php"></script>
+
+<style>
+ td { padding:2px 5px 2px 5px;}
+ #jquery-notification-message {width:100%;}
+</style>
+<script language=javascript>
+function Check_Form_Validator()
+{
+	if (!CheckNotNull(document.Check_Form.recordFile, "重新上传的全程录音|录像文件")) {return false;}
+}
+
+</script>
+
+<meta content="mshtml 6.00.3790.0" name=generator></head>
+<body oncontextmenu="return false">
+  <form action="" method="post" name="Check_Form" onsubmit="return Check_Form_Validator()" >
+  <table class=datatable style="line-height: 150%;border-collapse:collapse;" cellspacing=0 cellpadding=0 bordercolor=#cacaca border=1 width=100%>
+     <div class=position>位置：&nbsp; 我的问卷 &raquo; 重新上传全程录音|录像文件</div>
+      <tr><td bgcolor="#f9f9f9"><b>重新上传全程录音|录像文件</b></td></tr>
+     <tr><td><table cellSpacing=0 cellPadding=0 width="100%" style="border:0px">
+		   <tr style="border:0px"><td class="answer" style="border:0px"><b>上传文件：</b><input type="text" readonly id="recordFile" name="recordFile" size="60"/><span id="upload_recordFile"></span>&nbsp;<input type="button" value="上传" onclick="fileUpload_recordFile.startUpload();" class="buttonClass" /></td></tr>
+		   <tr style="border:0px"><td id="fsUploadProgress_recordFile" style="border:0px"></td></tr>
+		   <noscript>
+		   <tr style="border:0px"><td style="background-color: #FFFF66; border-top: solid 4px #FF9966; border-bottom: solid 4px #FF9966; margin: 10px 25px; padding: 10px 15px;border:0px">上传控件加载失败，原因可能是：您可能未开启JavaScript支持！</td></tr>
+		   </noscript>
+		   <tr style="border:0px"><td id="divLoadingContent_recordFile" class="content" style="background-color: #FFFF66; border-top: solid 4px #FF9966; border-bottom: solid 4px #FF9966; margin: 10px 25px; padding: 10px 15px; display: none;border:0px">上传控件加载中，请稍候...</td></tr>
+		   <tr style="border:0px"><td id="divLongLoading_recordFile" class="content" style="background-color: #FFFF66; border-top: solid 4px #FF9966; border-bottom: solid 4px #FF9966; margin: 10px 25px; padding: 10px 15px; display: none;border:0px">上传控件加载超时，原因可能是：请保证您的flash插件是开启状态，上传控件需要Flash Player 9或以上的支持！</td></tr>
+		   <tr style="border:0px"><td id="divAlternateContent_recordFile" class="content" style="background-color: #FFFF66; border-top: solid 4px #FF9966; border-bottom: solid 4px #FF9966; margin: 10px 25px; padding: 10px 15px; display: none;border:0px">上传控件加载失败，原因可能是：您的Flash Player版本过低！您可以访问<a href="http://www.adobe.com/shockwave/download/download.cgi?P1_Prod_Version=ShockwaveFlash">Adobe网站</a>获得最新Flash Player版本。</td></tr>
+		   <tr style="border:0px"><td style="border:0px">* 上传文件扩展名限制为：{allowType}，大小限制为：{maxSize}M</td></tr>
+	  </table></td></tr>
+	 </table><table width=100%>
+     <tr><td>
+ 		  <input name="surveyID" id="surveyID" type="hidden" value="{surveyID}"> 
+ 		  <input name="responseID" id="responseID"  type="hidden" value="{responseID}"> 
+		  <input name="Action" id="Action" value="AddRecFileSubmit" type="hidden">
+	      <input type=submit class=inputsubmit value="确定">&nbsp;<input class=inputsubmit type="button" name="close" value="关闭" onClick="javascript:parent.hidePopWin();">
+          </td>
+       </tr>
+      </form>       
+   </table>
+
+      <script type="text/javascript">
+	var fileUpload_recordFile;
+	function Init_recordFile() {
+		var settings = {
+			flash_url : "../JS/swfupload.swf",
+			upload_url: "../JS/RecFileUpload.php",
+			post_params: {"PHPSESSID" : "{session_id}",
+			  "uploadFileName": "recordFile"
+			},
+			file_post_name:"recordFile",
+			file_size_limit : "{maxSize} MB",
+			file_types : "{allowType}",
+			file_types_description : "{allowType}",
+			file_upload_limit : 1,
+			custom_settings : {
+				progressTarget : "fsUploadProgress_recordFile"
+			},
+			debug: false,
+			prevent_swf_caching:true,
+
+			//Button settings
+			button_image_url: "../Images/cnfileselect.png",
+			button_width: "61",
+			button_height: "22",
+			button_placeholder_id: "upload_recordFile",
+			button_action : SWFUpload.BUTTON_ACTION.SELECT_FILE,
+			button_window_mode:"OPAQUE",
+			
+			swfupload_loaded_handler : swfUploadLoaded_recordFile,
+			file_dialog_start_handler:fileDialogStart_recordFile,
+			file_queued_handler : fileQueued,
+			file_queue_error_handler : fileQueueError,
+			file_dialog_complete_handler : fileDialogComplete,
+			upload_start_handler : uploadStart,
+			upload_progress_handler : uploadProgress,
+			upload_error_handler : uploadError,
+			upload_success_handler : uploadSuccess_recordFile,
+			upload_complete_handler : uploadComplete,
+			
+			//SWFObject settings
+			minimum_flash_version : "9.0.28",
+			swfupload_pre_load_handler : swfUploadPreLoad_recordFile,
+			swfupload_load_failed_handler : swfUploadLoadFailed_recordFile
+		};
+
+		fileUpload_recordFile= new SWFUpload(settings);
+	}
+
+	function swfUploadPreLoad_recordFile() {
+		var self = this;
+		var loading = function () {
+			document.getElementById("divLoadingContent_recordFile").style.display = "";
+
+			var longLoad = function () {
+				document.getElementById("divLoadingContent_recordFile").style.display = "none";
+				document.getElementById("divLongLoading_recordFile").style.display = "";
+			};
+			this.customSettings.loadingTimeout = setTimeout(function () {
+					longLoad.call(self)
+				},
+				15 * 1000
+			);
+		};
+		
+		this.customSettings.loadingTimeout = setTimeout(function () {
+				loading.call(self);
+			},
+			1*1000
+		);
+	}
+	function swfUploadLoaded_recordFile() {
+		var self = this;
+		clearTimeout(this.customSettings.loadingTimeout);
+		document.getElementById("divLoadingContent_recordFile").style.display = "none";
+		document.getElementById("divLongLoading_recordFile").style.display = "none";
+		document.getElementById("divAlternateContent_recordFile").style.display = "none";
+	}
+	   
+	function swfUploadLoadFailed_recordFile() {
+		clearTimeout(this.customSettings.loadingTimeout);
+		document.getElementById("divLoadingContent_recordFile").style.display = "none";
+		document.getElementById("divLongLoading_recordFile").style.display = "none";
+		document.getElementById("divAlternateContent_recordFile").style.display = "";
+	}
+	//打开文件选择选择窗口时触发的事件
+	function fileDialogStart_recordFile() {
+		var txt = document.getElementById("recordFile");
+		txt.value = "";
+		this.cancelUpload();
+	}
+
+	//文件传输完成触发事件
+	function uploadSuccess_recordFile(file, serverData) {
+		try {
+			var progress = new FileProgress(file, this.customSettings.progressTarget);
+			progress.setComplete();
+			progress.setStatus("文件上传完成。");
+			progress.toggleCancel(false);
+
+			this.setButtonDisabled(true);
+			
+			//给文本框赋值
+			var txt = document.getElementById("recordFile");
+			txt.value = serverData;
+			if( document.getElementById('importSurveySubmit') != null ) document.getElementById('importSurveySubmit').disabled = false;
+		} catch (ex) {
+			this.debug(ex);
+		}
+	}
+	//开始执行
+	Init_recordFile();
+ </script>
+</center>
+</body></html>

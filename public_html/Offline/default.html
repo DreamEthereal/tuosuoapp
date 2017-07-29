@@ -1,0 +1,68 @@
+<HTML>
+<HEAD>
+	<TITLE>EnableQ在线问卷调查引擎客户端本地化</TITLE>
+	<meta http-equiv=content-type content="text/html; charset=gbk">
+	<meta http-equiv="pragma" content="no-cache">
+	<meta http-equiv="cache-control" content="no-cache">
+	<meta http-equiv="expires" content="0">
+	<script type="text/javascript" src="common/string.js.php"></script>
+	<script>
+	var theHomeURL = (rexseeApplication.getHome() == '' ) ? rexseeApplication.getDeveloperHome() : rexseeApplication.getHome();
+	var remoteXMLURL = str_replace('default.html','bulidClient.xml',theHomeURL);
+	var remoteServer = str_replace('Offline/default.html','',theHomeURL);
+	function onPageReady()
+	{
+		rexseeApplication.setDefaultEncoding('gbk');
+		rexseeDialog.toast('正在创建客户端到本地...');
+		rexseeBrowser.clearCache();
+		rexseeBrowser.clearHistory();
+		buildClient();
+	}
+	function buildClient()
+	{
+		//创建客户端
+		rexseeDialog.toast('正在创建客户端到本地...');
+		rexseeClient.build(remoteXMLURL);
+
+		//比较版本和检查文件
+		var ser_version = rexseeClient.getLatestVersion(remoteXMLURL);
+		var cli_version = rexseeClient.getVersion('bulidClient.xml');
+		if( cli_version == -1 || ser_version > cli_version )
+		{
+			rexseeDialog.toast("创建客户端到本地出现异常(本地版本无法检测)，请尝试退出程序在安卓‘应用管理’中'清除数据'后重启程序再次尝试!");
+		}
+		else
+		{
+			var theXMLContent = rexseeClient.getXML(remoteXMLURL);
+			if( rexseeXML.parse(theXMLContent,false) == false )
+			{
+				rexseeDialog.toast("创建客户端到本地出现异常(服务器版本无法检测)，请尝试退出程序在安卓‘应用管理’中'清除数据'后重启程序再次尝试!");
+			}
+			else
+			{
+				rexseeXML.goToRoot();
+				var theFileNum = rexseeXML.getListByTagName('file');
+				var isErrorFlag = false;
+				for(var tmp=0;tmp<theFileNum;tmp++)
+				{
+					rexseeXML.goToList(tmp);
+					var thisFile = eval('('+rexseeXML.getJson()+')').attributes.path;
+					if( ! rexseeFile.exists(rexseeClient.getRoot(remoteXMLURL)+thisFile) )
+					{
+						isErrorFlag = true;
+						break;
+					}
+				}
+				if( isErrorFlag == true )
+				{
+					rexseeDialog.toast("创建客户端到本地出现异常(部分文件未下载)，请尝试退出程序在安卓‘应用管理’中'清除数据'后重启程序再次尝试!");
+				}
+			}
+		}			
+		rexseeClient.launch(remoteXMLURL);
+	}
+	</script>
+</HEAD>
+<body style="background:#e5e5e5;color:#666" onload="javascript:onPageReady();">
+</body>
+</html>

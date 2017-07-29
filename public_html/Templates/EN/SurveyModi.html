@@ -1,0 +1,122 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gbk" />
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" />
+<title>修改调查问卷:{siteTitle}</title>
+<link rel="shortcut icon" href="./Images/enableq.ico" type="image/x-icon" />
+<link rel="stylesheet" type="text/css" href="./CSS/UIBase.css" />
+<link rel="stylesheet" type="text/css" href="./CSS/Index.css" />
+<link href="./CSS/Window.css" type="text/css" rel=stylesheet>
+<script type="text/javascript" src="./JS/Common.js.php"></script>
+<script type="text/javascript" src="./JS/Window.js.php?style=1"></script>
+<script type="text/javascript" src="./JS/Jquery.min.js.php"></script>
+<script type="text/javascript" src="./JS/AjaxChangeStat.js.php"></script>
+<script>
+function InitFrame()
+{
+   document.getElementById("the_content_iframe").src="./m.php?qname={surveyName}&qlang=en&questionID={preFirstQtnId}";
+   reSizeIframeHeight();
+}
+function refreshParent() {
+   document.getElementById("the_content_iframe").src="./m.php?qname={surveyName}&qlang=en&questionID={preFirstQtnId}";
+   reSizeIframeHeight();
+}
+function sendActionURL(url,title) {
+  var userAgent = navigator.userAgent.toLowerCase();
+  var is_opera = userAgent.indexOf('opera') != -1 && opera.version();
+  var is_moz = (navigator.product == 'Gecko') && userAgent.substr(userAgent.indexOf('firefox') + 8, 3);
+  var is_ie = (userAgent.indexOf('msie') != -1 && !is_opera) && userAgent.substr(userAgent.indexOf('msie') + 5, 3);
+  var is_mac = userAgent.indexOf('mac') != -1;
+  if( is_ie )
+  {
+	 var theWinHeight = document.body.offsetHeight-90;
+	 var theWinWidth  = document.body.offsetWidth -20;
+  }
+  else
+  {
+	 var theWinHeight = document.body.offsetHeight-90;
+	 var theWinWidth = document.body.clientWidth-40;
+  }
+  showPopWin(url, theWinWidth, theWinHeight, refreshParent, null,title);
+}
+function reSizeIframeHeight()
+{
+	var theTdHeight = getViewportHeight() - 78;
+	document.getElementById('theIframe_cont').style.height = theTdHeight+'px';
+	document.getElementById('the_content_iframe').style.height = theTdHeight+'px';
+}
+</script>
+<style>
+  .classtd { padding:2px 5px 2px 5px;}
+</style>
+
+<body oncontextmenu="return false" style="margin:0px;padding:0px;overflow:hidden;" onLoad="javascript:InitFrame();" onresize="javascript:reSizeIframeHeight();">
+ 	<div class="header">
+		<h1 class="logo">EnableQ</h1>
+		<div class="sidebar_show"></div>
+		<div class="header_menu">
+			<div class="header_m_1">
+				<font color="#999999">欢迎您，</font><font color="#e45857" id="nick_Name_cont">{nickUserName}</font></a>
+			</div>
+			<div class="header_m_2">
+				<a href="javascript:void(0);">问卷风格</a>
+				<span class="head_menu_icon"></span>
+				<ul class="head_menu_list">
+					<span class="head_menu_top"></span>
+					<li><a href="javascript:void(0);" onclick="javascript:AjaxChangeRequest('System/AjaxChangeStyle.php?theme=Standard&surveyID={surveyID}&surveyTitle={surveyURLTitle}');">&nbsp;标准的&nbsp;{theme_Standard}</a></li>
+					<li><a href="javascript:void(0);" onclick="javascript:AjaxChangeRequest('System/AjaxChangeStyle.php?theme=Coffee&surveyID={surveyID}&surveyTitle={surveyURLTitle}');">&nbsp;咖啡色的&nbsp;{theme_Coffee}</a></li>
+					<li><a href="javascript:void(0);" onclick="javascript:AjaxChangeRequest('System/AjaxChangeStyle.php?theme=PurplePink&surveyID={surveyID}&surveyTitle={surveyURLTitle}');">&nbsp;紫粉色的&nbsp;{theme_PurplePink}</a></li>
+					<li><a href="javascript:void(0);" onclick="javascript:AjaxChangeRequest('System/AjaxChangeStyle.php?theme=BrownBlue&surveyID={surveyID}&surveyTitle={surveyURLTitle}');">&nbsp;棕蓝色的&nbsp;{theme_BrownBlue}</a></li>
+					<li><a href="javascript:void(0);" onclick="javascript:AjaxChangeRequest('System/AjaxChangeStyle.php?theme=RedPink&surveyID={surveyID}&surveyTitle={surveyURLTitle}');">&nbsp;红粉色的&nbsp;{theme_RedPink}</a></li>
+					<li><a href="javascript:void(0);" onclick="javascript:AjaxChangeRequest('System/AjaxChangeStyle.php?theme=RedGray&surveyID={surveyID}&surveyTitle={surveyURLTitle}');">&nbsp;红灰色的&nbsp;{theme_RedGray}</a></li>
+					<li><a href="javascript:void(0);" onclick="javascript:AjaxChangeRequest('System/AjaxChangeStyle.php?theme=PurpleYellow&surveyID={surveyID}&surveyTitle={surveyURLTitle}');">&nbsp;紫黄色的&nbsp;{theme_PurpleYellow}</a></li>
+					<li><a href="javascript:void(0);" onclick="javascript:AjaxChangeRequest('System/AjaxChangeStyle.php?theme=BlueBrown&surveyID={surveyID}&surveyTitle={surveyURLTitle}');">&nbsp;蓝棕色的&nbsp;{theme_BlueBrown}</a></li>
+					<li><a href="javascript:void(0);" onclick="javascript:AjaxChangeRequest('System/AjaxChangeStyle.php?theme=BlueGray&surveyID={surveyID}&surveyTitle={surveyURLTitle}');">&nbsp;蓝灰色的&nbsp;{theme_BlueGray}</a></li>
+					<li><a href="javascript:void(0);" onclick="javascript:AjaxChangeRequest('System/AjaxChangeStyle.php?theme=BlueGrayII&surveyID={surveyID}&surveyTitle={surveyURLTitle}');">&nbsp;浅蓝灰色&nbsp;{theme_BlueGrayII}</a></li>
+					<li><a href="javascript:void(0);" onclick="javascript:AjaxChangeRequest('System/AjaxChangeStyle.php?theme=BlueGreen&surveyID={surveyID}&surveyTitle={surveyURLTitle}');">&nbsp;蓝绿色的&nbsp;{theme_BlueGreen}</a></li>
+					<li><a href="javascript:void(0);" onclick="javascript:AjaxChangeRequest('System/AjaxChangeStyle.php?theme=GreenPink&surveyID={surveyID}&surveyTitle={surveyURLTitle}');">&nbsp;绿粉色的&nbsp;{theme_GreenPink}</a></li>
+					<li><a href="javascript:void(0);" onclick="javascript:AjaxChangeRequest('System/AjaxChangeStyle.php?theme=Spring&surveyID={surveyID}&surveyTitle={surveyURLTitle}');">&nbsp;春绿色的&nbsp;{theme_Spring}</a></li>
+					<li><a href="javascript:void(0);" onclick="javascript:AjaxChangeRequest('System/AjaxChangeStyle.php?theme=Summer&surveyID={surveyID}&surveyTitle={surveyURLTitle}');">&nbsp;深夏色的&nbsp;{theme_Summer}</a></li>
+					<li class="last"><a href="javascript:void(0);" onclick="javascript:AjaxChangeRequest('System/AjaxChangeStyle.php?theme=UserDefine&surveyID={surveyID}&surveyTitle={surveyURLTitle}');">&nbsp;自定义的&nbsp;{theme_UserDefine}</a></li>
+				</ul>
+			</div>
+			<div class="header_m_3" style="margin-left:50px">
+				<a href="javascript:void(0);" onclick="javascript:if(window.confirm('您确定关闭问卷修改窗口?')) {window.close();}" target=_top>关闭</a>
+			</div>
+		</div>
+	  </div>
+	  
+	  <table width=100% style="border-bottom:0px;margin:0px" cellspacing=0 cellpadding=0 valign=top>
+		<tr>
+			<td width=* style="margin:0px;padding:0px" valign=top id="theIframe_cont"><iframe id="the_content_iframe" name="the_content_iframe" src="" frameborder=0 style="height:100%;width:100%;overflow-x:hidden;overflow-y:auto;"></iframe></td>
+	  </tr>
+	  </table>
+
+	 <link href="CSS/SideBar.css" type=text/css rel=stylesheet>
+	<script type="text/javascript" src="JS/SideBar.js.php"></script>
+	<div id="sideBar">	
+		<a href="javascript:void(0);" id="sideBarTab" onfocus="this.blur();"><img src="Images/slide-button.gif"/></a>
+		<div id="sideBarContents" style="display:none">
+			<div id="sideBarContentsInner" style="display:none">
+				<h2>操作小提示</h2>			
+				<ul>
+					<li><b>[执行]</b> 执行状态的问卷为保持数据完整性，将关闭部分设计功能</li>
+					<li><b>[执行]</b> 对于问题或选项文字的修改，在“执行”状态仍然是开放的</li>
+					<li><b>[修改]</b> 点击问卷中的问题或选项的文字，可直接对其编辑与修改</li>
+					<li><b>[修改]</b> 可点击顶部菜单的“问卷风格”，为目前的问卷重新指定一种展现风格，但使用系统模版则会失效</li>
+					<li><b>[修改]</b> 对于问卷的更多控制选项，尽在“问卷属性”功能界面</li>
+				</ul>			
+			</div>
+		</div>	
+	</div>
+	<script>initSideBar();</script>
+	 <!-- popmenu -->
+	<script type="text/javascript" src="./JS/PopMenu.js.php"></script>
+	<script>
+	//关闭
+	$('.sidebar_show').live('click',function(e){
+		if(window.confirm('您确定关闭问卷修改窗口?')) {window.close();}
+	});
+	</script>
+</body></html>

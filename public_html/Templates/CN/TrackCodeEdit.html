@@ -1,0 +1,104 @@
+<html>
+<head>
+<meta http-equiv=content-language content=zh-cn>
+<meta http-equiv=content-type content="text/html; charset=gbk">
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7">
+<link href="../CSS/Base.css" rel="stylesheet">
+<script language=javascript src="../JS/HighLight.js.php"></script>
+<script type="text/javascript" src="../JS/Jquery.min.js.php"></script>
+<script type="text/javascript" src="../JS/Jquery.notification.js.php"></script>
+<link type="text/css" rel="stylesheet" href="../CSS/Notification.css" />
+<script language=javascript src="../JS/CheckQuestion.js.php"></script>
+<style>
+ td { padding:2px 5px 2px 5px;}
+ table {margin-bottom:4px;}
+ #jquery-notification-message {width:100%;}
+</style>
+<script language=javascript>
+function Check_Form_Validator()
+{
+	if (!CheckNotNull(document.Check_Form.tagName, "创意名称")) {return false;}
+	if (!CheckNotNull(document.Check_Form.exposure, "用以记录该创意曝光量的Cookie变量名称")) {return false;}
+	if (!CheckSpecicalChar(document.Check_Form.exposure, "用以记录该创意曝光量的Cookie变量名称")) {return false;}
+	if (!CheckNotNull(document.Check_Form.firstExposure, "用以记录该创意首次曝光时间的Cookie变量名称")) {return false;}
+	if (!CheckSpecicalChar(document.Check_Form.firstExposure, "用以记录该创意首次曝光时间的Cookie变量名称")) {return false;}
+	if (!CheckNotNull(document.Check_Form.lastExposure, "用以记录该创意最近曝光时间的Cookie变量名称")) {return false;}
+	if (!CheckSpecicalChar(document.Check_Form.lastExposure, "用以记录该创意最近曝光时间的Cookie变量名称")) {return false;}
+}
+function CheckSpecicalChar(objField, strText)
+{
+    var objValue = Trim(objField.value);
+    if (objValue=="") return true;
+	var strErr = "“" + strText + "”只能含有汉字、数字、字母、下划线字符！";
+	var Re =  /^[a-zA-Z0-9_]{1,}$/;
+	if ( !Re.test(objField.value))
+	{
+        objField.focus();
+		$.notification(strErr);
+		return false;
+	}
+	return true;
+}
+function submitForm()
+{
+	if( Check_Form_Validator() != false )
+	{
+		document.getElementById('submitBtn').disabled = true;
+		disabledStyle(document.getElementById('submitBtn'));
+		document.getElementById('resetBtn').disabled = true;
+		disabledStyle(document.getElementById('resetBtn'));
+		document.getElementById('close').disabled = true;
+		disabledStyle(document.getElementById('close'));
+		document.Check_Form.submit();
+	}
+}
+</script>
+<meta content="mshtml 6.00.3790.0" name=generator></head>
+<body oncontextmenu="return false">
+  <form action="" method="post" name="Check_Form" id="Check_Form" onsubmit="return false;">
+  <table class=datatable style="line-height: 150%;border-collapse:collapse;" cellspacing=0 cellpadding=0 bordercolor=#cacaca border=1 width=100%>
+      <div class=position>位置：&nbsp; 我的问卷 &raquo; 编辑曝光代码定义</div>
+      <tr> 
+         <td colspan="2" height=25 bgcolor="#f9f9f9"><b>基本信息</b>&nbsp;<img src="../Images/info.gif" border=0></td>
+      </tr>
+      <tr> 
+         <td width="17%"><SPAN class=red>*</SPAN> 创意名称：</td>
+         <td width="83%"><INPUT id=tagName name=tagName value="{tagName}" size=60></td>
+      </tr>
+      <tr> 
+           <td height="25"><SPAN class=red>*</SPAN> 组别：</td>
+           <td><SELECT id=tagCate name=tagCate> 
+				    <OPTION value=1 {tagCate_1}>曝光组</OPTION> 
+					<OPTION value=2 {tagCate_2}>控制组</OPTION> 
+			</SELECT></td>
+       </tr>
+       <tr> 
+         <td colspan="2" height=25 bgcolor="#f9f9f9"><b>用以记录该创意的Cookie变量名称</b>&nbsp;<img src="../Images/info.gif" border=0></td>
+      </tr>
+     <tr> 
+           <td height="25"><SPAN class=red>*</SPAN> 曝光量：</td>
+           <td>c_{surveyID}_<input name="exposure" type="text" id="exposure" size="15" maxlength="30" value="{exposure}"></td>
+      </tr>
+      <tr> 
+          <td height="23"><SPAN class=red>*</SPAN> 首次曝光时间：</td>
+          <td>c_{surveyID}_<input name="firstExposure" type="text" id="firstExposure" size="15" maxlength="30"  value="{firstExposure}"></td>
+      </tr>
+      <tr> 
+          <td height="25"><SPAN class=red>*</SPAN> 最近曝光时间：</td>
+          <td>c_{surveyID}_<input name="lastExposure" type="text" id="lastExposure" size="15" maxlength="30"  value="{lastExposure}"></td>
+      </tr>
+	  </tr></table><table width=100%>
+      <tr><td width=17%></td> 
+          <td>
+ 		  <input name="tagID" type="hidden" value="{tagID}"> 
+ 		  <input name="surveyID" type="hidden" value="{surveyID}"> 
+ 		  <input name="Action" type="hidden" id="Action" value="{Action}"> 
+		  <input class=inputsubmit type="button" name="submitBtn" id="submitBtn" value="确定" onclick="javascript:submitForm();"> 
+		  <input class=inputsubmit name="resetBtn" id="resetBtn" type="reset" value="重置">
+		  <input class=inputsubmit type="button" name="close" id="close" value="关闭" onClick="javascript:parent.hidePopWin();">
+          </td>
+       </tr>
+      </form>       
+   </table>
+   <script type="text/javascript">initInputHighlightScript();</script> 
+</body></html>

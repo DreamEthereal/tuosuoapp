@@ -1,0 +1,2 @@
+2016-02-21 12:00:12     <b>Bad SQL Query</b>:  SELECT * FROM eq_response_19 b  WHERE ../../../../../../../../etc/passwd\0.jpg  ORDER BY responseID DESC <br><b>You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near './../../../../../../../etc/passwd\0.jpg  ORDER BY responseID DESC' at line 1</b>
+

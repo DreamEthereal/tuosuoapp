@@ -1,0 +1,14 @@
+<tr><td height=25 class="question" valign=center>&nbsp;{questionRequire}<span class="textEdit" id="questionName_{questionID}">{questionName}</span>&nbsp;<span class=notes>{questionNotes}</span></td></tr>
+<tr><td class="tips"><span class="textEdit" id="questionNotes_{questionID}">{questionTips}</span></td></tr>
+<tr><td>
+	  <table cellSpacing=0 cellPadding=0 id="qtn_table_{questionID}" width=100%>
+        <!-- BEGIN OPTION -->{optionList}<!-- END OPTION -->
+		<!--DELETE_OTHER_RADIO_BEGIN-->
+		<tr style="display:{isHaveOther}">
+		  <td class="answer tdheight" nowrap valign=center align=center width=1%><input onclick="Check_Survey_Conditions()" type="radio" value="0" name="{optionID}" id="{optionID}" {isCheck0}></td>
+		  <td class="answer" nowrap valign=center align=left><a href="javascript:void(0)" onclick=javascript:selRadioCheckRows("option_{questionID}",{theOptionOdNum});><div style="white-space:nowrap;" class="tdlineheight"><span class="textEdit" id="optionName_2_{questionID}_0">{otherText}</span>£º</div></a></td>
+		</tr>
+		<tr style="display:{isHaveOther}" class="no_color_tr"><td>&nbsp;</td><td class="answer" nowrap><input name="TextOtherValue_{questionID}" id="TextOtherValue_{questionID}" type="{inputPrompt}" size="{length}" value="{value}" onblur="Check_Survey_Conditions();">&nbsp;{unitText}&nbsp;</td></tr>
+		<!--DELETE_OTHER_RADIO_END-->
+	 </table>
+</td></tr>

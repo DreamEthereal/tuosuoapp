@@ -1,0 +1,184 @@
+<html>
+<head>
+<meta http-equiv=content-type content="text/html; charset=gbk">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<link rel="stylesheet" type="text/css" href="resources/android.css">
+<script type="text/javascript" src="script/user.js"></script>
+<script type="text/javascript" src="script/animation.js"></script>
+<script type="text/javascript" src="common/smart-2.11.min.js"></script>
+<script type="text/javascript" src="common/string.js"></script>
+<script type="text/javascript" src="common/jquery-1.11.2.min.js"></script>
+<script type="text/javascript" src="common/countqtn.js"></script>
+<script type="text/javascript" src="common/gpsconfig.js"></script>
+<script type="text/javascript" src="common/gps.js"></script>
+<script language="javascript"> 
+	var img = 0;
+	if( ! rexseeDatabase.tableExists('eq_font','rexsee:enableq.db') )
+	{
+		var ftsql = "CREATE TABLE eq_font (id int(1) NOT NULL default '1',fontId int(1) NOT NULL default '1');";
+		rexseeDatabase.exec(ftsql,'rexsee:enableq.db');
+		ftsql = " INSERT INTO eq_font (id,fontId) values ('1','1');";
+		rexseeDatabase.exec(ftsql,'rexsee:enableq.db');
+		if( rexseeScreen.getScreenHeight() < 500 || rexseeScreen.getScreenWidth() < 500 )
+		{
+			rexseeScreen.setScreenOrientation('landscape');
+			document.write('<LINK href="resources/minipad.css" type=text/css rel=stylesheet>');
+			img = 0;
+		}
+		else
+		{
+			document.write('<LINK href="resources/pad10.css" type=text/css rel=stylesheet>');
+			img = 1;
+		}
+	}
+	else
+	{
+		var ftsql = " SELECT fontId FROM eq_font WHERE id='1';";
+		var ftRow = eval('('+getDbRows(ftsql,'rexsee:enableq.db')+')');
+		if( parseInt(ftRow.rows[0][0] ) == 1)  //大字体
+		{
+			document.write('<LINK href="resources/pad10.css" type=text/css rel=stylesheet>');
+			img = 1;
+		}
+		else
+		{
+			document.write('<LINK href="resources/minipad.css" type=text/css rel=stylesheet>');
+			img = 0;
+		}
+	}
+
+	rexseeSpecialKey.enableBackKeyListener(false);
+	rexseeMenu.setOptionsMenuId("mainOptionsMenu1");
+	rexseeScreen.setFullScreen(true);
+
+	var qid = rexseeHashMap.get('enableq','qid');
+	rexseeApplication.setDefaultEncoding('gbk');
+	var qid = rexseeHashMap.get('enableq','qid');
+	document.write("<script language='javascript' type='text/javascript' src='"+rexseeStorage.getRoot()+"enableq_offline/script/"+qid+"/jsondata.js'><\/sc" + "ript>");
+
+</script>
+<style>
+ td { padding:2px 5px 2px 5px;}
+ table {margin-bottom:3px;}
+ .answer {color:#666}
+</style>
+<body oncontextmenu="return false" style="background:#e5e5e5;color:#666;margin:0px;padding:0px;overflow:hidden;">
+
+<script>
+ if(img == 0 ) 
+ {
+	document.write('<div class="titlebar"><table width=100% style="margin:0px"><tr><td width=51 style="padding:0px"><a href=javascript:animationLoad("showdata.html");><img src="resources/back.png" border=0 width=51></a></td><td align=center width=* class="pageTitle" style="padding:0px">数据统计</td><td width=51 style="padding:0px">&nbsp;</td></tr></table></div>');
+ }
+ else
+ {
+	document.write('<div class="titlebar"><table width=100% style="margin:0px"><tr><td width=75 style="padding:0px"><a href=javascript:animationLoad("showdata.html");><img src="resources/hback.png" border=0 width=75></a></td><td align=center width=* class="pageTitle" style="padding:0px">数据统计</td><td width=75 style="padding:0px">&nbsp;</td></tr></table></div>');
+ }
+</script>
+
+<div id="content-wrap">
+<div id="content-cont">
+<div class="featurebox">
+  <table cellpadding="0" cellspacing="0" width="100%">
+  <tr><td id="survey_content_container" style="padding:5px"></td></tr>
+  <tr><td height=5></td></tr>
+  </table>
+</div></div></div>
+
+<script>
+	$("#survey_content_container").empty();
+	var survey_content_container_html = '';
+
+	var sql = " SELECT offlineCount FROM eq_survey_list WHERE surveyID ="+qid+"; ";
+	var surveyRow = eval('('+getDbRows(sql,'rexsee:enableq.db')+')');
+	if( count(surveyRow.rows) != 0 )
+	{
+		if( surveyRow.rows[0][0] != '' )
+		{
+			var theQtnList = surveyRow.rows[0][0].split(',');
+			for( var tmp in theQtnList )
+			{
+				var questionID = theQtnList[tmp];
+				if(	typeof QtnListArray[questionID] != 'undefined' )
+				{
+					switch( QtnListArray[questionID].questionType )
+					{
+						case 1:
+							count_yesno_qtn(questionID);
+						break;			
+						case 2:
+							count_radio_qtn(questionID);
+						break;			
+						case 3:
+							count_checkbox_qtn(questionID);
+						break;
+						case 24:
+							count_combradio_qtn(questionID);
+						break;
+						case 25:
+							count_combcheckbox_qtn(questionID);
+						break;
+					}
+				}
+			}			
+		}
+		else
+		{
+			survey_content_container_html = '<br/>&nbsp;<font color=red><b style="font-size:16px">服务器端尚未定义进行简单数据统计的调查问题</b></font>';
+		}			
+	}
+	else
+	{
+		survey_content_container_html = '<br/>&nbsp;<font color=red><b style="font-size:16px">服务器端尚未定义进行简单数据统计的调查问题</b></font>';
+	}
+	//$("#survey_content_container").html(survey_content_container_html);
+	document.getElementById('survey_content_container').innerHTML = survey_content_container_html;
+
+	function CountPercent(optionNum,totalNum)
+	{
+		if( parseInt(totalNum) == 0 )
+		{
+		    return 0;
+		}
+		else
+		{
+			return number_format(fixMath(optionNum*100,totalNum,'/'),2);
+		}
+	}
+	function  fixMath(m,n,op)   { 
+		var   a   =   (m+ " "); 
+		var   b   =   (n+ " "); 
+		var   x   =   1; 
+		var   y   =   1; 
+		var   c   =   1; 
+		if(a.indexOf( ". ")> 0)   { 
+			x   =   Math.pow(10,   a.length   -   a.indexOf( ". ")   -   1); 
+		} 
+		if(b.indexOf( ". ")> 0)   { 
+			y   =   Math.pow(10,   b.length   -   b.indexOf( ". ")   -   1); 
+		} 
+		switch(op) 
+		{ 
+			case   '+ ': 
+			case   '- ': 
+				c   =   Math.max(x,y); 
+				m   =   Math.round(m*c); 
+				n   =   Math.round(n*c); 
+				break; 
+			case   '* ': 
+				c   =   x*y 
+				m   =   Math.round(m*x); 
+				n   =   Math.round(n*y); 
+				break; 
+			case   '/ ': 
+				c   =   Math.max(x,y); 
+				m   =   Math.round(m*c); 
+				n   =   Math.round(n*c); 
+				c   =   1; 
+				break; 
+		} 
+		return   eval( "( "+m+op+n+ ")/ "+c); 
+    }
+</script>
+<script>scroll(0, 0);</script>
+</body>
+</html>

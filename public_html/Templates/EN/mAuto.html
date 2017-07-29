@@ -1,0 +1,13 @@
+<script type="text/javascript" src="JS/CheckAuto.en.php"></script>
+<tr><td height=25 class="question" valign=center>&nbsp;{questionRequire}<span class="textEdit" id="questionName_{questionID}">{questionName}</span>&nbsp;<span class=notes>{questionNotes}</span></td></tr>
+<tr><td class="tips"><span class="textEdit" id="questionNotes_{questionID}">{questionTips}</span></td></tr>
+<tr rel="eqprint"><td>
+	  <table cellSpacing=0 cellPadding=0 style="padding:0px;margin:0px" id="auto_focus_{questionID}" width=100%>
+        <!-- BEGIN OPTION -->
+	    <tr style="display:none" id="auto_{baseID}_{questionID}_{optionValue}">
+		  <td class="answer tdheight" align="left" nowrap id="eqcheck_{baseID}_{questionID}_{optionValue}"><input type="{isRadio}" value="{optionValue}" name="{optionName}" id="option_{questionID}" {isCheck} {onChangeEvent}></td>
+		  <td style="padding:0px;margin:0px" class="answer" nowrap align="left" width=99%><a href="javascript:void(0)" onclick=javascript:{selEventName}("option_{questionID}",{theOptionOdNum});><div style="white-space:nowrap;" class=tdlineheight><span id="textNode_{questionID}_{optionValue}">{optionText}</span></div></a></td>
+	   </tr>
+	    <!-- END OPTION -->
+	  </table>
+</td></tr>

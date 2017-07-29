@@ -1,0 +1,266 @@
+<html>
+<head>
+<meta http-equiv=content-language content=zh-cn>
+<meta http-equiv=content-type content="text/html; charset=gbk">
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7">
+<style>
+ td { padding:2px 5px 2px 5px;}
+ select,img {vertical-align: middle;}
+</style>
+<link href="../CSS/Base.css" rel=stylesheet>
+<LINK href="../CSS/Window.css" type=text/css rel=stylesheet>
+<script type="text/javascript" src="../JS/Common.js.php"></script>
+<script type="text/javascript" src="../JS/Window.js.php"></script>
+<script language=javascript src="../JS/Textarea.js.php"></script>
+<script language=javascript src="../JS/HighLight.js.php"></script>
+<script type="text/javascript" src="../JS/Jquery.min.js.php"></script>
+<script type="text/javascript" src="../JS/Jquery.notification.js.php"></script>
+<link type="text/css" rel="stylesheet" href="../CSS/Notification.css" />
+<script language=javascript src="../JS/CheckQuestion.js.php"></script>
+<script language=javascript src="../JS/CheckAlias.js.php"></script>
+<script language=javascript src="../JS/TheEditor.js.php"></script>
+<script language=javascript>
+var editTextRange;
+function Check_Form_Validator()
+{
+	if (!CheckNotNull(document.Check_Form.questionName, "题目文字")) {return false;}
+	if (!CheckNotNull(document.Check_Form.maxRows, "枚举项数目")) {return false;}
+	if (!CheckNumber(document.Check_Form.maxRows, "枚举项数目",3,20)) {return false;}
+	if (document.getElementById("maxSize").value != "")
+	{
+		if (!CheckNumber(document.Check_Form.maxSize, "最少必填枚举项",1,20)) {return false;}
+		if (Number( document.Check_Form.maxRows.value ) < Number(document.Check_Form.maxSize.value) )
+		{
+			document.Check_Form.maxSize.focus();
+			$.notification('最少必填枚举项必须小于枚举项数目');
+			return false;
+		}
+	}
+	if (!CheckNotNull(document.Check_Form.maxLength, "文本输入框长度")) {return false;}
+	if (!CheckNumber(document.Check_Form.maxLength, "文本输入框长度",2,80)) {return false;}
+	//if ( document.Check_Form.isRequired.checked)
+	//{
+	    switch( document.Check_Form.isCheckType.value )
+		{
+		   case '0':
+		   case '1':
+		   break;
+		   case '2':
+			    if (!CheckNotNull(document.Check_Form.minOption, "要求的输入最少值")) {return false;}
+			    if (!CheckNotNull(document.Check_Form.maxOption, "要求的输入最多值")) {return false;}
+				if (!CheckMinMaxNum(document.Check_Form.minOption, "要求的输入最少值")) {return false;}
+			    if (!CheckMinMaxNum(document.Check_Form.maxOption, "要求的输入最多值")) {return false;}
+				if (Number( document.Check_Form.maxOption.value ) < Number(document.Check_Form.minOption.value) )
+				{
+					document.Check_Form.maxOption.focus();
+					$.notification('区间值的最多值必须大于最少值');
+					return false;
+				}
+		   break;
+		   case '4':
+			    if (!CheckNotNull(document.Check_Form.minOption, "要求的输入最少值")) {return false;}
+			    if (!CheckNotNull(document.Check_Form.maxOption, "要求的输入最多值")) {return false;}
+				if (!CheckIsValue(document.Check_Form.minOption, "要求的输入最少值",null,null)) {return false;}
+			    if (!CheckIsValue(document.Check_Form.maxOption, "要求的输入最多值",null,null)) {return false;}
+				if (Number( document.Check_Form.maxOption.value ) < Number(document.Check_Form.minOption.value) )
+				{
+					document.Check_Form.maxOption.focus();
+					$.notification('区间值的最多值必须大于最少值');
+					return false;
+				}
+		   break;
+		}
+	//}
+}
+//检查输入内容是否为数字
+function CheckMinMaxNum(objField, strText) {
+  if (objField.value == "") return true;
+  var RE = new RegExp("[^0-9]");
+  if (objField.value.search(RE) != -1) {
+    objField.focus();
+    $.notification("“" + strText + "”中只能填写整数！");
+    return false;
+  }
+  return true;
+}
+function checkIsRequired()
+{
+   if (document.Check_Form.isRequired.checked)
+   {
+		document.Check_Form.maxSize.disabled  = false		
+		//document.Check_Form.isCheckType.disabled  = false		
+		//document.Check_Form.minOption.disabled  = false
+		//document.Check_Form.maxOption.disabled  = false
+   } 
+   else
+   {
+		document.Check_Form.maxSize.disabled  = true		
+		//document.Check_Form.isCheckType.disabled  = true		
+		//document.Check_Form.minOption.disabled  = true
+		//document.Check_Form.maxOption.disabled  = true
+   }	
+}
+function checkIsCheckType(value)
+{
+   switch( value )
+   {
+		case '0':
+		case '1':
+		   document.Check_Form.minOption.disabled  = true
+		   document.Check_Form.maxOption.disabled  = true
+		   document.getElementById("checkInfo").innerHTML= '';
+		break;
+		case '2':
+		   document.Check_Form.minOption.disabled  = false
+		   document.Check_Form.maxOption.disabled  = false
+		   document.getElementById("checkInfo").innerHTML= '字符串长度：';
+		break;
+		case '4':
+		   document.Check_Form.minOption.disabled  = false
+		   document.Check_Form.maxOption.disabled  = false
+		   document.getElementById("checkInfo").innerHTML= '数值区间：';
+		break;
+   }
+}
+function Init()
+{
+	checkIsRequired();
+	checkIsCheckType('{isCheckType}');
+}
+function submitForm(actionName)
+{
+	if( Check_Form_Validator() != false )
+	{
+		document.getElementById('AddListSubmit').disabled = true;
+		disabledStyle(document.getElementById('AddListSubmit'));
+		document.getElementById('AddListOver').disabled = true;
+		disabledStyle(document.getElementById('AddListOver'));
+		document.getElementById('close').disabled = true;
+		disabledStyle(document.getElementById('close'));
+		document.getElementById('Action').value = actionName;
+		document.Check_Form.submit();
+	}
+}
+</script>
+
+<meta content="mshtml 6.00.3790.0" name=generator></head>
+<body onload="javascript:Init();">
+   <form method="post" action="" name="Check_Form" id="Check_Form" onsubmit="return false;">
+  <table class=datatable style="line-height: 150%;border-collapse:collapse;" cellspacing=0 cellpadding=0 bordercolor=#cacaca border=1 width=100%>
+   <div class=position>位置：&nbsp; 我的问卷 &raquo; 编辑问卷问题 &raquo; 枚举题</div>
+   <tr><td bgcolor="#e9e9e9"><b>编辑问卷问题</b></td></tr>
+   <tr><td>&nbsp;<span style="font-size:14px;font-weight:bold;">枚举题</span>&nbsp;
+     <a onmouseover="this.T_WIDTH=446;this.T_PADDING=0;this.T_BGCOLOR='#ffffff'; return escape('<img src=../Images/Example/example_list.jpg width=446 align=center>')" href="javascript:void(0);"><font color=red>图例</font></a></td></tr>
+   <tr bgcolor="#f9f9f9" height=25><td><b>&nbsp;关于...</b>&nbsp;<img src="../Images/info.gif" border=0></td></tr>
+   <tr><td>&nbsp;枚举题一般使用在对有可能发生但又不确定的信息进行收集。</td></tr>
+   <tr bgcolor="#f9f9f9" height=25><td><b>&nbsp;题目文字</b>&nbsp;<img src="../Images/info.gif" border=0>
+     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascript:void(0);" onclick="javascript:{var textEditor = document.getElementById('questionName');textEditor.focus();editTextRange = textEditor.document.selection.createRange();showPopWin('../System/ShowInsertImage.php', 590, 250, null, null,'插入图片或视频');}"><font color=red><b>插入图片或视频</font></b></a><img src="../Images/list_menu_arrow.gif" border=0>
+	 &nbsp;&nbsp;&nbsp;<a href="javascript:void(0);" onclick="javascript:{var textEditor = document.getElementById('questionName');textEditor.focus();editTextRange = textEditor.document.selection.createRange();showPopWin('../System/ShowInsertAnswer.php?&surveyID={surveyID}&orderByID={orderByID}', 700, 160, null, null,'插入前述问题的答案');}"><font color=red><b>插入前述问题答案</font></b></a><img src="../Images/list_menu_arrow.gif" border=0>
+	 &nbsp;&nbsp;&nbsp;<a href="javascript:void(0);" onclick="javascript:{var textEditor = document.getElementById('questionName');textEditor.focus();editTextRange = textEditor.document.selection.createRange();showPopWin('../System/ShowInsertKish.php?&surveyID={surveyID}&orderByID={orderByID}', 700, 160, null, null,'插入针对前述问题的Kish抽样结果');}"><font color=red><b>插入Kish抽样结果</font></b></a><img src="../Images/list_menu_arrow.gif" border=0>
+   </td></tr>
+   <tr><td>
+	  <a href="javascript:void(0)" onclick="doMyExecCommand('Bold')"><img src="../Images/Editor/bold.gif" WIDTH="20" HEIGHT="20" title="Bold"></a>
+	  <a href="javascript:void(0)" onclick="doMyExecCommand('Italic')"><img src="../Images/Editor/italic.gif" WIDTH="20" HEIGHT="20" title="Italic"></a>
+	  <a href="javascript:void(0)" onclick="doMyExecCommand('Underline')"><img src="../Images/Editor/underline.gif" WIDTH="20" HEIGHT="20" title="Underline"></a>
+	  <img src="../Images/Editor/separator.gif" WIDTH="5" HEIGHT="20">
+ 	  <select onchange="doMySelectClick('FontSize',this);" style="width: 75px;margin-bottom:4px;">
+          <option>字体大小</option>
+          <option VALUE="12">12</option>
+          <option VALUE="14">14</option>
+          <option VALUE="16">16</option>
+          <option VALUE="18">18</option>
+          <option VALUE="20">20</option>
+          <option VALUE="22">22</option>
+          <option VALUE="24">24</option>
+          <option VALUE="30">30</option>
+          <option VALUE="36">36</option>
+      </select>
+      <select name="ForeColor" onChange="doMyFormat('ForeColor',this[this.selectedIndex].style.color); this.selectedIndex=0" style="width: 80px;margin-bottom:4px;">
+		  <option selected>文字颜色
+		  <option style="BACKGROUND: #000000; Color: #000000">Black</option>
+		  <option style="BACKGROUND: #FFFFFF; Color: #FFFFFF">White</option>
+		  <option style="BACKGROUND: #0000FF; Color: #0000FF">Blue 1</option>
+		  <option style="BACKGROUND: #2222FF; Color: #2222FF">Blue 2</option>
+		  <option style="BACKGROUND: #4444FF; Color: #4444FF">Blue 3</option>
+		  <option style="BACKGROUND: #6666FF; Color: #6666FF">Blue 4</option>
+		  <option style="BACKGROUND: #333333; Color: #333333">Gray 1</option>
+		  <option style="BACKGROUND: #666666; Color: #666666">Gray 2</option>
+		  <option style="BACKGROUND: #999999; Color: #999999">Gray 3</option>
+		  <option style="BACKGROUND: #EEEEEE; Color: #EEEEEE">Gray 4</option>
+		  <option style="BACKGROUND: #004000; Color: #004000">Green 1</option>
+		  <option style="BACKGROUND: #006000; Color: #006000">Green 2</option>
+		  <option style="BACKGROUND: #008000; Color: #008000">Green 3</option>
+		  <option style="BACKGROUND: #00A000; Color: #00A000">Green 4</option>
+		  <option style="BACKGROUND: #FF0000; Color: #FF0000">Red 1</option>
+		  <option style="BACKGROUND: #FF2222; Color: #FF2222">Red 2</option>
+		  <option style="BACKGROUND: #FF4444; Color: #FF4444">Red 3</option>
+		  <option style="BACKGROUND: #FF6666; Color: #FF6666">Red 4</option>
+		  <option style="BACKGROUND: #FFFF00; Color: #FFFF00">Yellow 1</option>
+		  <option style="BACKGROUND: #FFFF33; Color: #FFFF33">Yellow 2</option>
+		  <option style="BACKGROUND: #FFFF66; Color: #FFFF66">Yellow 3</option>
+		  <option style="BACKGROUND: #FFFF99; Color: #FFFF99">Yellow 4</option>
+	  </select>
+	  <select name="fontbackground" onChange="doMyFormat('BackColor',this[this.selectedIndex].style.color); this.selectedIndex=0" style="width: 80px;margin-bottom:4px;">
+		  <option selected>文字底色</option>
+		  <option style="BACKGROUND: #000000; Color: #000000">Black</option>
+		  <option style="BACKGROUND: #FFFFFF; Color: #FFFFFF">White</option>
+		  <option style="BACKGROUND: #0000FF; Color: #0000FF">Blue 1</option>
+		  <option style="BACKGROUND: #2222FF; Color: #2222FF">Blue 2</option>
+		  <option style="BACKGROUND: #4444FF; Color: #4444FF">Blue 3</option>
+		  <option style="BACKGROUND: #6666FF; Color: #6666FF">Blue 4</option>
+		  <option style="BACKGROUND: #333333; Color: #333333">Gray 1</option>
+		  <option style="BACKGROUND: #666666; Color: #666666">Gray 2</option>
+		  <option style="BACKGROUND: #999999; Color: #999999">Gray 3</option>
+		  <option style="BACKGROUND: #EEEEEE; Color: #EEEEEE">Gray 4</option>
+		  <option style="BACKGROUND: #004000; Color: #004000">Green 1</option>
+		  <option style="BACKGROUND: #006000; Color: #006000">Green 2</option>
+		  <option style="BACKGROUND: #008000; Color: #008000">Green 3</option>
+		  <option style="BACKGROUND: #00A000; Color: #00A000">Green 4</option>
+		  <option style="BACKGROUND: #FF0000; Color: #FF0000">Red 1</option>
+		  <option style="BACKGROUND: #FF2222; Color: #FF2222">Red 2</option>
+		  <option style="BACKGROUND: #FF4444; Color: #FF4444">Red 3</option>
+		  <option style="BACKGROUND: #FF6666; Color: #FF6666">Red 4</option>
+		  <option style="BACKGROUND: #FFFF00; Color: #FFFF00">Yellow 1</option>
+		  <option style="BACKGROUND: #FFFF33; Color: #FFFF33">Yellow 2</option>
+		  <option style="BACKGROUND: #FFFF66; Color: #FFFF66">Yellow 3</option>
+		  <option style="BACKGROUND: #FFFF99; Color: #FFFF99">Yellow 4</option>
+	  </select>	
+    <textarea rows=5 cols=125 name="questionName" id="questionName" tabIndex=1>{questionName}</textarea>  <a href="javascript:resizeTextHeight('questionName',1);"><img src="../Images/jia.gif"></a><a href="javascript:resizeTextHeight('questionName',-1);"><img src="../Images/jian.gif"></a>
+   </td></tr>
+   <tr height="28"><td valign=center>&nbsp;问题别名&nbsp;<img src="../Images/info.gif" border=0>&nbsp;&nbsp;<input class="textInput" name="alias" id="alias" type="text" id="alias" size="20" onkeypress="checkAliasValid()"  style="ime-mode:disabled" onPaste="return false;" onKeyUp="AliasAjaxRequest('AjaxCheckQtnAlias.php?alias='+this.value+'&oldName={alias}&surveyID={surveyID}');" value="{alias}">&nbsp;* 使用汉语拼音或者英文名称&nbsp;&nbsp;<span id="alias_info"></span></td></tr>
+   <tr bgcolor="#f9f9f9" height=25><td>&nbsp;有关问题的说明或问题回复提示&nbsp;<img src="../Images/info.gif" border=0></td></tr>
+   <tr><td><textarea rows=3 cols=125 name="questionNotes" id="questionNotes" tabIndex=1>{questionNotes}</textarea>  <a href="javascript:resizeTextHeight('questionNotes',1);"><img src="../Images/jia.gif"></a><a href="javascript:resizeTextHeight('questionNotes',-1);"><img src="../Images/jian.gif"></a></td></tr>
+   <tr bgcolor="#f9f9f9" height=25><td><b>&nbsp;显示设置</b>&nbsp;<img src="../Images/info.gif" border=0></td></tr>
+   <tr><td>
+	    &nbsp;&nbsp;&nbsp;枚举项数目 <input type="text" value="{maxRows}" name="maxRows" id="maxRows" size=6> <br/>
+	    &nbsp;&nbsp;&nbsp;文本输入框长度 <input type="text" value="{maxLength}" name="maxLength" id="maxLength" size=6> <br/>
+   </td></tr>
+   <tr bgcolor="#f9f9f9" height=25><td><b>&nbsp;控制设置</b>&nbsp;<img src="../Images/info.gif" border=0></td></tr>
+   <tr><td>
+	    &nbsp;&nbsp;<input type="checkbox" value="1" name="isRequired" id="isRequired" {isRequired} onclick="checkIsRequired();"> 此题为必答题 <br/>
+	    &nbsp;&nbsp;&nbsp;最少必填枚举项 <input type="text" value="{maxSize}" name="maxSize" id="maxSize" size=6> <br/>
+        &nbsp;&nbsp;&nbsp;输入检查规则&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <Select name="isCheckType" id="isCheckType" onchange="checkIsCheckType(document.Check_Form.isCheckType.options[document.Check_Form.isCheckType.selectedIndex].value);">
+		     <option value="0" {isCheckType0}>请选择输入检查规则</option>
+		     <option value="1" {isCheckType1}>检查输入为网址</option>
+		     <option value="2" {isCheckType2}>检查字符串长度</option>
+		     <option value="4" {isCheckType4}>检查输入为数值</option>
+		    </select>&nbsp;&nbsp;<span id=checkInfo>区间值：</span>最少：<input name="minOption" id="minOption" type="text" size=6 value="{minOption}">&nbsp;最多：<input name="maxOption" id="maxOption" type="text" size=6 value="{maxOption}">
+	  </td>
+   </tr></table><table width=100% style="margin-bottom:15px">
+   <tr> 
+  	 <td height="15">
+         <input name="surveyID" type="hidden" id="surveyID" value="{surveyID}"> 
+         <input name="questionID" type="hidden" id="questionID" value="{questionID}"> 
+         <input name="orderByID" type="hidden" id="orderByID" value="{orderByID}"> 
+         <input name="Action" type="hidden" id="Action"> 
+         <input class=inputsubmit name="AddListSubmit" type="button" id="AddListSubmit" value="保存，下一个" onclick="javascript:submitForm('AddListSubmit');"> 
+         <input class=inputsubmit name="AddListOver" type="button" id="AddListOver" value="保存，结束" onclick="javascript:submitForm('AddListOver');"> 
+         <input class=inputsubmit type="button" name="close" id="close" value="  关闭  " onClick="javascript:parent.hidePopWin();">
+      </td>
+    </tr>
+  </form>
+ </table>
+  <script type="text/javascript">initInputHighlightScript();</script> 
+  <script language=javascript src="../JS/Example.js.php"></script>
+</body></html>

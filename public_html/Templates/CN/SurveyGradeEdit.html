@@ -1,0 +1,86 @@
+<html>
+<head>
+<meta http-equiv=content-language content=zh-cn>
+<meta http-equiv=content-type content="text/html; charset=gbk">
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7">
+<style>
+td { padding:2px 5px 2px 5px;}
+table {margin-bottom:4px;}
+</style>
+<link href="../CSS/Base.css" rel=stylesheet>
+<script type="text/javascript" src="../JS/Jquery.min.js.php"></script>
+<script type="text/javascript" src="../JS/Jquery.notification.js.php"></script>
+<link type="text/css" rel="stylesheet" href="../CSS/Notification.css" />
+<script language=javascript src="../JS/CheckQuestion.js.php"></script>
+<script language="javascript"> 
+function Check_Form_Validator()
+{
+	if(!CheckNotNull(document.Check_Form.startGrade, "评分规则开始分值")) {return false;}
+	if(!CheckNoFloat(document.Check_Form.startGrade,'评分规则开始分值')){return false;} 
+	if(!CheckNotNull(document.Check_Form.endGrade, "评分规则结束分值")) {return false;}
+	if(!CheckNoFloat(document.Check_Form.endGrade,'评分规则结束分值')){return false;} 
+	if(!CheckNotNull(document.Check_Form.conclusion, "评分规则的结论")) {return false;}
+	if (Number( document.Check_Form.endGrade.value ) <= Number(document.Check_Form.startGrade.value) )
+	{
+		document.Check_Form.endGrade.focus();
+		$.notification('结束分值必须大于开始分值');
+		return false;
+	}
+}
+//检查浮点数
+function CheckNoFloat(objField, strText) {
+    var objValue = objField.value;
+    if (objValue=="") return true;
+	var strErr = "“" + strText + "”不是正确的数据格式！";
+	var reg=/^-?\d+\.?\d*$/;
+	if (!reg.test(objValue)) {
+        objField.focus();
+		$.notification(strErr);
+		return false;
+	}
+	return true;
+}
+function submitForm()
+{
+	if( Check_Form_Validator() != false )
+	{
+		document.getElementById('submitBtn').disabled = true;
+		disabledStyle(document.getElementById('submitBtn'));
+		document.getElementById('close').disabled = true;
+		disabledStyle(document.getElementById('close'));
+		document.Check_Form.submit();
+	}
+}
+</script> 
+<meta content="mshtml 6.00.3790.0" name=generator></head>
+<body oncontextmenu="return false">
+  <form name="Check_Form" method="post" action="" id="Check_Form" onsubmit="return false;">
+  <table style="LINE-HEIGHT: 150%;border-collapse:collapse;" cellSpacing=0 cellPadding=0 width="100%" borderColor=#cacaca border=1>
+   <div class=position>位置：&nbsp; 我的问卷 &raquo; 修改量表评分规则</div>
+   <tr><td bgcolor="#f9f9f9" colspan=3><b>修改量表评分规则</b></td></tr>
+       <tr><td>当量表计算得分&nbsp;&nbsp;
+		 <select id='startOperator' name='startOperator'>
+		   <option value='>='>大于等于</option>
+		   <option value='>' {startOperator2}>大于</option>
+		 </select>
+		 <input name='startGrade' id='startGrade' size=10 value="{startGrade}">
+		 同时&nbsp;&nbsp;
+		 <select id='endOperator' name='endOperator'>
+		   <option value='<'>小于</option>
+		   <option value='<=' {endOperator2}>小于等于</option>
+		 </select>
+		 <input name='endGrade' id='endGrade' size=10 value="{endGrade}"><br/>
+		 则结论为：<br/>
+		 <textarea name='conclusion' id='conclusion' rows=6 cols=87>{conclusion}</textarea>
+		</td></tr></table><table width=100%>
+		<tr> 
+  			<td height="15">
+			 <input name="gradeID" type="hidden" id="gradeID" value="{gradeID}"> 
+			 <input name="Action" type="hidden" id="Action" value="EditGradeRule"> 
+			 <input class=inputsubmit type="button" name="submitBtn" id="submitBtn" value="确定" onclick="javascript:submitForm();"> 
+			 <input class=inputsubmit type="button" name="close" id="close" value="关闭" onClick="javascript:parent.hidePopWin();">
+			</td>
+		</tr>
+	</form>
+ </table>
+</body></html>

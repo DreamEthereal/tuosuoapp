@@ -1,0 +1,246 @@
+<html>
+<head>
+<meta http-equiv=content-language content=zh-cn>
+<meta http-equiv=content-type content="text/html; charset=gbk">
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7">
+<style>
+ td { padding:2px 5px 2px 5px;}
+</style>
+<link href="../CSS/Base.css" rel=stylesheet>
+<script type="text/javascript" src="../JS/Jquery.min.js.php"></script>
+<script type="text/javascript" src="../JS/Jquery.notification.js.php"></script>
+<link type="text/css" rel="stylesheet" href="../CSS/Notification.css" />
+<script language=javascript src="../JS/CheckQuestion.js.php"></script>
+<script language=javascript src="../JS/HighLight.js.php"></script>
+<script>
+function Check_Form_Validator()
+{
+	if (!CheckNotNull(document.Check_Form.optionCate, "分类")) {return false;}
+	if (!CheckNotNull(document.getElementById("optionName"), "常用选项")) {return false;}
+}
+
+var http_request = false;
+function AjaxRequest(url)
+{
+	http_request = false;
+	if(window.ActiveXObject)
+	{
+		try  // IE
+		{
+			http_request = new ActiveXObject("Msxml2.XMLHTTP");
+		}
+		catch (e)
+		{
+			try
+			{
+				http_request = new ActiveXObject("Microsoft.XMLHTTP");
+			}
+			catch (e) {}
+		}
+	}
+	else if(window.XMLHttpRequest)
+	{
+		// Mozilla, Safari,...
+		http_request = new XMLHttpRequest();
+		if (http_request.overrideMimeType)
+		{
+			http_request.overrideMimeType('text/xml');
+		}
+	}
+	
+	if (!http_request)
+	{
+		$.notification("Cannot create an XMLHTTP instance");
+		return false;
+	}
+	http_request.onreadystatechange = AjaxRangeOption;
+  	http_request.open('GET', url, true);
+	http_request.send(null);
+}
+
+function AjaxRangeOption()
+{
+	if (http_request.readyState == 4)
+	{
+		if(http_request.status == 200)
+		{
+	        var resText = http_request.responseText;
+		    document.getElementById("optionNameHTML").innerHTML = resText;
+		}
+		else
+		{
+			$.notification('网络传输问题');
+		}
+	}
+}
+function SubmitCallBack() {
+    if( Check_Form_Validator() != false )
+	{
+		switch( document.Check_Form.isRange.value )
+		{
+			case '1':  //矩阵单选、多选、复合矩阵单选
+				parent.document.getElementById("optionAnswer").value = document.getElementById("optionName").value ;
+			break;
+			case '0':  //普通单选、多选
+				var theValue = document.getElementById("optionName").value;
+				//var theValueString = theValue.replace(/\r\n/g,"######");
+				var theValueString = theValue.replace(/\n/g,"######");
+				var theStringArray = theValueString.split("######");
+				var theLength = parent.document.getElementById('theOptionTable').rows.length;
+				for( i=0;i<theStringArray.length;i++)
+				{
+					var j = i+1;
+					var theObj = eval("parent.document.getElementById('optionID_" + j +"')");
+					if( theStringArray[i] != '' )
+					{
+						if( theObj != null )
+						{
+							theObj.value = theStringArray[i] ;
+						}
+						else
+						{
+							parent.insertRow(parent.document.getElementById('theOptionTable').rows.length);
+							theObj = eval("parent.document.getElementById('optionID_" + j +"')");
+							theObj.value = theStringArray[i] ;
+						}
+					}
+				}
+				for( k=theStringArray.length+1;k<=theLength;k++)
+				{
+					var theObj = eval("parent.document.getElementById('optionID_" + k +"')");
+					if( theObj != null ){
+					   theObj.value = '';
+					}
+				}
+			break;
+			case '2':  //复合单选
+				var theValue = document.getElementById("optionName").value;
+				//var theValueString = theValue.replace(/\r\n/g,"######");
+				var theValueString = theValue.replace(/\n/g,"######");
+				var theStringArray = theValueString.split("######");
+				var theLength = parent.document.getElementById('theOptionTable').rows.length;
+				for( i=0;i<theStringArray.length;i++)
+				{
+					var j = i+1;
+					var theObj = eval("parent.document.getElementById('optionID_" + j +"')");
+					if( theStringArray[i] != '' )
+					{
+						if( theObj != null )
+						{
+							theObj.value = theStringArray[i] ;
+						}
+						else
+						{
+							parent.insertCombRadioRow(parent.document.getElementById('theOptionTable').rows.length);
+							theObj = eval("parent.document.getElementById('optionID_" + j +"')");
+							theObj.value = theStringArray[i] ;
+						}
+					}
+				}
+				for( k=theStringArray.length+1;k<=theLength;k++)
+				{
+					var theObj = eval("parent.document.getElementById('optionID_" + k +"')");
+					if( theObj != null ){
+					   theObj.value = '';
+					}
+				}
+			break;
+			case '3':  //复合多选
+				var theValue = document.getElementById("optionName").value;
+				//var theValueString = theValue.replace(/\r\n/g,"######");
+				var theValueString = theValue.replace(/\n/g,"######");
+				var theStringArray = theValueString.split("######");
+				var theLength = parent.document.getElementById('theOptionTable').rows.length;
+				for( i=0;i<theStringArray.length;i++)
+				{
+					var j = i+1;
+					var theObj = eval("parent.document.getElementById('optionID_" + j +"')");
+					if( theStringArray[i] != '' )
+					{
+						if( theObj != null )
+						{
+							theObj.value = theStringArray[i] ;
+						}
+						else
+						{
+							parent.insertCombCheckBoxRow(parent.document.getElementById('theOptionTable').rows.length);
+							theObj = eval("parent.document.getElementById('optionID_" + j +"')");
+							theObj.value = theStringArray[i] ;
+						}
+					}
+				}
+				for( k=theStringArray.length+1;k<=theLength;k++)
+				{
+					var theObj = eval("parent.document.getElementById('optionID_" + k +"')");
+					if( theObj != null ){
+					   theObj.value = '';
+					}
+				}
+			break;
+			case '4':  //矩阵填空
+				var theValue = document.getElementById("optionName").value;
+				//var theValueString = theValue.replace(/\r\n/g,"######");
+				var theValueString = theValue.replace(/\n/g,"######");
+				var theStringArray = theValueString.split("######");
+				var theLength = parent.document.getElementById('theOptionTable').rows.length;
+				for( i=0;i<theStringArray.length;i++)
+				{
+					var j = i+1;
+					var theObj = eval("parent.document.getElementById('optionID_" + j +"')");
+					if( theStringArray[i] != '' )
+					{
+						if( theObj != null )
+						{
+							theObj.value = theStringArray[i] ;
+						}
+						else
+						{
+							parent.insertMultipleTextRow(parent.document.getElementById('theOptionTable').rows.length);
+							theObj = eval("parent.document.getElementById('optionID_" + j +"')");
+							theObj.value = theStringArray[i] ;
+						}
+					}
+				}
+				for( k=theStringArray.length+1;k<=theLength;k++)
+				{
+					var theObj = eval("parent.document.getElementById('optionID_" + k +"')");
+					if( theObj != null ){
+					   theObj.value = '';
+					}
+				}
+			break;
+		}
+		parent.hidePopWin();
+	}
+}
+</script>
+<meta content="mshtml 6.00.3790.0" name=generator></head>
+<body oncontextmenu="return false">
+   <form name="Check_Form" method="post" action="">
+  <table class=datatable style="line-height: 150%;border-collapse:collapse;" cellspacing=0 cellpadding=0 bordercolor=#cacaca border=1 width=100%>
+   <DIV class=position>位置：&nbsp; 我的问卷 &raquo; 编辑问题 &raquo; 使用常用选项</DIV>
+   <tr><td colspan="2" bgcolor="#f9f9f9"><b>使用常用选项</b></td></tr>
+   <tr>
+      <td>&nbsp;分类</td>
+	  <td><select name="optionCate" id="optionCate" onChange="AjaxRequest('AjaxChangeNormalOption.php?selectedID='+document.Check_Form.optionCate.options[document.Check_Form.optionCate.selectedIndex].value);" size=6>
+	     <option value='' selected>请选择常用选项分类...</option>
+		 {optionCateList}
+		 </select>
+	  </td>
+   </tr>
+   <tr>
+      <td width=12% nowrap>&nbsp;常用选项</td>	  
+	  <td><span id="optionNameHTML"><textarea rows=6 cols=60 name="optionName" id="optionName"></textarea></span>
+	  </td>
+   </tr><table><table width=100%>
+   <tr><td width=12%>
+  	 <td>
+		 <input name="isRange" type="hidden" value="{isRange}">
+         <input class=inputsubmit name="Action" type="button" id="submit" value="确定" onClick="javascript:SubmitCallBack();"> 
+         <input class=inputsubmit type="button" name="close" value="关闭" onClick="javascript:parent.hidePopWin();">
+      </td>
+    </tr>
+  </form>
+ </table>
+ <script type="text/javascript">initInputHighlightScript();</script> 
+</body></html>

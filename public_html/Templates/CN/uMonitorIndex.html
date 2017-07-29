@@ -1,0 +1,66 @@
+	<html>
+	<head>
+	<title>{siteTitle} </title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<style>
+		@media screen and (max-device-width: 320px){body{-webkit-text-size-adjust:none}}
+		@media screen and (max-device-width: 480px){body{-webkit-text-size-adjust:none}}
+		@media only screen and (-webkit-min-device-pixel-ratio: 2){body{-webkit-text-size-adjust:none}}
+		@media only screen and (min-device-width: 768px) and (max-device-width: 1024px){body{-webkit-text-size-adjust:none}}
+	</style>
+	<meta http-equiv=content-type content="text/html; charset=gbk">
+	<LINK href="../CSS/Android.css" type=text/css rel=stylesheet>
+	<LINK href="../Offline/resources/phone.css" type=text/css rel=stylesheet>
+	<script src="../JS/SelRadioCheckBox.js.php"></script>
+	<SCRIPT type="text/javascript">
+		window.onRexseeReady = function(){
+			//设置横屏
+			rexseeScreen.setScreenOrientation('landscape');
+			rexseeMenu.create("mainOptionsMenu","label:mainOptionsMenu");
+			rexseeMenu.addItem("mainOptionsMenu","rexsee:reload","label:刷新;");
+			rexseeMenu.addItem("mainOptionsMenu","../Monitor/Logout.php","label:注销;");			
+			rexseeMenu.addItem("mainOptionsMenu","rexsee:quit","label:退出;");
+			rexseeMenu.setOptionsMenuId("mainOptionsMenu");
+
+			rexseeTitleBar.setStyle('visibility:hidden;');
+			rexseeStatusBar.setStyle('visibility:hidden;');
+
+			rexseeSpecialKey.enableBackKeyListener(false);
+		}
+	</SCRIPT>
+	<style>
+		.titlebar {padding:3px;font-weight:bold;background: -webkit-gradient(linear, left top, right bottom, from(#014e82), to(#4d7496));}
+		table{border-collapse:collapse;border-spacing:0;}  
+	</style>
+</HEAD>
+
+<BODY style="background:#fff;color:#666" oncontextmenu="return false">
+
+<div class="titlebar">
+ <table width=100%>
+   <tr height=30><td width=30 valign=middle><a href="../Monitor/Logout.php" onclick="return window.confirm('确定要退出当前登录吗?')"><img src="../Images/back.png"></a></td>
+	   <td align=center width=* class="pageTitle">选择调查问卷</td>
+	   <td width=30 valign=middle><a href="rexsee:quit"><img src="../Images/exit.png"></a></td>
+  </tr>
+ </table>
+</div>
+
+<div class="notesInfo">【说明】欢迎您，{nickName}，请选择问卷。</div>
+
+<div id="androidList" style="padding-left:10px;padding-right:10px;padding-top:5px;">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<!-- BEGIN LIST -->
+  <tr><td style="height:30;padding-top:10px;padding-bottom:10px;font-size:18px;" onclick="javascript:window.location.href='{surveyURL}'">{surveyTitle}</td>
+      <td align=right rowspan=2 valign=center width=40 nowrap style="border-bottom:#ccc 1px solid;"  onclick="javascript:window.location.href='{surveyURL}'"><img src="../Images/action.png" border=0>&nbsp;</td>
+   </tr>
+  <tr><td style="border-bottom:#ccc 1px solid;padding-bottom:5px;font-size:12px;color:#a7a7a7;" onclick="javascript:window.location.href='{surveyURL}'">{beginTime}&nbsp;(<font color=red>{replyNum}</font>)</td></tr>
+<!-- END LIST -->
+</table>
+
+<div style="color:#444444;font-size:14px;margin-top:5px">共计<span class=red>{totalNum}</span>张问卷</div>
+
+</div>
+
+<script>scroll(0, 0);</script>
+</body>
+</html>

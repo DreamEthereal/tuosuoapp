@@ -1,0 +1,94 @@
+<html>
+<head>
+<meta http-equiv=content-language content=zh-cn>
+<meta http-equiv=content-type content="text/html; charset=gbk">
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7">
+<style>
+ td { padding:2px 5px 2px 5px;}
+</style>
+<link href="../CSS/Base.css" rel=stylesheet>
+<script language=javascript src="../JS/HighLight.js.php"></script>
+<script type="text/javascript" src="../JS/Jquery.min.js.php"></script>
+<script type="text/javascript" src="../JS/Jquery.notification.js.php"></script>
+<link type="text/css" rel="stylesheet" href="../CSS/Notification.css" />
+<script language=javascript src="../JS/CheckQuestion.js.php"></script>
+<style>
+#jquery-notification-message {
+  width:100%;
+}
+</style>
+<script language=javascript>
+function Check_Form_Validator()
+{
+	if (!CheckNotNull(document.Check_Form.userGroupName, "节点名称")) {return false;}
+	if (!CheckSpecicalChar(document.Check_Form.userGroupName, "节点名称")) {return false;}
+	if ( {groupType} == 2 )
+	{
+		if (!CheckNotNull(document.Check_Form.userGroupDesc, "节点描述")) {return false;}
+		if (!CheckSpecicalChar(document.Check_Form.userGroupDesc, "节点描述")) {return false;}
+	}
+}
+function CheckSpecicalChar(objField, strText)
+{
+	var strErr = "“" + strText + "”不能包含单引号、双引号、反斜线等非法字符！";
+	var Re = /[\x22\x27\x5C]+/ig;
+	if ( Re.test(objField.value))
+	{
+        objField.focus();
+		$.notification(strErr);
+		return false;
+	}
+	return true;
+}
+function submitForm()
+{
+	if( Check_Form_Validator() != false )
+	{
+		document.getElementById('submitBtn').disabled = true;
+		disabledStyle(document.getElementById('submitBtn'));
+		document.getElementById('close').disabled = true;
+		disabledStyle(document.getElementById('close'));
+		document.Check_Form.submit();
+	}
+}
+</script>
+<meta content="mshtml 6.00.3790.0" name=generator></head>
+<body oncontextmenu="return false">
+  <form action="" method="post" name="Check_Form" id="Check_Form" onsubmit="return false;">
+  <table class=datatable style="line-height: 150%;border-collapse:collapse;" cellspacing=0 cellpadding=0 bordercolor=#cacaca border=1 width=100%>
+     <div class=position>位置：&nbsp; 我的问卷 &raquo; 编辑节点信息</div>
+      <tr><td bgcolor="#f9f9f9" colspan=2><b>编辑节点信息</b></td></tr>
+      <tr>
+        <td align=right colspan=2><SPAN style="PADDING-RIGHT: 16px">注：以下带“<SPAN  class=red>*</SPAN>”的为必填项</SPAN></td></tr>
+	  <tr>
+         <td width="18%"><SPAN class=red>*</SPAN> 父节点：</td>
+		 <td><span class=red>{nodeName}</span></td>
+	  </tr>
+      <tr> 
+         <td><SPAN class=red>*</SPAN> 节点名称：</td>
+         <td><input name="userGroupName" type="text" id="userGroupName" size="40" maxlength="40" value="{userGroupName}"><br/><SPAN class=red>*</SPAN> 建议不超过30字符</td>
+      </tr>
+      <tr id="userGroupLabelContainer"> 
+         <td><SPAN class=red>*</SPAN> 节点归类：</td>
+         <td><input name="userGroupLabel" type="text" id="userGroupLabel" size="20" maxlength="40" value="{userGroupLabel}"><br/><SPAN class=red>*</SPAN> 神秘客/暗访/明检类项目计算节点得分排名用以区分同级节点的标记，例子：分行</td>
+      </tr>
+      <tr id="userGroupDescContainer"> 
+          <td height="23"><SPAN class=red>*</SPAN> 节点描述：</td>
+          <td><textarea id="userGroupDesc" name="userGroupDesc" rows=5 cols=76>{userGroupDesc}</textarea><br/><SPAN class=red>*</SPAN> 神秘客/暗访/明检类项目中的节点地址/电话信息等，建议不超过255字符</td>
+      </tr>
+	 </table><table width=100%>
+     <tr><td width=18%>&nbsp;</td> 
+          <td>
+ 		  <input name="groupId" type="hidden" value="{groupId}"> 
+ 		  <input name="groupType" type="hidden" value="{groupType}"> 
+ 		  <input name="userGroupID" type="hidden" value="{userGroupID}"> 
+ 		  <input name="Action" type="hidden" id="Action" value="{Action}"> 
+	      <input class=inputsubmit type="button" name="submitBtn" id="submitBtn" value="确定" onclick="javascript:submitForm();">&nbsp;
+		  <input class=inputsubmit type="button" name="close" id="close" value="关闭" onClick="javascript:parent.hidePopWin();">
+          </td>
+       </tr>
+      </form>       
+   </table>
+   <script>if({groupType} == 1 ) {$("#userGroupDescContainer").hide();$("#userGroupLabelContainer").hide();}</script>
+   <script type="text/javascript">initInputHighlightScript();</script> 
+</body></html>

@@ -1,0 +1,52 @@
+<script type="text/javascript" src="JS/CheckAutoRank.en.php"></script>
+<tr><td height=25 class="question" valign=center>&nbsp;{questionRequire}<span class="textEdit" id="questionName_{questionID}">{questionName}</span>&nbsp;<span class=notes>{questionNotes}</span></td></tr>
+<tr><td class="tips"><span class="textEdit" id="questionNotes_{questionID}">{questionTips}</span></td></tr>
+<tr><td>
+	  <table cellSpacing=0 cellPadding=0 width=100% id="qtn_table_{questionID}">
+       <!-- BEGIN OPTION -->
+	   <tr style="display:none" id="rank_{baseID}_{questionID}_{optionNameID}">
+	     <td class="answer tdheight optcont" align="left" id="rankcheck_{baseID}_{questionID}_{optionNameID}" nowrap><input type="hidden" name="{optionID}" id="{optionID}" value="{value}" class="sortinput"><span class="sortnum"></span>&nbsp;<span id="optionName_20_{questionID}_{optionNameID}">{optionName}</span>
+	     </td>
+	     </tr>
+	   <!-- END OPTION -->
+	  </table>
+</td></tr>
+
+<script>
+//回显原值
+$("#qtn_table_{questionID}").find("td.optcont").each(function(){
+	var v = $(this).find("input.sortinput").val();
+	if(	v != '' ){
+		$(this).find("span.sortnum").html(v).addClass("sortnum-chk");
+		$(this).attr("check","1");		
+	}
+});
+$("#qtn_table_{questionID} td.optcont").bind("click",function(v){
+		if(!$(this).attr("check")){
+			var u = $("#qtn_table_{questionID}").find("td[check='1']").length+1;
+			//回显
+			$(this).find("span.sortnum").html(u).addClass("sortnum-chk");
+			//赋值
+			$(this).find("input.sortinput").val(u);
+			$(this).attr("check","1");
+		}
+		else{
+			var u = $(this).find("span.sortnum").html();
+			$("#qtn_table_{questionID}").find("td[check='1']").each(function(){
+				var w = $(this).find("span.sortnum").html();
+				if( w-u > 0){
+					//回显
+					$(this).find("span.sortnum").html(w-1);
+					//赋值
+					$(this).find("input.sortinput").val(w-1);
+				}
+			});
+			//回显
+			$(this).find("span.sortnum").html("").removeClass("sortnum-chk");
+			//赋值
+			$(this).find("input.sortinput").val('');
+			$(this).attr("check","");
+		}
+		Check_Survey_Conditions();
+});
+</script>

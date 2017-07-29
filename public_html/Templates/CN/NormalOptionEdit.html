@@ -1,0 +1,62 @@
+<html>
+<head>
+<meta http-equiv=content-language content=zh-cn>
+<meta http-equiv=content-type content="text/html; charset=gbk">
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7">
+<style>
+ td { padding:2px 5px 2px 5px;}
+</style>
+<LINK href="../CSS/Base.css" rel=stylesheet>
+<script type="text/javascript" src="../JS/Jquery.min.js.php"></script>
+<script type="text/javascript" src="../JS/Jquery.notification.js.php"></script>
+<link type="text/css" rel="stylesheet" href="../CSS/Notification.css" />
+<script language=javascript src="../JS/CheckQuestion.js.php"></script>
+<script language=javascript src="../JS/HighLight.js.php"></script>
+<script language=javascript>
+function Check_Form_Validator()
+{
+	if (!CheckNotNull(document.Check_Form.optionCate, "分类")) {return false;}
+	if (!CheckNotNull(document.Check_Form.optionName, "常用选项")) {return false;}
+}
+function submitForm()
+{
+	if( Check_Form_Validator() != false )
+	{
+		document.getElementById('submitBtn').disabled = true;
+		disabledStyle(document.getElementById('submitBtn'));
+		document.getElementById('close').disabled = true;
+		disabledStyle(document.getElementById('close'));
+		document.Check_Form.submit();
+	}
+}
+</script>
+<META content="MSHTML 6.00.3790.0" name=GENERATOR></HEAD>
+<BODY oncontextmenu="return false">
+<center>
+     <form action="" method="post" name="Check_Form" id="Check_Form" onsubmit="return false;">
+  <table class=datatable style="line-height: 150%;border-collapse:collapse;" cellspacing=0 cellpadding=0 bordercolor=#cacaca border=1 width=100%>
+     <div class=position>位置：&nbsp; 我的问卷 &raquo; 定义常用选项 &raquo; 编辑常用选项</div>
+     <tr><td colspan="2" bgcolor="#f9f9f9"><b>编辑常用选项</b></td></tr>
+     <tr><td align=right colspan=2><SPAN style="PADDING-RIGHT: 16px">注：以下带“<SPAN  class=red>*</SPAN>”的为必填项</SPAN></td></tr>
+	 <tr> 
+        <td width="20%" height="25"><span class=red>*</span> 分类：</td>
+        <td width="80%"><input class="textInput" name="optionCate" type="text" id="optionCate" value="{optionCate}" size="30">
+　　　</td>
+   </tr>
+   <tr> 
+       <td height="25"><SPAN class=red>*</SPAN> 常用选项：</td>
+       <td><textarea rows=6 cols=70 name="optionName">{optionName}</textarea><br/>(在此输入常用选项，每个选项一行)</td>
+   </tr></table><table width=100%>
+   <tr>
+     <td width=20%></td>
+  	 <td>
+		 <input name="Action" type="hidden" value="OptionEditSubmit">
+		 <input name="optionID" type="hidden" value="{optionID}">
+		 <input class=inputsubmit type="button" name="submitBtn" id="submitBtn" value="确定" onclick="javascript:submitForm();"> 
+		 <input class=inputsubmit type="button" name="close" id="close" value="关闭" onClick="javascript:parent.hidePopWin();">
+      </td>
+    </tr>
+  </form>
+ </table>
+ <script type="text/javascript">initInputHighlightScript();</script> 
+</body></html>

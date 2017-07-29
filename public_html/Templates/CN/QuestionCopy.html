@@ -1,0 +1,132 @@
+<html>
+<head>
+<meta http-equiv=content-language content=zh-cn>
+<meta http-equiv=content-type content="text/html; charset=gbk">
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7">
+<style>
+ td { padding:2px 5px 2px 5px;}
+</style>
+<link href="../CSS/Base.css" rel=stylesheet>
+<script type="text/javascript" src="../JS/Jquery.min.js.php"></script>
+<script type="text/javascript" src="../JS/Jquery.notification.js.php"></script>
+<link type="text/css" rel="stylesheet" href="../CSS/Notification.css" />
+<script language=javascript src="../JS/CheckQuestion.js.php"></script>
+<script language=javascript>
+function Check_Form_Validator()
+{
+	if (!CheckNotNull(document.Check_Form.survey_ID, "选定要复制的源问卷")) {return false;}
+	if (!CheckNotNull(document.getElementById("questionID"), "复制问卷问题")) {return false;}
+	if (!CheckNotNull(document.Check_Form.theBaseId, "选定问题复制在当前问卷的插入位置")) {return false;}
+}
+var http_request = false;
+function AjaxRequest(url,cond)
+{
+	http_request = false;
+	if(window.ActiveXObject)
+	{
+		try  // IE
+		{
+			http_request = new ActiveXObject("Msxml2.XMLHTTP");
+		}
+		catch (e)
+		{
+			try
+			{
+				http_request = new ActiveXObject("Microsoft.XMLHTTP");
+			}
+			catch (e) {}
+		}
+	}
+	else if(window.XMLHttpRequest)
+	{
+		// Mozilla, Safari,...
+		http_request = new XMLHttpRequest();
+		if (http_request.overrideMimeType)
+		{
+			http_request.overrideMimeType('text/xml');
+		}
+	}
+	
+	if (!http_request)
+	{
+		$.notification("Cannot create an XMLHTTP instance");
+		return false;
+	}
+	http_request.onreadystatechange = AjaxQuestion;
+  	http_request.open('GET', url, true);
+	http_request.send(null);
+}
+
+function AjaxQuestion()
+{
+	if (http_request.readyState == 4)
+	{
+		if(http_request.status == 200)
+		{
+	        var resText = http_request.responseText;
+		    document.getElementById("questionOnHTML").innerHTML = resText;
+		}
+		else
+		{
+			$.notification('网络传输问题');
+		}
+	}
+}
+function submitForm()
+{
+	if( Check_Form_Validator() != false )
+	{
+		document.getElementById('submitBtn').disabled = true;
+		disabledStyle(document.getElementById('submitBtn'));
+		document.getElementById('close').disabled = true;
+		disabledStyle(document.getElementById('close'));
+		document.Check_Form.submit();
+	}
+}
+</script>
+<meta content="mshtml 6.00.3790.0" name=generator></head>
+<body oncontextmenu="return false">
+  
+  <form style="margin:0px" name="Check_Form" method="post" action="" id="Check_Form" onsubmit="return false;">
+  <table class=datatable style="line-height: 150%;border-collapse:collapse;" cellspacing=0 cellpadding=0 bordercolor=#cacaca border=1 width=100%>
+     <div class=position>位置：&nbsp; 我的问卷 &raquo; 新增问题 &raquo; 自现有问卷中复制问题新增</div>
+     <tr><td colspan="2" bgcolor="#f9f9f9" height="25"><b>自现有问卷中复制问题新增</b></td></tr>
+     <tr>
+      <td width=14% nowrap>&nbsp;可复制问卷列表</td>
+	  <td><select name="survey_ID" id="survey_ID" onChange="AjaxRequest('AjaxNewChangeQtn.php?surveyID={surveyID}&selectedID='+document.Check_Form.survey_ID.options[document.Check_Form.survey_ID.selectedIndex].value,1);" size=7 style="width:580px;">
+	     <option value='' selected>请选择...</option>
+		 {surveyIDList}
+		 </select>
+	  </td>
+     </tr>
+     <tr>
+      <td width=14% nowrap>&nbsp;复制问卷问题</td>	  
+	  <td width=86% nowrap><span id="questionOnHTML">
+	      <select name="questionID[]" id="questionID" size=12 multiple style="width:580px;">
+		  <option selected value="{m_questionID}">{m_questionName}</option> 
+		  </select></span><br/>
+		  <span class=red>*</span> 按住Ctrl键点击鼠标进行多重选择
+	  </td>
+     </tr>
+	 <tr>
+	   <td nowrap>&nbsp;在此问题后插入</td>
+	   <td nowrap><select name="theBaseId" id="theBaseId" style="width:580px;">
+		   <option value='' selected>请选择...</option>
+		   <option value='afterOfAll'>所有问题之后</option>
+		   {questionList}
+		  </select>
+	 </td></tr>
+   </table><table width=100%>
+   <tr>
+     <td width=14%></td>
+  	 <td>
+		 <input name="Action" type="hidden" value="CopySubmit">
+		 <input name="surveyID" type="hidden" value="{surveyID}">
+		 <input name="surveyTitle" type="hidden" value="{surveyTitle}">
+		 <input class=inputsubmit type="button" name="submitBtn" id="submitBtn" value="确定" onclick="javascript:submitForm();"> 
+		 <input class=inputsubmit type="button" name="close" id="close" value="关闭" onClick="javascript:parent.hidePopWin();">
+      </td>
+    </tr>
+  </form>
+ </table>
+</body></html>

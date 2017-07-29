@@ -1,0 +1,85 @@
+<html>
+<head>
+<meta http-equiv=content-language content=zh-cn>
+<meta http-equiv=content-type content="text/html; charset=gbk">
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7">
+<style>
+ td { padding:2px 5px 2px 5px;}
+</style>
+<link href="../CSS/Base.css" rel=stylesheet>
+<script language=javascript src="../JS/HighLight.js.php"></script>
+<script type="text/javascript" src="../JS/Jquery.min.js.php"></script>
+<script type="text/javascript" src="../JS/Jquery.notification.js.php"></script>
+<link type="text/css" rel="stylesheet" href="../CSS/Notification.css" />
+<script language=javascript src="../JS/CheckQuestion.js.php"></script>
+<script>
+function Check_Form_Validator()
+{
+	<!-- BEGIN JS -->
+	if (!CheckNotNull(document.getElementById('quotaName_{jsQuotaID}'), "配额名称")) {return false;}
+	if (!CheckSpecicalChar(document.getElementById('quotaName_{jsQuotaID}'), "配额名称")) {return false;}
+	if (!CheckNotNull(document.getElementById('quotaNum_{jsQuotaID}'), "配额限制")) {return false;}
+	if (!CheckNumber(document.getElementById('quotaNum_{jsQuotaID}'), "配额限制",0,10000000)) {return false;}
+	if (!CheckNotNull(document.getElementById('quotaText_{jsQuotaID}'), "到达配额的提示信息")) {return false;}
+	if (!CheckSpecicalChar(document.getElementById('quotaText_{jsQuotaID}'), "到达配额的提示信息")) {return false;}
+	<!-- END JS -->
+}
+function CheckSpecicalChar(objField, strText)
+{
+	var strErr = "“" + strText + "”不能包含单引号、双引号、反斜线等非法字符！";
+	var Re = /[\x22\x27\x5C]+/ig;
+	if ( Re.test(objField.value))
+	{
+        objField.focus();
+		$.notification(strErr);
+		return false;
+	}
+	return true;
+}
+function submitForm()
+{
+	if( Check_Form_Validator() != false )
+	{
+		document.getElementById('submitBtn').disabled = true;
+		disabledStyle(document.getElementById('submitBtn'));
+		document.getElementById('resetBtn').disabled = true;
+		disabledStyle(document.getElementById('resetBtn'));
+		document.getElementById('close').disabled = true;
+		disabledStyle(document.getElementById('close'));
+		document.Check_Form.submit();
+	}
+}
+</script>
+<meta content="mshtml 6.00.3790.0" name=generator></head>
+<body oncontextmenu="return false">
+   <form name="Check_Form" id="Check_Form" method="post" action="" onsubmit="return false;" >
+  <table class=datatable style="line-height: 150%;border-collapse:collapse;" cellspacing=0 cellpadding=0 bordercolor=#cacaca border=1 width=100%>
+   <div class=position>位置：&nbsp; 我的问卷 &raquo; {surveyTitle}</div>
+   <tr><td bgcolor="#e9e9e9" colspan=2><b>修订问卷配额定义</b></td></tr>
+   <tr bgcolor="#f9f9f9" height=25><td colspan=2><b>&nbsp;关于...</b>&nbsp;<img src="../Images/info.gif" border=0></td></tr>   <tr><td colspan=2>&nbsp配额一般用以限制在某一种特征条件成立前提下的样本回复数量，甄别是一种配额限制为0的特殊配额</td></tr>
+   <tr bgcolor="#f9f9f9" >
+       <td height=25 width=90% nowrap><b>&nbsp;配额名称/到达配额的提示信息</b></td>
+	   <td width=10%><b>&nbsp;配额限制</b></td>
+   </tr>
+   <!-- BEGIN QUOTA -->
+	<tr>
+	   <td height=25>&nbsp;<input name="quotaName[{quotaID}]" id="quotaName_{quotaID}" size=92 value="{quotaName}"><br/>
+			&nbsp;<textarea cols=92 rows=5 name="quotaText[{quotaID}]" id="quotaText_{quotaID}">{quotaText}</textarea>	   
+	   </td>
+	   <td nowrap valign=top>&nbsp;<input name="quotaNum[{quotaID}]" id="quotaNum_{quotaID}" size=6 value="{quotaNum}"></td>
+	</tr>
+   <!-- END QUOTA -->
+   </table><table width=100%>
+   <tr> 
+  	 <td>
+         <input name="surveyID" type="hidden" id="surveyID" value="{surveyID}"> 
+    	 <input name="Action" type="hidden" id="Action" value="UpdateQuotaSubmit"> 
+		 <input class=inputsubmit type="button" name="submitBtn" id="submitBtn" value="确定" onclick="javascript:submitForm();"> 
+		 <input class=inputsubmit name="resetBtn" id="resetBtn" type="reset" value="重置">
+		 <input class=inputsubmit type="button" name="close" id="close" value="关闭" onClick="javascript:parent.hidePopWin();">
+      </td>
+    </tr>
+  </form>
+ </table>
+<script>initInputHighlightScript();</script>
+</body></html>

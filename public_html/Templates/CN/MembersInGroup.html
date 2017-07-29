@@ -1,0 +1,92 @@
+<html>
+<head>
+<meta http-equiv=content-language content=zh-cn>
+<meta http-equiv=content-type content="text/html; charset=gbk">
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7">
+<style>
+ td { padding:2px 5px 2px 5px;}
+</style>
+<script language=javascript>
+function Check_Form_Validator()
+{
+	var theObj = document.getElementById("administratorsNameList");
+	for(c = 0; c < theObj.options.length; c++) {
+		theObj.options[c].selected = true;
+	}
+}
+function move(fbox, tbox) {
+	var arrFbox = new Array();
+	var arrTbox = new Array();
+	var arrLookup = new Array();
+	var i;
+	for (i = 0; i < tbox.options.length; i++) {
+		arrLookup[tbox.options[i].text] = tbox.options[i].value;
+		arrTbox[i] = tbox.options[i].text;
+	}
+	var fLength = 0;
+	var tLength = arrTbox.length;
+	for(i = 0; i < fbox.options.length; i++) {
+		arrLookup[fbox.options[i].text] = fbox.options[i].value;
+		if (fbox.options[i].selected && fbox.options[i].value != "") {
+			arrTbox[tLength] = fbox.options[i].text;
+			tLength++;
+		}
+		else {
+			arrFbox[fLength] = fbox.options[i].text;
+			fLength++;
+		}
+	}
+	//arrFbox.sort();
+	//arrTbox.sort();
+	fbox.length = 0;
+	tbox.length = 0;
+	var c;
+	for(c = 0; c < arrFbox.length; c++) {
+		var no = new Option();
+		no.value = arrLookup[arrFbox[c]];
+		no.text = arrFbox[c];
+		fbox[c] = no;
+	}
+	for(c = 0; c < arrTbox.length; c++) {
+		var no = new Option();
+		no.value = arrLookup[arrTbox[c]];
+		no.text = arrTbox[c];
+		tbox[c] = no;
+	}
+}
+</script>
+<link href="../CSS/Base.css" rel=stylesheet>
+<meta content="mshtml 6.00.3790.0" name=generator></head>
+<body oncontextmenu="return false">
+  <form name="Check_Form" method="post" action="" onsubmit="return Check_Form_Validator()">
+  <table class=datatable style="line-height: 150%;border-collapse:collapse;" cellspacing=0 cellpadding=0 bordercolor=#cacaca border=1 width=100%>
+       <div class=position>位置：&nbsp; 我的问卷 &raquo; 设定样本分组成员</div>
+       <tr> 
+         <td bgcolor="#f9f9f9"><b>选择样本分组 [<span class=red>{groupName}</span>] 成员</b></td>
+       </tr>
+		 <tr><td height="25"><span style="float:left"><b>可选择的样本列表</b></span><span style="float:right"><b>已设定的样本</b></td></tr>
+		 <tr><td align=left style="margin:0px;padding:0px">
+			  <table cellspacing=0 cellpadding=0><tr><td style="margin:0px;padding:0px">
+				 <select multiple name="administratorsNameList0[]" id="administratorsNameList0" size=22 style="width:300px;*width:310px">
+					   {administratorsNameList0}
+				 </select></td>
+				 <td style="margin:0px 2px 0px 2px;padding:0px 2px 0px 2px"><input type="button" class=inputsubmit onClick="move(this.form.administratorsNameList0,this.form.administratorsNameList)" value=">" style="margin-bottom:2px;"><br/>
+				 <input type="button" class=inputsubmit onClick="move(this.form.administratorsNameList,this.form.administratorsNameList0)" value="<" style="margin-bottom:2px;"></td>
+				 <td style="margin:0px;padding:0px">
+				 <select name="administratorsNameList[]" id="administratorsNameList" multiple size="22" style="width:300px;*width:310px">
+					  {administratorsNameList}
+				 </select></td></tr></table>
+		 </td></tr></table>
+		 <table width=100%>
+        <tr align="center"> 
+           <td height="15"> 
+			 <input name="groupID" type="hidden" value="{groupID}">
+			 <input name="groupName" type="hidden" value="{groupName}">
+			 <input name="Action" type="hidden" value="MemberInGroupSubmit">
+			 <input name="submit" type="submit" class=inputsubmit id="submit" value="确定">
+             <input class=inputsubmit type="button" name="close" value="关闭" onClick="javascript:parent.hidePopWin();"> 
+          </td>
+        </tr>
+    </form>
+  </table>
+</body></html>

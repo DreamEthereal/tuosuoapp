@@ -1,0 +1,49 @@
+<html>
+<head>
+<title>{surveyTitle}</title>
+<meta http-equiv=content-type content="text/html;">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<link rel="stylesheet" type="text/css" href="CSS/Phone.css">
+<style>
+@media screen and (max-device-width: 320px){body{-webkit-text-size-adjust:none}}
+@media screen and (max-device-width: 480px){body{-webkit-text-size-adjust:none}}
+@media only screen and (-webkit-min-device-pixel-ratio: 2){body{-webkit-text-size-adjust:none}}
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px){body{-webkit-text-size-adjust:none}}
+input[type=password] {
+	border: 1px solid #555;
+	padding: 0.5em;
+	font-size: 15px;
+    width: auto;
+    line-height: 1.2em;
+    background: #fff;
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #aaa), color-stop(0.12, #fff));
+    -webkit-appearance: none;
+ 	-webkit-box-shadow: 1px 1px 1px #fff;
+ 	-webkit-border-radius: 0.5em;
+}
+</style>
+<body oncontextmenu="return false" style="background:#f9f9f9;color:#000;margin:0px;">
+
+<div class="titlebar">
+ <table width=100%>
+   <tr>
+   <td align=left width=* class="pageTitle">{surveyShortTitle}</td>
+   </tr>
+ </table>
+</div>
+
+<!--该调查问卷由科维能动EnableQ在线问卷调查引擎系统生成 -->
+ <table width="100%">
+ {enableq}
+ </table>
+<script>
+//重新定义告警函数
+(function ($) {
+	$.notification = function (message) {
+		alert(message);
+	};
+})(jQuery);
+</script>
+<script>scroll(0, 0);</script>
+</body>
+</html>

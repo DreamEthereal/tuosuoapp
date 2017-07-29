@@ -1,0 +1,179 @@
+<html>
+<head>
+<meta http-equiv=content-language content=zh-cn>
+<meta http-equiv=content-type content="text/html; charset=gbk">
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7">
+<style>
+ td { padding:2px 5px 2px 5px;}
+</style>
+<link href="../CSS/Base.css" rel=stylesheet>
+<script type="text/javascript" src="../JS/Jquery.min.js.php"></script>
+<script type="text/javascript" src="../JS/Jquery.notification.js.php"></script>
+<link type="text/css" rel="stylesheet" href="../CSS/Notification.css" />
+<script language=javascript src="../JS/CheckQuestion.js.php"></script>
+<script language=javascript src="../JS/HighLight.js.php"></script>
+<script language=javascript>
+function Check_Form_Validator()
+{
+    var theValue = document.getElementById("exportQtnList").value;
+    var exportQtnList = theValue.substr(0,theValue.length-1).split("|");
+    for( i=0;i<exportQtnList.length;i++)
+    {
+       var theObj = document.getElementById("exportQtnList");
+	   for(c = 0; c < theObj.options.length; c++) {
+	      theObj.options[c].selected = true;
+	   }
+    }
+	if ( IsInCheckBox(document.Check_Form.exportCate,1) && IsInCheckBox(document.Check_Form.exportType,2) )
+	{
+		if( !CheckExportListNoSelect(document.Check_Form.exportQtnList, "需要导出的调查问题")) {return false;}
+	}
+}
+function gId(_sId){
+	return document.getElementById(_sId);
+}
+//检测下拉必选
+function CheckExportListNoSelect(objField, strText)
+{
+	for( i=0;i<objField.options.length;i++ ) {   
+		if(objField.options[i].selected && objField.value != '') {   
+		   return true;   
+		}   
+	}
+	objField.focus();
+    $.notification( "请选择“" + strText + "”！");
+	return false;
+}
+function move(fbox, tbox) {
+	var arrFbox = new Array();
+	var arrTbox = new Array();
+	var arrLookup = new Array();
+	var i;
+	for (i = 0; i < tbox.options.length; i++) {
+		arrLookup[tbox.options[i].text] = tbox.options[i].value;
+		arrTbox[i] = tbox.options[i].text;
+	}
+	var fLength = 0;
+	var tLength = arrTbox.length;
+	for(i = 0; i < fbox.options.length; i++) {
+		arrLookup[fbox.options[i].text] = fbox.options[i].value;
+		if (fbox.options[i].selected && fbox.options[i].value != "") {
+			arrTbox[tLength] = fbox.options[i].text;
+			tLength++;
+		}
+		else {
+			arrFbox[fLength] = fbox.options[i].text;
+			fLength++;
+		}
+	}
+	//arrFbox.sort();
+	//arrTbox.sort();
+	fbox.length = 0;
+	tbox.length = 0;
+	var c;
+	for(c = 0; c < arrFbox.length; c++) {
+		var no = new Option();
+		no.value = arrLookup[arrFbox[c]];
+		no.text = arrFbox[c];
+		fbox[c] = no;
+	}
+	for(c = 0; c < arrTbox.length; c++) {
+		var no = new Option();
+		no.value = arrLookup[arrTbox[c]];
+		no.text = arrTbox[c];
+		tbox[c] = no;
+	}
+}
+
+function onChangeMode()
+{
+	if (IsInCheckBox(document.Check_Form.exportType,1 ))
+	{
+		gId('questionList').disabled =true;
+		gId('exportQtnList').disabled =true;
+	}
+	if (IsInCheckBox(document.Check_Form.exportType,2 ))
+	{
+		gId('questionList').disabled = false;
+		gId('exportQtnList').disabled = false;
+	}
+}
+function submitForm()
+{
+	if( Check_Form_Validator() != false)
+	{
+		gId('submitButton').disabled = true;
+		changeDisabledStyle(gId('submitButton'));
+		gId('closeButton').disabled = true;
+		changeDisabledStyle(gId('closeButton'));
+		document.Check_Form.submit();
+	}
+}
+function changeDisabledStyle(obj)
+{
+	obj.style.border = '1px solid #DDD';
+	obj.style.backgroundColor = '#F5F5F5';
+	obj.style.color = '#3b5888';
+}
+function checkIsValiad()
+{
+	if ( (event.keyCode<48 || event.keyCode>57) && event.keyCode != 44 )
+	{
+		event.keyCode=0;
+	}
+}
+function onChangeCate()
+{
+	if (IsInCheckBox(document.Check_Form.exportCate,1 ))
+	{
+		document.Check_Form.exportType[0].disabled = false;
+		document.Check_Form.exportType[1].disabled = false;
+		onChangeMode();
+	}
+	if (IsInCheckBox(document.Check_Form.exportCate,2 ))
+	{
+		document.Check_Form.exportType[0].disabled = true;
+		document.Check_Form.exportType[1].disabled = true;
+		gId('questionList').disabled =true;
+		gId('exportQtnList').disabled =true;
+	}
+}
+</script>
+<meta content="mshtml 6.00.3790.0" name=generator></head>
+<body oncontextmenu="return false" onload="javascript:onChangeCate();">
+  <form action="" method="post" name="Check_Form" id="Check_Form" onsubmit="return false;" >
+  <table class=datatable style="line-height: 150%;border-collapse:collapse;" cellspacing=0 cellpadding=0 bordercolor=#cacaca border=1 width=100%>
+     <div class=position>位置：&nbsp; 我的问卷 &raquo; {surveyTitle}</div>
+     <tr><td bgcolor="#f9f9f9" height="25"><b>选择导出痕迹类型</b></td></tr>
+	 <tr><td><input name="exportCate" id="exportCate" value=1 type="radio" checked onclick="javascript:onChangeCate();">导出数据审核痕迹信息&nbsp;&nbsp;&nbsp;<input name="exportCate" id="exportCate" value=2 type="radio" onclick="javascript:onChangeCate();">导出数据审核流程信息<br/>
+	 </td></tr>
+     <tr><td bgcolor="#f9f9f9" height="25"><b>选择导出的调查问题</b></td></tr>
+	 <tr><td><input name="exportType" id="exportType" value=1 type="radio" checked onclick="javascript:onChangeMode();">导出调查问卷中全部问题所对应的数据<br/>
+	         <input name="exportType" id="exportType" value=2 type="radio" onclick="javascript:onChangeMode();">仅需要导出下列选择的问题所对应的数据<br/>
+			  <table cellspacing=0 cellpadding=0><tr><td style="margin:0px;padding-left:5px">
+				 <select multiple name="questionList[]" id="questionList" size="14" style="width:370px;*width:380px">
+					   {questionList}
+				 </select></td>
+				 <td style="margin:0px 2px 0px 2px;padding:0px 2px 0px 2px"><input type="button" class=inputsubmit onClick="move(this.form.questionList,this.form.exportQtnList)" value=">" style="margin-bottom:2px;"><br/>
+				 <input type="button" class=inputsubmit onClick="move(this.form.exportQtnList,this.form.questionList)" value="<" style="margin-bottom:2px;"></td>
+				 <td style="margin:0px;padding:0px">
+				 <select name="exportQtnList[]" id="exportQtnList" multiple size="14" style="width:370px;*width:380px">
+					  {exportQtnList}
+				 </select></td></tr></table>
+   </td></tr>
+   <tr><td bgcolor="#f9f9f9" height="25"><b>选择导出的数据范围</b></td></tr>
+   <tr><td>数据序号：<input type="text" name="responseID" id="responseID" size=71 onkeypress="checkIsValiad();" style="ime-mode:disabled" onPaste="return false;"> (填写数据序号，采用英文逗号分隔，为空表明全部数据)</td></tr>
+   </table>
+   <table width=100%>
+   <tr><td height="15">
+		 <input name="Action" type="hidden" value="ExportDataSubmit">
+		 <input name="surveyID" type="hidden" value="{surveyID}">
+		 <input name="exportSQL" type="hidden" value="{exportSQL}">
+         <input name="submitButton" class=inputsubmit type="button" id="submitButton" value="确定" onclick="javascript:submitForm();"> 
+	     <input type="button" class=inputsubmit name="closeButton" id="closeButton" value="关闭" onclick="javascript:parent.hidePopWin();"> 
+      </td>
+    </tr>
+  </form>
+ </table>
+ <script type="text/javascript">initInputHighlightScript();</script> 
+</body></html>

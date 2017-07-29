@@ -1,0 +1,43 @@
+<html>
+<head>
+<meta http-equiv=content-language content=zh-cn>
+<meta http-equiv=content-type content="text/html; charset=gbk">
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7">
+<style>
+ td { padding:2px 5px 2px 5px;}
+ table {margin-bottom:4px;}
+</style>
+<link href="../CSS/Base.css" rel="stylesheet">
+<script type="text/javascript" src="../JS/Jquery.min.js.php"></script>
+<script language=javascript>
+function submit_form_action()
+{
+	parent.gId('popupControls').style.display = 'none';
+	document.getElementById('Action').value = 'UpdateTaskNameSubmit';
+	document.Check_Form.submit();
+}
+</script>
+<meta content="mshtml 6.00.3790.0" name=generator></head>
+<body oncontextmenu="return false">
+  <form action="" method="post" name="Check_Form" id="Check_Form">
+  <table class=datatable style="line-height: 150%;border-collapse:collapse;" cellspacing=0 cellpadding=0 bordercolor=#cacaca border=1 width=100%>
+   <div class=position>位置：&nbsp; 我的桌面 &raquo; 修正任务名称</div>
+   <tr><td bgcolor="#f9f9f9" colspan=2>&nbsp;<b>关于...</b></td></tr>
+   <tr><td colspan=2 style="padding-left:10px">
+	<span class=red>*</span> 我们知道，神秘客项目中访员的“任务名称”和“任务描述”信息，来自项目属性中设定的“关联客户对象”节点下属并且无子孙节点的“节<br/>&nbsp;&nbsp;&nbsp;点名称”和“节点描述”<br/>
+	<span class=red>*</span> 在神秘客项目的回复数据中，采用“样本标识”和“地址标识”两个字段属性记录“任务名称”和“任务描述”对应的值<br/>
+	<span class=red>*</span> 为保证系统性能，项目的回复数据一旦产生，那么“任务名称”和“任务描述”对应的值即被记录，并且不可改变<br/>
+	<span class=red>*</span> 当项目管理人员发现回复数据中的这两个属性数据有误时，修订“关联客户对象”用户节点下的“节点名称”和“节点描述”对应值，并不对<br/>&nbsp;&nbsp;&nbsp;回复数据中的“样本标识”和“地址标识”的属性值产生影响<br/>
+	<span class=red>*</span> 即便上述属性值错误，但神秘客项目的“任务完成清单”分析功能基于任务代号，所以并不受此影响<br/>
+	<span class=red>*</span> 系统仍然提供“修正任务名称”的辅助功能，用来修正“关联客户对象”用户节点下的“节点名称”和“节点描述”与回复数据中的“样本标<br/>&nbsp;&nbsp;&nbsp;识”和“地址标识”对应值的一致性<br/>
+   </td></tr></table>
+   <table width=100%>
+      <tr><td height="23">
+		  <input name="surveyID" id="surveyID" value="{surveyID}" type="hidden">
+ 		  <input name="Action" type="hidden" id="Action"> 
+          <input class=inputsubmit type="button" name="submitbutton" id="submitbutton" value=" 修正 " onclick="javascript:if(window.confirm('您确定修正问卷对应的任务名称数据吗！？')){submit_form_action();}""> 
+         </td>
+       </tr>
+      </form>       
+   </table>
+</body></html>

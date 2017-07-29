@@ -1,0 +1,169 @@
+<html>
+<head>
+<meta http-equiv=content-type content="text/html; charset=gbk">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<link rel="stylesheet" type="text/css" href="resources/android.css">
+<script type="text/javascript" src="script/user.js"></script>
+<script type="text/javascript" src="script/animation.js"></script>
+<script type="text/javascript" src="common/smart-2.11.min.js"></script>
+<script type="text/javascript" src="common/string.js"></script>
+<script type="text/javascript" src="common/page.js"></script>
+<script type="text/javascript" src="common/jquery-1.11.2.min.js"></script>
+<script type="text/javascript" src="common/gpsconfig.js"></script>
+<script type="text/javascript" src="common/gps.js"></script>
+<script language="javascript"> 
+	var img = 0;
+	if( ! rexseeDatabase.tableExists('eq_font','rexsee:enableq.db') )
+	{
+		var ftsql = "CREATE TABLE eq_font (id int(1) NOT NULL default '1',fontId int(1) NOT NULL default '1');";
+		rexseeDatabase.exec(ftsql,'rexsee:enableq.db');
+		ftsql = " INSERT INTO eq_font (id,fontId) values ('1','1');";
+		rexseeDatabase.exec(ftsql,'rexsee:enableq.db');
+		if( rexseeScreen.getScreenHeight() < 500 || rexseeScreen.getScreenWidth() < 500 )
+		{
+			rexseeScreen.setScreenOrientation('landscape');
+			document.write('<LINK href="resources/minipad.css" type=text/css rel=stylesheet>');
+			img = 0;
+		}
+		else
+		{
+			document.write('<LINK href="resources/pad10.css" type=text/css rel=stylesheet>');
+			img = 1;
+		}
+	}
+	else
+	{
+		var ftsql = " SELECT fontId FROM eq_font WHERE id='1';";
+		var ftRow = eval('('+getDbRows(ftsql,'rexsee:enableq.db')+')');
+		if( parseInt(ftRow.rows[0][0] ) == 1)  //大字体
+		{
+			document.write('<LINK href="resources/pad10.css" type=text/css rel=stylesheet>');
+			img = 1;
+		}
+		else
+		{
+			document.write('<LINK href="resources/minipad.css" type=text/css rel=stylesheet>');
+			img = 0;
+		}
+	}
+
+	rexseeSpecialKey.enableBackKeyListener(false);
+	rexseeMenu.setOptionsMenuId("mainOptionsMenu1");
+	rexseeScreen.setFullScreen(true);
+
+	function showtask0(surveyID)
+	{
+	    rexseeHashMap.remove('enableq','qid');
+		rexseeHashMap.add('enableq','qid',surveyID);
+		animationLoad('showtask0.html');
+	}
+	function showtask1(surveyID)
+	{
+	    rexseeHashMap.remove('enableq','qid');
+		rexseeHashMap.add('enableq','qid',surveyID);
+		animationLoad('showtask1.html');
+	}
+</script>
+<body oncontextmenu="return false" style="background:#e5e5e5;color:#666;margin:0px;padding:0px;overflow:hidden;">
+
+<script>
+ if(img == 0 ) 
+ {
+	document.write('<div class="titlebar"><table width=100%><tr><td width=51 style="padding:0px"><a href=javascript:animationLoad("index.html");><img src="resources/back.png" border=0 width=51></a></td><td align=center width=* class="pageTitle">已完成任务</td><td width=51 style="padding:0px">&nbsp;</td></tr></table></div>');
+ }
+ else
+ {
+	document.write('<div class="titlebar"><table width=100%><tr><td width=75 style="padding:0px"><a href=javascript:animationLoad("index.html");><img src="resources/hback.png" border=0 width=75></a></td><td align=center width=* class="pageTitle">已完成任务</td><td width=75 style="padding:0px">&nbsp;</td></tr></table></div>');
+ }
+</script>
+
+<script>
+	var qid = rexseeHashMap.get('enableq','qid');
+
+	var sql = " SELECT surveyTitle,isRecord,isOfflineModi FROM eq_survey_list WHERE surveyID = '"+qid+"';";
+	var surveyRow = eval('('+getDbRows(sql,'rexsee:enableq.db')+')');
+	var datas ="{ surveyTitle:'"+surveyRow.rows[0][0] +"',";
+	datas +="surveyID:'"+qid+"',";
+
+	sql = " SELECT taskID,taskName,taskDesc FROM eq_task_list WHERE surveyID = '"+qid+"' ORDER BY taskID ASC ;";
+	var taskRow = eval('('+getDbRows(sql,'rexsee:enableq.db')+')');
+	var taskdatas = " thisdata: [ ";
+	var totalResponseNum = 0;
+	if( count(taskRow.rows) != 0 )
+	{
+		for( var tmp in taskRow.rows )
+		{
+			sql = " SELECT joinTime,submitTime FROM eq_response_"+qid+" WHERE taskID ='"+taskRow.rows[tmp][0]+"' AND area = '"+nickUserName+"' AND overFlag =1 LIMIT 1 ";
+			var dataRow = eval('('+getDbRows(sql,'rexsee:enableq.db')+')');
+			if( count(dataRow.rows) != 0 )
+			{
+				totalResponseNum++;
+				taskdatas += " { ";
+				taskdatas += " taskName:'"+qJsonCharFilter(taskRow.rows[tmp][1])+"',";
+				taskdatas += " taskDesc:'"+qJsonCharFilter(taskRow.rows[tmp][2])+"',";
+				var actionTitle = "已于"+date('Y-m-d H:i:s',dataRow.rows[0][1])+"完成";
+				taskdatas += " actionTitle:'"+actionTitle+"' },";
+			}
+		}
+		taskdatas = taskdatas.substr(0,taskdatas.length-1)+"] }";
+	}
+	else //无数据
+	{
+		taskdatas += "] }";
+	}
+	if( totalResponseNum == 0 )
+	{
+		datas +="haveNoTask:'',";
+		datas +="totalResponseNum:'0',";
+	}
+	else
+	{
+		datas +="haveNoTask:'none',";
+		datas +="totalResponseNum:'"+totalResponseNum+"',";
+	}
+	datas += taskdatas;		
+</script>
+<script id="main_list_tpl" type="text/x-jsmart-tmpl">
+<div class="notesInfo">&nbsp;列出已完成任务：{$surveyTitle} (<font color=red>{$totalResponseNum}</font>)</div>
+
+<div class="invertedshiftdown">
+	<ul>
+      <li><a href="javascript:showtask0({$surveyID});">未完成任务</a>
+      <li class="current"><a href="javascript:showtask1({$surveyID});">已完成任务</a></li>
+	</ul>
+</div>
+
+<div id="androidList" style="padding-top:5px;background: #e5e5e5;" class="contentPadding">
+
+<form name="Check_Form" method="post" action="">
+{foreach $thisdata as $i => $data}
+  <table width=100% style="border:#d9d9d9 2px solid;margin-bottom:5px;background:#ffffff">
+   <tr>
+      <td height=50 width=* valign=center class="actiontitle">{$data.taskName}<br/><span class="taskDesc">({$data.taskDesc})</span></td>
+   </tr>
+   <tr>
+      <td height=30 width=* align=left class="sysinfo" style="padding-left:20px">{$data.actionTitle}</td>
+   </tr>
+ </table>
+{/foreach}
+  <table width=100% style="border:#d9d9d9 2px solid;margin-bottom:5px;background:#ffffff;display:{$haveNoTask}">
+   <tr style="display:{$haveNoTask}">
+      <td height=50 width=* valign=center class="actiontitle">当前无任务</span></td>
+   </tr>
+   <tr style="display:{$haveNoTask}">
+      <td height=30 width=* align=left class="taskDesc" style="padding-left:20px">无已完成任务</td>
+   </tr>
+ </table>
+</script>
+<script>
+   var tplText = document.getElementById('main_list_tpl').innerHTML;
+   var tpl = new jSmart( tplText );
+   var jsondatas = eval('('+datas+')');
+   var res = tpl.fetch( jsondatas );
+   document.write( res );
+</script>
+</div>
+</form>
+<script>scroll(0, 0);</script>
+</body>
+</html>

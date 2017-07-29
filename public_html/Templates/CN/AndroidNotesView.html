@@ -1,0 +1,45 @@
+<html>
+<head>
+<meta http-equiv=content-language content=zh-cn>
+<meta http-equiv=content-type content="text/html; charset=gbk">
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7">
+<style>
+ td { padding:2px 5px 2px 5px;}
+ table {margin-bottom:4px;}
+</style>
+<link href="../CSS/Base.css" rel="stylesheet">
+<meta content="mshtml 6.00.3790.0" name=generator></head>
+<body oncontextmenu="return false">
+    <table class=datatable style="line-height: 150%;border-collapse:collapse;" cellspacing=0 cellpadding=0 bordercolor=#cacaca border=1 width=100%>
+      <div class=position>位置：&nbsp; 我的桌面 &raquo; 推送消息详细</div>
+      <tr><td bgcolor="#f9f9f9" colspan=2>&nbsp;<b>推送消息详细</b></td></tr>
+      <tr> 
+         <td width="17%"><SPAN class=red>*</SPAN> 发送人：</td>
+         <td width="83%">{sendName}</td>
+      </tr>
+       <tr> 
+           <td height="25"><SPAN class=red>*</SPAN> 消息主题：</td>
+           <td>{pushTitle}</td>
+       </tr>
+       <tr> 
+           <td height="25"><SPAN class=red>*</SPAN> 消息内容：</td>
+           <td>{pushInfo}</td>
+       </tr>
+	  <tr><td><SPAN class=red>*</SPAN> 接受端：</td>
+	      <td>{isCommon}</td>
+	  </tr>
+	   <tr><td><SPAN class=red>*</SPAN> 推送时间：</td>
+		  <td>{pushTime}</td>
+	   </tr>
+	   <tr><td><SPAN class=red>*</SPAN> App查看<br/>&nbsp;&nbsp;&nbsp;消息的链接：</td>
+		  <td>{pushURL}</td>
+	   </tr>
+	  </table>		
+      <table width=100% style="border:0px;">
+      <tr><td width=17% style="border:0px;"></td>
+	    <td style="border:0px"> 
+		  <input class=inputsubmit type="button" name="close" value="关闭" onClick="javascript:parent.hidePopWin();">
+		 </td>
+      </tr>
+    </table>
+</body></html>

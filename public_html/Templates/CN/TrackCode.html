@@ -1,0 +1,249 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gbk" />
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" />
+<title>曝光代码 - Eclear在线问卷调查引擎</title>
+<link rel="shortcut icon" href="../Images/enableq.ico" type="image/x-icon" />
+<link rel="stylesheet" type="text/css" href="../CSS/UIBase.css" />
+<link rel="stylesheet" type="text/css" href="../CSS/Index.css" />
+<link href="../CSS/Window.css" type="text/css" rel=stylesheet>
+<script type="text/javascript" src="../JS/Common.js.php"></script>
+<script type="text/javascript" src="../JS/Window.js.php"></script>
+<script type="text/javascript" src="../JS/Jquery.min.js.php"></script>
+<script type="text/javascript" src="../JS/Jquery.notification.js.php"></script>
+<link type="text/css" rel="stylesheet" href="../CSS/Notification.css" />
+<script type="text/javascript" src="../JS/CheckQuestion.js.php"></script>
+<script type="text/javascript" src="../JS/Calendar.js.php"></script>
+<script>
+function refreshParent() {
+   //window.location.replace(window.location.href);
+   window.location.reload(true);
+}
+function Check_Form_Validator()
+{
+	//if (!CheckNotNull(document.Check_Form.exposureDomain, "曝光代码生成Cookie值的作用域")) {return false;}
+	if (!CheckNotNull(document.Check_Form.trackBeginTime, "Campaign的开始追踪时间")) {return false;}
+	if (!CheckNotNull(document.Check_Form.trackEndTime, "Campaign的结束追踪时间")) {return false;}
+	if ( document.Check_Form.trackBeginTime.value >= document.Check_Form.trackEndTime.value )
+	{
+		document.Check_Form.endTime.focus();
+		$.notification('开始追踪时间不应在结束追踪时间之后');
+		return false;
+    }
+	if (!CheckNotNull(document.Check_Form.exposureCampaign, "用以记录整个Campaign曝光量的Cookie变量名称")) {return false;}
+	if (!CheckSpecicalChar(document.Check_Form.exposureCampaign, "用以记录整个Campaign曝光量的Cookie变量名称")) {return false;}
+	if (!CheckNotNull(document.Check_Form.firstExposureCampaign, "用以记录整个Campaign首次曝光时间的Cookie变量名称")) {return false;}
+	if (!CheckSpecicalChar(document.Check_Form.firstExposureCampaign, "用以记录整个Campaign首次曝光时间的Cookie变量名称")) {return false;}
+	if (!CheckNotNull(document.Check_Form.lastExposureCampaign, "用以记录整个Campaign最近曝光时间的Cookie变量名称")) {return false;}
+	if (!CheckSpecicalChar(document.Check_Form.lastExposureCampaign, "用以记录整个Campaign最近曝光时间的Cookie变量名称")) {return false;}
+	if (!CheckNotNull(document.Check_Form.exposureNormal, "用以记录整个曝光组曝光量的Cookie变量名称")) {return false;}
+	if (!CheckSpecicalChar(document.Check_Form.exposureNormal, "用以记录整个曝光组曝光量的Cookie变量名称")) {return false;}
+	if (!CheckNotNull(document.Check_Form.firstExposureNormal, "用以记录整个曝光组首次曝光时间的Cookie变量名称")) {return false;}
+	if (!CheckSpecicalChar(document.Check_Form.firstExposureNormal, "用以记录整个曝光组首次曝光时间的Cookie变量名称")) {return false;}
+	if (!CheckNotNull(document.Check_Form.lastExposureNormal, "用以记录整个曝光组最近曝光时间的Cookie变量名称")) {return false;}
+	if (!CheckSpecicalChar(document.Check_Form.lastExposureNormal, "用以记录整个曝光组最近曝光时间的Cookie变量名称")) {return false;}
+	if (!CheckNotNull(document.Check_Form.exposureControl, "用以记录整个控制组曝光量的Cookie变量名称")) {return false;}
+	if (!CheckSpecicalChar(document.Check_Form.exposureControl, "用以记录整个控制组曝光量的Cookie变量名称")) {return false;}
+	if (!CheckNotNull(document.Check_Form.firstExposureControl, "用以记录整个控制组首次曝光时间的Cookie变量名称")) {return false;}
+	if (!CheckSpecicalChar(document.Check_Form.firstExposureControl, "用以记录整个控制组首次曝光时间的Cookie变量名称")) {return false;}
+	if (!CheckNotNull(document.Check_Form.lastExposureControl, "用以记录整个控制组最近曝光时间的Cookie变量名称")) {return false;}
+	if (!CheckSpecicalChar(document.Check_Form.lastExposureControl, "用以记录整个控制组最近曝光时间的Cookie变量名称")) {return false;}
+
+	var tmpArray = [];
+	tmpArray.push(Trim(document.Check_Form.exposureCampaign.value));
+	tmpArray.push(Trim(document.Check_Form.firstExposureCampaign.value));
+	tmpArray.push(Trim(document.Check_Form.lastExposureCampaign.value));
+	tmpArray.push(Trim(document.Check_Form.exposureNormal.value));
+	tmpArray.push(Trim(document.Check_Form.firstExposureNormal.value));
+	tmpArray.push(Trim(document.Check_Form.lastExposureNormal.value));
+	tmpArray.push(Trim(document.Check_Form.exposureControl.value));
+	tmpArray.push(Trim(document.Check_Form.firstExposureControl.value));
+	tmpArray.push(Trim(document.Check_Form.lastExposureControl.value));
+	var theLength = tmpArray.length;
+	var afterArray = unique(tmpArray);
+	if( theLength != afterArray.length )
+	{
+		$.notification('一致性错误：您定义的曝光Cookie变量名称中存在重复的变量名称!');
+		return false;
+	}
+}
+function CheckSpecicalChar(objField, strText)
+{
+    var objValue = Trim(objField.value);
+    if (objValue=="") return true;
+	var strErr = "“" + strText + "”只能含有汉字、数字、字母、下划线字符！";
+	var Re =  /^[a-zA-Z0-9_]{1,}$/;
+	if ( !Re.test(objField.value))
+	{
+        objField.focus();
+		$.notification(strErr);
+		return false;
+	}
+	return true;
+}
+function submitForm(actionName)
+{
+	if( Check_Form_Validator() != false )
+	{
+		document.getElementById('submitBtn').disabled = true;
+		disabledStyle(document.getElementById('submitBtn'));
+		document.getElementById('resetBtn').disabled = true;
+		disabledStyle(document.getElementById('resetBtn'));
+		document.getElementById('Action').value = actionName;
+		document.Check_Form.submit();
+	}
+}
+</script>
+
+<style>
+	input[type=text] {border:1px solid #cacaca;height:20px;font-family: Calibri,"宋体",sans-serif;line-height:20px;vertical-align: middle;}
+	select {border:1px solid #cacaca;font-family: Calibri,"宋体",sans-serif;vertical-align: middle;height:22px;line-height:22px}
+	input[type=checkbox]{vertical-align: middle;margin-right:5px}
+	input[type=radio]{vertical-align: middle;margin-right:5px}
+	textarea{height:80px;border:1px solid #cacaca;font-family: Calibri,"宋体",sans-serif;}
+	.clssel{height:20px}
+	select,img {vertical-align: middle;}
+	.inputsubmit{vertical-align: middle;}
+    .d_table tr:hover{background-color:transparent;}
+</style>
+</head>
+<body oncontextmenu="return false">
+ 	<div class="header">
+		<h1 class="logo">Eclear</h1>
+		<div class="header_menu">
+			<div class="header_m_1">
+				<a href="../System/ShowMain.php">欢迎您，<font color="#e45857" id="nick_Name_cont"></font></a>
+				<span class="head_menu_icon"></span>
+				<ul class="head_menu_list">
+					<span class="head_menu_top"></span>
+					<li><a href="../System/MyProfile.php">我的账户信息</a></li>
+					<li class="last"><a href="../System/ChangePass.php">修改我的密码</a></li>
+				</ul>
+			</div>
+			<div class="header_m_6" style="margin-left:50px">
+				<a href="../System/ShowMain.php">首页</a>
+			</div>
+			<div class="header_m_2" id="mySetting">
+			</div>
+			<div class="header_m_3" style="margin-left:50px">
+				<a href="../Help/Downs.php">帮助</a>
+				<span class="head_menu_icon"></span>
+				<ul class="head_menu_list">
+					<span class="head_menu_top"></span>
+					<li><a href="../Help/Downs.php">帮助文件下载</a></li>
+					<li><a href="http://doc.itenable.com.cn" target=_blank>在线帮助文档</a></li>
+					<li><a href="http://i.enableq.com" target=_blank>在线讨论社区</a></li>
+					<li class="last"><a href="../System/AdministratorsLogs.php">系统操作日志</a></li>
+				</ul>
+			</div>
+			<div class="header_m_4" style="margin-left:50px">
+				<a href="javascript:void(0);" onclick="javascript:showPopWin('../License/AboutEnableQ.php', 500, 400, null, null,'关于...')">关于</a>
+			</div>
+			<div class="header_m_5">
+				<a href="../System/Logout.php?loginOutURL=../index.php" target=_top>退出</a>
+			</div>
+		</div>
+	</div><!--end of header-->
+	<script type="text/javascript" src="../JS/MySetting.js.php"></script>
+
+	<div class="container clearfix">
+	   <div class="main">
+		<div class="nav">
+			    <a href="ShowSurveyList.php?Action=Edit&surveyID={surveyID}" style="display:{isAdmin6}">属性</a>
+				<a href="TrackCode.php?surveyID={surveyID}" style="display:{isTrackCode}" class="cur">追踪</a>
+				<a href="GetSurveyCode.php?surveyID={surveyID}" style="display:{isDeployStat}">分发</a>
+				<a href="ShowSurveyList.php?Action=EditUser&surveyID={surveyID}">用户</a>
+				<a href="{taskURL}" style="display:{haveTask}">任务</a>
+				<a href="{planURL}" style="display:{havePlan}">计划</a>
+		</div>		
+		<div class="sub_nav clearfix">
+			<p class="sub_nav_top clearfix">
+				<a href="TrackCode.php?surveyID={surveyID}" class="cur">曝光代码</a>
+				<a href="IssueCode.php?surveyID={surveyID}">分发代码</a>
+			</p>
+		</div>
+	    <div class="content">
+			<div class="content_tit">
+				<div class="clearfix">
+				<h1><span class=redtitle>[{surveyTitle}]</span>曝光代码</h1>
+				<span class="total ml10"></span>
+				<span class="btn ml10"></span>
+				</div>
+				<p class="fc_grey">曝光代码与曝光量Cookie变量定义</p>
+			</div>
+		   <div class="content_main" style="margin-top:10px;">
+			<form name="Check_Form" id="Check_Form" style="margin:0;padding:0" method="POST" action="">
+  			 <table class="d_table">
+			   <tr><th align=left class="question"><b>&nbsp;关于曝光代码...</b>&nbsp;<img src="../Images/info.gif" border=0></th></tr>   
+			   <tr><td style="line-height:22px">对于互联网广告事后测试与跟踪研究类项目，本功能帮助生成曝光量监测代码，可将生成的监测代码插入到广告素材中<br/>可在对应的研究问卷中创建"隐藏变量"的Cookie类型问题，其变量名称与本功能定义的曝光量Cookie变量一致，系统可将广告曝光量与问卷数据一并记录<br/>曝光量亦可作为问卷分发的前置控制，即样本是否能访问和回复问卷可基于控制组的曝光量定义前置条件</td></tr>
+			 </table>
+
+  			 <table class="d_table">
+			   <tr><th align=left class="question"><b>&nbsp;曝光代码生成Cookie值的作用域</b></th></tr>
+			   <tr>
+				   <td style="line-height:22px;padding-top:5px"><input name="exposureDomain" type="text" id="exposureDomain" size="50"  value="{exposureDomain}"><br/>&nbsp;<span class=red>*</span>&nbsp;该值非常重要，设置错误将会导致研究问卷中创建的"隐藏变量"Cookie类型问题取不到曝光代码生成的Cookie值<br/>&nbsp;<span class=red>*</span>&nbsp;如果Eclear系统部署的域名为[diaocha.domain.com.cn]，那么该值为[.domain.com.cn]<br/>&nbsp;<span class=red>*</span>&nbsp;如果曝光代码生成的Cookie值不需要被其他二级域名下的Web应用读取，可设置为空</td>
+			   </tr>
+			 </table>
+
+  			 <table class="d_table">
+			   <tr><th align=left class="question" colspan=3><b>&nbsp;曝光控制和曝光变量定义</b></th></tr>
+			   <tr><td colspan=3 bgcolor="#fcfcfc"><b>Campaign的追踪时间范围：</b></td></tr>
+			   <tr><td>开始追踪时间：<input name="trackBeginTime" type="text" id="trackBeginTime" size="20" readonly value="{trackBeginTime}" onfocus="if(this.value=='0000-00-00-00-00') this.value=''" onclick="javascript:SelectDate(this,'yyyy-MM-dd-hh-mm')"></td>
+				   <td>结束追踪时间：<input name="trackEndTime" type="text" id="trackEndTime" size="20" readonly value="{trackEndTime}" onfocus="if(this.value=='0000-00-00-00-00') this.value=''" onclick="javascript:SelectDate(this,'yyyy-MM-dd-hh-mm')"></td>
+				   <td>&nbsp;</td>
+				</tr>
+			   <tr><td colspan=3 bgcolor="#fcfcfc"><b>用以记录整个Campaign的Cookie变量名称：</b></td></tr>
+			   <tr><td>曝光量：t_{surveyID}_<input name="exposureCampaign" type="text" id="exposureCampaign" size="15" maxlength="30" value="{exposureCampaign}"></td>
+			       <td>首次曝光时间：t_{surveyID}_<input name="firstExposureCampaign" type="text" id="firstExposureCampaign" size="15" maxlength="30"  value="{firstExposureCampaign}"></td>
+				   <td>最近曝光时间：t_{surveyID}_<input name="lastExposureCampaign" type="text" id="lastExposureCampaign" size="15" maxlength="30"  value="{lastExposureCampaign}"></td></tr>
+			   <tr><td colspan=3 bgcolor="#fcfcfc"><b>用以记录整个曝光组的Cookie变量名称：</b></td></tr>
+			   <tr><td>曝光量：t_{surveyID}_<input name="exposureNormal" type="text" id="exposureNormal" size="15" maxlength="30" value="{exposureNormal}"></td>
+			       <td>首次曝光时间：t_{surveyID}_<input name="firstExposureNormal" type="text" id="firstExposureNormal" size="15" maxlength="30"  value="{firstExposureNormal}"></td>
+				   <td>最近曝光时间：t_{surveyID}_<input name="lastExposureNormal" type="text" id="lastExposureNormal" size="15" maxlength="30"  value="{lastExposureNormal}"></td></tr>
+			   <tr><td colspan=3 bgcolor="#fcfcfc"><b>用以记录整个控制组的Cookie变量名称：</b></td></tr>
+			   <tr><td>曝光量：t_{surveyID}_<input name="exposureControl" type="text" id="exposureControl" size="15" maxlength="30" value="{exposureControl}"></td>
+			       <td>首次曝光时间：t_{surveyID}_<input name="firstExposureControl" type="text" id="firstExposureControl" size="15" maxlength="30"  value="{firstExposureControl}"></td>
+				   <td>最近曝光时间：t_{surveyID}_<input name="lastExposureControl" type="text" id="lastExposureControl" size="15" maxlength="30"  value="{lastExposureControl}"></td></tr>
+			 </table>
+			
+			<table width=100%>
+			<tr><td>
+				<input type="hidden" name="Action" id="Action">
+				<input type="hidden" name="surveyID" id="surveyID" value="{surveyID}">
+				<input type="hidden" name="surveyTitle" id="surveyTitle" value="{surveyTitle}">
+				<input type="button" name="submitBtn" id="submitBtn" class=inputsubmit value="确 定" style="vertical-align: middle;" onclick="javascript:submitForm('TrackControlSubmit');"> 
+				<input name="resetBtn" id="resetBtn" type="reset" class=inputsubmit value="重 置" style="vertical-align: middle;"> 
+			</td></tr>
+
+  			<table class="d_table" style="margin-top:10px">
+			<tr><th align=left class="question" colspan=7><b>&nbsp;曝光代码</b>&nbsp;&nbsp;<span style="font-size:12px"><font color="#cf1100">[{totalRecNum}组]</font></span>&nbsp;&nbsp;<input class=inputsubmit name="trackNew" type="button" id="trackNew" value="新建" onclick="javascript:showPopWin('?surveyID={surveyID}&Action=NewTrack', 720, 300, refreshParent, null,'新建曝光代码')" style="vertical-align: middle;"></th></tr>
+			<tr class=coltitle>
+				 <th width=4% nowrap align=left>&nbsp;<B>组别</B></th>
+				 <th width=20% nowrap align=left>&nbsp;<B>创意名称</B></th>
+				 <th width=* align=left><B>曝光代码</B></th>
+				 <th width=8% nowrap align=center>&nbsp;<B>曝光量</b></th>
+				 <th width=8% nowrap align=center>&nbsp;<B>首次曝光时间</b></th>
+				 <th width=8% nowrap align=center>&nbsp;<B>最近曝光时间</b></th>
+				 <th width=6% nowrap>操作</th>
+			</tr>
+			<!-- BEGIN LIST -->
+			<tr> 
+			  <td nowrap>{tagCate}</td>
+			  <td>{tagName}</td>
+			  <td align=left>{trackCode}</td>
+			  <td align=center>{exposure}</td>
+			  <td align=center>{firstExposure}</td>
+			  <td align=center>{lastExposure}</td>
+			  <td align=center nowrap><a href="javascript:void(0);" onclick="javascript:showPopWin('?surveyID={surveyID}&Action=EditTrack&tagID={tagID}', 700, 450, refreshParent, null,'编辑曝光代码定义')">编辑</a> <a href="?surveyID={surveyID}&Action=DeleteTrack&tagID={tagID}&tagName={tagNameURL}" onclick="return window.confirm('您真的想删除该曝光代码定义吗？本操作不可恢复！?')">删除</a></td>
+			</tr>
+			<!-- END LIST -->
+			</table>
+			</form>
+			</div><!--end of content_main-->
+		   </div><!--end of content-->
+	   </div><!--end of main-->
+    </div><!--end of container-->
+	<!--popmenu -->
+	<script type="text/javascript" src="../JS/PopMenu.js.php"></script>
+</body></html>

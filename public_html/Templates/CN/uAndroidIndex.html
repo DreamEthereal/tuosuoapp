@@ -1,0 +1,100 @@
+<HTML>
+<HEAD>
+	<TITLE>{siteTitle}</TITLE>
+	<meta http-equiv=content-type content="text/html; charset=gbk">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta http-equiv="pragma" content="no-cache">
+	<meta http-equiv="cache-control" content="no-cache">
+	<meta http-equiv="expires" content="0">
+	<LINK href="../CSS/Android.css" type=text/css rel=stylesheet>
+	<SCRIPT type=text/javascript>
+		/*function setTabBar(){
+			var normalStyle = "width:fillparent;height:fillparent;weight:1;border-width:0;padding:2 10 3 10;font-size:16;color:#FFFFFF;icon-visibility:hidden;background-color:#444444+#888888+#222222/4;";
+			var pressedStyle = "background-color:#444444;";
+			var selectedStyle = "background-color:#6A0500+#FA0E01+#6A0500/4;";
+			rexseeMenu.create("mainTabBar", "height :40;width:fillparent;background-color:#444444;border-width:0;fading-edge-length:60;fading-edge-color:#444444;");
+			rexseeMenu.addItem("mainTabBar","index.php","label:我的问卷;"+normalStyle,pressedStyle,selectedStyle);
+			rexseeMenu.addItem("mainTabBar","InputIndex.php","label:调查数据;"+normalStyle,pressedStyle,selectedStyle);
+			rexseeTabBars.create("mainTabBar");
+			rexseeTabBars.select("mainTabBar",eval('('+rexseeTabBars.getTabIds('mainTabBar')+')')[0]);
+		}*/
+		window.onRexseeReady = function(){
+			//设置横屏
+			if( rexseeScreen.getScreenHeight() < 500 || rexseeScreen.getScreenWidth() < 500 )
+			{
+				rexseeScreen.setScreenOrientation('landscape');
+			}
+			rexseeMenu.create("mainOptionsMenu","label:mainOptionsMenu");
+			rexseeMenu.addItem("mainOptionsMenu","rexsee:reload","label:刷新;");
+			rexseeMenu.addItem("mainOptionsMenu","rexsee:quit","label:退出;");
+			rexseeMenu.setOptionsMenuId("mainOptionsMenu");
+			//setTabBar();
+			
+			rexseeMenu.create("mainOptionsMenu1","label:mainOptionsMenu1");
+			rexseeMenu.addItem("mainOptionsMenu1","rexsee:reload","label:刷新;");
+			rexseeMenu.addItem("mainOptionsMenu1","javascript:rexseeBrowser.goBack();","label:后退;");
+			rexseeMenu.addItem("mainOptionsMenu1","rexsee:quit","label:退出;");
+
+			rexseeMenu.create("mainOptionsMenu2","label:mainOptionsMenu2");
+			rexseeMenu.addItem("mainOptionsMenu2","javascript:rexseeBrowser.goBack();","label:后退;");
+			rexseeMenu.addItem("mainOptionsMenu2","rexsee:quit","label:退出;");
+
+			if( rexseePushHttpListener.contains('{pushURL}') )
+			{
+				rexseePushHttpListener.refresh(false,false);
+			}
+			else
+			{
+				rexseePushHttpListener.add('{pushURL}',rexseeTelephony.getSimSerialNumber(),rexseeTelephony.getDeviceId());
+				rexseePushHttpListener.setDurationAndTimeout(3,10);
+			}
+			
+			rexseeTitleBar.setStyle('visibility:hidden;');
+			rexseeStatusBar.setStyle('visibility:hidden;');
+
+			//rexseeCookie.removeAl();
+
+			rexseeSpecialKey.enableBackKeyListener(false);
+			//rexseeSpecialKey.enableVolumeKeyListener(false);
+			//rexseeBrowserStyle.setStyle('browser-zoom-button:visible;');
+
+			//正在加载信息
+			rexseeDialog.toast("正在努力为您加载信息...");
+
+			//显示文件列表
+			var deviceId = rexseeTelephony.getDeviceId();
+			ajaxSurveySubmit("ShowSurveyList.php","theDeviceId="+deviceId);
+		}
+		function ajaxSurveySubmit(url,postStr) {
+			var ajax=false; 
+			try { ajax = new ActiveXObject("Msxml2.XMLHTTP"); }
+			catch (e) { try { ajax = new ActiveXObject("Microsoft.XMLHTTP"); } catch (E) { ajax = false; } }
+			if (!ajax && typeof XMLHttpRequest!='undefined') ajax = new XMLHttpRequest(); 
+
+			ajax.open("POST", url, true); 
+			ajax.setRequestHeader("Content-Type","application/x-www-form-urlencoded"); 
+			ajax.send(postStr);
+			ajax.onreadystatechange = function(){
+				if( ajax.readyState == 4 && ajax.status == 200)
+				{
+					scroll(0,0);
+					document.getElementById('androidList').innerHTML = ajax.responseText;
+				} 
+		    }
+		}
+	</SCRIPT>
+</HEAD>
+<body background="#e5e5e5">
+<div style="padding:3px;font-weight:bold;background: -webkit-gradient(linear, left top, right bottom, from(#6A0500), to(#a80900));color:#fff;font-size:18px">
+ <table width=100%>
+   <tr><td width=30><a href="rexsee:quit"><img src="../Images/exit.png" border=0></a></td>
+   <td align=center width=* style="color:#fff;font-size:18px"><script>document.write(rexseeApplication.getLabel());</script></td>
+   <td width=30><a href="../r.php" style="display:{isNotRegister}"><img src="../Images/register.png" border=0></a></td>
+ </tr>
+ </table>
+</div>
+
+<div style="background:#ddd;border-bottom:#ccc 1px solid;font-size:12px;height:20px;padding:3px 0px 5px 0px;">【说明】选择调查项目，进行回复，感谢参与。</div>
+<div id="androidList" style="padding-left:10px;padding-right:10px;padding-top:2px;background: #e5e5e5;"></div>
+</body>
+</html>

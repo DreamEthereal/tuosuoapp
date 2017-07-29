@@ -1,0 +1,221 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gbk" />
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" />
+<title>管理节点所属子节点 - Eclear在线问卷调查引擎</title>
+<link rel="shortcut icon" href="../Images/enableq.ico" type="image/x-icon" />
+<link rel="stylesheet" type="text/css" href="../CSS/UIBase.css" />
+<link rel="stylesheet" type="text/css" href="../CSS/Index.css" />
+<link href="../CSS/Window.css" type="text/css" rel=stylesheet>
+<script type="text/javascript" src="../JS/Common.js.php"></script>
+<script type="text/javascript" src="../JS/Window.js.php"></script>
+<script type="text/javascript" src="../JS/Jquery.min.js.php"></script>
+<script type="text/javascript" src="../JS/Jquery.notification.js.php"></script>
+<link type="text/css" rel="stylesheet" href="../CSS/Notification.css" />
+<script type="text/javascript" src="../JS/Actions.js.php"></script>
+<script type="text/javascript" src="../JS/CheckQuestion.js.php"></script>
+<script language="javascript"> 
+function checkall(form) 
+{
+	if( form.all.checked)
+	{
+		for(var i = 0;i < form.elements.length-1; i++) 
+		{
+			var e = form.elements[i];
+			if( ! e.disabled )	e.checked = true;
+		}
+	}
+	else
+	{
+		for(var i = 0;i < form.elements.length-1; i++) 
+		{
+			var e = form.elements[i];
+			if( ! e.disabled )	e.checked = false;
+		}
+    }
+}
+function refreshParent() {
+   self.location.reload();
+   parent.refreshNode();
+}
+function checkSelectUser()
+{
+	var strErr = "操作要求必须先选择一个或多个节点！";
+	objField = document.Check_Form.userGroupID;
+	if( typeof objField != 'undefined' )
+	{
+		if( objField.length == null )
+		{
+			if (! objField.disabled && objField.checked) return true;
+			else
+			{
+				document.Check_Form.all.focus();
+				$.notification(strErr);
+				return false;
+			}
+		}
+		else
+		{
+			for (i=0;i<objField.length;i++){
+				if ( ! objField[i].disabled && objField[i].checked) return true;
+			}
+			document.Check_Form.all.focus();
+			$.notification(strErr);
+			return false;
+		}
+	}
+	else
+	{
+		$.notification(strErr);
+		return false;
+	}
+}
+function checkUserAction( actionValue )
+{
+	if ( checkSelectUser()) 
+	{
+		document.getElementById('DeleUsersSubmit').disabled = true;
+		disabledStyle(document.getElementById('DeleUsersSubmit'));
+		document.getElementById('TranUsersSubmit').disabled = true;
+		disabledStyle(document.getElementById('TranUsersSubmit'));
+		gId('formAction').value = actionValue;
+		gId('Check_Form').submit();
+	}
+}
+
+function deleteUserSubmit()
+{
+	if( document.getElementById('tran_userGroupID') == null )
+	{
+		if ( checkSelectUser()) 
+		{
+			if( window.confirm('危险提示!!!您真的想删除选中的这些用户节点吗？操作将会删除该节点以及子节点，该节点以及子节点所属的全部用户将会移向一个以当前时间命名的临时节点，而且不可恢复！') )
+			{
+				checkUserAction('DeleUsersSubmit');
+			}
+		}
+	}
+	else
+	{
+		gId('tran_userGroupID_container').innerHTML = "<input name=\"t_tran_userGroupID\" id=\"t_tran_userGroupID\" size=20 type=text>";
+		gId('DeleUsersSubmit').value = '删除';
+		gId('TranUsersSubmit').value = '检索';
+	}
+}
+
+function tranUserSubmit()
+{
+	if( document.getElementById('tran_userGroupID') == null )
+	{
+		if(Trim(gId('t_tran_userGroupID').value) == '' )
+		{
+			$.notification("输入节点名中的关键字获得可选择的节点列表!");
+			gId('t_tran_userGroupID').focus();
+		}
+		else
+		{
+			AjaxRequest("../System/AjaxSearchNodes.php?groupType={groupType}&t_name="+Trim(gId('t_tran_userGroupID').value));
+		}
+	}
+	else
+	{
+		if ( checkSelectUser() && CheckListNoSelect(gId('tran_userGroupID'),"需要迁往的节点")) 
+		{
+			document.getElementById('DeleUsersSubmit').disabled = true;
+			disabledStyle(document.getElementById('DeleUsersSubmit'));
+			document.getElementById('TranUsersSubmit').disabled = true;
+			disabledStyle(document.getElementById('TranUsersSubmit'));
+			gId('formAction').value = 'TranUsersSubmit';
+			gId('Check_Form').submit();
+		}
+	}
+}
+function AjaxRequest(url)
+{
+    var ajax=false; 
+	try { ajax = new ActiveXObject("Msxml2.XMLHTTP"); }
+	catch (e) { try { ajax = new ActiveXObject("Microsoft.XMLHTTP"); } catch (E) { ajax = false; } }
+	if (!ajax && typeof XMLHttpRequest!='undefined') ajax = new XMLHttpRequest(); 
+
+	ajax.onreadystatechange = function(){
+	   if( ajax.readyState == 4 && ajax.status == 200)
+	   {
+		  var theRtnArray = ajax.responseText.split('######');
+		  if( theRtnArray[0] == 'false' )
+		  {
+			  $.notification(theRtnArray[1]);
+			  gId('t_tran_userGroupID').focus();
+		  }
+		  else
+		  {
+			  gId('tran_userGroupID_container').innerHTML = theRtnArray[1];
+			  gId('DeleUsersSubmit').value = '清空';
+			  gId('TranUsersSubmit').value = '开始';
+		  }	
+	   }
+	};
+	ajax.open('GET', url, true);
+	ajax.send(null);
+}
+</script>
+<style>
+	input[type=text] {border:1px solid #cacaca;height:18px;font-family: Calibri,"宋体",sans-serif;line-height:18px;vertical-align: middle;}
+	select {border:1px solid #cacaca;height:20px;font-family: Calibri,"宋体",sans-serif;vertical-align: middle;}
+</style>
+</head>
+
+<body oncontextmenu="return false">
+	<div class="container clearfix" style="margin-top:0px">
+		<div class="main">
+		    <div class="nav">
+				<a href="{thisURL}">节点用户</a>
+				<a href="{thisNodeURL}" class="cur">子节点</a>
+			</div>			
+		   <div class="content">
+			<div class="content_tit">
+				<div class="clearfix">
+				<h1><span class=redtitle title="{nodeAllName}"><u>{nodeName}</u></span>节点</h1></h1>
+				<span class="total ml10">[{recNum} / {totalNum}节点]</span>
+				<span class="btn ml10"><input class=stnsubmit name="createNew" type="button" id="createNew" value="新增节点" onclick="javascript:showPopWin('{addURL}', 630, 220, refreshParent, null,'新增用户节点')">&nbsp;</span>
+				</div>
+			</div>
+			<div class="content_main">
+			<form name="Check_Form" id="Check_Form" style="margin:0;padding:0" method="POST" action="">
+			   <div class="search_form" style="height:50px;line-height:50px">
+				<span style="float:left;"><IMG SRC="../Images/search.gif"> 查找节点名包含：<input type="text" name="name" value="{name}" size=17>&nbsp;<input type="submit" class=inputsubmit name="Submit" value="查询" style="vertical-align: middle;"><input name="Action" type="hidden" id="Action" value="querySubmit"></span>	   
+	 		 </div>
+  			 <table class="d_table">
+				<tr class=coltitle> 
+					 <th width=3% align=center noWrap><input name="all" type="checkbox" id="all" value="all" onclick="checkall(this.form)" style="BACKGROUND-COLOR:#f9f9f9"></th>
+					 <th width=* noWrap align=left><b>节点名</b></th>
+					 <th width=10% noWrap align=center><b>子节点数</b></th>
+					 <th width=10% noWrap align=center><b>用户数</b></th>
+					 <th width=11% nowrap align=center><b>操作</b></th>
+				</tr>
+
+				 <!-- BEGIN USER -->
+				 <tr> 
+					  <td width=3% align=center noWrap><input name="userGroupID[]" type="checkbox" id="userGroupID" value="{userGroupID}"></td>
+					  <td title="{userAllGroupName}" align=left><a href="{viewURL}" title="{userAllGroupName}">{userGroupName}</a></td>
+					  <td align=center noWrap>{userGroupNodeNum}</td>
+					  <td align=center noWrap>{userGroupUserNum}</td>
+					  <td align=center nowrap><a href="{viewURL}">查看</a> <a href="javascript:void(0);" onclick="javascript:showPopWin('{editURL}', 630, 220, refreshParent, null,'编辑节点信息')">编辑</a> <a href="{deleteURL}" onclick="return window.confirm('危险提示!!!您真的想删除选中的这些用户节点吗？操作将会删除该节点以及子节点，该节点以及子节点所属的全部用户将会移向一个以当前时间命名的临时节点，而且不可恢复！')">删除</a></td>
+				  </tr>
+				  <!-- END USER -->
+			     </table><table width=99%>
+				 <tr>
+					<td align=left valign=center>
+					<span style="float:left">选中的节点迁移至：<span id="tran_userGroupID_container"><input name="t_tran_userGroupID" id="t_tran_userGroupID" size=20 type=text></span>&nbsp;<input name="TranUsersSubmit" class=inputsubmit type="button" id="TranUsersSubmit" value="检索" onclick="javascript:tranUserSubmit();" style="vertical-align: middle;"> 
+					<input name="DeleUsersSubmit" class=inputsubmit type="button" id="DeleUsersSubmit" value="删除" onclick="javascript:deleteUserSubmit();"  style="vertical-align: middle;"> 
+					<input name="formAction" id="formAction" type="hidden"></span>
+					<span style="float:right;display:{isTopNode};margin-top:4px"><img src="../Images/top.gif" align=absmiddle>&nbsp;<a href="{topURL}">回上级</a>&nbsp;</span>
+					</td></tr>
+			</table>
+		   </form>
+			 <div class="pages">{pagesList}</div>
+			</div><!--end of content_main-->
+		   </div><!--end of content-->
+	   </div><!--end of main-->
+    </div><!--end of container-->
+</body></html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<META http-equiv=Content-Language content=zh-cn>
+<META http-equiv=Content-Type content="text/html; charset=gbk">
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7">
+<link rel="stylesheet" type="text/css" href="CSS/UIBase.css" />
+<link rel="stylesheet" type="text/css" href="CSS/Index.css" />
+<style> td { padding:2px 5px 2px 5px;} table { margin-bottom:4px;}</style>
+</head>
+<body>
+	<div class="container clearfix">
+	   <div class="main">
+		    <div class="content">
+			<div class="content_tit">
+				<div class="clearfix">
+				<h1>列出<span class=redtitle>[{cateName}]</span>分类下的调查问卷</h1>
+				<span class="total ml10"></span>
+				<span class="btn ml10"></span>
+				</div>
+				<p class="fc_grey">选择对应的调查问卷，提交您的意见回复</p>
+			</div>
+			<div class="content_main" style="margin-top:10px">
+				<table class="d_table">
+				   <!-- BEGIN SURVEY -->
+				   <tr style="display:{haveAnswer}"><td><a href="{surveyURL}" target=_blank class="linkblue">{surveyTitle}</a></td></tr>
+				  <!-- END SURVEY -->
+				</table>
+			 </div><!--end of content_main-->
+		   </div><!--end of content-->
+	   </div><!--end of main-->
+    </div><!--end of container-->
+<!--该调查问卷列表由科维能动EnableQ在线问卷调查引擎系统生成 -->
+</body>
+</html>

@@ -1,0 +1,165 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gbk" />
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" />
+<title>管理展示模板 - Eclear在线问卷调查引擎</title>
+<link rel="shortcut icon" href="../Images/enableq.ico" type="image/x-icon" />
+<link rel="stylesheet" type="text/css" href="../CSS/UIBase.css" />
+<link rel="stylesheet" type="text/css" href="../CSS/Index.css" />
+<link href="../CSS/Window.css" type="text/css" rel=stylesheet>
+<script type="text/javascript" src="../JS/Common.js.php"></script>
+<script type="text/javascript" src="../JS/Window.js.php"></script>
+<script type="text/javascript" src="../JS/Jquery.min.js.php"></script>
+<script language="javascript">
+function refreshParent() {
+   self.location.reload();
+}
+</script>
+</head>
+
+<body oncontextmenu="return false">
+ 	<div class="header">
+		<h1 class="logo">Eclear</h1>
+		<div class="sidebar_show"></div>
+		<div class="header_menu">
+			<div class="header_m_1">
+				<a href="../System/ShowMain.php">欢迎您，<font color="#e45857" id="nick_Name_cont"></font></a>
+				<span class="head_menu_icon"></span>
+				<ul class="head_menu_list">
+					<span class="head_menu_top"></span>
+					<li><a href="../System/MyProfile.php">我的账户信息</a></li>
+					<li class="last"><a href="../System/ChangePass.php">修改我的密码</a></li>
+				</ul>
+			</div>
+			<div class="header_m_6" style="margin-left:50px">
+				<a href="../System/ShowMain.php">首页</a>
+			</div>
+			<div class="header_m_2" id="mySetting">
+			</div>
+			<div class="header_m_3" style="margin-left:50px">
+				<a href="../Help/Downs.php">帮助</a>
+				<span class="head_menu_icon"></span>
+				<ul class="head_menu_list">
+					<span class="head_menu_top"></span>
+					<li><a href="../Help/Downs.php">帮助文件下载</a></li>
+					<li><a href="http://doc.itenable.com.cn" target=_blank>在线帮助文档</a></li>
+					<li><a href="http://i.enableq.com" target=_blank>在线讨论社区</a></li>
+					<li class="last"><a href="../System/AdministratorsLogs.php">系统操作日志</a></li>
+				</ul>
+			</div>
+			<div class="header_m_4" style="margin-left:50px">
+				<a href="javascript:void(0);" onclick="javascript:showPopWin('../License/AboutEnableQ.php', 500, 400, null, null,'关于...')">关于</a>
+			</div>
+			<div class="header_m_5">
+				<a href="../System/Logout.php?loginOutURL=../index.php" target=_top>退出</a>
+			</div>
+		</div>
+	</div>
+
+	<div class="container clearfix">
+		<div class="sider_bar">
+			<div class="sider_menu">
+				<a class="sider_menu_title cur" href="javascript:void(0);" onclick="menuToggle('sider_menu_list_1')">调查问卷模版</a>
+				<ul class="sider_menu_list" id="sider_menu_list_1">
+					<li><a href="../System/MgtTplFile.php" class="sel">管理展示模板</a></li>
+					<li><a href="../System/MgtImageFile.php">管理附属文件</a></li>
+				</ul>
+			</div>
+			<div class="sider_menu">
+				<a class="sider_menu_title" href="javascript:void(0);" onclick="menuToggle('sider_menu_list_2')">辅助问卷管理</a>
+				<ul class="sider_menu_list" id="sider_menu_list_2">
+					<li><a href="../System/MgtNormalOption.php">定义常用选项</a></li>
+					<li id="batchSurveyAction"><a href="../System/BatchSurveyAction.php">批量问卷操作</a></li>
+					<li><a href="../System/SurveyDistribution.php">迁移问卷数据</a></li>
+					<li><a href="../System/MgtArchiving.php">问卷归档记录</a></li>
+				</ul>
+			</div>
+			<div class="sider_menu" id="researchReport">
+				<a class="sider_menu_title" href="javascript:void(0);" onclick="menuToggle('sider_menu_list_4')">辅助调研管理</a>
+				<ul class="sider_menu_list" id="sider_menu_list_4">
+					<li><a href="../System/ResearchReport.php">管理调研文件</a></li>
+				</ul>
+			</div>
+			<div class="sider_menu" id="listSurveyApi">
+				<a class="sider_menu_title" href="javascript:void(0);" onclick="menuToggle('sider_menu_list_3')">问卷列表调用</a>
+				<ul class="sider_menu_list" id="sider_menu_list_3">
+					<li><a class="window-700-360" title="问卷列表调用" href="../System/ListSurveyAPI.php">问卷列表调用</a></li>
+				</ul>
+			</div>
+		</div>
+	    <script type="text/javascript" src="../JS/MySetting.js.php"></script>
+
+	   <div class="main">
+		 <div class="content">
+			<div class="content_tit">
+				<div class="clearfix">
+				<h1>管理展示调查问卷的框架模板</h1>
+				<span class="total ml10">[{recNum}模板]</span>
+				<span class="btn ml10"><input class=stnsubmit name="createNew" type="button" id="createNew" value="上传模板" onclick="javascript:showPopWin('MgtTplFile.php?Action=Add', 700, 280, refreshParent, null,'上传新展示模板')">&nbsp;</span>
+				</div>
+				<p class="fc_grey">用以管理展示调查问卷页面的框架页面，可根据实际自定义调查问卷页面的头和脚</p>
+			</div>
+			<div class="content_main" style="margin-top:10px">
+			  <form action="" method="post" name="Panel_Form" id="Panel_Form">
+			   <table class="d_table">
+				 <tr class=coltitle>
+					<th width=5%>&nbsp;</th>
+					<th align="left" width=35%>&nbsp;&nbsp;<b>模板标识名称</b></th>
+					<th align="left" width=35%>&nbsp;&nbsp;<b>模板文件名</b></th>
+					<th align="center" width=25%><b>操 作</b></th>
+				</tr>
+				<!-- BEGIN TPL -->
+				<tr>
+					<td align="center"><input type="radio" name="defaultPanel" value="{panelID}" {isDefault}></td>
+					<td>&nbsp;&nbsp;{tplTagName}</td>
+					<td>&nbsp;&nbsp;{tplFileName}</td>
+					<td align="center">
+						<a href="?Action=Download&panelID={panelID}">下载</A>&nbsp;
+						<a href="javascript:void(0);" onclick="javascript:showPopWin('?Actions=Upload&panelID={panelID}', 700, 280, refreshParent, null,'上传覆盖原模板文件{tplName}');" style="display:{isSystem}">上传</A>&nbsp;
+						<a href="javascript:void(0);" onclick="javascript:showPopWin('?Actions=WebEdit&panelID={panelID}', 700, 450, null, null,'在线编辑模板文件{tplName}');" style="display:{isSystem}">在线编辑</A>&nbsp;
+						<a href="?Actions=Delete&panelID={panelID}" onclick="return window.confirm('您真的想删除模板文件{tplName}吗？本操作不可恢复！')" style="display:{isSystem}">删除</A>
+					</td>
+				</tr>
+				<!-- END TPL -->
+				</table><table width=100% style="border:0px;">
+				 <tr><td colspan="4" align=center style="border:0px;"><input type=hidden name="Actions" value="SettingDefaultSubmit"><input type="submit" class=inputsubmit value="设为默认" {isSuper}></td></tr>
+			  </table>
+			  <table style="border:0px;margin-top:15px;margin-bottom:15px" class="n_table">
+				<tr>
+				 <td style="border:0px;padding-left:0px;">
+				     <img src="../Images/notes.gif">：<b>[模板]</b> 展示模板作为问卷展示页面的框架，可根据实际自定义问卷页面的头和脚<br/>
+					 <img src="../Images/notes.gif">：<b>[图片]</b> 模板文件如需要引用到图片/动画文件，请使用“管理附属文件”上传该文件<br/>
+					 <img src="../Images/notes.gif">：<b>[设计]</b> 问卷页面除框架之外的部分，原则上是不允许修改的<br/>
+					 <img src="../Images/notes.gif">：<b>[设计]</b> 对于“公开”类型的问卷，可通过“获取执行代码”下载该问卷的全部HTML代码再重新编辑<br/>
+					 <img src="../Images/notes.gif">：<b>[字体]</b> 问卷页面中的问题或选项的字体大小，可直接修改CSS目录下的对应CSS文件来实现<br/>
+				 </td>
+			   </tr>
+			  </table>
+			  </form>
+			</div><!--end of content_main-->
+		 </div><!--end of content-->
+	  </div><!--end of main-->
+   </div><!--end of container-->
+
+	<link href="../CSS/SideBar.css" type=text/css rel=stylesheet>
+	<script type="text/javascript" src="../JS/Jquery.min.js.php"></script>
+	<script type="text/javascript" src="../JS/SideBar.js.php"></script>
+	<div id="sideBar">
+		<a href="javascript:void(0);" id="sideBarTab" onfocus="this.blur();"><img src="../Images/slide-button.gif"/></a>
+		<div id="sideBarContents" style="display:none">
+			<div id="sideBarContentsInner" style="display:none">
+				<h2>操作小提示</h2>
+				<ul>
+					<li><b>[默认]</b> 设定系统的默认调查问卷展示模版，当调查问卷不指定其对应的展示模版时，使用系统设定的默认模版</li>
+					<li><b>[特定]</b> 每一个调查问卷可在“属性”处指定其对应的展示模版，但需先在本功能处完成展示模版的上传</li>
+					<li><b>[图片]</b> 模板文件如需要引用到图片或者动画文件，可使用“管理附属文件”上传，或直接使用外部文件，系统建议后一种方案</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<script>initSideBar();</script>
+	<!--popmenu -->
+	<script type="text/javascript" src="../JS/PopMenu.js.php"></script>
+</body>
+</html>

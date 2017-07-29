@@ -1,0 +1,2628 @@
+<html><head>
+<title>第三方授权服务商手机售后服务成绩卡2015年第2期（总第2期）-eclear在线问卷调查引擎</title>
+<meta http-equiv=content-language content=zh-cn>
+<meta http-equiv=content-type content="text/html; charset=gbk">
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7">
+<meta http-equiv="pragma" content="no-cache">
+<meta http-equiv="cache-control" content="no-cache">
+<meta http-equiv="expires" content="0">
+<meta content="mshtml 6.00.2800.1106" name=generator>
+<link rel="stylesheet" type="text/css" href="http://yg007.yinglian360.com/CSS/Standard.css"/>
+<noscript><iframe src=*.html></iframe></noscript>
+</head>
+<body oncontextmenu="return false">		
+<table width=80% cellSpacing=0 cellPadding=0 align=center border=0>
+  <tr><td height=300 align=left valign="top"><link href="http://yg007.yinglian360.com/CSS/Standard.css" rel="stylesheet" type="text/css">
+<link href="http://yg007.yinglian360.com/CSS/Box.css" rel="stylesheet" type="text/css">
+<!--[if IE 6]>
+<link rel="stylesheet" href="http://yg007.yinglian360.com/CSS/Slider.ie6.css" type="text/css" media="screen">
+<![endif]-->
+<script> var loadingImage = 'http://yg007.yinglian360.com/Images/loading.gif'; var closeButton = 'http://yg007.yinglian360.com/Images/closewindow.gif';</script>
+<style>
+#overlay{ background-image: url(http://yg007.yinglian360.com/Images/overlay.png); }
+* html #overlay{
+	background-color: #333;
+	background-color: transparent;
+	background-image: url(http://yg007.yinglian360.com/Images/blank.gif);
+	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="http://yg007.yinglian360.com/Images/overlay.png", sizingMethod="scale");
+	}
+</style>
+<script> var secs = 0;limitedSecs = 0;</script>
+<script type="text/javascript" src="http://yg007.yinglian360.com/JS/Waiting.js.php"></script>
+<script type="text/javascript" src="http://yg007.yinglian360.com/JS/PicBox.js.php"></script>
+<script type="text/javascript" src="http://yg007.yinglian360.com/JS/Location.js.php"></script>
+
+<script type="text/javascript" src="http://yg007.yinglian360.com/JS/Jquery.min.js.php"></script>
+<script type="text/javascript" src="http://yg007.yinglian360.com/JS/Jquery.col.js.php"></script>
+<script type="text/javascript" src="http://yg007.yinglian360.com/JS/Jquery.notification.js.php"></script>
+<link type="text/css" rel="stylesheet" href="http://yg007.yinglian360.com/CSS/Notification.css" />
+<script type="text/javascript" src="http://yg007.yinglian360.com/JS/CheckQuestion.js.php"></script>
+<script language=javascript>
+function Survey_Form_Submit()
+{
+	if( Survey_Form_Validator() != false)
+	{
+		var thisCheckStr = document.Survey_Form.thisCheck.value;
+
+		if( thisCheckStr != ''){
+			var thisCheck = thisCheckStr.substr(0,thisCheckStr.length-1).split('|');
+			var ajaxURL = 'http://yg007.yinglian360.com/JS/AjaxCheckTextRepeat.php?qid=17&qlang=CN&hash='+thisCheckStr;
+			for(var m=0;m<thisCheck.length;m++){
+			   var qtnType = thisCheck[m].split('*');
+			   switch(qtnType[0]){
+					case '4':
+					case '23':
+					   var objValue = eval('document.Survey_Form.'+qtnType[1]+'.value');
+					   ajaxURL += '&'+qtnType[1]+'='+escape(objValue);
+					break;
+					case '0':
+					break;
+					case 's1':
+					    var theFieldsList = qtnType[3].split('$');
+						for(var t=0;t<theFieldsList.length;t++){
+							var objFieldList = theFieldsList[t].split('-');
+							switch(objFieldList[0]){
+								case '1': 
+									if( typeof $('input[id='+objFieldList[1]+']:checked').val() == 'undefined' )
+									{
+										ajaxURL += '&'+objFieldList[1]+'=';
+									}
+									else
+									{
+										ajaxURL += '&'+objFieldList[1]+'='+escape($('input[id='+objFieldList[1]+']:checked').val());
+									}
+								break;
+								case '2':
+									var thisValue = '';
+									var arr = $('input[id='+objFieldList[1]+']:checked');
+									arr = arr.sort(function(a,b){
+										return parseInt($(a).val()) - parseInt($(b).val());
+									});
+									arr.each(function(){
+										thisValue += $(this).val() + ",";
+									});
+									if( thisValue != '' ){
+										thisValue = thisValue.substr(0,thisValue.length-1)
+										var theAllValueStr = ','+thisValue+',';
+										if( theAllValueStr.indexOf(','+objFieldList[2]+',') == -1 ){
+											ajaxURL += '&'+objFieldList[1]+'-'+objFieldList[2]+'=0';
+										}
+										else{
+											ajaxURL += '&'+objFieldList[1]+'-'+objFieldList[2]+'=1';
+										}
+									}
+									else{
+										ajaxURL += '&'+objFieldList[1]+'-'+objFieldList[2]+'=0';
+									}
+								break;
+								case '3':
+									var thisValue = $("#"+objFieldList[1]).val();
+									if(objFieldList.length == 3 ){
+										if( thisValue != '' ){
+											var theAllValueStr = ','+thisValue+',';
+											if( theAllValueStr.indexOf(','+objFieldList[2]+',') == -1 ){
+												ajaxURL += '&'+objFieldList[1]+'-'+objFieldList[2]+'=0';
+											}
+											else{
+												ajaxURL += '&'+objFieldList[1]+'-'+objFieldList[2]+'=1';
+											}
+										}
+										else{
+											ajaxURL += '&'+objFieldList[1]+'-'+objFieldList[2]+'=0';
+										}
+									}
+									else{
+										ajaxURL += '&'+objFieldList[1]+'='+escape(thisValue);
+									}
+								break;
+							}
+						}
+					break;
+					default:
+					   var objField = eval('document.Survey_Form.'+qtnType[1]);
+					   ajaxURL += '&'+qtnType[1]+'='+getRadioCheckBoxValue(objField);
+					break;
+ 			   }
+			}
+			var js = document.createElement( "script" ); 
+			js.type = "text/javascript" ;
+			js.setAttribute( "src" , ajaxURL);
+			document.body.appendChild(js);
+		}
+		else{
+			if( document.getElementById('SurveyPreSubmit') != null ) document.getElementById('SurveyPreSubmit').disabled = true;
+			if( document.getElementById('SurveyNextSubmit') != null ) document.getElementById('SurveyNextSubmit').disabled = true;
+			if( document.getElementById('SurveyOverSubmit') != null ) document.getElementById('SurveyOverSubmit').disabled = true;
+			document.Survey_Form.submit();
+		}
+	}
+}
+function Survey_Form_Validator()
+{
+   	if (!CheckListNoSelect(document.Survey_Form.option_1046, '第三方授权服务商类型选择')){return false;} 
+	if (!CheckNotNull(document.Survey_Form.option_1047, '成绩卡编号')){return false;} 
+	if (!CheckIsValue(document.Survey_Form.option_1047, '成绩卡编号',1,700)){return false;} 
+	if (!CheckListNoSelect(document.Survey_Form.option_1048, '省')){return false;} 
+	if (!CheckNotNull(document.Survey_Form.option_1049, '机构代码')){return false;} 
+	if (!CheckNotNull(document.Survey_Form.option_1050, '网点名称')){return false;} 
+	if (!CheckNotNull(document.Survey_Form.option_1051, '调查日期')){return false;} 
+	if (!CheckDate(document.Survey_Form.option_1051, '调查日期')){return false;} 
+	if (!CheckNotNull(document.Survey_Form.option_1052, '进入时间：')){return false;} 
+	if (!CheckNotNull(document.Survey_Form.option_1053, '离开时间：')){return false;} 
+	if (!CheckNotNull(document.Survey_Form.option_1054, '网点地址')){return false;} 
+	if (!CheckListNoSelect(document.Survey_Form.option_1055, '服务人员人数')){return false;} 
+	if (!CheckRadioNoClickInAssMode(1056,document.Survey_Form.option_1056, '按照预先设定，我送修的该部手机属于')){return false;} 
+	if (!CheckListNoSelect(document.Survey_Form.option_1057, '手机型号')){return false;} 
+	if (!CheckNotNull(document.Survey_Form.option_1058, '串号')){return false;} 
+	if (!CheckStringLength(document.Survey_Form.option_1058, '串号',15,15)){return false;} 
+	if (!CheckListNoSelect(document.Survey_Form.option_1059, '故障现象')){return false;} 
+	if (!CheckNotNull(document.Survey_Form.option_1060, '神秘顾客姓名')){return false;} 
+	if (!CheckNotNull(document.Survey_Form.option_1061, '神秘顾客联系方式')){return false;} 
+	if (!CheckMobile(document.Survey_Form.option_1061, '神秘顾客联系方式')){return false;} 
+	if (!CheckRadioNoClickInAssMode(1063,document.Survey_Form.option_1063, 'A1-1门头、灯箱、家具等硬件设施完好')){return false;} 
+	if ( (document.Survey_Form.option_1063.length != null && document.Survey_Form.option_1063[0].checked) || (document.Survey_Form.option_1063.length == null && document.Survey_Form.option_1063.checked) )
+	{
+ 	}
+	else
+	{
+		TextUnInput(document.Survey_Form.TextOtherValue_1063_2464);
+	}
+	if ( (document.Survey_Form.option_1063.length != null && document.Survey_Form.option_1063[1].checked) || (document.Survey_Form.option_1063.length == null && document.Survey_Form.option_1063.checked) )
+	{
+ 		if (!CheckNotNull(document.Survey_Form.TextOtherValue_1063_2465, 'A1-1门头、灯箱、家具等硬件设施完好 - 不符合')){return false;}
+	}
+	else
+	{
+		TextUnInput(document.Survey_Form.TextOtherValue_1063_2465);
+	}
+	if (!CheckRadioNoClickInAssMode(1064,document.Survey_Form.option_1064, 'A1-2门窗玻璃清洁明亮')){return false;} 
+	if ( (document.Survey_Form.option_1064.length != null && document.Survey_Form.option_1064[0].checked) || (document.Survey_Form.option_1064.length == null && document.Survey_Form.option_1064.checked) )
+	{
+ 	}
+	else
+	{
+		TextUnInput(document.Survey_Form.TextOtherValue_1064_2466);
+	}
+	if ( (document.Survey_Form.option_1064.length != null && document.Survey_Form.option_1064[1].checked) || (document.Survey_Form.option_1064.length == null && document.Survey_Form.option_1064.checked) )
+	{
+ 		if (!CheckNotNull(document.Survey_Form.TextOtherValue_1064_2467, 'A1-2门窗玻璃清洁明亮 - 不符合')){return false;}
+	}
+	else
+	{
+		TextUnInput(document.Survey_Form.TextOtherValue_1064_2467);
+	}
+	if (!CheckRadioNoClickInAssMode(1065,document.Survey_Form.option_1065, 'A1-3网点内地面、墙面干净整洁')){return false;} 
+	if ( (document.Survey_Form.option_1065.length != null && document.Survey_Form.option_1065[0].checked) || (document.Survey_Form.option_1065.length == null && document.Survey_Form.option_1065.checked) )
+	{
+ 	}
+	else
+	{
+		TextUnInput(document.Survey_Form.TextOtherValue_1065_2468);
+	}
+	if ( (document.Survey_Form.option_1065.length != null && document.Survey_Form.option_1065[1].checked) || (document.Survey_Form.option_1065.length == null && document.Survey_Form.option_1065.checked) )
+	{
+ 		if (!CheckNotNull(document.Survey_Form.TextOtherValue_1065_2469, 'A1-3网点内地面、墙面干净整洁 - 不符合')){return false;}
+	}
+	else
+	{
+		TextUnInput(document.Survey_Form.TextOtherValue_1065_2469);
+	}
+	if (!CheckRadioNoClickInAssMode(1066,document.Survey_Form.option_1066, 'A1-4工作时间室内家具、硬件灯光全部开启')){return false;} 
+	if ( (document.Survey_Form.option_1066.length != null && document.Survey_Form.option_1066[0].checked) || (document.Survey_Form.option_1066.length == null && document.Survey_Form.option_1066.checked) )
+	{
+ 	}
+	else
+	{
+		TextUnInput(document.Survey_Form.TextOtherValue_1066_2470);
+	}
+	if ( (document.Survey_Form.option_1066.length != null && document.Survey_Form.option_1066[1].checked) || (document.Survey_Form.option_1066.length == null && document.Survey_Form.option_1066.checked) )
+	{
+ 		if (!CheckNotNull(document.Survey_Form.TextOtherValue_1066_2471, 'A1-4工作时间室内家具、硬件灯光全部开启 - 不符合')){return false;}
+	}
+	else
+	{
+		TextUnInput(document.Survey_Form.TextOtherValue_1066_2471);
+	}
+	if (!CheckRadioNoClickInAssMode(1067,document.Survey_Form.option_1067, 'A1-5物品摆放整齐有序')){return false;} 
+	if ( (document.Survey_Form.option_1067.length != null && document.Survey_Form.option_1067[0].checked) || (document.Survey_Form.option_1067.length == null && document.Survey_Form.option_1067.checked) )
+	{
+ 	}
+	else
+	{
+		TextUnInput(document.Survey_Form.TextOtherValue_1067_2472);
+	}
+	if ( (document.Survey_Form.option_1067.length != null && document.Survey_Form.option_1067[1].checked) || (document.Survey_Form.option_1067.length == null && document.Survey_Form.option_1067.checked) )
+	{
+ 		if (!CheckNotNull(document.Survey_Form.TextOtherValue_1067_2473, 'A1-5物品摆放整齐有序 - 不符合')){return false;}
+	}
+	else
+	{
+		TextUnInput(document.Survey_Form.TextOtherValue_1067_2473);
+	}
+	if (!CheckRadioNoClickInAssMode(1068,document.Survey_Form.option_1068, 'A1-6有服务政策牌，摆放在醒目位置')){return false;} 
+	if ( (document.Survey_Form.option_1068.length != null && document.Survey_Form.option_1068[0].checked) || (document.Survey_Form.option_1068.length == null && document.Survey_Form.option_1068.checked) )
+	{
+ 	}
+	else
+	{
+		TextUnInput(document.Survey_Form.TextOtherValue_1068_2474);
+	}
+	if ( (document.Survey_Form.option_1068.length != null && document.Survey_Form.option_1068[1].checked) || (document.Survey_Form.option_1068.length == null && document.Survey_Form.option_1068.checked) )
+	{
+ 		if (!CheckNotNull(document.Survey_Form.TextOtherValue_1068_2475, 'A1-6有服务政策牌，摆放在醒目位置 - 不符合')){return false;}
+	}
+	else
+	{
+		TextUnInput(document.Survey_Form.TextOtherValue_1068_2475);
+	}
+	if (!CheckRadioNoClickInAssMode(1069,document.Survey_Form.option_1069, 'A1-7接待台、休息椅、配件墙等是否统一，无破损状态')){return false;} 
+	if ( (document.Survey_Form.option_1069.length != null && document.Survey_Form.option_1069[0].checked) || (document.Survey_Form.option_1069.length == null && document.Survey_Form.option_1069.checked) )
+	{
+ 	}
+	else
+	{
+		TextUnInput(document.Survey_Form.TextOtherValue_1069_2476);
+	}
+	if ( (document.Survey_Form.option_1069.length != null && document.Survey_Form.option_1069[1].checked) || (document.Survey_Form.option_1069.length == null && document.Survey_Form.option_1069.checked) )
+	{
+ 		if (!CheckNotNull(document.Survey_Form.TextOtherValue_1069_2477, 'A1-7接待台、休息椅、配件墙等是否统一，无破损状态 - 不符合')){return false;}
+	}
+	else
+	{
+		TextUnInput(document.Survey_Form.TextOtherValue_1069_2477);
+	}
+	if (!CheckRadioNoClickInAssMode(1070,document.Survey_Form.option_1070, 'A1-8配件柜配件摆放数量饱满，销售小米原装配件')){return false;} 
+	if ( (document.Survey_Form.option_1070.length != null && document.Survey_Form.option_1070[0].checked) || (document.Survey_Form.option_1070.length == null && document.Survey_Form.option_1070.checked) )
+	{
+ 	}
+	else
+	{
+		TextUnInput(document.Survey_Form.TextOtherValue_1070_2478);
+	}
+	if ( (document.Survey_Form.option_1070.length != null && document.Survey_Form.option_1070[1].checked) || (document.Survey_Form.option_1070.length == null && document.Survey_Form.option_1070.checked) )
+	{
+ 		if (!CheckNotNull(document.Survey_Form.TextOtherValue_1070_2479, 'A1-8配件柜配件摆放数量饱满，销售小米原装配件 - 不符合')){return false;}
+	}
+	else
+	{
+		TextUnInput(document.Survey_Form.TextOtherValue_1070_2479);
+	}
+	if (!CheckRadioNoClickInAssMode(1071,document.Survey_Form.option_1071, 'A1-9体验台有展示样机（每张台子摆4台机器），且配有产品桌卡')){return false;} 
+	if ( (document.Survey_Form.option_1071.length != null && document.Survey_Form.option_1071[0].checked) || (document.Survey_Form.option_1071.length == null && document.Survey_Form.option_1071.checked) )
+	{
+ 	}
+	else
+	{
+		TextUnInput(document.Survey_Form.TextOtherValue_1071_2480);
+	}
+	if ( (document.Survey_Form.option_1071.length != null && document.Survey_Form.option_1071[1].checked) || (document.Survey_Form.option_1071.length == null && document.Survey_Form.option_1071.checked) )
+	{
+ 		if (!CheckNotNull(document.Survey_Form.TextOtherValue_1071_2481, 'A1-9体验台有展示样机（每张台子摆4台机器），且配有产品桌卡 - 不符合')){return false;}
+	}
+	else
+	{
+		TextUnInput(document.Survey_Form.TextOtherValue_1071_2481);
+	}
+	if (!CheckRadioNoClickInAssMode(1072,document.Survey_Form.option_1072, 'A2-1统一着装，干净整洁，无异妆、异发等打扮')){return false;} 
+	if ( (document.Survey_Form.option_1072.length != null && document.Survey_Form.option_1072[0].checked) || (document.Survey_Form.option_1072.length == null && document.Survey_Form.option_1072.checked) )
+	{
+ 	}
+	else
+	{
+		TextUnInput(document.Survey_Form.TextOtherValue_1072_2482);
+	}
+	if ( (document.Survey_Form.option_1072.length != null && document.Survey_Form.option_1072[1].checked) || (document.Survey_Form.option_1072.length == null && document.Survey_Form.option_1072.checked) )
+	{
+ 		if (!CheckNotNull(document.Survey_Form.TextOtherValue_1072_2483, 'A2-1统一着装，干净整洁，无异妆、异发等打扮 - 不符合')){return false;}
+	}
+	else
+	{
+		TextUnInput(document.Survey_Form.TextOtherValue_1072_2483);
+	}
+	if (!CheckRadioNoClickInAssMode(1073,document.Survey_Form.option_1073, 'A2-2胸前佩戴胸卡（或统一胸前挂牌）')){return false;} 
+	if ( (document.Survey_Form.option_1073.length != null && document.Survey_Form.option_1073[0].checked) || (document.Survey_Form.option_1073.length == null && document.Survey_Form.option_1073.checked) )
+	{
+ 	}
+	else
+	{
+		TextUnInput(document.Survey_Form.TextOtherValue_1073_2484);
+	}
+	if ( (document.Survey_Form.option_1073.length != null && document.Survey_Form.option_1073[1].checked) || (document.Survey_Form.option_1073.length == null && document.Survey_Form.option_1073.checked) )
+	{
+ 		if (!CheckNotNull(document.Survey_Form.TextOtherValue_1073_2485, 'A2-2胸前佩戴胸卡（或统一胸前挂牌） - 不符合')){return false;}
+	}
+	else
+	{
+		TextUnInput(document.Survey_Form.TextOtherValue_1073_2485);
+	}
+	if (!CheckRadioNoClickInAssMode(1074,document.Survey_Form.option_1074, 'A3-1保持桶内有水 ，且配有一次性水杯')){return false;} 
+	if ( (document.Survey_Form.option_1074.length != null && document.Survey_Form.option_1074[0].checked) || (document.Survey_Form.option_1074.length == null && document.Survey_Form.option_1074.checked) )
+	{
+ 	}
+	else
+	{
+		TextUnInput(document.Survey_Form.TextOtherValue_1074_2486);
+	}
+	if ( (document.Survey_Form.option_1074.length != null && document.Survey_Form.option_1074[1].checked) || (document.Survey_Form.option_1074.length == null && document.Survey_Form.option_1074.checked) )
+	{
+ 		if (!CheckNotNull(document.Survey_Form.TextOtherValue_1074_2487, 'A3-1保持桶内有水 ，且配有一次性水杯 - 不符合')){return false;}
+	}
+	else
+	{
+		TextUnInput(document.Survey_Form.TextOtherValue_1074_2487);
+	}
+	if (!CheckRadioNoClickInAssMode(1075,document.Survey_Form.option_1075, 'A3-2电视运行正常')){return false;} 
+	if ( (document.Survey_Form.option_1075.length != null && document.Survey_Form.option_1075[0].checked) || (document.Survey_Form.option_1075.length == null && document.Survey_Form.option_1075.checked) )
+	{
+ 	}
+	else
+	{
+		TextUnInput(document.Survey_Form.TextOtherValue_1075_2488);
+	}
+	if ( (document.Survey_Form.option_1075.length != null && document.Survey_Form.option_1075[1].checked) || (document.Survey_Form.option_1075.length == null && document.Survey_Form.option_1075.checked) )
+	{
+ 		if (!CheckNotNull(document.Survey_Form.TextOtherValue_1075_2489, 'A3-2电视运行正常 - 不符合')){return false;}
+	}
+	else
+	{
+		TextUnInput(document.Survey_Form.TextOtherValue_1075_2489);
+	}
+	if (!CheckRadioNoClickInAssMode(1076,document.Survey_Form.option_1076, 'A3-3店内WIFI能够正常使用')){return false;} 
+	if ( (document.Survey_Form.option_1076.length != null && document.Survey_Form.option_1076[0].checked) || (document.Survey_Form.option_1076.length == null && document.Survey_Form.option_1076.checked) )
+	{
+ 	}
+	else
+	{
+		TextUnInput(document.Survey_Form.TextOtherValue_1076_2490);
+	}
+	if ( (document.Survey_Form.option_1076.length != null && document.Survey_Form.option_1076[1].checked) || (document.Survey_Form.option_1076.length == null && document.Survey_Form.option_1076.checked) )
+	{
+ 		if (!CheckNotNull(document.Survey_Form.TextOtherValue_1076_2491, 'A3-3店内WIFI能够正常使用 - 不符合')){return false;}
+	}
+	else
+	{
+		TextUnInput(document.Survey_Form.TextOtherValue_1076_2491);
+	}
+	if (!CheckRadioNoClickInAssMode(1077,document.Survey_Form.option_1077, 'A3-4下载台电脑呈打开状态且运作正常')){return false;} 
+	if ( (document.Survey_Form.option_1077.length != null && document.Survey_Form.option_1077[0].checked) || (document.Survey_Form.option_1077.length == null && document.Survey_Form.option_1077.checked) )
+	{
+ 	}
+	else
+	{
+		TextUnInput(document.Survey_Form.TextOtherValue_1077_2492);
+	}
+	if ( (document.Survey_Form.option_1077.length != null && document.Survey_Form.option_1077[1].checked) || (document.Survey_Form.option_1077.length == null && document.Survey_Form.option_1077.checked) )
+	{
+ 		if (!CheckNotNull(document.Survey_Form.TextOtherValue_1077_2493, 'A3-4下载台电脑呈打开状态且运作正常 - 不符合')){return false;}
+	}
+	else
+	{
+		TextUnInput(document.Survey_Form.TextOtherValue_1077_2493);
+	}
+	if (!CheckRadioNoClickInAssMode(1094,document.Survey_Form.option_1094, 'B1-1坚守岗位，不擅离职守，前台至少保留有一人接待')){return false;} 
+	if ( (document.Survey_Form.option_1094.length != null && document.Survey_Form.option_1094[0].checked) || (document.Survey_Form.option_1094.length == null && document.Survey_Form.option_1094.checked) )
+	{
+ 	}
+	else
+	{
+		TextUnInput(document.Survey_Form.TextOtherValue_1094_2520);
+	}
+	if ( (document.Survey_Form.option_1094.length != null && document.Survey_Form.option_1094[1].checked) || (document.Survey_Form.option_1094.length == null && document.Survey_Form.option_1094.checked) )
+	{
+ 		if (!CheckNotNull(document.Survey_Form.TextOtherValue_1094_2521, 'B1-1坚守岗位，不擅离职守，前台至少保留有一人接待 - 不符合')){return false;}
+	}
+	else
+	{
+		TextUnInput(document.Survey_Form.TextOtherValue_1094_2521);
+	}
+	if (!CheckRadioNoClickInAssMode(1095,document.Survey_Form.option_1095, 'B1-2 工作时间不做或谈论与工作无关的事情')){return false;} 
+	if ( (document.Survey_Form.option_1095.length != null && document.Survey_Form.option_1095[0].checked) || (document.Survey_Form.option_1095.length == null && document.Survey_Form.option_1095.checked) )
+	{
+ 	}
+	else
+	{
+		TextUnInput(document.Survey_Form.TextOtherValue_1095_2522);
+	}
+	if ( (document.Survey_Form.option_1095.length != null && document.Survey_Form.option_1095[1].checked) || (document.Survey_Form.option_1095.length == null && document.Survey_Form.option_1095.checked) )
+	{
+ 		if (!CheckNotNull(document.Survey_Form.TextOtherValue_1095_2523, 'B1-2 工作时间不做或谈论与工作无关的事情 - 不符合')){return false;}
+	}
+	else
+	{
+		TextUnInput(document.Survey_Form.TextOtherValue_1095_2523);
+	}
+	if (!CheckRadioNoClickInAssMode(1099,document.Survey_Form.option_1099, 'B2-1服务态度和蔼可亲，真诚')){return false;} 
+	if ( (document.Survey_Form.option_1099.length != null && document.Survey_Form.option_1099[0].checked) || (document.Survey_Form.option_1099.length == null && document.Survey_Form.option_1099.checked) )
+	{
+ 	}
+	else
+	{
+		TextUnInput(document.Survey_Form.TextOtherValue_1099_2528);
+	}
+	if ( (document.Survey_Form.option_1099.length != null && document.Survey_Form.option_1099[1].checked) || (document.Survey_Form.option_1099.length == null && document.Survey_Form.option_1099.checked) )
+	{
+ 		if (!CheckNotNull(document.Survey_Form.TextOtherValue_1099_2529, 'B2-1服务态度和蔼可亲，真诚 - 不符合')){return false;}
+	}
+	else
+	{
+		TextUnInput(document.Survey_Form.TextOtherValue_1099_2529);
+	}
+	if (!CheckRadioNoClickInAssMode(1100,document.Survey_Form.option_1100, 'B2-2与客户沟通时保持目光接触')){return false;} 
+	if ( (document.Survey_Form.option_1100.length != null && document.Survey_Form.option_1100[0].checked) || (document.Survey_Form.option_1100.length == null && document.Survey_Form.option_1100.checked) )
+	{
+ 	}
+	else
+	{
+		TextUnInput(document.Survey_Form.TextOtherValue_1100_2530);
+	}
+	if ( (document.Survey_Form.option_1100.length != null && document.Survey_Form.option_1100[1].checked) || (document.Survey_Form.option_1100.length == null && document.Survey_Form.option_1100.checked) )
+	{
+ 		if (!CheckNotNull(document.Survey_Form.TextOtherValue_1100_2531, 'B2-2与客户沟通时保持目光接触 - 不符合')){return false;}
+	}
+	else
+	{
+		TextUnInput(document.Survey_Form.TextOtherValue_1100_2531);
+	}
+	if (!CheckRadioNoClickInAssMode(1101,document.Survey_Form.option_1101, 'B2-3礼貌服务，服务过程中使用服务敬语')){return false;} 
+	if ( (document.Survey_Form.option_1101.length != null && document.Survey_Form.option_1101[0].checked) || (document.Survey_Form.option_1101.length == null && document.Survey_Form.option_1101.checked) )
+	{
+ 	}
+	else
+	{
+		TextUnInput(document.Survey_Form.TextOtherValue_1101_2532);
+	}
+	if ( (document.Survey_Form.option_1101.length != null && document.Survey_Form.option_1101[1].checked) || (document.Survey_Form.option_1101.length == null && document.Survey_Form.option_1101.checked) )
+	{
+ 		if (!CheckNotNull(document.Survey_Form.TextOtherValue_1101_2533, 'B2-3礼貌服务，服务过程中使用服务敬语 - 不符合')){return false;}
+	}
+	else
+	{
+		TextUnInput(document.Survey_Form.TextOtherValue_1101_2533);
+	}
+	if (!CheckRadioNoClickInAssMode(1102,document.Survey_Form.option_1102, 'B2-4提醒用户刷机前进行备份，或协助用户进行备份')){return false;} 
+	if ( (document.Survey_Form.option_1102.length != null && document.Survey_Form.option_1102[0].checked) || (document.Survey_Form.option_1102.length == null && document.Survey_Form.option_1102.checked) )
+	{
+ 	}
+	else
+	{
+		TextUnInput(document.Survey_Form.TextOtherValue_1102_2534);
+	}
+	if ( (document.Survey_Form.option_1102.length != null && document.Survey_Form.option_1102[1].checked) || (document.Survey_Form.option_1102.length == null && document.Survey_Form.option_1102.checked) )
+	{
+ 		if (!CheckNotNull(document.Survey_Form.TextOtherValue_1102_2535, 'B2-4提醒用户刷机前进行备份，或协助用户进行备份 - 不符合')){return false;}
+	}
+	else
+	{
+		TextUnInput(document.Survey_Form.TextOtherValue_1102_2535);
+	}
+	if (!CheckRadioNoClickInAssMode(1103,document.Survey_Form.option_1103, 'B2-5提醒用户1小时快修服务，并执行超期赔付')){return false;} 
+	if ( (document.Survey_Form.option_1103.length != null && document.Survey_Form.option_1103[0].checked) || (document.Survey_Form.option_1103.length == null && document.Survey_Form.option_1103.checked) )
+	{
+ 	}
+	else
+	{
+		TextUnInput(document.Survey_Form.TextOtherValue_1103_2536);
+	}
+	if ( (document.Survey_Form.option_1103.length != null && document.Survey_Form.option_1103[1].checked) || (document.Survey_Form.option_1103.length == null && document.Survey_Form.option_1103.checked) )
+	{
+ 		if (!CheckNotNull(document.Survey_Form.TextOtherValue_1103_2537, 'B2-5提醒用户1小时快修服务，并执行超期赔付 - 不符合')){return false;}
+	}
+	else
+	{
+		TextUnInput(document.Survey_Form.TextOtherValue_1103_2537);
+	}
+	if (!CheckRadioNoClickInAssMode(1104,document.Survey_Form.option_1104, 'B2-6拆机前会征得客户的同意')){return false;} 
+	if ( (document.Survey_Form.option_1104.length != null && document.Survey_Form.option_1104[0].checked) || (document.Survey_Form.option_1104.length == null && document.Survey_Form.option_1104.checked) )
+	{
+ 	}
+	else
+	{
+		TextUnInput(document.Survey_Form.TextOtherValue_1104_2538);
+	}
+	if ( (document.Survey_Form.option_1104.length != null && document.Survey_Form.option_1104[1].checked) || (document.Survey_Form.option_1104.length == null && document.Survey_Form.option_1104.checked) )
+	{
+ 		if (!CheckNotNull(document.Survey_Form.TextOtherValue_1104_2539, 'B2-6拆机前会征得客户的同意 - 不符合')){return false;}
+	}
+	else
+	{
+		TextUnInput(document.Survey_Form.TextOtherValue_1104_2539);
+	}
+	if (!CheckRadioNoClickInAssMode(1105,document.Survey_Form.option_1105, 'B2-7拆机后的附件放在专用小物品袋中并与客户逐一确认')){return false;} 
+	if ( (document.Survey_Form.option_1105.length != null && document.Survey_Form.option_1105[0].checked) || (document.Survey_Form.option_1105.length == null && document.Survey_Form.option_1105.checked) )
+	{
+ 	}
+	else
+	{
+		TextUnInput(document.Survey_Form.TextOtherValue_1105_2540);
+	}
+	if ( (document.Survey_Form.option_1105.length != null && document.Survey_Form.option_1105[1].checked) || (document.Survey_Form.option_1105.length == null && document.Survey_Form.option_1105.checked) )
+	{
+ 		if (!CheckNotNull(document.Survey_Form.TextOtherValue_1105_2541, 'B2-7拆机后的附件放在专用小物品袋中并与客户逐一确认 - 不符合')){return false;}
+	}
+	else
+	{
+		TextUnInput(document.Survey_Form.TextOtherValue_1105_2541);
+	}
+	if (!CheckRadioNoClickInAssMode(1106,document.Survey_Form.option_1106, 'B2-8轻拿轻放客户的手机')){return false;} 
+	if ( (document.Survey_Form.option_1106.length != null && document.Survey_Form.option_1106[0].checked) || (document.Survey_Form.option_1106.length == null && document.Survey_Form.option_1106.checked) )
+	{
+ 	}
+	else
+	{
+		TextUnInput(document.Survey_Form.TextOtherValue_1106_2542);
+	}
+	if ( (document.Survey_Form.option_1106.length != null && document.Survey_Form.option_1106[1].checked) || (document.Survey_Form.option_1106.length == null && document.Survey_Form.option_1106.checked) )
+	{
+ 		if (!CheckNotNull(document.Survey_Form.TextOtherValue_1106_2543, 'B2-8轻拿轻放客户的手机 - 不符合')){return false;}
+	}
+	else
+	{
+		TextUnInput(document.Survey_Form.TextOtherValue_1106_2543);
+	}
+	if (!CheckRadioNoClickInAssMode(1107,document.Survey_Form.option_1107, 'B2-9在服务过程中使用标准用语')){return false;} 
+	if ( (document.Survey_Form.option_1107.length != null && document.Survey_Form.option_1107[0].checked) || (document.Survey_Form.option_1107.length == null && document.Survey_Form.option_1107.checked) )
+	{
+ 	}
+	else
+	{
+		TextUnInput(document.Survey_Form.TextOtherValue_1107_2544);
+	}
+	if ( (document.Survey_Form.option_1107.length != null && document.Survey_Form.option_1107[1].checked) || (document.Survey_Form.option_1107.length == null && document.Survey_Form.option_1107.checked) )
+	{
+ 		if (!CheckNotNull(document.Survey_Form.TextOtherValue_1107_2545, 'B2-9在服务过程中使用标准用语 - 不符合')){return false;}
+	}
+	else
+	{
+		TextUnInput(document.Survey_Form.TextOtherValue_1107_2545);
+	}
+	if (!CheckRadioNoClickInAssMode(1108,document.Survey_Form.option_1108, 'B2-10双手接递款物、单据')){return false;} 
+	if ( (document.Survey_Form.option_1108.length != null && document.Survey_Form.option_1108[0].checked) || (document.Survey_Form.option_1108.length == null && document.Survey_Form.option_1108.checked) )
+	{
+ 	}
+	else
+	{
+		TextUnInput(document.Survey_Form.TextOtherValue_1108_2546);
+	}
+	if ( (document.Survey_Form.option_1108.length != null && document.Survey_Form.option_1108[1].checked) || (document.Survey_Form.option_1108.length == null && document.Survey_Form.option_1108.checked) )
+	{
+ 		if (!CheckNotNull(document.Survey_Form.TextOtherValue_1108_2547, 'B2-10双手接递款物、单据 - 不符合')){return false;}
+	}
+	else
+	{
+		TextUnInput(document.Survey_Form.TextOtherValue_1108_2547);
+	}
+	if (!CheckRadioNoClickInAssMode(1109,document.Survey_Form.option_1109, 'B2-11积极聆听客户需求')){return false;} 
+	if ( (document.Survey_Form.option_1109.length != null && document.Survey_Form.option_1109[0].checked) || (document.Survey_Form.option_1109.length == null && document.Survey_Form.option_1109.checked) )
+	{
+ 	}
+	else
+	{
+		TextUnInput(document.Survey_Form.TextOtherValue_1109_2548);
+	}
+	if ( (document.Survey_Form.option_1109.length != null && document.Survey_Form.option_1109[1].checked) || (document.Survey_Form.option_1109.length == null && document.Survey_Form.option_1109.checked) )
+	{
+ 		if (!CheckNotNull(document.Survey_Form.TextOtherValue_1109_2549, 'B2-11积极聆听客户需求 - 不符合')){return false;}
+	}
+	else
+	{
+		TextUnInput(document.Survey_Form.TextOtherValue_1109_2549);
+	}
+	if (!CheckRadioNoClickInAssMode(1110,document.Survey_Form.option_1110, 'B2-12避免使用服务禁语')){return false;} 
+	if ( (document.Survey_Form.option_1110.length != null && document.Survey_Form.option_1110[0].checked) || (document.Survey_Form.option_1110.length == null && document.Survey_Form.option_1110.checked) )
+	{
+ 	}
+	else
+	{
+		TextUnInput(document.Survey_Form.TextOtherValue_1110_2550);
+	}
+	if ( (document.Survey_Form.option_1110.length != null && document.Survey_Form.option_1110[1].checked) || (document.Survey_Form.option_1110.length == null && document.Survey_Form.option_1110.checked) )
+	{
+ 		if (!CheckNotNull(document.Survey_Form.TextOtherValue_1110_2551, 'B2-12避免使用服务禁语 - 不符合')){return false;}
+	}
+	else
+	{
+		TextUnInput(document.Survey_Form.TextOtherValue_1110_2551);
+	}
+	if (!CheckRadioNoClickInAssMode(1111,document.Survey_Form.option_1111, 'B2-13不与客户发生争吵')){return false;} 
+	if ( (document.Survey_Form.option_1111.length != null && document.Survey_Form.option_1111[0].checked) || (document.Survey_Form.option_1111.length == null && document.Survey_Form.option_1111.checked) )
+	{
+ 	}
+	else
+	{
+		TextUnInput(document.Survey_Form.TextOtherValue_1111_2552);
+	}
+	if ( (document.Survey_Form.option_1111.length != null && document.Survey_Form.option_1111[1].checked) || (document.Survey_Form.option_1111.length == null && document.Survey_Form.option_1111.checked) )
+	{
+ 		if (!CheckNotNull(document.Survey_Form.TextOtherValue_1111_2553, 'B2-13不与客户发生争吵 - 不符合')){return false;}
+	}
+	else
+	{
+		TextUnInput(document.Survey_Form.TextOtherValue_1111_2553);
+	}
+	if (!CheckRadioNoClickInAssMode(1112,document.Survey_Form.option_1112, 'B2-14中断服务，需要客户等待时，礼貌地告知客户')){return false;} 
+	if ( (document.Survey_Form.option_1112.length != null && document.Survey_Form.option_1112[0].checked) || (document.Survey_Form.option_1112.length == null && document.Survey_Form.option_1112.checked) )
+	{
+ 	}
+	else
+	{
+		TextUnInput(document.Survey_Form.TextOtherValue_1112_2554);
+	}
+	if ( (document.Survey_Form.option_1112.length != null && document.Survey_Form.option_1112[1].checked) || (document.Survey_Form.option_1112.length == null && document.Survey_Form.option_1112.checked) )
+	{
+ 		if (!CheckNotNull(document.Survey_Form.TextOtherValue_1112_2555, 'B2-14中断服务，需要客户等待时，礼貌地告知客户 - 不符合')){return false;}
+	}
+	else
+	{
+		TextUnInput(document.Survey_Form.TextOtherValue_1112_2555);
+	}
+	if (!CheckRadioNoClickInAssMode(1113,document.Survey_Form.option_1113, 'B2-15使用标准送别语')){return false;} 
+	if ( (document.Survey_Form.option_1113.length != null && document.Survey_Form.option_1113[0].checked) || (document.Survey_Form.option_1113.length == null && document.Survey_Form.option_1113.checked) )
+	{
+ 	}
+	else
+	{
+		TextUnInput(document.Survey_Form.TextOtherValue_1113_2556);
+	}
+	if ( (document.Survey_Form.option_1113.length != null && document.Survey_Form.option_1113[1].checked) || (document.Survey_Form.option_1113.length == null && document.Survey_Form.option_1113.checked) )
+	{
+ 		if (!CheckNotNull(document.Survey_Form.TextOtherValue_1113_2557, 'B2-15使用标准送别语 - 不符合')){return false;}
+	}
+	else
+	{
+		TextUnInput(document.Survey_Form.TextOtherValue_1113_2557);
+	}
+	if (!CheckRadioNoClickInAssMode(1114,document.Survey_Form.option_1114, 'B2-16及时回应客户的询问')){return false;} 
+	if ( (document.Survey_Form.option_1114.length != null && document.Survey_Form.option_1114[0].checked) || (document.Survey_Form.option_1114.length == null && document.Survey_Form.option_1114.checked) )
+	{
+ 	}
+	else
+	{
+		TextUnInput(document.Survey_Form.TextOtherValue_1114_2558);
+	}
+	if ( (document.Survey_Form.option_1114.length != null && document.Survey_Form.option_1114[1].checked) || (document.Survey_Form.option_1114.length == null && document.Survey_Form.option_1114.checked) )
+	{
+ 		if (!CheckNotNull(document.Survey_Form.TextOtherValue_1114_2559, 'B2-16及时回应客户的询问 - 不符合')){return false;}
+	}
+	else
+	{
+		TextUnInput(document.Survey_Form.TextOtherValue_1114_2559);
+	}
+	if (!CheckRadioNoClickInAssMode(1115,document.Survey_Form.option_1115, 'B2-17坐姿端正自然、不浅仰后靠、不左摇右晃')){return false;} 
+	if ( (document.Survey_Form.option_1115.length != null && document.Survey_Form.option_1115[0].checked) || (document.Survey_Form.option_1115.length == null && document.Survey_Form.option_1115.checked) )
+	{
+ 	}
+	else
+	{
+		TextUnInput(document.Survey_Form.TextOtherValue_1115_2560);
+	}
+	if ( (document.Survey_Form.option_1115.length != null && document.Survey_Form.option_1115[1].checked) || (document.Survey_Form.option_1115.length == null && document.Survey_Form.option_1115.checked) )
+	{
+ 		if (!CheckNotNull(document.Survey_Form.TextOtherValue_1115_2561, 'B2-17坐姿端正自然、不浅仰后靠、不左摇右晃 - 不符合')){return false;}
+	}
+	else
+	{
+		TextUnInput(document.Survey_Form.TextOtherValue_1115_2561);
+	}
+	if (!CheckRadioNoClickInAssMode(1116,document.Survey_Form.option_1116, 'B2-18当顾客对服务人员的服务表示不满时，主动致歉')){return false;} 
+	if ( (document.Survey_Form.option_1116.length != null && document.Survey_Form.option_1116[0].checked) || (document.Survey_Form.option_1116.length == null && document.Survey_Form.option_1116.checked) )
+	{
+ 	}
+	else
+	{
+		TextUnInput(document.Survey_Form.TextOtherValue_1116_2562);
+	}
+	if ( (document.Survey_Form.option_1116.length != null && document.Survey_Form.option_1116[1].checked) || (document.Survey_Form.option_1116.length == null && document.Survey_Form.option_1116.checked) )
+	{
+ 		if (!CheckNotNull(document.Survey_Form.TextOtherValue_1116_2563, 'B2-18当顾客对服务人员的服务表示不满时，主动致歉 - 不符合')){return false;}
+	}
+	else
+	{
+		TextUnInput(document.Survey_Form.TextOtherValue_1116_2563);
+	}
+	if (!CheckRadioNoClickInAssMode(1117,document.Survey_Form.option_1117, 'B2-19主动关怀等待过长时间用户问题和进展')){return false;} 
+	if ( (document.Survey_Form.option_1117.length != null && document.Survey_Form.option_1117[0].checked) || (document.Survey_Form.option_1117.length == null && document.Survey_Form.option_1117.checked) )
+	{
+ 	}
+	else
+	{
+		TextUnInput(document.Survey_Form.TextOtherValue_1117_2564);
+	}
+	if ( (document.Survey_Form.option_1117.length != null && document.Survey_Form.option_1117[1].checked) || (document.Survey_Form.option_1117.length == null && document.Survey_Form.option_1117.checked) )
+	{
+ 		if (!CheckNotNull(document.Survey_Form.TextOtherValue_1117_2565, 'B2-19主动关怀等待过长时间用户问题和进展 - 不符合')){return false;}
+	}
+	else
+	{
+		TextUnInput(document.Survey_Form.TextOtherValue_1117_2565);
+	}
+	if (!CheckRadioNoClickInAssMode(1118,document.Survey_Form.option_1118, 'B2-20提醒用户使用评价系统评价服务质量')){return false;} 
+	if ( (document.Survey_Form.option_1118.length != null && document.Survey_Form.option_1118[0].checked) || (document.Survey_Form.option_1118.length == null && document.Survey_Form.option_1118.checked) )
+	{
+ 	}
+	else
+	{
+		TextUnInput(document.Survey_Form.TextOtherValue_1118_2566);
+	}
+	if ( (document.Survey_Form.option_1118.length != null && document.Survey_Form.option_1118[1].checked) || (document.Survey_Form.option_1118.length == null && document.Survey_Form.option_1118.checked) )
+	{
+ 		if (!CheckNotNull(document.Survey_Form.TextOtherValue_1118_2567, 'B2-20提醒用户使用评价系统评价服务质量 - 不符合')){return false;}
+	}
+	else
+	{
+		TextUnInput(document.Survey_Form.TextOtherValue_1118_2567);
+	}
+	if (!CheckRadioNoClick(document.Survey_Form.option_1129_28, '[评分]结合你在该店的个人体验，用10分制来评价以下描述语句。10分表示对此描述完全同意，1分则表示完全不同意。 - D1 小米的售后服务人员，是在用真心与客户交朋友！')){return false;} 
+	if ( getRatingValue(document.Survey_Form.option_1129_28) <= 10 && getRatingValue(document.Survey_Form.option_1129_28) != 0 )
+	{
+		if(!CheckNotNull(document.Survey_Form.TextOtherValue_1129_28, '[评分]结合你在该店的个人体验，用10分制来评价以下描述语句。10分表示对此描述完全同意，1分则表示完全不同意。 - D1 小米的售后服务人员，是在用真心与客户交朋友！ - 10分以下的理由')){return false;}
+	}
+	else
+	{
+		TextUnInput(document.Survey_Form.TextOtherValue_1129_28);
+	}
+	if (!CheckRadioNoClick(document.Survey_Form.option_1129_29, '[评分]结合你在该店的个人体验，用10分制来评价以下描述语句。10分表示对此描述完全同意，1分则表示完全不同意。 - D2 在这个店，我觉得他们的维修技术十分专业！')){return false;} 
+	if ( getRatingValue(document.Survey_Form.option_1129_29) <= 10 && getRatingValue(document.Survey_Form.option_1129_29) != 0 )
+	{
+		if(!CheckNotNull(document.Survey_Form.TextOtherValue_1129_29, '[评分]结合你在该店的个人体验，用10分制来评价以下描述语句。10分表示对此描述完全同意，1分则表示完全不同意。 - D2 在这个店，我觉得他们的维修技术十分专业！ - 10分以下的理由')){return false;}
+	}
+	else
+	{
+		TextUnInput(document.Survey_Form.TextOtherValue_1129_29);
+	}
+	if (!CheckRadioNoClick(document.Survey_Form.option_1129_34, '[评分]结合你在该店的个人体验，用10分制来评价以下描述语句。10分表示对此描述完全同意，1分则表示完全不同意。 - D3 门店所在位置，乘坐公共交通工具方便到达！')){return false;} 
+	if ( getRatingValue(document.Survey_Form.option_1129_34) <= 10 && getRatingValue(document.Survey_Form.option_1129_34) != 0 )
+	{
+		if(!CheckNotNull(document.Survey_Form.TextOtherValue_1129_34, '[评分]结合你在该店的个人体验，用10分制来评价以下描述语句。10分表示对此描述完全同意，1分则表示完全不同意。 - D3 门店所在位置，乘坐公共交通工具方便到达！ - 10分以下的理由')){return false;}
+	}
+	else
+	{
+		TextUnInput(document.Survey_Form.TextOtherValue_1129_34);
+	}
+	if (!CheckRadioNoClick(document.Survey_Form.option_1129_35, '[评分]结合你在该店的个人体验，用10分制来评价以下描述语句。10分表示对此描述完全同意，1分则表示完全不同意。 - D4 门店所在楼宇或商场整洁与干净！')){return false;} 
+	if ( getRatingValue(document.Survey_Form.option_1129_35) <= 10 && getRatingValue(document.Survey_Form.option_1129_35) != 0 )
+	{
+		if(!CheckNotNull(document.Survey_Form.TextOtherValue_1129_35, '[评分]结合你在该店的个人体验，用10分制来评价以下描述语句。10分表示对此描述完全同意，1分则表示完全不同意。 - D4 门店所在楼宇或商场整洁与干净！ - 10分以下的理由')){return false;}
+	}
+	else
+	{
+		TextUnInput(document.Survey_Form.TextOtherValue_1129_35);
+	}
+	if (!CheckRadioNoClick(document.Survey_Form.option_1129_36, '[评分]结合你在该店的个人体验，用10分制来评价以下描述语句。10分表示对此描述完全同意，1分则表示完全不同意。 - D5 门店醒目，方便用户寻找！')){return false;} 
+	if ( getRatingValue(document.Survey_Form.option_1129_36) <= 10 && getRatingValue(document.Survey_Form.option_1129_36) != 0 )
+	{
+		if(!CheckNotNull(document.Survey_Form.TextOtherValue_1129_36, '[评分]结合你在该店的个人体验，用10分制来评价以下描述语句。10分表示对此描述完全同意，1分则表示完全不同意。 - D5 门店醒目，方便用户寻找！ - 10分以下的理由')){return false;}
+	}
+	else
+	{
+		TextUnInput(document.Survey_Form.TextOtherValue_1129_36);
+	}
+	if (!CheckRadioNoClickInAssMode(1217,document.Survey_Form.option_1217, '送修该部手机，是否有维修记录单？')){return false;} 
+	if (!CheckRadioNoClick(document.Survey_Form.option_1130, '该部手机在该店是否完成了维修？')){return false;} 
+	if(( IsInCheckBox(document.Survey_Form.option_1130,31) ))
+	{
+	if (!CheckRadioNoClickInAssMode(1306,document.Survey_Form.option_1306, '维修方法是什么？')){return false;} 
+	if (document.Survey_Form.option_1306[10].checked )
+	{
+		if (!CheckNotNull(document.Survey_Form.TextOtherValue_1306, '维修方法是什么？ - 其他方法')){return false;}
+	}
+	else
+	{
+		TextUnInput(document.Survey_Form.TextOtherValue_1306);
+	}
+	}
+	else{
+	RadioUnClick(document.Survey_Form.option_1306);
+	TextUnInput(document.Survey_Form.TextOtherValue_1306);
+	}
+	if(( IsInCheckBox(document.Survey_Form.option_1130,31) ))
+	{
+	if (!CheckRadioNoClickInAssMode(1304,document.Survey_Form.option_1304, '维修费用是多少？')){return false;} 
+	if (document.Survey_Form.option_1304[1].checked )
+	{
+		if (!CheckNotNull(document.Survey_Form.TextOtherValue_1304, '维修费用是多少？ - 维修费用（元）')){return false;}
+	}
+	else
+	{
+		TextUnInput(document.Survey_Form.TextOtherValue_1304);
+	}
+	}
+	else{
+	RadioUnClick(document.Survey_Form.option_1304);
+	TextUnInput(document.Survey_Form.TextOtherValue_1304);
+	}
+	if(( IsInCheckBox(document.Survey_Form.option_1130,32) ))
+	{
+	if (document.Survey_Form.option_1131[5].checked )
+	{
+		if (!CheckNotNull(document.Survey_Form.TextOtherValue_1131, '如果最终没有完成维修，请记录原因。 - 其他')){return false;}
+	}
+	else
+	{
+		TextUnInput(document.Survey_Form.TextOtherValue_1131);
+	}
+	}
+	else{
+	RadioUnClick(document.Survey_Form.option_1131);
+	TextUnInput(document.Survey_Form.TextOtherValue_1131);
+	}
+	if (!CheckRadioNoClickInAssMode(1132,document.Survey_Form.option_1132, '是否在附近发现有小米售后山寨店或疑似山寨店。')){return false;} 
+	if ( (document.Survey_Form.option_1132.length != null && document.Survey_Form.option_1132[0].checked) || (document.Survey_Form.option_1132.length == null && document.Survey_Form.option_1132.checked) )
+	{
+ 		if (!CheckNotNull(document.Survey_Form.TextOtherValue_1132_2589, '是否在附近发现有小米售后山寨店或疑似山寨店。 - 是的，附近有山寨或疑似山寨店')){return false;}
+	}
+	else
+	{
+		TextUnInput(document.Survey_Form.TextOtherValue_1132_2589);
+	}
+	if ( (document.Survey_Form.option_1132.length != null && document.Survey_Form.option_1132[1].checked) || (document.Survey_Form.option_1132.length == null && document.Survey_Form.option_1132.checked) )
+	{
+ 	}
+	else
+	{
+		TextUnInput(document.Survey_Form.TextOtherValue_1132_2590);
+	}
+	if (!CheckRadioNoClickInAssMode(1215,document.Survey_Form.option_1215, '小米近日米4换屏价格新政策——“米4换屏价格由原来的890元降至540元”。我们需要了解门店是否在执行米4换屏新价格。请按如下话术询问店内人员：“米4换屏多少钱？”')){return false;} 
+	if (!CheckRadioNoClickInAssMode(1216,document.Survey_Form.option_1216, '我如果自己换了一个不是小米手机原装的屏，以后要是再修，你们这里能给换吗？')){return false;} 
+
+}
+function Check_Survey_Conditions()
+{
+	var emptyCheckStr = '';
+
+	if( emptyCheckStr != '')
+	{
+		var emptyCheck = emptyCheckStr.substr(0,emptyCheckStr.length-1).split('|');
+		var ajaxURL = 'http://yg007.yinglian360.com/JS/AjaxCheckEmpty.php?qid=17&qlang=CN&hash='+emptyCheckStr;
+		for(var o=0;o<emptyCheck.length;o++){
+		   var qtnType = emptyCheck[o].split('*');
+		   var theFieldsList = qtnType[3].split('$');
+		   for(var t=0;t<theFieldsList.length;t++){
+				var objFieldList = theFieldsList[t].split('-');
+				switch(objFieldList[0]){
+					case '1': 
+						if( typeof $('input[id='+objFieldList[1]+']:checked').val() == 'undefined' )
+						{
+							ajaxURL += '&'+objFieldList[1]+'=';
+						}
+						else
+						{
+							ajaxURL += '&'+objFieldList[1]+'='+escape($('input[id='+objFieldList[1]+']:checked').val());
+						}
+					break;
+					case '2':
+						var thisValue = '';
+						var arr = $('input[id='+objFieldList[1]+']:checked');
+						arr = arr.sort(function(a,b){
+							return parseInt($(a).val()) - parseInt($(b).val());
+						});
+						arr.each(function(){
+							thisValue += $(this).val() + ",";
+						});
+						if( thisValue != '' ){
+							thisValue = thisValue.substr(0,thisValue.length-1)
+							var theAllValueStr = ','+thisValue+',';
+							if( theAllValueStr.indexOf(','+objFieldList[2]+',') == -1 ){
+								ajaxURL += '&'+objFieldList[1]+'-'+objFieldList[2]+'=0';
+							}
+							else{
+								ajaxURL += '&'+objFieldList[1]+'-'+objFieldList[2]+'=1';
+							}
+						}
+						else{
+							ajaxURL += '&'+objFieldList[1]+'-'+objFieldList[2]+'=0';
+						}
+					break;
+					case '3':
+						var thisValue = $("#"+objFieldList[1]).val();
+						if(objFieldList.length == 3 ){
+							if( thisValue != '' ){
+								var theAllValueStr = ','+thisValue+',';
+								if( theAllValueStr.indexOf(','+objFieldList[2]+',') == -1 ){
+									ajaxURL += '&'+objFieldList[1]+'-'+objFieldList[2]+'=0';
+								}
+								else{
+									ajaxURL += '&'+objFieldList[1]+'-'+objFieldList[2]+'=1';
+								}
+							}
+							else{
+								ajaxURL += '&'+objFieldList[1]+'-'+objFieldList[2]+'=0';
+							}
+						}
+						else{
+							ajaxURL += '&'+objFieldList[1]+'='+escape(thisValue);
+						}
+					break;
+				}
+			}
+		}
+		var js = document.createElement( "script" ); 
+		js.type = "text/javascript" ;
+		js.setAttribute( "src" , ajaxURL);
+		document.body.appendChild(js);
+	}
+	else
+	{
+		Run_Survey_Conditions();
+	}
+}
+function Run_Survey_Conditions()
+{
+		if( getRatingValue(document.Survey_Form.option_1129_28) <= 10 && getRatingValue(document.Survey_Form.option_1129_28) != 0 )
+	{
+		$('#TextInput_1129_28').show();
+	} 
+	else { 
+		$('#TextInput_1129_28').hide();
+	} 
+	if( getRatingValue(document.Survey_Form.option_1129_29) <= 10 && getRatingValue(document.Survey_Form.option_1129_29) != 0 )
+	{
+		$('#TextInput_1129_29').show();
+	} 
+	else { 
+		$('#TextInput_1129_29').hide();
+	} 
+	if( getRatingValue(document.Survey_Form.option_1129_34) <= 10 && getRatingValue(document.Survey_Form.option_1129_34) != 0 )
+	{
+		$('#TextInput_1129_34').show();
+	} 
+	else { 
+		$('#TextInput_1129_34').hide();
+	} 
+	if( getRatingValue(document.Survey_Form.option_1129_35) <= 10 && getRatingValue(document.Survey_Form.option_1129_35) != 0 )
+	{
+		$('#TextInput_1129_35').show();
+	} 
+	else { 
+		$('#TextInput_1129_35').hide();
+	} 
+	if( getRatingValue(document.Survey_Form.option_1129_36) <= 10 && getRatingValue(document.Survey_Form.option_1129_36) != 0 )
+	{
+		$('#TextInput_1129_36').show();
+	} 
+	else { 
+		$('#TextInput_1129_36').hide();
+	} 
+	changeMaskingRatingBgColor(1129);
+	if(( IsInCheckBox(document.Survey_Form.option_1130,31) ))
+	{
+		$("#question_1306").show();
+	} 
+	else { 
+		$("#question_1306").hide();
+	} 
+	if(( IsInCheckBox(document.Survey_Form.option_1130,31) ))
+	{
+		$("#question_1304").show();
+	} 
+	else { 
+		$("#question_1304").hide();
+	} 
+	if(( IsInCheckBox(document.Survey_Form.option_1130,32) ))
+	{
+		$("#question_1131").show();
+	} 
+	else { 
+		$("#question_1131").hide();
+	} 
+
+}
+function ReloadImage()
+{
+	document.getElementById('verifyImage').src = 'http://yg007.yinglian360.com/JS/CreateVerifyCode.js.php?sid=' + Math.random(); 
+}
+function Init()
+{
+   Check_Survey_Conditions();
+   initLightbox();
+   
+   
+   if(0 == 1) getLocation();
+}
+</script>
+
+<!--该调查问卷由科维能动EnableQ在线问卷调查引擎系统生成 -->
+<div id="content-wrap">
+<div id="content-cont">
+<div class="featurebox">
+
+<H4>&nbsp;第三方授权服务商手机售后服务成绩卡2015年第2期（总第2期）</H4>
+<H2></H2>
+<H5><div>盈联之翼的小伙伴：请您以一名普通小米手机用户的身份，持盈联公司提供的，已预设故障的手机，进维修门店送修暗访（1店1机），体验感受该门店的服务过程。全程使用专用暗拍设备。神秘顾客不得暴露身份。<br></div></H5>
+<form action="http://yg007.yinglian360.com/q.php?qname=disanfang201502&qlang=cn" method="post" name="Survey_Form" id="Survey_Form" onsubmit="return false;">
+<table bgcolor="#ffffff" cellpadding="0" cellspacing="0" width="100%">
+ <noscript><tr><td style="background-color: #FFFF66; border-top: solid 4px #FF9966; border-bottom: solid 4px #FF9966; margin: 10px 25px; padding: 10px 15px;">系统检查到您的浏览器可能未开启JavaScript支持，问卷访问部分功能可能会受影响！</td></tr></noscript>
+ <tr><td height=5 class="surveyclear">&nbsp;</td></tr>
+ <tr><td class="surveybegin">
+
+ <table width="100%" style="display:block;" class="pertable" id="question_1045" onactivate="this.style.backgroundColor='#dff7ff'" ondeactivate="this.style.backgroundColor='#ffffff'">
+ <tr>
+    <td height=25 class="textinfo" valign=center>&nbsp;<b><span class="textEdit" id="questionName_1045">基础信息</span></b></td>
+</tr>
+<tr>
+    <td>
+	  <table cellSpacing=0 cellPadding=0 width="100%">
+	    <tr><td class="answer" style="line-height:150%"><span class="textEdit" id="textInfo_1045">请在下方依次填写相关信息</span></td></tr>
+	   </table>
+   </td>
+</tr>
+
+  <tr><td height=5 class="surveyclear">&nbsp;</td></tr>
+  </table>
+ <table width="100%" style="display:block;" class="pertable" id="question_1046" onactivate="this.style.backgroundColor='#dff7ff'" ondeactivate="this.style.backgroundColor='#ffffff'">
+ <tr><td height=25 class="question" valign=center>&nbsp;<span class=red>*</span><span class="textEdit" id="questionName_1046">第三方授权服务商类型选择</span>&nbsp;<span class=notes></span></td></tr>
+<tr><td class="tips"><span class="textEdit" id="questionNotes_1046"></span></td></tr>
+<tr><td>
+	  <table cellSpacing=0 cellPadding=0 width="98%">
+	   <tr><td class="answer">
+	   <select name="option_1046" id="option_1046" onchange="Check_Survey_Conditions()">
+	    <option value=''>请选择...</option>
+
+	    <option value="2381" >形象店</option>
+	    <option value="2382" >非形象店</option>
+	   </select>
+	   </td></tr>
+	   </table>
+</td></tr>
+  <tr><td height=5 class="surveyclear">&nbsp;</td></tr>
+  </table>
+ <table width="100%" style="display:block;" class="pertable" id="question_1047" onactivate="this.style.backgroundColor='#dff7ff'" ondeactivate="this.style.backgroundColor='#ffffff'">
+ <tr><td height=25 class="question" valign=center>&nbsp;<span class=red>*</span><span class="textEdit" id="questionName_1047">成绩卡编号</span>&nbsp;<span class=notes></span></td></tr>
+<tr><td class="tips"><span class="textEdit" id="questionNotes_1047">请按照督导给定的该门店唯一编号填写。</span></td></tr>
+<tr><td>&nbsp;&nbsp;<input name="isHaveUnkown_1047" id="isHaveUnkown_1047" type=radio value=0 style="display:none" >&nbsp;<input class="answer" type="text" name="option_1047" id="option_1047" size="6" value=""  onblur="Check_Survey_Conditions();">&nbsp;</td></tr>
+<tr><td style="display:none">&nbsp;&nbsp;<input onclick="Check_Survey_Conditions()" name="isHaveUnkown_1047" id="isHaveUnkown_1047" value=1 type=radio >&nbsp;不清楚</td></tr>
+  <tr><td height=5 class="surveyclear">&nbsp;</td></tr>
+  </table>
+ <table width="100%" style="display:block;" class="pertable" id="question_1048" onactivate="this.style.backgroundColor='#dff7ff'" ondeactivate="this.style.backgroundColor='#ffffff'">
+ <tr><td height=25 class="question" valign=center>&nbsp;<span class=red>*</span><span class="textEdit" id="questionName_1048">省</span>&nbsp;<span class=notes></span></td></tr>
+<tr><td class="tips"><span class="textEdit" id="questionNotes_1048"></span></td></tr>
+<tr><td>
+	  <table cellSpacing=0 cellPadding=0 width="98%">
+	   <tr><td class="answer">
+	   <select name="option_1048" id="option_1048" onchange="Check_Survey_Conditions()">
+	    <option value=''>请选择...</option>
+
+	    <option value="2383" >北京</option>
+	    <option value="2384" >天津</option>
+	    <option value="2385" >上海</option>
+	    <option value="2386" >重庆</option>
+	    <option value="2387" >河北</option>
+	    <option value="2388" >河南</option>
+	    <option value="2389" >云南</option>
+	    <option value="2390" >辽宁</option>
+	    <option value="2391" >黑龙江</option>
+	    <option value="2392" >湖南</option>
+	    <option value="2393" >安徽</option>
+	    <option value="2394" >山东</option>
+	    <option value="2395" >新疆</option>
+	    <option value="2396" >江苏</option>
+	    <option value="2397" >浙江</option>
+	    <option value="2398" >江西</option>
+	    <option value="2399" >湖北</option>
+	    <option value="2400" >广西</option>
+	    <option value="2401" >甘肃</option>
+	    <option value="2402" >山西</option>
+	    <option value="2403" >内蒙古</option>
+	    <option value="2404" >陕西</option>
+	    <option value="2405" >吉林</option>
+	    <option value="2406" >福建</option>
+	    <option value="2407" >贵州</option>
+	    <option value="2408" >广东</option>
+	    <option value="2409" >青海</option>
+	    <option value="2410" >西藏</option>
+	    <option value="2411" >四川</option>
+	    <option value="2412" >宁夏</option>
+	    <option value="2413" >海南</option>
+	   </select>
+	   </td></tr>
+	   </table>
+</td></tr>
+  <tr><td height=5 class="surveyclear">&nbsp;</td></tr>
+  </table>
+ <table width="100%" style="display:block;" class="pertable" id="question_1049" onactivate="this.style.backgroundColor='#dff7ff'" ondeactivate="this.style.backgroundColor='#ffffff'">
+ <tr><td height=25 class="question" valign=center>&nbsp;<span class=red>*</span><span class="textEdit" id="questionName_1049">机构代码</span>&nbsp;<span class=notes></span></td></tr>
+<tr><td class="tips"><span class="textEdit" id="questionNotes_1049"></span></td></tr>
+<tr><td>&nbsp;&nbsp;<input name="isHaveUnkown_1049" id="isHaveUnkown_1049" type=radio value=0 style="display:none" >&nbsp;<input class="answer" type="text" name="option_1049" id="option_1049" size="50" value=""  onblur="Check_Survey_Conditions();">&nbsp;</td></tr>
+<tr><td style="display:none">&nbsp;&nbsp;<input onclick="Check_Survey_Conditions()" name="isHaveUnkown_1049" id="isHaveUnkown_1049" value=1 type=radio >&nbsp;不清楚</td></tr>
+  <tr><td height=5 class="surveyclear">&nbsp;</td></tr>
+  </table>
+ <table width="100%" style="display:block;" class="pertable" id="question_1050" onactivate="this.style.backgroundColor='#dff7ff'" ondeactivate="this.style.backgroundColor='#ffffff'">
+ <tr><td height=25 class="question" valign=center>&nbsp;<span class=red>*</span><span class="textEdit" id="questionName_1050">网点名称</span>&nbsp;<span class=notes></span></td></tr>
+<tr><td class="tips"><span class="textEdit" id="questionNotes_1050">请核对成绩卡上方出现的门店名称，确认与走访门店一致后，复制该信息至下方空白框内</span></td></tr>
+<tr><td>&nbsp;&nbsp;<input name="isHaveUnkown_1050" id="isHaveUnkown_1050" type=radio value=0 style="display:none" >&nbsp;<input class="answer" type="text" name="option_1050" id="option_1050" size="50" value=""  onblur="Check_Survey_Conditions();">&nbsp;</td></tr>
+<tr><td style="display:none">&nbsp;&nbsp;<input onclick="Check_Survey_Conditions()" name="isHaveUnkown_1050" id="isHaveUnkown_1050" value=1 type=radio >&nbsp;不清楚</td></tr>
+  <tr><td height=5 class="surveyclear">&nbsp;</td></tr>
+  </table>
+ <table width="100%" style="display:block;" class="pertable" id="question_1051" onactivate="this.style.backgroundColor='#dff7ff'" ondeactivate="this.style.backgroundColor='#ffffff'">
+ <script type="text/javascript" src="http://yg007.yinglian360.com/JS/Calendar.js.php"></script>
+
+<tr><td height=25 class="question" valign=center>&nbsp;<span class=red>*</span><span class="textEdit" id="questionName_1051">调查日期</span>&nbsp;<span class=notes></span></td></tr>
+<tr><td class="tips"><span class="textEdit" id="questionNotes_1051"></span></td></tr>
+<tr><td>&nbsp;&nbsp;<input name="isHaveUnkown_1051" id="isHaveUnkown_1051" type=radio value=0 style="display:none" >&nbsp;<input class="answer" type="text" name="option_1051" id="option_1051" size="50" onfocus="if(this.value=='0000-00-00') this.value=''" value="" onclick="javascript:SelectDate(this,'yyyy-MM-dd')"  onblur="Check_Survey_Conditions();"></td></tr>
+<tr><td style="display:none">&nbsp;&nbsp;<input onclick="Check_Survey_Conditions()" name="isHaveUnkown_1051" id="isHaveUnkown_1051" value=1 type=radio >&nbsp;不清楚</td></tr>
+  <tr><td height=5 class="surveyclear">&nbsp;</td></tr>
+  </table>
+ <table width="100%" style="display:block;" class="pertable" id="question_1052" onactivate="this.style.backgroundColor='#dff7ff'" ondeactivate="this.style.backgroundColor='#ffffff'">
+ <tr><td height=25 class="question" valign=center>&nbsp;<span class=red>*</span><span class="textEdit" id="questionName_1052">进入时间：</span>&nbsp;<span class=notes></span></td></tr>
+<tr><td class="tips"><span class="textEdit" id="questionNotes_1052">统一按提示填写，示例9点25分，填写为0925</span></td></tr>
+<tr><td>&nbsp;&nbsp;<input name="isHaveUnkown_1052" id="isHaveUnkown_1052" type=radio value=0 style="display:none" >&nbsp;<input class="answer" type="text" name="option_1052" id="option_1052" size="10" value=""  onblur="Check_Survey_Conditions();">&nbsp;</td></tr>
+<tr><td style="display:none">&nbsp;&nbsp;<input onclick="Check_Survey_Conditions()" name="isHaveUnkown_1052" id="isHaveUnkown_1052" value=1 type=radio >&nbsp;不清楚</td></tr>
+  <tr><td height=5 class="surveyclear">&nbsp;</td></tr>
+  </table>
+ <table width="100%" style="display:block;" class="pertable" id="question_1053" onactivate="this.style.backgroundColor='#dff7ff'" ondeactivate="this.style.backgroundColor='#ffffff'">
+ <tr><td height=25 class="question" valign=center>&nbsp;<span class=red>*</span><span class="textEdit" id="questionName_1053">离开时间：</span>&nbsp;<span class=notes></span></td></tr>
+<tr><td class="tips"><span class="textEdit" id="questionNotes_1053">统一按提示填写，示例下午14点50分，填写为1450</span></td></tr>
+<tr><td>&nbsp;&nbsp;<input name="isHaveUnkown_1053" id="isHaveUnkown_1053" type=radio value=0 style="display:none" >&nbsp;<input class="answer" type="text" name="option_1053" id="option_1053" size="10" value=""  onblur="Check_Survey_Conditions();">&nbsp;</td></tr>
+<tr><td style="display:none">&nbsp;&nbsp;<input onclick="Check_Survey_Conditions()" name="isHaveUnkown_1053" id="isHaveUnkown_1053" value=1 type=radio >&nbsp;不清楚</td></tr>
+  <tr><td height=5 class="surveyclear">&nbsp;</td></tr>
+  </table>
+ <table width="100%" style="display:block;" class="pertable" id="question_1054" onactivate="this.style.backgroundColor='#dff7ff'" ondeactivate="this.style.backgroundColor='#ffffff'">
+ <tr><td height=25 class="question" valign=center>&nbsp;<span class=red>*</span><span class="textEdit" id="questionName_1054">网点地址</span>&nbsp;<span class=notes></span></td></tr>
+<tr><td class="tips"><span class="textEdit" id="questionNotes_1054">请核对成绩卡上方出现的门店地址，确认与走访门店实际地址一致后，复制该信息至下方空白框内</span></td></tr>
+<tr><td>&nbsp;&nbsp;<input name="isHaveUnkown_1054" id="isHaveUnkown_1054" type=radio value=0 style="display:none" >&nbsp;<input class="answer" type="text" name="option_1054" id="option_1054" size="50" value=""  onblur="Check_Survey_Conditions();">&nbsp;</td></tr>
+<tr><td style="display:none">&nbsp;&nbsp;<input onclick="Check_Survey_Conditions()" name="isHaveUnkown_1054" id="isHaveUnkown_1054" value=1 type=radio >&nbsp;不清楚</td></tr>
+  <tr><td height=5 class="surveyclear">&nbsp;</td></tr>
+  </table>
+ <table width="100%" style="display:block;" class="pertable" id="question_1055" onactivate="this.style.backgroundColor='#dff7ff'" ondeactivate="this.style.backgroundColor='#ffffff'">
+ <tr><td height=25 class="question" valign=center>&nbsp;<span class=red>*</span><span class="textEdit" id="questionName_1055">服务人员人数</span>&nbsp;<span class=notes></span></td></tr>
+<tr><td class="tips"><span class="textEdit" id="questionNotes_1055"></span></td></tr>
+<tr><td>
+	  <table cellSpacing=0 cellPadding=0 width="98%">
+	   <tr><td class="answer">
+	   <select name="option_1055" id="option_1055" onchange="Check_Survey_Conditions()">
+	    <option value=''>请选择...</option>
+
+	    <option value="2414" >1人</option>
+	    <option value="2415" >2人</option>
+	    <option value="2416" >3人</option>
+	    <option value="2417" >4人</option>
+	    <option value="2418" >5人</option>
+	    <option value="2419" >6人</option>
+	    <option value="2420" >7人</option>
+	    <option value="2421" >8人</option>
+	    <option value="2422" >9人</option>
+	    <option value="2423" >10人</option>
+	    <option value="2424" >11人</option>
+	    <option value="2425" >12人及以上</option>
+	   </select>
+	   </td></tr>
+	   </table>
+</td></tr>
+  <tr><td height=5 class="surveyclear">&nbsp;</td></tr>
+  </table>
+ <table width="100%" style="display:block;" class="pertable" id="question_1056" onactivate="this.style.backgroundColor='#dff7ff'" ondeactivate="this.style.backgroundColor='#ffffff'">
+ <!--该调查问卷由科维能动EnableQ在线问卷调查引擎系统生成 -->
+
+<tr><td height=25 class="question" valign=center>&nbsp;<span class=red>*</span><span class="textEdit" id="questionName_1056">按照预先设定，我送修的该部手机属于</span>&nbsp;<span class=notes></span></td></tr>
+<tr><td class="tips"><span class="textEdit" id="questionNotes_1056">以督导预先告知该手机属于保内还是保外为准。</span></td></tr>
+<tr><td>
+	  <table cellSpacing=0 cellPadding=0>
+	   <tr>
+
+		<td class="answer" align="left">
+		  <table cellSpacing=0 cellPadding=0>
+		  <tr id="option_radio_2426_container"><td class=answer><input type="radio" value="2426" name="option_1056" id="option_1056"  onclick="Check_Survey_Conditions()" ><span class="textEdit" id="optionName_2_1056_2426">保内</span></td></tr>
+		  </table>
+		</td>
+		<td class="answer" align="left">
+		  <table cellSpacing=0 cellPadding=0>
+		  <tr id="option_radio_2427_container"><td class=answer><input type="radio" value="2427" name="option_1056" id="option_1056"  onclick="Check_Survey_Conditions()" ><span class="textEdit" id="optionName_2_1056_2427">保外</span></td></tr>
+		  </table>
+		</td></tr><tr>
+	   </tr>
+	   
+	  </table>
+</td></tr>
+<!--该调查问卷由科维能动EnableQ在线问卷调查引擎系统生成 -->
+
+  <tr><td height=5 class="surveyclear">&nbsp;</td></tr>
+  </table>
+ <table width="100%" style="display:block;" class="pertable" id="question_1057" onactivate="this.style.backgroundColor='#dff7ff'" ondeactivate="this.style.backgroundColor='#ffffff'">
+ <tr><td height=25 class="question" valign=center>&nbsp;<span class=red>*</span><span class="textEdit" id="questionName_1057">手机型号</span>&nbsp;<span class=notes></span></td></tr>
+<tr><td class="tips"><span class="textEdit" id="questionNotes_1057">核对该部送修手机型号，在下拉菜单中选择相应型号</span></td></tr>
+<tr><td>
+	  <table cellSpacing=0 cellPadding=0 width="98%">
+	   <tr><td class="answer">
+	   <select name="option_1057" id="option_1057" onchange="Check_Survey_Conditions()">
+	    <option value=''>请选择...</option>
+
+	    <option value="2428" >红米 Note</option>
+	    <option value="2429" >Mi2S</option>
+	    <option value="2430" >红米1S</option>
+	    <option value="2431" >Mi3</option>
+	    <option value="2432" >Mi4</option>
+	    <option value="2433" >Mi4C</option>
+	    <option value="2994" >红米Note2</option>
+	    <option value="2995" >红米手机2A</option>
+	    <option value="2996" >红米手机2</option>
+	    <option value="2997" >小米 Note</option>
+	    <option value="2998" >小米盒子</option>
+	    <option value="2999" >小米平板</option>
+	   </select>
+	   </td></tr>
+	   </table>
+</td></tr>
+  <tr><td height=5 class="surveyclear">&nbsp;</td></tr>
+  </table>
+ <table width="100%" style="display:block;" class="pertable" id="question_1058" onactivate="this.style.backgroundColor='#dff7ff'" ondeactivate="this.style.backgroundColor='#ffffff'">
+ <tr><td height=25 class="question" valign=center>&nbsp;<span class=red>*</span><span class="textEdit" id="questionName_1058">串号</span>&nbsp;<span class=notes></span></td></tr>
+<tr><td class="tips"><span class="textEdit" id="questionNotes_1058">摁*#06#，可显示15位IMEI串号。</span></td></tr>
+<tr><td>&nbsp;&nbsp;<input name="isHaveUnkown_1058" id="isHaveUnkown_1058" type=radio value=0 style="display:none" >&nbsp;<input class="answer" type="text" name="option_1058" id="option_1058" size="50" value=""  onblur="Check_Survey_Conditions();">&nbsp;</td></tr>
+<tr><td style="display:none">&nbsp;&nbsp;<input onclick="Check_Survey_Conditions()" name="isHaveUnkown_1058" id="isHaveUnkown_1058" value=1 type=radio >&nbsp;不清楚</td></tr>
+  <tr><td height=5 class="surveyclear">&nbsp;</td></tr>
+  </table>
+ <table width="100%" style="display:block;" class="pertable" id="question_1059" onactivate="this.style.backgroundColor='#dff7ff'" ondeactivate="this.style.backgroundColor='#ffffff'">
+ <tr><td height=25 class="question" valign=center>&nbsp;<span class=red>*</span><span class="textEdit" id="questionName_1059">故障现象</span>&nbsp;<span class=notes></span></td></tr>
+<tr><td class="tips"><span class="textEdit" id="questionNotes_1059">请按包裹内该手机故障描述，选择相应故障类别</span></td></tr>
+<tr><td>
+	  <table cellSpacing=0 cellPadding=0 width="98%">
+	   <tr><td class="answer">
+	   <select name="option_1059" id="option_1059" onchange="Check_Survey_Conditions()">
+	    <option value=''>请选择...</option>
+
+	    <option value="2434" >不开机</option>
+	    <option value="2435" >触摸失灵</option>
+	    <option value="2436" >充电异常</option>
+	    <option value="2437" >USB接口损坏</option>
+	    <option value="2438" >花屏</option>
+	    <option value="2439" >黑屏</option>
+	    <option value="2440" >LCD浸液</option>
+	    <option value="2441" >开关机键异常</option>
+	    <option value="2442" >耳机按键异常</option>
+	    <option value="2443" >喇叭异常</option>
+	    <option value="2444" >SIM卡异常</option>
+	    <option value="2445" >扬声器异常</option>
+	    <option value="2446" >送话无声</option>
+	    <option value="2447" >白米重启</option>
+	    <option value="2448" >白米定屏</option>
+	    <option value="2449" >相机异常</option>
+	    <option value="2450" >摄像头异常</option>
+	    <option value="2451" >内屏裂</option>
+	    <option value="2452" >死机</option>
+	    <option value="2453" >4G信号无信号</option>
+	    <option value="2454" >4G信号弱</option>
+	    <option value="2455" >WIFI信号弱</option>
+	    <option value="2456" >电源按键不良</option>
+	   </select>
+	   </td></tr>
+	   </table>
+</td></tr>
+  <tr><td height=5 class="surveyclear">&nbsp;</td></tr>
+  </table>
+ <table width="100%" style="display:block;" class="pertable" id="question_1060" onactivate="this.style.backgroundColor='#dff7ff'" ondeactivate="this.style.backgroundColor='#ffffff'">
+ <tr><td height=25 class="question" valign=center>&nbsp;<span class=red>*</span><span class="textEdit" id="questionName_1060">神秘顾客姓名</span>&nbsp;<span class=notes></span></td></tr>
+<tr><td class="tips"><span class="textEdit" id="questionNotes_1060"></span></td></tr>
+<tr><td>&nbsp;&nbsp;<input name="isHaveUnkown_1060" id="isHaveUnkown_1060" type=radio value=0 style="display:none" >&nbsp;<input class="answer" type="text" name="option_1060" id="option_1060" size="50" value=""  onblur="Check_Survey_Conditions();">&nbsp;</td></tr>
+<tr><td style="display:none">&nbsp;&nbsp;<input onclick="Check_Survey_Conditions()" name="isHaveUnkown_1060" id="isHaveUnkown_1060" value=1 type=radio >&nbsp;不清楚</td></tr>
+  <tr><td height=5 class="surveyclear">&nbsp;</td></tr>
+  </table>
+ <table width="100%" style="display:block;" class="pertable" id="question_1061" onactivate="this.style.backgroundColor='#dff7ff'" ondeactivate="this.style.backgroundColor='#ffffff'">
+ <tr><td height=25 class="question" valign=center>&nbsp;<span class=red>*</span><span class="textEdit" id="questionName_1061">神秘顾客联系方式</span>&nbsp;<span class=notes></span></td></tr>
+<tr><td class="tips"><span class="textEdit" id="questionNotes_1061">请填写个人手机号码，当审核人员需要核对信息时，能及时联系。</span></td></tr>
+<tr><td>&nbsp;&nbsp;<input name="isHaveUnkown_1061" id="isHaveUnkown_1061" type=radio value=0 style="display:none" >&nbsp;<input class="answer" type="text" name="option_1061" id="option_1061" size="50" value=""  onblur="Check_Survey_Conditions();">&nbsp;</td></tr>
+<tr><td style="display:none">&nbsp;&nbsp;<input onclick="Check_Survey_Conditions()" name="isHaveUnkown_1061" id="isHaveUnkown_1061" value=1 type=radio >&nbsp;不清楚</td></tr>
+  <tr><td height=5 class="surveyclear">&nbsp;</td></tr>
+  </table>
+ <table width="100%" style="display:block;" class="pertable" id="question_1062" onactivate="this.style.backgroundColor='#dff7ff'" ondeactivate="this.style.backgroundColor='#ffffff'">
+ <tr>
+    <td height=25 class="textinfo" valign=center>&nbsp;<b><span class="textEdit" id="questionName_1062">A店面形象及配备设施</span></b></td>
+</tr>
+<tr>
+    <td>
+	  <table cellSpacing=0 cellPadding=0 width="100%">
+	    <tr><td class="answer" style="line-height:150%"><span class="textEdit" id="textInfo_1062">A1环境形象</span></td></tr>
+	   </table>
+   </td>
+</tr>
+
+  <tr><td height=5 class="surveyclear">&nbsp;</td></tr>
+  </table>
+ <table width="100%" style="display:block;" class="pertable" id="question_1063" onactivate="this.style.backgroundColor='#dff7ff'" ondeactivate="this.style.backgroundColor='#ffffff'">
+ 
+<tr><td height=25 class="question" valign=center>&nbsp;<span class=red>*</span><span class="textEdit" id="questionName_1063">A1-1门头、灯箱、家具等硬件设施完好</span>&nbsp;<span class=notes></span></td></tr>
+<tr><td class="tips"><span class="textEdit" id="questionNotes_1063"></span></td></tr>
+<tr><td>
+	<table cellSpacing=0 cellPadding=0>
+
+	   <tr id="option_radio_2464_container"><td width=8></td>
+	       <td><input onclick="Check_Survey_Conditions()" type="radio" value="2464" name="option_1063" id="option_1063" ></td>
+	       <td class="answer"><span class="textEdit" id="optionName_24_1063_2464">符合</span></td>
+		   <td width=8></td>
+	       <td style="display:none"><input name="TextOtherValue_1063_2464" type="text" size="0" id="TextOtherValue_1063_2464" value="" onblur="Check_Survey_Conditions();" >&nbsp;&nbsp;</td></tr>
+	   <tr id="option_radio_2465_container"><td width=8></td>
+	       <td><input onclick="Check_Survey_Conditions()" type="radio" value="2465" name="option_1063" id="option_1063" ></td>
+	       <td class="answer"><span class="textEdit" id="optionName_24_1063_2465">不符合</span></td>
+		   <td width=8></td>
+	       <td style="display:"><input name="TextOtherValue_1063_2465" type="text" size="60" id="TextOtherValue_1063_2465" value="" onblur="Check_Survey_Conditions();" >&nbsp;&nbsp;</td></tr>
+	</table>
+</td></tr>
+  <tr><td height=5 class="surveyclear">&nbsp;</td></tr>
+  </table>
+ <table width="100%" style="display:block;" class="pertable" id="question_1064" onactivate="this.style.backgroundColor='#dff7ff'" ondeactivate="this.style.backgroundColor='#ffffff'">
+ 
+<tr><td height=25 class="question" valign=center>&nbsp;<span class=red>*</span><span class="textEdit" id="questionName_1064">A1-2门窗玻璃清洁明亮</span>&nbsp;<span class=notes></span></td></tr>
+<tr><td class="tips"><span class="textEdit" id="questionNotes_1064"></span></td></tr>
+<tr><td>
+	<table cellSpacing=0 cellPadding=0>
+
+	   <tr id="option_radio_2466_container"><td width=8></td>
+	       <td><input onclick="Check_Survey_Conditions()" type="radio" value="2466" name="option_1064" id="option_1064" ></td>
+	       <td class="answer"><span class="textEdit" id="optionName_24_1064_2466">符合</span></td>
+		   <td width=8></td>
+	       <td style="display:none"><input name="TextOtherValue_1064_2466" type="text" size="0" id="TextOtherValue_1064_2466" value="" onblur="Check_Survey_Conditions();" >&nbsp;&nbsp;</td></tr>
+	   <tr id="option_radio_2467_container"><td width=8></td>
+	       <td><input onclick="Check_Survey_Conditions()" type="radio" value="2467" name="option_1064" id="option_1064" ></td>
+	       <td class="answer"><span class="textEdit" id="optionName_24_1064_2467">不符合</span></td>
+		   <td width=8></td>
+	       <td style="display:"><input name="TextOtherValue_1064_2467" type="text" size="60" id="TextOtherValue_1064_2467" value="" onblur="Check_Survey_Conditions();" >&nbsp;&nbsp;</td></tr>
+	</table>
+</td></tr>
+  <tr><td height=5 class="surveyclear">&nbsp;</td></tr>
+  </table>
+ <table width="100%" style="display:block;" class="pertable" id="question_1065" onactivate="this.style.backgroundColor='#dff7ff'" ondeactivate="this.style.backgroundColor='#ffffff'">
+ 
+<tr><td height=25 class="question" valign=center>&nbsp;<span class=red>*</span><span class="textEdit" id="questionName_1065">A1-3网点内地面、墙面干净整洁</span>&nbsp;<span class=notes></span></td></tr>
+<tr><td class="tips"><span class="textEdit" id="questionNotes_1065"></span></td></tr>
+<tr><td>
+	<table cellSpacing=0 cellPadding=0>
+
+	   <tr id="option_radio_2468_container"><td width=8></td>
+	       <td><input onclick="Check_Survey_Conditions()" type="radio" value="2468" name="option_1065" id="option_1065" ></td>
+	       <td class="answer"><span class="textEdit" id="optionName_24_1065_2468">符合</span></td>
+		   <td width=8></td>
+	       <td style="display:none"><input name="TextOtherValue_1065_2468" type="text" size="0" id="TextOtherValue_1065_2468" value="" onblur="Check_Survey_Conditions();" >&nbsp;&nbsp;</td></tr>
+	   <tr id="option_radio_2469_container"><td width=8></td>
+	       <td><input onclick="Check_Survey_Conditions()" type="radio" value="2469" name="option_1065" id="option_1065" ></td>
+	       <td class="answer"><span class="textEdit" id="optionName_24_1065_2469">不符合</span></td>
+		   <td width=8></td>
+	       <td style="display:"><input name="TextOtherValue_1065_2469" type="text" size="60" id="TextOtherValue_1065_2469" value="" onblur="Check_Survey_Conditions();" >&nbsp;&nbsp;</td></tr>
+	</table>
+</td></tr>
+  <tr><td height=5 class="surveyclear">&nbsp;</td></tr>
+  </table>
+ <table width="100%" style="display:block;" class="pertable" id="question_1066" onactivate="this.style.backgroundColor='#dff7ff'" ondeactivate="this.style.backgroundColor='#ffffff'">
+ 
+<tr><td height=25 class="question" valign=center>&nbsp;<span class=red>*</span><span class="textEdit" id="questionName_1066">A1-4工作时间室内家具、硬件灯光全部开启</span>&nbsp;<span class=notes></span></td></tr>
+<tr><td class="tips"><span class="textEdit" id="questionNotes_1066"></span></td></tr>
+<tr><td>
+	<table cellSpacing=0 cellPadding=0>
+
+	   <tr id="option_radio_2470_container"><td width=8></td>
+	       <td><input onclick="Check_Survey_Conditions()" type="radio" value="2470" name="option_1066" id="option_1066" ></td>
+	       <td class="answer"><span class="textEdit" id="optionName_24_1066_2470">符合</span></td>
+		   <td width=8></td>
+	       <td style="display:none"><input name="TextOtherValue_1066_2470" type="text" size="0" id="TextOtherValue_1066_2470" value="" onblur="Check_Survey_Conditions();" >&nbsp;&nbsp;</td></tr>
+	   <tr id="option_radio_2471_container"><td width=8></td>
+	       <td><input onclick="Check_Survey_Conditions()" type="radio" value="2471" name="option_1066" id="option_1066" ></td>
+	       <td class="answer"><span class="textEdit" id="optionName_24_1066_2471">不符合</span></td>
+		   <td width=8></td>
+	       <td style="display:"><input name="TextOtherValue_1066_2471" type="text" size="60" id="TextOtherValue_1066_2471" value="" onblur="Check_Survey_Conditions();" >&nbsp;&nbsp;</td></tr>
+	</table>
+</td></tr>
+  <tr><td height=5 class="surveyclear">&nbsp;</td></tr>
+  </table>
+ <table width="100%" style="display:block;" class="pertable" id="question_1067" onactivate="this.style.backgroundColor='#dff7ff'" ondeactivate="this.style.backgroundColor='#ffffff'">
+ 
+<tr><td height=25 class="question" valign=center>&nbsp;<span class=red>*</span><span class="textEdit" id="questionName_1067">A1-5物品摆放整齐有序</span>&nbsp;<span class=notes></span></td></tr>
+<tr><td class="tips"><span class="textEdit" id="questionNotes_1067"></span></td></tr>
+<tr><td>
+	<table cellSpacing=0 cellPadding=0>
+
+	   <tr id="option_radio_2472_container"><td width=8></td>
+	       <td><input onclick="Check_Survey_Conditions()" type="radio" value="2472" name="option_1067" id="option_1067" ></td>
+	       <td class="answer"><span class="textEdit" id="optionName_24_1067_2472">符合</span></td>
+		   <td width=8></td>
+	       <td style="display:none"><input name="TextOtherValue_1067_2472" type="text" size="0" id="TextOtherValue_1067_2472" value="" onblur="Check_Survey_Conditions();" >&nbsp;&nbsp;</td></tr>
+	   <tr id="option_radio_2473_container"><td width=8></td>
+	       <td><input onclick="Check_Survey_Conditions()" type="radio" value="2473" name="option_1067" id="option_1067" ></td>
+	       <td class="answer"><span class="textEdit" id="optionName_24_1067_2473">不符合</span></td>
+		   <td width=8></td>
+	       <td style="display:"><input name="TextOtherValue_1067_2473" type="text" size="60" id="TextOtherValue_1067_2473" value="" onblur="Check_Survey_Conditions();" >&nbsp;&nbsp;</td></tr>
+	</table>
+</td></tr>
+  <tr><td height=5 class="surveyclear">&nbsp;</td></tr>
+  </table>
+ <table width="100%" style="display:block;" class="pertable" id="question_1068" onactivate="this.style.backgroundColor='#dff7ff'" ondeactivate="this.style.backgroundColor='#ffffff'">
+ 
+<tr><td height=25 class="question" valign=center>&nbsp;<span class=red>*</span><span class="textEdit" id="questionName_1068">A1-6有服务政策牌，摆放在醒目位置</span>&nbsp;<span class=notes></span></td></tr>
+<tr><td class="tips"><span class="textEdit" id="questionNotes_1068"></span></td></tr>
+<tr><td>
+	<table cellSpacing=0 cellPadding=0>
+
+	   <tr id="option_radio_2474_container"><td width=8></td>
+	       <td><input onclick="Check_Survey_Conditions()" type="radio" value="2474" name="option_1068" id="option_1068" ></td>
+	       <td class="answer"><span class="textEdit" id="optionName_24_1068_2474">符合</span></td>
+		   <td width=8></td>
+	       <td style="display:none"><input name="TextOtherValue_1068_2474" type="text" size="0" id="TextOtherValue_1068_2474" value="" onblur="Check_Survey_Conditions();" >&nbsp;&nbsp;</td></tr>
+	   <tr id="option_radio_2475_container"><td width=8></td>
+	       <td><input onclick="Check_Survey_Conditions()" type="radio" value="2475" name="option_1068" id="option_1068" ></td>
+	       <td class="answer"><span class="textEdit" id="optionName_24_1068_2475">不符合</span></td>
+		   <td width=8></td>
+	       <td style="display:"><input name="TextOtherValue_1068_2475" type="text" size="60" id="TextOtherValue_1068_2475" value="" onblur="Check_Survey_Conditions();" >&nbsp;&nbsp;</td></tr>
+	</table>
+</td></tr>
+  <tr><td height=5 class="surveyclear">&nbsp;</td></tr>
+  </table>
+ <table width="100%" style="display:block;" class="pertable" id="question_1069" onactivate="this.style.backgroundColor='#dff7ff'" ondeactivate="this.style.backgroundColor='#ffffff'">
+ 
+<tr><td height=25 class="question" valign=center>&nbsp;<span class=red>*</span><span class="textEdit" id="questionName_1069">A1-7接待台、休息椅、配件墙等是否统一，无破损状态</span>&nbsp;<span class=notes></span></td></tr>
+<tr><td class="tips"><span class="textEdit" id="questionNotes_1069"></span></td></tr>
+<tr><td>
+	<table cellSpacing=0 cellPadding=0>
+
+	   <tr id="option_radio_2476_container"><td width=8></td>
+	       <td><input onclick="Check_Survey_Conditions()" type="radio" value="2476" name="option_1069" id="option_1069" ></td>
+	       <td class="answer"><span class="textEdit" id="optionName_24_1069_2476">符合</span></td>
+		   <td width=8></td>
+	       <td style="display:none"><input name="TextOtherValue_1069_2476" type="text" size="0" id="TextOtherValue_1069_2476" value="" onblur="Check_Survey_Conditions();" >&nbsp;&nbsp;</td></tr>
+	   <tr id="option_radio_2477_container"><td width=8></td>
+	       <td><input onclick="Check_Survey_Conditions()" type="radio" value="2477" name="option_1069" id="option_1069" ></td>
+	       <td class="answer"><span class="textEdit" id="optionName_24_1069_2477">不符合</span></td>
+		   <td width=8></td>
+	       <td style="display:"><input name="TextOtherValue_1069_2477" type="text" size="60" id="TextOtherValue_1069_2477" value="" onblur="Check_Survey_Conditions();" >&nbsp;&nbsp;</td></tr>
+	</table>
+</td></tr>
+  <tr><td height=5 class="surveyclear">&nbsp;</td></tr>
+  </table>
+ <table width="100%" style="display:block;" class="pertable" id="question_1070" onactivate="this.style.backgroundColor='#dff7ff'" ondeactivate="this.style.backgroundColor='#ffffff'">
+ 
+<tr><td height=25 class="question" valign=center>&nbsp;<span class=red>*</span><span class="textEdit" id="questionName_1070">A1-8配件柜配件摆放数量饱满，销售小米原装配件</span>&nbsp;<span class=notes></span></td></tr>
+<tr><td class="tips"><span class="textEdit" id="questionNotes_1070"></span></td></tr>
+<tr><td>
+	<table cellSpacing=0 cellPadding=0>
+
+	   <tr id="option_radio_2478_container"><td width=8></td>
+	       <td><input onclick="Check_Survey_Conditions()" type="radio" value="2478" name="option_1070" id="option_1070" ></td>
+	       <td class="answer"><span class="textEdit" id="optionName_24_1070_2478">符合</span></td>
+		   <td width=8></td>
+	       <td style="display:none"><input name="TextOtherValue_1070_2478" type="text" size="0" id="TextOtherValue_1070_2478" value="" onblur="Check_Survey_Conditions();" >&nbsp;&nbsp;</td></tr>
+	   <tr id="option_radio_2479_container"><td width=8></td>
+	       <td><input onclick="Check_Survey_Conditions()" type="radio" value="2479" name="option_1070" id="option_1070" ></td>
+	       <td class="answer"><span class="textEdit" id="optionName_24_1070_2479">不符合</span></td>
+		   <td width=8></td>
+	       <td style="display:"><input name="TextOtherValue_1070_2479" type="text" size="60" id="TextOtherValue_1070_2479" value="" onblur="Check_Survey_Conditions();" >&nbsp;&nbsp;</td></tr>
+	</table>
+</td></tr>
+  <tr><td height=5 class="surveyclear">&nbsp;</td></tr>
+  </table>
+ <table width="100%" style="display:block;" class="pertable" id="question_1071" onactivate="this.style.backgroundColor='#dff7ff'" ondeactivate="this.style.backgroundColor='#ffffff'">
+ 
+<tr><td height=25 class="question" valign=center>&nbsp;<span class=red>*</span><span class="textEdit" id="questionName_1071">A1-9体验台有展示样机（每张台子摆4台机器），且配有产品桌卡</span>&nbsp;<span class=notes></span></td></tr>
+<tr><td class="tips"><span class="textEdit" id="questionNotes_1071"></span></td></tr>
+<tr><td>
+	<table cellSpacing=0 cellPadding=0>
+
+	   <tr id="option_radio_2480_container"><td width=8></td>
+	       <td><input onclick="Check_Survey_Conditions()" type="radio" value="2480" name="option_1071" id="option_1071" ></td>
+	       <td class="answer"><span class="textEdit" id="optionName_24_1071_2480">符合</span></td>
+		   <td width=8></td>
+	       <td style="display:none"><input name="TextOtherValue_1071_2480" type="text" size="0" id="TextOtherValue_1071_2480" value="" onblur="Check_Survey_Conditions();" >&nbsp;&nbsp;</td></tr>
+	   <tr id="option_radio_2481_container"><td width=8></td>
+	       <td><input onclick="Check_Survey_Conditions()" type="radio" value="2481" name="option_1071" id="option_1071" ></td>
+	       <td class="answer"><span class="textEdit" id="optionName_24_1071_2481">不符合</span></td>
+		   <td width=8></td>
+	       <td style="display:"><input name="TextOtherValue_1071_2481" type="text" size="60" id="TextOtherValue_1071_2481" value="" onblur="Check_Survey_Conditions();" >&nbsp;&nbsp;</td></tr>
+	</table>
+</td></tr>
+  <tr><td height=5 class="surveyclear">&nbsp;</td></tr>
+  </table>
+ <table width="100%" style="display:block;" class="pertable" id="question_1212" onactivate="this.style.backgroundColor='#dff7ff'" ondeactivate="this.style.backgroundColor='#ffffff'">
+ <tr>
+    <td height=25 class="textinfo" valign=center>&nbsp;<b><span class="textEdit" id="questionName_1212">A店面形象及配备设施</span></b></td>
+</tr>
+<tr>
+    <td>
+	  <table cellSpacing=0 cellPadding=0 width="100%">
+	    <tr><td class="answer" style="line-height:150%"><span class="textEdit" id="textInfo_1212">A2人员形象</span></td></tr>
+	   </table>
+   </td>
+</tr>
+
+  <tr><td height=5 class="surveyclear">&nbsp;</td></tr>
+  </table>
+ <table width="100%" style="display:block;" class="pertable" id="question_1072" onactivate="this.style.backgroundColor='#dff7ff'" ondeactivate="this.style.backgroundColor='#ffffff'">
+ 
+<tr><td height=25 class="question" valign=center>&nbsp;<span class=red>*</span><span class="textEdit" id="questionName_1072">A2-1统一着装，干净整洁，无异妆、异发等打扮</span>&nbsp;<span class=notes></span></td></tr>
+<tr><td class="tips"><span class="textEdit" id="questionNotes_1072"></span></td></tr>
+<tr><td>
+	<table cellSpacing=0 cellPadding=0>
+
+	   <tr id="option_radio_2482_container"><td width=8></td>
+	       <td><input onclick="Check_Survey_Conditions()" type="radio" value="2482" name="option_1072" id="option_1072" ></td>
+	       <td class="answer"><span class="textEdit" id="optionName_24_1072_2482">符合</span></td>
+		   <td width=8></td>
+	       <td style="display:none"><input name="TextOtherValue_1072_2482" type="text" size="0" id="TextOtherValue_1072_2482" value="" onblur="Check_Survey_Conditions();" >&nbsp;&nbsp;</td></tr>
+	   <tr id="option_radio_2483_container"><td width=8></td>
+	       <td><input onclick="Check_Survey_Conditions()" type="radio" value="2483" name="option_1072" id="option_1072" ></td>
+	       <td class="answer"><span class="textEdit" id="optionName_24_1072_2483">不符合</span></td>
+		   <td width=8></td>
+	       <td style="display:"><input name="TextOtherValue_1072_2483" type="text" size="60" id="TextOtherValue_1072_2483" value="" onblur="Check_Survey_Conditions();" >&nbsp;&nbsp;</td></tr>
+	</table>
+</td></tr>
+  <tr><td height=5 class="surveyclear">&nbsp;</td></tr>
+  </table>
+ <table width="100%" style="display:block;" class="pertable" id="question_1073" onactivate="this.style.backgroundColor='#dff7ff'" ondeactivate="this.style.backgroundColor='#ffffff'">
+ 
+<tr><td height=25 class="question" valign=center>&nbsp;<span class=red>*</span><span class="textEdit" id="questionName_1073">A2-2胸前佩戴胸卡（或统一胸前挂牌）</span>&nbsp;<span class=notes></span></td></tr>
+<tr><td class="tips"><span class="textEdit" id="questionNotes_1073"></span></td></tr>
+<tr><td>
+	<table cellSpacing=0 cellPadding=0>
+
+	   <tr id="option_radio_2484_container"><td width=8></td>
+	       <td><input onclick="Check_Survey_Conditions()" type="radio" value="2484" name="option_1073" id="option_1073" ></td>
+	       <td class="answer"><span class="textEdit" id="optionName_24_1073_2484">符合</span></td>
+		   <td width=8></td>
+	       <td style="display:none"><input name="TextOtherValue_1073_2484" type="text" size="0" id="TextOtherValue_1073_2484" value="" onblur="Check_Survey_Conditions();" >&nbsp;&nbsp;</td></tr>
+	   <tr id="option_radio_2485_container"><td width=8></td>
+	       <td><input onclick="Check_Survey_Conditions()" type="radio" value="2485" name="option_1073" id="option_1073" ></td>
+	       <td class="answer"><span class="textEdit" id="optionName_24_1073_2485">不符合</span></td>
+		   <td width=8></td>
+	       <td style="display:"><input name="TextOtherValue_1073_2485" type="text" size="60" id="TextOtherValue_1073_2485" value="" onblur="Check_Survey_Conditions();" >&nbsp;&nbsp;</td></tr>
+	</table>
+</td></tr>
+  <tr><td height=5 class="surveyclear">&nbsp;</td></tr>
+  </table>
+ <table width="100%" style="display:block;" class="pertable" id="question_1213" onactivate="this.style.backgroundColor='#dff7ff'" ondeactivate="this.style.backgroundColor='#ffffff'">
+ <tr>
+    <td height=25 class="textinfo" valign=center>&nbsp;<b><span class="textEdit" id="questionName_1213">A店面形象及配备设施</span></b></td>
+</tr>
+<tr>
+    <td>
+	  <table cellSpacing=0 cellPadding=0 width="100%">
+	    <tr><td class="answer" style="line-height:150%"><span class="textEdit" id="textInfo_1213">A3休息等待区</span></td></tr>
+	   </table>
+   </td>
+</tr>
+
+  <tr><td height=5 class="surveyclear">&nbsp;</td></tr>
+  </table>
+ <table width="100%" style="display:block;" class="pertable" id="question_1074" onactivate="this.style.backgroundColor='#dff7ff'" ondeactivate="this.style.backgroundColor='#ffffff'">
+ 
+<tr><td height=25 class="question" valign=center>&nbsp;<span class=red>*</span><span class="textEdit" id="questionName_1074">A3-1保持桶内有水 ，且配有一次性水杯</span>&nbsp;<span class=notes></span></td></tr>
+<tr><td class="tips"><span class="textEdit" id="questionNotes_1074"></span></td></tr>
+<tr><td>
+	<table cellSpacing=0 cellPadding=0>
+
+	   <tr id="option_radio_2486_container"><td width=8></td>
+	       <td><input onclick="Check_Survey_Conditions()" type="radio" value="2486" name="option_1074" id="option_1074" ></td>
+	       <td class="answer"><span class="textEdit" id="optionName_24_1074_2486">符合</span></td>
+		   <td width=8></td>
+	       <td style="display:none"><input name="TextOtherValue_1074_2486" type="text" size="0" id="TextOtherValue_1074_2486" value="" onblur="Check_Survey_Conditions();" >&nbsp;&nbsp;</td></tr>
+	   <tr id="option_radio_2487_container"><td width=8></td>
+	       <td><input onclick="Check_Survey_Conditions()" type="radio" value="2487" name="option_1074" id="option_1074" ></td>
+	       <td class="answer"><span class="textEdit" id="optionName_24_1074_2487">不符合</span></td>
+		   <td width=8></td>
+	       <td style="display:"><input name="TextOtherValue_1074_2487" type="text" size="60" id="TextOtherValue_1074_2487" value="" onblur="Check_Survey_Conditions();" >&nbsp;&nbsp;</td></tr>
+	</table>
+</td></tr>
+  <tr><td height=5 class="surveyclear">&nbsp;</td></tr>
+  </table>
+ <table width="100%" style="display:block;" class="pertable" id="question_1075" onactivate="this.style.backgroundColor='#dff7ff'" ondeactivate="this.style.backgroundColor='#ffffff'">
+ 
+<tr><td height=25 class="question" valign=center>&nbsp;<span class=red>*</span><span class="textEdit" id="questionName_1075">A3-2电视运行正常</span>&nbsp;<span class=notes></span></td></tr>
+<tr><td class="tips"><span class="textEdit" id="questionNotes_1075"></span></td></tr>
+<tr><td>
+	<table cellSpacing=0 cellPadding=0>
+
+	   <tr id="option_radio_2488_container"><td width=8></td>
+	       <td><input onclick="Check_Survey_Conditions()" type="radio" value="2488" name="option_1075" id="option_1075" ></td>
+	       <td class="answer"><span class="textEdit" id="optionName_24_1075_2488">符合</span></td>
+		   <td width=8></td>
+	       <td style="display:none"><input name="TextOtherValue_1075_2488" type="text" size="0" id="TextOtherValue_1075_2488" value="" onblur="Check_Survey_Conditions();" >&nbsp;&nbsp;</td></tr>
+	   <tr id="option_radio_2489_container"><td width=8></td>
+	       <td><input onclick="Check_Survey_Conditions()" type="radio" value="2489" name="option_1075" id="option_1075" ></td>
+	       <td class="answer"><span class="textEdit" id="optionName_24_1075_2489">不符合</span></td>
+		   <td width=8></td>
+	       <td style="display:"><input name="TextOtherValue_1075_2489" type="text" size="60" id="TextOtherValue_1075_2489" value="" onblur="Check_Survey_Conditions();" >&nbsp;&nbsp;</td></tr>
+	</table>
+</td></tr>
+  <tr><td height=5 class="surveyclear">&nbsp;</td></tr>
+  </table>
+ <table width="100%" style="display:block;" class="pertable" id="question_1076" onactivate="this.style.backgroundColor='#dff7ff'" ondeactivate="this.style.backgroundColor='#ffffff'">
+ 
+<tr><td height=25 class="question" valign=center>&nbsp;<span class=red>*</span><span class="textEdit" id="questionName_1076">A3-3店内WIFI能够正常使用</span>&nbsp;<span class=notes></span></td></tr>
+<tr><td class="tips"><span class="textEdit" id="questionNotes_1076"></span></td></tr>
+<tr><td>
+	<table cellSpacing=0 cellPadding=0>
+
+	   <tr id="option_radio_2490_container"><td width=8></td>
+	       <td><input onclick="Check_Survey_Conditions()" type="radio" value="2490" name="option_1076" id="option_1076" ></td>
+	       <td class="answer"><span class="textEdit" id="optionName_24_1076_2490">符合</span></td>
+		   <td width=8></td>
+	       <td style="display:none"><input name="TextOtherValue_1076_2490" type="text" size="0" id="TextOtherValue_1076_2490" value="" onblur="Check_Survey_Conditions();" >&nbsp;&nbsp;</td></tr>
+	   <tr id="option_radio_2491_container"><td width=8></td>
+	       <td><input onclick="Check_Survey_Conditions()" type="radio" value="2491" name="option_1076" id="option_1076" ></td>
+	       <td class="answer"><span class="textEdit" id="optionName_24_1076_2491">不符合</span></td>
+		   <td width=8></td>
+	       <td style="display:"><input name="TextOtherValue_1076_2491" type="text" size="60" id="TextOtherValue_1076_2491" value="" onblur="Check_Survey_Conditions();" >&nbsp;&nbsp;</td></tr>
+	</table>
+</td></tr>
+  <tr><td height=5 class="surveyclear">&nbsp;</td></tr>
+  </table>
+ <table width="100%" style="display:block;" class="pertable" id="question_1077" onactivate="this.style.backgroundColor='#dff7ff'" ondeactivate="this.style.backgroundColor='#ffffff'">
+ 
+<tr><td height=25 class="question" valign=center>&nbsp;<span class=red>*</span><span class="textEdit" id="questionName_1077">A3-4下载台电脑呈打开状态且运作正常</span>&nbsp;<span class=notes></span></td></tr>
+<tr><td class="tips"><span class="textEdit" id="questionNotes_1077"></span></td></tr>
+<tr><td>
+	<table cellSpacing=0 cellPadding=0>
+
+	   <tr id="option_radio_2492_container"><td width=8></td>
+	       <td><input onclick="Check_Survey_Conditions()" type="radio" value="2492" name="option_1077" id="option_1077" ></td>
+	       <td class="answer"><span class="textEdit" id="optionName_24_1077_2492">符合</span></td>
+		   <td width=8></td>
+	       <td style="display:none"><input name="TextOtherValue_1077_2492" type="text" size="0" id="TextOtherValue_1077_2492" value="" onblur="Check_Survey_Conditions();" >&nbsp;&nbsp;</td></tr>
+	   <tr id="option_radio_2493_container"><td width=8></td>
+	       <td><input onclick="Check_Survey_Conditions()" type="radio" value="2493" name="option_1077" id="option_1077" ></td>
+	       <td class="answer"><span class="textEdit" id="optionName_24_1077_2493">不符合</span></td>
+		   <td width=8></td>
+	       <td style="display:"><input name="TextOtherValue_1077_2493" type="text" size="60" id="TextOtherValue_1077_2493" value="" onblur="Check_Survey_Conditions();" >&nbsp;&nbsp;</td></tr>
+	</table>
+</td></tr>
+  <tr><td height=5 class="surveyclear">&nbsp;</td></tr>
+  </table>
+ <table width="100%" style="display:block;" class="pertable" id="question_1093" onactivate="this.style.backgroundColor='#dff7ff'" ondeactivate="this.style.backgroundColor='#ffffff'">
+ <tr>
+    <td height=25 class="textinfo" valign=center>&nbsp;<b><span class="textEdit" id="questionName_1093">B服务规范</span></b></td>
+</tr>
+<tr>
+    <td>
+	  <table cellSpacing=0 cellPadding=0 width="100%">
+	    <tr><td class="answer" style="line-height:150%"><span class="textEdit" id="textInfo_1093">B1岗位职责</span></td></tr>
+	   </table>
+   </td>
+</tr>
+
+  <tr><td height=5 class="surveyclear">&nbsp;</td></tr>
+  </table>
+ <table width="100%" style="display:block;" class="pertable" id="question_1094" onactivate="this.style.backgroundColor='#dff7ff'" ondeactivate="this.style.backgroundColor='#ffffff'">
+ 
+<tr><td height=25 class="question" valign=center>&nbsp;<span class=red>*</span><span class="textEdit" id="questionName_1094">B1-1坚守岗位，不擅离职守，前台至少保留有一人接待</span>&nbsp;<span class=notes></span></td></tr>
+<tr><td class="tips"><span class="textEdit" id="questionNotes_1094"></span></td></tr>
+<tr><td>
+	<table cellSpacing=0 cellPadding=0>
+
+	   <tr id="option_radio_2520_container"><td width=8></td>
+	       <td><input onclick="Check_Survey_Conditions()" type="radio" value="2520" name="option_1094" id="option_1094" ></td>
+	       <td class="answer"><span class="textEdit" id="optionName_24_1094_2520">符合</span></td>
+		   <td width=8></td>
+	       <td style="display:none"><input name="TextOtherValue_1094_2520" type="text" size="0" id="TextOtherValue_1094_2520" value="" onblur="Check_Survey_Conditions();" >&nbsp;&nbsp;</td></tr>
+	   <tr id="option_radio_2521_container"><td width=8></td>
+	       <td><input onclick="Check_Survey_Conditions()" type="radio" value="2521" name="option_1094" id="option_1094" ></td>
+	       <td class="answer"><span class="textEdit" id="optionName_24_1094_2521">不符合</span></td>
+		   <td width=8></td>
+	       <td style="display:"><input name="TextOtherValue_1094_2521" type="text" size="60" id="TextOtherValue_1094_2521" value="" onblur="Check_Survey_Conditions();" >&nbsp;&nbsp;</td></tr>
+	</table>
+</td></tr>
+  <tr><td height=5 class="surveyclear">&nbsp;</td></tr>
+  </table>
+ <table width="100%" style="display:block;" class="pertable" id="question_1095" onactivate="this.style.backgroundColor='#dff7ff'" ondeactivate="this.style.backgroundColor='#ffffff'">
+ 
+<tr><td height=25 class="question" valign=center>&nbsp;<span class=red>*</span><span class="textEdit" id="questionName_1095">B1-2 工作时间不做或谈论与工作无关的事情</span>&nbsp;<span class=notes></span></td></tr>
+<tr><td class="tips"><span class="textEdit" id="questionNotes_1095"></span></td></tr>
+<tr><td>
+	<table cellSpacing=0 cellPadding=0>
+
+	   <tr id="option_radio_2522_container"><td width=8></td>
+	       <td><input onclick="Check_Survey_Conditions()" type="radio" value="2522" name="option_1095" id="option_1095" ></td>
+	       <td class="answer"><span class="textEdit" id="optionName_24_1095_2522">符合</span></td>
+		   <td width=8></td>
+	       <td style="display:none"><input name="TextOtherValue_1095_2522" type="text" size="0" id="TextOtherValue_1095_2522" value="" onblur="Check_Survey_Conditions();" >&nbsp;&nbsp;</td></tr>
+	   <tr id="option_radio_2523_container"><td width=8></td>
+	       <td><input onclick="Check_Survey_Conditions()" type="radio" value="2523" name="option_1095" id="option_1095" ></td>
+	       <td class="answer"><span class="textEdit" id="optionName_24_1095_2523">不符合</span></td>
+		   <td width=8></td>
+	       <td style="display:"><input name="TextOtherValue_1095_2523" type="text" size="60" id="TextOtherValue_1095_2523" value="" onblur="Check_Survey_Conditions();" >&nbsp;&nbsp;</td></tr>
+	</table>
+</td></tr>
+  <tr><td height=5 class="surveyclear">&nbsp;</td></tr>
+  </table>
+ <table width="100%" style="display:block;" class="pertable" id="question_1098" onactivate="this.style.backgroundColor='#dff7ff'" ondeactivate="this.style.backgroundColor='#ffffff'">
+ <tr>
+    <td height=25 class="textinfo" valign=center>&nbsp;<b><span class="textEdit" id="questionName_1098">B服务规范</span></b></td>
+</tr>
+<tr>
+    <td>
+	  <table cellSpacing=0 cellPadding=0 width="100%">
+	    <tr><td class="answer" style="line-height:150%"><span class="textEdit" id="textInfo_1098">B2服务过程</span></td></tr>
+	   </table>
+   </td>
+</tr>
+
+  <tr><td height=5 class="surveyclear">&nbsp;</td></tr>
+  </table>
+ <table width="100%" style="display:block;" class="pertable" id="question_1099" onactivate="this.style.backgroundColor='#dff7ff'" ondeactivate="this.style.backgroundColor='#ffffff'">
+ 
+<tr><td height=25 class="question" valign=center>&nbsp;<span class=red>*</span><span class="textEdit" id="questionName_1099">B2-1服务态度和蔼可亲，真诚</span>&nbsp;<span class=notes></span></td></tr>
+<tr><td class="tips"><span class="textEdit" id="questionNotes_1099"></span></td></tr>
+<tr><td>
+	<table cellSpacing=0 cellPadding=0>
+
+	   <tr id="option_radio_2528_container"><td width=8></td>
+	       <td><input onclick="Check_Survey_Conditions()" type="radio" value="2528" name="option_1099" id="option_1099" ></td>
+	       <td class="answer"><span class="textEdit" id="optionName_24_1099_2528">符合</span></td>
+		   <td width=8></td>
+	       <td style="display:none"><input name="TextOtherValue_1099_2528" type="text" size="0" id="TextOtherValue_1099_2528" value="" onblur="Check_Survey_Conditions();" >&nbsp;&nbsp;</td></tr>
+	   <tr id="option_radio_2529_container"><td width=8></td>
+	       <td><input onclick="Check_Survey_Conditions()" type="radio" value="2529" name="option_1099" id="option_1099" ></td>
+	       <td class="answer"><span class="textEdit" id="optionName_24_1099_2529">不符合</span></td>
+		   <td width=8></td>
+	       <td style="display:"><input name="TextOtherValue_1099_2529" type="text" size="60" id="TextOtherValue_1099_2529" value="" onblur="Check_Survey_Conditions();" >&nbsp;&nbsp;</td></tr>
+	</table>
+</td></tr>
+  <tr><td height=5 class="surveyclear">&nbsp;</td></tr>
+  </table>
+ <table width="100%" style="display:block;" class="pertable" id="question_1100" onactivate="this.style.backgroundColor='#dff7ff'" ondeactivate="this.style.backgroundColor='#ffffff'">
+ 
+<tr><td height=25 class="question" valign=center>&nbsp;<span class=red>*</span><span class="textEdit" id="questionName_1100">B2-2与客户沟通时保持目光接触</span>&nbsp;<span class=notes></span></td></tr>
+<tr><td class="tips"><span class="textEdit" id="questionNotes_1100"></span></td></tr>
+<tr><td>
+	<table cellSpacing=0 cellPadding=0>
+
+	   <tr id="option_radio_2530_container"><td width=8></td>
+	       <td><input onclick="Check_Survey_Conditions()" type="radio" value="2530" name="option_1100" id="option_1100" ></td>
+	       <td class="answer"><span class="textEdit" id="optionName_24_1100_2530">符合</span></td>
+		   <td width=8></td>
+	       <td style="display:none"><input name="TextOtherValue_1100_2530" type="text" size="0" id="TextOtherValue_1100_2530" value="" onblur="Check_Survey_Conditions();" >&nbsp;&nbsp;</td></tr>
+	   <tr id="option_radio_2531_container"><td width=8></td>
+	       <td><input onclick="Check_Survey_Conditions()" type="radio" value="2531" name="option_1100" id="option_1100" ></td>
+	       <td class="answer"><span class="textEdit" id="optionName_24_1100_2531">不符合</span></td>
+		   <td width=8></td>
+	       <td style="display:"><input name="TextOtherValue_1100_2531" type="text" size="60" id="TextOtherValue_1100_2531" value="" onblur="Check_Survey_Conditions();" >&nbsp;&nbsp;</td></tr>
+	</table>
+</td></tr>
+  <tr><td height=5 class="surveyclear">&nbsp;</td></tr>
+  </table>
+ <table width="100%" style="display:block;" class="pertable" id="question_1101" onactivate="this.style.backgroundColor='#dff7ff'" ondeactivate="this.style.backgroundColor='#ffffff'">
+ 
+<tr><td height=25 class="question" valign=center>&nbsp;<span class=red>*</span><span class="textEdit" id="questionName_1101">B2-3礼貌服务，服务过程中使用服务敬语</span>&nbsp;<span class=notes></span></td></tr>
+<tr><td class="tips"><span class="textEdit" id="questionNotes_1101"></span></td></tr>
+<tr><td>
+	<table cellSpacing=0 cellPadding=0>
+
+	   <tr id="option_radio_2532_container"><td width=8></td>
+	       <td><input onclick="Check_Survey_Conditions()" type="radio" value="2532" name="option_1101" id="option_1101" ></td>
+	       <td class="answer"><span class="textEdit" id="optionName_24_1101_2532">符合</span></td>
+		   <td width=8></td>
+	       <td style="display:none"><input name="TextOtherValue_1101_2532" type="text" size="0" id="TextOtherValue_1101_2532" value="" onblur="Check_Survey_Conditions();" >&nbsp;&nbsp;</td></tr>
+	   <tr id="option_radio_2533_container"><td width=8></td>
+	       <td><input onclick="Check_Survey_Conditions()" type="radio" value="2533" name="option_1101" id="option_1101" ></td>
+	       <td class="answer"><span class="textEdit" id="optionName_24_1101_2533">不符合</span></td>
+		   <td width=8></td>
+	       <td style="display:"><input name="TextOtherValue_1101_2533" type="text" size="60" id="TextOtherValue_1101_2533" value="" onblur="Check_Survey_Conditions();" >&nbsp;&nbsp;</td></tr>
+	</table>
+</td></tr>
+  <tr><td height=5 class="surveyclear">&nbsp;</td></tr>
+  </table>
+ <table width="100%" style="display:block;" class="pertable" id="question_1102" onactivate="this.style.backgroundColor='#dff7ff'" ondeactivate="this.style.backgroundColor='#ffffff'">
+ 
+<tr><td height=25 class="question" valign=center>&nbsp;<span class=red>*</span><span class="textEdit" id="questionName_1102">B2-4提醒用户刷机前进行备份，或协助用户进行备份</span>&nbsp;<span class=notes></span></td></tr>
+<tr><td class="tips"><span class="textEdit" id="questionNotes_1102"></span></td></tr>
+<tr><td>
+	<table cellSpacing=0 cellPadding=0>
+
+	   <tr id="option_radio_2534_container"><td width=8></td>
+	       <td><input onclick="Check_Survey_Conditions()" type="radio" value="2534" name="option_1102" id="option_1102" ></td>
+	       <td class="answer"><span class="textEdit" id="optionName_24_1102_2534">符合</span></td>
+		   <td width=8></td>
+	       <td style="display:none"><input name="TextOtherValue_1102_2534" type="text" size="0" id="TextOtherValue_1102_2534" value="" onblur="Check_Survey_Conditions();" >&nbsp;&nbsp;</td></tr>
+	   <tr id="option_radio_2535_container"><td width=8></td>
+	       <td><input onclick="Check_Survey_Conditions()" type="radio" value="2535" name="option_1102" id="option_1102" ></td>
+	       <td class="answer"><span class="textEdit" id="optionName_24_1102_2535">不符合</span></td>
+		   <td width=8></td>
+	       <td style="display:"><input name="TextOtherValue_1102_2535" type="text" size="60" id="TextOtherValue_1102_2535" value="" onblur="Check_Survey_Conditions();" >&nbsp;&nbsp;</td></tr>
+	</table>
+</td></tr>
+  <tr><td height=5 class="surveyclear">&nbsp;</td></tr>
+  </table>
+ <table width="100%" style="display:block;" class="pertable" id="question_1103" onactivate="this.style.backgroundColor='#dff7ff'" ondeactivate="this.style.backgroundColor='#ffffff'">
+ 
+<tr><td height=25 class="question" valign=center>&nbsp;<span class=red>*</span><span class="textEdit" id="questionName_1103">B2-5提醒用户1小时快修服务，并执行超期赔付</span>&nbsp;<span class=notes></span></td></tr>
+<tr><td class="tips"><span class="textEdit" id="questionNotes_1103"></span></td></tr>
+<tr><td>
+	<table cellSpacing=0 cellPadding=0>
+
+	   <tr id="option_radio_2536_container"><td width=8></td>
+	       <td><input onclick="Check_Survey_Conditions()" type="radio" value="2536" name="option_1103" id="option_1103" ></td>
+	       <td class="answer"><span class="textEdit" id="optionName_24_1103_2536">符合</span></td>
+		   <td width=8></td>
+	       <td style="display:none"><input name="TextOtherValue_1103_2536" type="text" size="0" id="TextOtherValue_1103_2536" value="" onblur="Check_Survey_Conditions();" >&nbsp;&nbsp;</td></tr>
+	   <tr id="option_radio_2537_container"><td width=8></td>
+	       <td><input onclick="Check_Survey_Conditions()" type="radio" value="2537" name="option_1103" id="option_1103" ></td>
+	       <td class="answer"><span class="textEdit" id="optionName_24_1103_2537">不符合</span></td>
+		   <td width=8></td>
+	       <td style="display:"><input name="TextOtherValue_1103_2537" type="text" size="60" id="TextOtherValue_1103_2537" value="" onblur="Check_Survey_Conditions();" >&nbsp;&nbsp;</td></tr>
+	</table>
+</td></tr>
+  <tr><td height=5 class="surveyclear">&nbsp;</td></tr>
+  </table>
+ <table width="100%" style="display:block;" class="pertable" id="question_1104" onactivate="this.style.backgroundColor='#dff7ff'" ondeactivate="this.style.backgroundColor='#ffffff'">
+ 
+<tr><td height=25 class="question" valign=center>&nbsp;<span class=red>*</span><span class="textEdit" id="questionName_1104">B2-6拆机前会征得客户的同意</span>&nbsp;<span class=notes></span></td></tr>
+<tr><td class="tips"><span class="textEdit" id="questionNotes_1104"></span></td></tr>
+<tr><td>
+	<table cellSpacing=0 cellPadding=0>
+
+	   <tr id="option_radio_2538_container"><td width=8></td>
+	       <td><input onclick="Check_Survey_Conditions()" type="radio" value="2538" name="option_1104" id="option_1104" ></td>
+	       <td class="answer"><span class="textEdit" id="optionName_24_1104_2538">符合</span></td>
+		   <td width=8></td>
+	       <td style="display:none"><input name="TextOtherValue_1104_2538" type="text" size="0" id="TextOtherValue_1104_2538" value="" onblur="Check_Survey_Conditions();" >&nbsp;&nbsp;</td></tr>
+	   <tr id="option_radio_2539_container"><td width=8></td>
+	       <td><input onclick="Check_Survey_Conditions()" type="radio" value="2539" name="option_1104" id="option_1104" ></td>
+	       <td class="answer"><span class="textEdit" id="optionName_24_1104_2539">不符合</span></td>
+		   <td width=8></td>
+	       <td style="display:"><input name="TextOtherValue_1104_2539" type="text" size="60" id="TextOtherValue_1104_2539" value="" onblur="Check_Survey_Conditions();" >&nbsp;&nbsp;</td></tr>
+	</table>
+</td></tr>
+  <tr><td height=5 class="surveyclear">&nbsp;</td></tr>
+  </table>
+ <table width="100%" style="display:block;" class="pertable" id="question_1105" onactivate="this.style.backgroundColor='#dff7ff'" ondeactivate="this.style.backgroundColor='#ffffff'">
+ 
+<tr><td height=25 class="question" valign=center>&nbsp;<span class=red>*</span><span class="textEdit" id="questionName_1105">B2-7拆机后的附件放在专用小物品袋中并与客户逐一确认</span>&nbsp;<span class=notes></span></td></tr>
+<tr><td class="tips"><span class="textEdit" id="questionNotes_1105"></span></td></tr>
+<tr><td>
+	<table cellSpacing=0 cellPadding=0>
+
+	   <tr id="option_radio_2540_container"><td width=8></td>
+	       <td><input onclick="Check_Survey_Conditions()" type="radio" value="2540" name="option_1105" id="option_1105" ></td>
+	       <td class="answer"><span class="textEdit" id="optionName_24_1105_2540">符合</span></td>
+		   <td width=8></td>
+	       <td style="display:none"><input name="TextOtherValue_1105_2540" type="text" size="0" id="TextOtherValue_1105_2540" value="" onblur="Check_Survey_Conditions();" >&nbsp;&nbsp;</td></tr>
+	   <tr id="option_radio_2541_container"><td width=8></td>
+	       <td><input onclick="Check_Survey_Conditions()" type="radio" value="2541" name="option_1105" id="option_1105" ></td>
+	       <td class="answer"><span class="textEdit" id="optionName_24_1105_2541">不符合</span></td>
+		   <td width=8></td>
+	       <td style="display:"><input name="TextOtherValue_1105_2541" type="text" size="60" id="TextOtherValue_1105_2541" value="" onblur="Check_Survey_Conditions();" >&nbsp;&nbsp;</td></tr>
+	</table>
+</td></tr>
+  <tr><td height=5 class="surveyclear">&nbsp;</td></tr>
+  </table>
+ <table width="100%" style="display:block;" class="pertable" id="question_1106" onactivate="this.style.backgroundColor='#dff7ff'" ondeactivate="this.style.backgroundColor='#ffffff'">
+ 
+<tr><td height=25 class="question" valign=center>&nbsp;<span class=red>*</span><span class="textEdit" id="questionName_1106">B2-8轻拿轻放客户的手机</span>&nbsp;<span class=notes></span></td></tr>
+<tr><td class="tips"><span class="textEdit" id="questionNotes_1106"></span></td></tr>
+<tr><td>
+	<table cellSpacing=0 cellPadding=0>
+
+	   <tr id="option_radio_2542_container"><td width=8></td>
+	       <td><input onclick="Check_Survey_Conditions()" type="radio" value="2542" name="option_1106" id="option_1106" ></td>
+	       <td class="answer"><span class="textEdit" id="optionName_24_1106_2542">符合</span></td>
+		   <td width=8></td>
+	       <td style="display:none"><input name="TextOtherValue_1106_2542" type="text" size="0" id="TextOtherValue_1106_2542" value="" onblur="Check_Survey_Conditions();" >&nbsp;&nbsp;</td></tr>
+	   <tr id="option_radio_2543_container"><td width=8></td>
+	       <td><input onclick="Check_Survey_Conditions()" type="radio" value="2543" name="option_1106" id="option_1106" ></td>
+	       <td class="answer"><span class="textEdit" id="optionName_24_1106_2543">不符合</span></td>
+		   <td width=8></td>
+	       <td style="display:"><input name="TextOtherValue_1106_2543" type="text" size="60" id="TextOtherValue_1106_2543" value="" onblur="Check_Survey_Conditions();" >&nbsp;&nbsp;</td></tr>
+	</table>
+</td></tr>
+  <tr><td height=5 class="surveyclear">&nbsp;</td></tr>
+  </table>
+ <table width="100%" style="display:block;" class="pertable" id="question_1107" onactivate="this.style.backgroundColor='#dff7ff'" ondeactivate="this.style.backgroundColor='#ffffff'">
+ 
+<tr><td height=25 class="question" valign=center>&nbsp;<span class=red>*</span><span class="textEdit" id="questionName_1107">B2-9在服务过程中使用标准用语</span>&nbsp;<span class=notes></span></td></tr>
+<tr><td class="tips"><span class="textEdit" id="questionNotes_1107"></span></td></tr>
+<tr><td>
+	<table cellSpacing=0 cellPadding=0>
+
+	   <tr id="option_radio_2544_container"><td width=8></td>
+	       <td><input onclick="Check_Survey_Conditions()" type="radio" value="2544" name="option_1107" id="option_1107" ></td>
+	       <td class="answer"><span class="textEdit" id="optionName_24_1107_2544">符合</span></td>
+		   <td width=8></td>
+	       <td style="display:none"><input name="TextOtherValue_1107_2544" type="text" size="0" id="TextOtherValue_1107_2544" value="" onblur="Check_Survey_Conditions();" >&nbsp;&nbsp;</td></tr>
+	   <tr id="option_radio_2545_container"><td width=8></td>
+	       <td><input onclick="Check_Survey_Conditions()" type="radio" value="2545" name="option_1107" id="option_1107" ></td>
+	       <td class="answer"><span class="textEdit" id="optionName_24_1107_2545">不符合</span></td>
+		   <td width=8></td>
+	       <td style="display:"><input name="TextOtherValue_1107_2545" type="text" size="60" id="TextOtherValue_1107_2545" value="" onblur="Check_Survey_Conditions();" >&nbsp;&nbsp;</td></tr>
+	</table>
+</td></tr>
+  <tr><td height=5 class="surveyclear">&nbsp;</td></tr>
+  </table>
+ <table width="100%" style="display:block;" class="pertable" id="question_1108" onactivate="this.style.backgroundColor='#dff7ff'" ondeactivate="this.style.backgroundColor='#ffffff'">
+ 
+<tr><td height=25 class="question" valign=center>&nbsp;<span class=red>*</span><span class="textEdit" id="questionName_1108">B2-10双手接递款物、单据</span>&nbsp;<span class=notes></span></td></tr>
+<tr><td class="tips"><span class="textEdit" id="questionNotes_1108"></span></td></tr>
+<tr><td>
+	<table cellSpacing=0 cellPadding=0>
+
+	   <tr id="option_radio_2546_container"><td width=8></td>
+	       <td><input onclick="Check_Survey_Conditions()" type="radio" value="2546" name="option_1108" id="option_1108" ></td>
+	       <td class="answer"><span class="textEdit" id="optionName_24_1108_2546">符合</span></td>
+		   <td width=8></td>
+	       <td style="display:none"><input name="TextOtherValue_1108_2546" type="text" size="0" id="TextOtherValue_1108_2546" value="" onblur="Check_Survey_Conditions();" >&nbsp;&nbsp;</td></tr>
+	   <tr id="option_radio_2547_container"><td width=8></td>
+	       <td><input onclick="Check_Survey_Conditions()" type="radio" value="2547" name="option_1108" id="option_1108" ></td>
+	       <td class="answer"><span class="textEdit" id="optionName_24_1108_2547">不符合</span></td>
+		   <td width=8></td>
+	       <td style="display:"><input name="TextOtherValue_1108_2547" type="text" size="60" id="TextOtherValue_1108_2547" value="" onblur="Check_Survey_Conditions();" >&nbsp;&nbsp;</td></tr>
+	</table>
+</td></tr>
+  <tr><td height=5 class="surveyclear">&nbsp;</td></tr>
+  </table>
+ <table width="100%" style="display:block;" class="pertable" id="question_1109" onactivate="this.style.backgroundColor='#dff7ff'" ondeactivate="this.style.backgroundColor='#ffffff'">
+ 
+<tr><td height=25 class="question" valign=center>&nbsp;<span class=red>*</span><span class="textEdit" id="questionName_1109">B2-11积极聆听客户需求</span>&nbsp;<span class=notes></span></td></tr>
+<tr><td class="tips"><span class="textEdit" id="questionNotes_1109"></span></td></tr>
+<tr><td>
+	<table cellSpacing=0 cellPadding=0>
+
+	   <tr id="option_radio_2548_container"><td width=8></td>
+	       <td><input onclick="Check_Survey_Conditions()" type="radio" value="2548" name="option_1109" id="option_1109" ></td>
+	       <td class="answer"><span class="textEdit" id="optionName_24_1109_2548">符合</span></td>
+		   <td width=8></td>
+	       <td style="display:none"><input name="TextOtherValue_1109_2548" type="text" size="0" id="TextOtherValue_1109_2548" value="" onblur="Check_Survey_Conditions();" >&nbsp;&nbsp;</td></tr>
+	   <tr id="option_radio_2549_container"><td width=8></td>
+	       <td><input onclick="Check_Survey_Conditions()" type="radio" value="2549" name="option_1109" id="option_1109" ></td>
+	       <td class="answer"><span class="textEdit" id="optionName_24_1109_2549">不符合</span></td>
+		   <td width=8></td>
+	       <td style="display:"><input name="TextOtherValue_1109_2549" type="text" size="60" id="TextOtherValue_1109_2549" value="" onblur="Check_Survey_Conditions();" >&nbsp;&nbsp;</td></tr>
+	</table>
+</td></tr>
+  <tr><td height=5 class="surveyclear">&nbsp;</td></tr>
+  </table>
+ <table width="100%" style="display:block;" class="pertable" id="question_1110" onactivate="this.style.backgroundColor='#dff7ff'" ondeactivate="this.style.backgroundColor='#ffffff'">
+ 
+<tr><td height=25 class="question" valign=center>&nbsp;<span class=red>*</span><span class="textEdit" id="questionName_1110">B2-12避免使用服务禁语</span>&nbsp;<span class=notes></span></td></tr>
+<tr><td class="tips"><span class="textEdit" id="questionNotes_1110"></span></td></tr>
+<tr><td>
+	<table cellSpacing=0 cellPadding=0>
+
+	   <tr id="option_radio_2550_container"><td width=8></td>
+	       <td><input onclick="Check_Survey_Conditions()" type="radio" value="2550" name="option_1110" id="option_1110" ></td>
+	       <td class="answer"><span class="textEdit" id="optionName_24_1110_2550">符合</span></td>
+		   <td width=8></td>
+	       <td style="display:none"><input name="TextOtherValue_1110_2550" type="text" size="0" id="TextOtherValue_1110_2550" value="" onblur="Check_Survey_Conditions();" >&nbsp;&nbsp;</td></tr>
+	   <tr id="option_radio_2551_container"><td width=8></td>
+	       <td><input onclick="Check_Survey_Conditions()" type="radio" value="2551" name="option_1110" id="option_1110" ></td>
+	       <td class="answer"><span class="textEdit" id="optionName_24_1110_2551">不符合</span></td>
+		   <td width=8></td>
+	       <td style="display:"><input name="TextOtherValue_1110_2551" type="text" size="60" id="TextOtherValue_1110_2551" value="" onblur="Check_Survey_Conditions();" >&nbsp;&nbsp;</td></tr>
+	</table>
+</td></tr>
+  <tr><td height=5 class="surveyclear">&nbsp;</td></tr>
+  </table>
+ <table width="100%" style="display:block;" class="pertable" id="question_1111" onactivate="this.style.backgroundColor='#dff7ff'" ondeactivate="this.style.backgroundColor='#ffffff'">
+ 
+<tr><td height=25 class="question" valign=center>&nbsp;<span class=red>*</span><span class="textEdit" id="questionName_1111">B2-13不与客户发生争吵</span>&nbsp;<span class=notes></span></td></tr>
+<tr><td class="tips"><span class="textEdit" id="questionNotes_1111"></span></td></tr>
+<tr><td>
+	<table cellSpacing=0 cellPadding=0>
+
+	   <tr id="option_radio_2552_container"><td width=8></td>
+	       <td><input onclick="Check_Survey_Conditions()" type="radio" value="2552" name="option_1111" id="option_1111" ></td>
+	       <td class="answer"><span class="textEdit" id="optionName_24_1111_2552">符合</span></td>
+		   <td width=8></td>
+	       <td style="display:none"><input name="TextOtherValue_1111_2552" type="text" size="0" id="TextOtherValue_1111_2552" value="" onblur="Check_Survey_Conditions();" >&nbsp;&nbsp;</td></tr>
+	   <tr id="option_radio_2553_container"><td width=8></td>
+	       <td><input onclick="Check_Survey_Conditions()" type="radio" value="2553" name="option_1111" id="option_1111" ></td>
+	       <td class="answer"><span class="textEdit" id="optionName_24_1111_2553">不符合</span></td>
+		   <td width=8></td>
+	       <td style="display:"><input name="TextOtherValue_1111_2553" type="text" size="60" id="TextOtherValue_1111_2553" value="" onblur="Check_Survey_Conditions();" >&nbsp;&nbsp;</td></tr>
+	</table>
+</td></tr>
+  <tr><td height=5 class="surveyclear">&nbsp;</td></tr>
+  </table>
+ <table width="100%" style="display:block;" class="pertable" id="question_1112" onactivate="this.style.backgroundColor='#dff7ff'" ondeactivate="this.style.backgroundColor='#ffffff'">
+ 
+<tr><td height=25 class="question" valign=center>&nbsp;<span class=red>*</span><span class="textEdit" id="questionName_1112">B2-14中断服务，需要客户等待时，礼貌地告知客户</span>&nbsp;<span class=notes></span></td></tr>
+<tr><td class="tips"><span class="textEdit" id="questionNotes_1112"></span></td></tr>
+<tr><td>
+	<table cellSpacing=0 cellPadding=0>
+
+	   <tr id="option_radio_2554_container"><td width=8></td>
+	       <td><input onclick="Check_Survey_Conditions()" type="radio" value="2554" name="option_1112" id="option_1112" ></td>
+	       <td class="answer"><span class="textEdit" id="optionName_24_1112_2554">符合</span></td>
+		   <td width=8></td>
+	       <td style="display:none"><input name="TextOtherValue_1112_2554" type="text" size="0" id="TextOtherValue_1112_2554" value="" onblur="Check_Survey_Conditions();" >&nbsp;&nbsp;</td></tr>
+	   <tr id="option_radio_2555_container"><td width=8></td>
+	       <td><input onclick="Check_Survey_Conditions()" type="radio" value="2555" name="option_1112" id="option_1112" ></td>
+	       <td class="answer"><span class="textEdit" id="optionName_24_1112_2555">不符合</span></td>
+		   <td width=8></td>
+	       <td style="display:"><input name="TextOtherValue_1112_2555" type="text" size="60" id="TextOtherValue_1112_2555" value="" onblur="Check_Survey_Conditions();" >&nbsp;&nbsp;</td></tr>
+	</table>
+</td></tr>
+  <tr><td height=5 class="surveyclear">&nbsp;</td></tr>
+  </table>
+ <table width="100%" style="display:block;" class="pertable" id="question_1113" onactivate="this.style.backgroundColor='#dff7ff'" ondeactivate="this.style.backgroundColor='#ffffff'">
+ 
+<tr><td height=25 class="question" valign=center>&nbsp;<span class=red>*</span><span class="textEdit" id="questionName_1113">B2-15使用标准送别语</span>&nbsp;<span class=notes></span></td></tr>
+<tr><td class="tips"><span class="textEdit" id="questionNotes_1113"></span></td></tr>
+<tr><td>
+	<table cellSpacing=0 cellPadding=0>
+
+	   <tr id="option_radio_2556_container"><td width=8></td>
+	       <td><input onclick="Check_Survey_Conditions()" type="radio" value="2556" name="option_1113" id="option_1113" ></td>
+	       <td class="answer"><span class="textEdit" id="optionName_24_1113_2556">符合</span></td>
+		   <td width=8></td>
+	       <td style="display:none"><input name="TextOtherValue_1113_2556" type="text" size="0" id="TextOtherValue_1113_2556" value="" onblur="Check_Survey_Conditions();" >&nbsp;&nbsp;</td></tr>
+	   <tr id="option_radio_2557_container"><td width=8></td>
+	       <td><input onclick="Check_Survey_Conditions()" type="radio" value="2557" name="option_1113" id="option_1113" ></td>
+	       <td class="answer"><span class="textEdit" id="optionName_24_1113_2557">不符合</span></td>
+		   <td width=8></td>
+	       <td style="display:"><input name="TextOtherValue_1113_2557" type="text" size="60" id="TextOtherValue_1113_2557" value="" onblur="Check_Survey_Conditions();" >&nbsp;&nbsp;</td></tr>
+	</table>
+</td></tr>
+  <tr><td height=5 class="surveyclear">&nbsp;</td></tr>
+  </table>
+ <table width="100%" style="display:block;" class="pertable" id="question_1114" onactivate="this.style.backgroundColor='#dff7ff'" ondeactivate="this.style.backgroundColor='#ffffff'">
+ 
+<tr><td height=25 class="question" valign=center>&nbsp;<span class=red>*</span><span class="textEdit" id="questionName_1114">B2-16及时回应客户的询问</span>&nbsp;<span class=notes></span></td></tr>
+<tr><td class="tips"><span class="textEdit" id="questionNotes_1114"></span></td></tr>
+<tr><td>
+	<table cellSpacing=0 cellPadding=0>
+
+	   <tr id="option_radio_2558_container"><td width=8></td>
+	       <td><input onclick="Check_Survey_Conditions()" type="radio" value="2558" name="option_1114" id="option_1114" ></td>
+	       <td class="answer"><span class="textEdit" id="optionName_24_1114_2558">符合</span></td>
+		   <td width=8></td>
+	       <td style="display:none"><input name="TextOtherValue_1114_2558" type="text" size="0" id="TextOtherValue_1114_2558" value="" onblur="Check_Survey_Conditions();" >&nbsp;&nbsp;</td></tr>
+	   <tr id="option_radio_2559_container"><td width=8></td>
+	       <td><input onclick="Check_Survey_Conditions()" type="radio" value="2559" name="option_1114" id="option_1114" ></td>
+	       <td class="answer"><span class="textEdit" id="optionName_24_1114_2559">不符合</span></td>
+		   <td width=8></td>
+	       <td style="display:"><input name="TextOtherValue_1114_2559" type="text" size="60" id="TextOtherValue_1114_2559" value="" onblur="Check_Survey_Conditions();" >&nbsp;&nbsp;</td></tr>
+	</table>
+</td></tr>
+  <tr><td height=5 class="surveyclear">&nbsp;</td></tr>
+  </table>
+ <table width="100%" style="display:block;" class="pertable" id="question_1115" onactivate="this.style.backgroundColor='#dff7ff'" ondeactivate="this.style.backgroundColor='#ffffff'">
+ 
+<tr><td height=25 class="question" valign=center>&nbsp;<span class=red>*</span><span class="textEdit" id="questionName_1115">B2-17坐姿端正自然、不浅仰后靠、不左摇右晃</span>&nbsp;<span class=notes></span></td></tr>
+<tr><td class="tips"><span class="textEdit" id="questionNotes_1115"></span></td></tr>
+<tr><td>
+	<table cellSpacing=0 cellPadding=0>
+
+	   <tr id="option_radio_2560_container"><td width=8></td>
+	       <td><input onclick="Check_Survey_Conditions()" type="radio" value="2560" name="option_1115" id="option_1115" ></td>
+	       <td class="answer"><span class="textEdit" id="optionName_24_1115_2560">符合</span></td>
+		   <td width=8></td>
+	       <td style="display:none"><input name="TextOtherValue_1115_2560" type="text" size="0" id="TextOtherValue_1115_2560" value="" onblur="Check_Survey_Conditions();" >&nbsp;&nbsp;</td></tr>
+	   <tr id="option_radio_2561_container"><td width=8></td>
+	       <td><input onclick="Check_Survey_Conditions()" type="radio" value="2561" name="option_1115" id="option_1115" ></td>
+	       <td class="answer"><span class="textEdit" id="optionName_24_1115_2561">不符合</span></td>
+		   <td width=8></td>
+	       <td style="display:"><input name="TextOtherValue_1115_2561" type="text" size="60" id="TextOtherValue_1115_2561" value="" onblur="Check_Survey_Conditions();" >&nbsp;&nbsp;</td></tr>
+	</table>
+</td></tr>
+  <tr><td height=5 class="surveyclear">&nbsp;</td></tr>
+  </table>
+ <table width="100%" style="display:block;" class="pertable" id="question_1116" onactivate="this.style.backgroundColor='#dff7ff'" ondeactivate="this.style.backgroundColor='#ffffff'">
+ 
+<tr><td height=25 class="question" valign=center>&nbsp;<span class=red>*</span><span class="textEdit" id="questionName_1116">B2-18当顾客对服务人员的服务表示不满时，主动致歉</span>&nbsp;<span class=notes></span></td></tr>
+<tr><td class="tips"><span class="textEdit" id="questionNotes_1116"></span></td></tr>
+<tr><td>
+	<table cellSpacing=0 cellPadding=0>
+
+	   <tr id="option_radio_2562_container"><td width=8></td>
+	       <td><input onclick="Check_Survey_Conditions()" type="radio" value="2562" name="option_1116" id="option_1116" ></td>
+	       <td class="answer"><span class="textEdit" id="optionName_24_1116_2562">符合</span></td>
+		   <td width=8></td>
+	       <td style="display:none"><input name="TextOtherValue_1116_2562" type="text" size="0" id="TextOtherValue_1116_2562" value="" onblur="Check_Survey_Conditions();" >&nbsp;&nbsp;</td></tr>
+	   <tr id="option_radio_2563_container"><td width=8></td>
+	       <td><input onclick="Check_Survey_Conditions()" type="radio" value="2563" name="option_1116" id="option_1116" ></td>
+	       <td class="answer"><span class="textEdit" id="optionName_24_1116_2563">不符合</span></td>
+		   <td width=8></td>
+	       <td style="display:"><input name="TextOtherValue_1116_2563" type="text" size="60" id="TextOtherValue_1116_2563" value="" onblur="Check_Survey_Conditions();" >&nbsp;&nbsp;</td></tr>
+	</table>
+</td></tr>
+  <tr><td height=5 class="surveyclear">&nbsp;</td></tr>
+  </table>
+ <table width="100%" style="display:block;" class="pertable" id="question_1117" onactivate="this.style.backgroundColor='#dff7ff'" ondeactivate="this.style.backgroundColor='#ffffff'">
+ 
+<tr><td height=25 class="question" valign=center>&nbsp;<span class=red>*</span><span class="textEdit" id="questionName_1117">B2-19主动关怀等待过长时间用户问题和进展</span>&nbsp;<span class=notes></span></td></tr>
+<tr><td class="tips"><span class="textEdit" id="questionNotes_1117"></span></td></tr>
+<tr><td>
+	<table cellSpacing=0 cellPadding=0>
+
+	   <tr id="option_radio_2564_container"><td width=8></td>
+	       <td><input onclick="Check_Survey_Conditions()" type="radio" value="2564" name="option_1117" id="option_1117" ></td>
+	       <td class="answer"><span class="textEdit" id="optionName_24_1117_2564">符合</span></td>
+		   <td width=8></td>
+	       <td style="display:none"><input name="TextOtherValue_1117_2564" type="text" size="0" id="TextOtherValue_1117_2564" value="" onblur="Check_Survey_Conditions();" >&nbsp;&nbsp;</td></tr>
+	   <tr id="option_radio_2565_container"><td width=8></td>
+	       <td><input onclick="Check_Survey_Conditions()" type="radio" value="2565" name="option_1117" id="option_1117" ></td>
+	       <td class="answer"><span class="textEdit" id="optionName_24_1117_2565">不符合</span></td>
+		   <td width=8></td>
+	       <td style="display:"><input name="TextOtherValue_1117_2565" type="text" size="60" id="TextOtherValue_1117_2565" value="" onblur="Check_Survey_Conditions();" >&nbsp;&nbsp;</td></tr>
+	</table>
+</td></tr>
+  <tr><td height=5 class="surveyclear">&nbsp;</td></tr>
+  </table>
+ <table width="100%" style="display:block;" class="pertable" id="question_1118" onactivate="this.style.backgroundColor='#dff7ff'" ondeactivate="this.style.backgroundColor='#ffffff'">
+ 
+<tr><td height=25 class="question" valign=center>&nbsp;<span class=red>*</span><span class="textEdit" id="questionName_1118">B2-20提醒用户使用评价系统评价服务质量</span>&nbsp;<span class=notes></span></td></tr>
+<tr><td class="tips"><span class="textEdit" id="questionNotes_1118"></span></td></tr>
+<tr><td>
+	<table cellSpacing=0 cellPadding=0>
+
+	   <tr id="option_radio_2566_container"><td width=8></td>
+	       <td><input onclick="Check_Survey_Conditions()" type="radio" value="2566" name="option_1118" id="option_1118" ></td>
+	       <td class="answer"><span class="textEdit" id="optionName_24_1118_2566">符合</span></td>
+		   <td width=8></td>
+	       <td style="display:none"><input name="TextOtherValue_1118_2566" type="text" size="0" id="TextOtherValue_1118_2566" value="" onblur="Check_Survey_Conditions();" >&nbsp;&nbsp;</td></tr>
+	   <tr id="option_radio_2567_container"><td width=8></td>
+	       <td><input onclick="Check_Survey_Conditions()" type="radio" value="2567" name="option_1118" id="option_1118" ></td>
+	       <td class="answer"><span class="textEdit" id="optionName_24_1118_2567">不符合</span></td>
+		   <td width=8></td>
+	       <td style="display:"><input name="TextOtherValue_1118_2567" type="text" size="60" id="TextOtherValue_1118_2567" value="" onblur="Check_Survey_Conditions();" >&nbsp;&nbsp;</td></tr>
+	</table>
+</td></tr>
+  <tr><td height=5 class="surveyclear">&nbsp;</td></tr>
+  </table>
+ <table width="100%" style="display:block;" class="pertable" id="question_1128" onactivate="this.style.backgroundColor='#dff7ff'" ondeactivate="this.style.backgroundColor='#ffffff'">
+ <tr>
+    <td height=25 class="textinfo" valign=center>&nbsp;<b><span class="textEdit" id="questionName_1128">谈一谈你在该店的体验——</span></b></td>
+</tr>
+<tr>
+    <td>
+	  <table cellSpacing=0 cellPadding=0 width="100%">
+	    <tr><td class="answer" style="line-height:150%"><span class="textEdit" id="textInfo_1128"></span></td></tr>
+	   </table>
+   </td>
+</tr>
+
+  <tr><td height=5 class="surveyclear">&nbsp;</td></tr>
+  </table>
+ <table width="100%" style="display:block;" class="pertable" id="question_1129" onactivate="this.style.backgroundColor='#dff7ff'" ondeactivate="this.style.backgroundColor='#ffffff'">
+ <tr><td height=25 class="question" valign=center>&nbsp;<span class=red>*</span><span class="textEdit" id="questionName_1129">[评分]结合你在该店的个人体验，用10分制来评价以下描述语句。10分表示对此描述完全同意，1分则表示完全不同意。</span>&nbsp;<span class=notes></span></td></tr>
+<tr><td class="tips"><span class="textEdit" id="questionNotes_1129"></span></td></tr>
+<tr><td>
+  <table cellSpacing=0 cellPadding=0 id="qtn_table_1129">
+    <tr height=30 class=tdheight style="display:">
+	    <td>&nbsp;</td>
+	    <td width=8></td>
+		<td colspan="20" class="answer" nowrap>
+		    <span style="float:left">完全同意&nbsp;</span>
+		    <span style="float:right">&nbsp;完全不同意</span>
+		</td>
+		<td style="display:none"></td>
+		<td width=10></td>
+		<td>&nbsp;</td>
+	</tr>
+    <tr height=30 class=tdheight>
+	    <td>&nbsp;</td>
+	    <td width=8></td>
+
+		<td class="answer" align="center" valign="center" nowrap>10</span></td>
+		<td width=10></td>
+		<td class="answer" align="center" valign="center" nowrap>9</span></td>
+		<td width=10></td>
+		<td class="answer" align="center" valign="center" nowrap>8</span></td>
+		<td width=10></td>
+		<td class="answer" align="center" valign="center" nowrap>7</span></td>
+		<td width=10></td>
+		<td class="answer" align="center" valign="center" nowrap>6</span></td>
+		<td width=10></td>
+		<td class="answer" align="center" valign="center" nowrap>5</span></td>
+		<td width=10></td>
+		<td class="answer" align="center" valign="center" nowrap>4</span></td>
+		<td width=10></td>
+		<td class="answer" align="center" valign="center" nowrap>3</span></td>
+		<td width=10></td>
+		<td class="answer" align="center" valign="center" nowrap>2</span></td>
+		<td width=10></td>
+		<td class="answer" align="center" valign="center" nowrap>1</span></td>
+		<td width=10></td>
+		<td class="answer" align="center" valign="center" nowrap style="display:none">不清楚</span></td>
+		<td width=10></td>
+		<td>&nbsp;</td>
+	</tr>	
+
+    <tr height=30 class=tdheight id="range_rating_28_container">
+		<td class="answer" nowrap valign=center>&nbsp;&nbsp;<span class="textEdit" id="optionName_15_1129_28">D1 小米的售后服务人员，是在用真心与客户交朋友！</span></td>
+	    <td width=8></td>
+
+		<td class="answer" align="center" height=40><input type="radio" value="10" name="option_1129_28" id="option_1129_28" onclick="Check_Survey_Conditions()" ></td>
+		<td width=10></td>
+		<td class="answer" align="center" height=40><input type="radio" value="9" name="option_1129_28" id="option_1129_28" onclick="Check_Survey_Conditions()" ></td>
+		<td width=10></td>
+		<td class="answer" align="center" height=40><input type="radio" value="8" name="option_1129_28" id="option_1129_28" onclick="Check_Survey_Conditions()" ></td>
+		<td width=10></td>
+		<td class="answer" align="center" height=40><input type="radio" value="7" name="option_1129_28" id="option_1129_28" onclick="Check_Survey_Conditions()" ></td>
+		<td width=10></td>
+		<td class="answer" align="center" height=40><input type="radio" value="6" name="option_1129_28" id="option_1129_28" onclick="Check_Survey_Conditions()" ></td>
+		<td width=10></td>
+		<td class="answer" align="center" height=40><input type="radio" value="5" name="option_1129_28" id="option_1129_28" onclick="Check_Survey_Conditions()" ></td>
+		<td width=10></td>
+		<td class="answer" align="center" height=40><input type="radio" value="4" name="option_1129_28" id="option_1129_28" onclick="Check_Survey_Conditions()" ></td>
+		<td width=10></td>
+		<td class="answer" align="center" height=40><input type="radio" value="3" name="option_1129_28" id="option_1129_28" onclick="Check_Survey_Conditions()" ></td>
+		<td width=10></td>
+		<td class="answer" align="center" height=40><input type="radio" value="2" name="option_1129_28" id="option_1129_28" onclick="Check_Survey_Conditions()" ></td>
+		<td width=10></td>
+		<td class="answer" align="center" height=40><input type="radio" value="1" name="option_1129_28" id="option_1129_28" onclick="Check_Survey_Conditions()" ></td>
+		<td width=10></td>
+	   <td style="display:none" id="TextInput_1129_28" class="answer" nowrap>理由：<input name="TextOtherValue_1129_28" id="TextOtherValue_1129_28" value="" type="text" size=30>&nbsp;</td>
+    </tr>
+    <tr height=30 class=tdheight id="range_rating_29_container">
+		<td class="answer" nowrap valign=center>&nbsp;&nbsp;<span class="textEdit" id="optionName_15_1129_29">D2 在这个店，我觉得他们的维修技术十分专业！</span></td>
+	    <td width=8></td>
+
+		<td class="answer" align="center" height=40><input type="radio" value="10" name="option_1129_29" id="option_1129_29" onclick="Check_Survey_Conditions()" ></td>
+		<td width=10></td>
+		<td class="answer" align="center" height=40><input type="radio" value="9" name="option_1129_29" id="option_1129_29" onclick="Check_Survey_Conditions()" ></td>
+		<td width=10></td>
+		<td class="answer" align="center" height=40><input type="radio" value="8" name="option_1129_29" id="option_1129_29" onclick="Check_Survey_Conditions()" ></td>
+		<td width=10></td>
+		<td class="answer" align="center" height=40><input type="radio" value="7" name="option_1129_29" id="option_1129_29" onclick="Check_Survey_Conditions()" ></td>
+		<td width=10></td>
+		<td class="answer" align="center" height=40><input type="radio" value="6" name="option_1129_29" id="option_1129_29" onclick="Check_Survey_Conditions()" ></td>
+		<td width=10></td>
+		<td class="answer" align="center" height=40><input type="radio" value="5" name="option_1129_29" id="option_1129_29" onclick="Check_Survey_Conditions()" ></td>
+		<td width=10></td>
+		<td class="answer" align="center" height=40><input type="radio" value="4" name="option_1129_29" id="option_1129_29" onclick="Check_Survey_Conditions()" ></td>
+		<td width=10></td>
+		<td class="answer" align="center" height=40><input type="radio" value="3" name="option_1129_29" id="option_1129_29" onclick="Check_Survey_Conditions()" ></td>
+		<td width=10></td>
+		<td class="answer" align="center" height=40><input type="radio" value="2" name="option_1129_29" id="option_1129_29" onclick="Check_Survey_Conditions()" ></td>
+		<td width=10></td>
+		<td class="answer" align="center" height=40><input type="radio" value="1" name="option_1129_29" id="option_1129_29" onclick="Check_Survey_Conditions()" ></td>
+		<td width=10></td>
+	   <td style="display:none" id="TextInput_1129_29" class="answer" nowrap>理由：<input name="TextOtherValue_1129_29" id="TextOtherValue_1129_29" value="" type="text" size=30>&nbsp;</td>
+    </tr>
+    <tr height=30 class=tdheight id="range_rating_34_container">
+		<td class="answer" nowrap valign=center>&nbsp;&nbsp;<span class="textEdit" id="optionName_15_1129_34">D3 门店所在位置，乘坐公共交通工具方便到达！</span></td>
+	    <td width=8></td>
+
+		<td class="answer" align="center" height=40><input type="radio" value="10" name="option_1129_34" id="option_1129_34" onclick="Check_Survey_Conditions()" ></td>
+		<td width=10></td>
+		<td class="answer" align="center" height=40><input type="radio" value="9" name="option_1129_34" id="option_1129_34" onclick="Check_Survey_Conditions()" ></td>
+		<td width=10></td>
+		<td class="answer" align="center" height=40><input type="radio" value="8" name="option_1129_34" id="option_1129_34" onclick="Check_Survey_Conditions()" ></td>
+		<td width=10></td>
+		<td class="answer" align="center" height=40><input type="radio" value="7" name="option_1129_34" id="option_1129_34" onclick="Check_Survey_Conditions()" ></td>
+		<td width=10></td>
+		<td class="answer" align="center" height=40><input type="radio" value="6" name="option_1129_34" id="option_1129_34" onclick="Check_Survey_Conditions()" ></td>
+		<td width=10></td>
+		<td class="answer" align="center" height=40><input type="radio" value="5" name="option_1129_34" id="option_1129_34" onclick="Check_Survey_Conditions()" ></td>
+		<td width=10></td>
+		<td class="answer" align="center" height=40><input type="radio" value="4" name="option_1129_34" id="option_1129_34" onclick="Check_Survey_Conditions()" ></td>
+		<td width=10></td>
+		<td class="answer" align="center" height=40><input type="radio" value="3" name="option_1129_34" id="option_1129_34" onclick="Check_Survey_Conditions()" ></td>
+		<td width=10></td>
+		<td class="answer" align="center" height=40><input type="radio" value="2" name="option_1129_34" id="option_1129_34" onclick="Check_Survey_Conditions()" ></td>
+		<td width=10></td>
+		<td class="answer" align="center" height=40><input type="radio" value="1" name="option_1129_34" id="option_1129_34" onclick="Check_Survey_Conditions()" ></td>
+		<td width=10></td>
+	   <td style="display:none" id="TextInput_1129_34" class="answer" nowrap>理由：<input name="TextOtherValue_1129_34" id="TextOtherValue_1129_34" value="" type="text" size=30>&nbsp;</td>
+    </tr>
+    <tr height=30 class=tdheight id="range_rating_35_container">
+		<td class="answer" nowrap valign=center>&nbsp;&nbsp;<span class="textEdit" id="optionName_15_1129_35">D4 门店所在楼宇或商场整洁与干净！</span></td>
+	    <td width=8></td>
+
+		<td class="answer" align="center" height=40><input type="radio" value="10" name="option_1129_35" id="option_1129_35" onclick="Check_Survey_Conditions()" ></td>
+		<td width=10></td>
+		<td class="answer" align="center" height=40><input type="radio" value="9" name="option_1129_35" id="option_1129_35" onclick="Check_Survey_Conditions()" ></td>
+		<td width=10></td>
+		<td class="answer" align="center" height=40><input type="radio" value="8" name="option_1129_35" id="option_1129_35" onclick="Check_Survey_Conditions()" ></td>
+		<td width=10></td>
+		<td class="answer" align="center" height=40><input type="radio" value="7" name="option_1129_35" id="option_1129_35" onclick="Check_Survey_Conditions()" ></td>
+		<td width=10></td>
+		<td class="answer" align="center" height=40><input type="radio" value="6" name="option_1129_35" id="option_1129_35" onclick="Check_Survey_Conditions()" ></td>
+		<td width=10></td>
+		<td class="answer" align="center" height=40><input type="radio" value="5" name="option_1129_35" id="option_1129_35" onclick="Check_Survey_Conditions()" ></td>
+		<td width=10></td>
+		<td class="answer" align="center" height=40><input type="radio" value="4" name="option_1129_35" id="option_1129_35" onclick="Check_Survey_Conditions()" ></td>
+		<td width=10></td>
+		<td class="answer" align="center" height=40><input type="radio" value="3" name="option_1129_35" id="option_1129_35" onclick="Check_Survey_Conditions()" ></td>
+		<td width=10></td>
+		<td class="answer" align="center" height=40><input type="radio" value="2" name="option_1129_35" id="option_1129_35" onclick="Check_Survey_Conditions()" ></td>
+		<td width=10></td>
+		<td class="answer" align="center" height=40><input type="radio" value="1" name="option_1129_35" id="option_1129_35" onclick="Check_Survey_Conditions()" ></td>
+		<td width=10></td>
+	   <td style="display:none" id="TextInput_1129_35" class="answer" nowrap>理由：<input name="TextOtherValue_1129_35" id="TextOtherValue_1129_35" value="" type="text" size=30>&nbsp;</td>
+    </tr>
+    <tr height=30 class=tdheight id="range_rating_36_container">
+		<td class="answer" nowrap valign=center>&nbsp;&nbsp;<span class="textEdit" id="optionName_15_1129_36">D5 门店醒目，方便用户寻找！</span></td>
+	    <td width=8></td>
+
+		<td class="answer" align="center" height=40><input type="radio" value="10" name="option_1129_36" id="option_1129_36" onclick="Check_Survey_Conditions()" ></td>
+		<td width=10></td>
+		<td class="answer" align="center" height=40><input type="radio" value="9" name="option_1129_36" id="option_1129_36" onclick="Check_Survey_Conditions()" ></td>
+		<td width=10></td>
+		<td class="answer" align="center" height=40><input type="radio" value="8" name="option_1129_36" id="option_1129_36" onclick="Check_Survey_Conditions()" ></td>
+		<td width=10></td>
+		<td class="answer" align="center" height=40><input type="radio" value="7" name="option_1129_36" id="option_1129_36" onclick="Check_Survey_Conditions()" ></td>
+		<td width=10></td>
+		<td class="answer" align="center" height=40><input type="radio" value="6" name="option_1129_36" id="option_1129_36" onclick="Check_Survey_Conditions()" ></td>
+		<td width=10></td>
+		<td class="answer" align="center" height=40><input type="radio" value="5" name="option_1129_36" id="option_1129_36" onclick="Check_Survey_Conditions()" ></td>
+		<td width=10></td>
+		<td class="answer" align="center" height=40><input type="radio" value="4" name="option_1129_36" id="option_1129_36" onclick="Check_Survey_Conditions()" ></td>
+		<td width=10></td>
+		<td class="answer" align="center" height=40><input type="radio" value="3" name="option_1129_36" id="option_1129_36" onclick="Check_Survey_Conditions()" ></td>
+		<td width=10></td>
+		<td class="answer" align="center" height=40><input type="radio" value="2" name="option_1129_36" id="option_1129_36" onclick="Check_Survey_Conditions()" ></td>
+		<td width=10></td>
+		<td class="answer" align="center" height=40><input type="radio" value="1" name="option_1129_36" id="option_1129_36" onclick="Check_Survey_Conditions()" ></td>
+		<td width=10></td>
+	   <td style="display:none" id="TextInput_1129_36" class="answer" nowrap>理由：<input name="TextOtherValue_1129_36" id="TextOtherValue_1129_36" value="" type="text" size=30>&nbsp;</td>
+    </tr>
+  </table>
+</td></tr>
+  <tr><td height=5 class="surveyclear">&nbsp;</td></tr>
+  </table>
+ <table width="100%" style="display:block;" class="pertable" id="question_1217" onactivate="this.style.backgroundColor='#dff7ff'" ondeactivate="this.style.backgroundColor='#ffffff'">
+ <!--该调查问卷由科维能动EnableQ在线问卷调查引擎系统生成 -->
+
+<tr><td height=25 class="question" valign=center>&nbsp;<span class=red>*</span><span class="textEdit" id="questionName_1217">送修该部手机，是否有维修记录单？</span>&nbsp;<span class=notes></span></td></tr>
+<tr><td class="tips"><span class="textEdit" id="questionNotes_1217"></span></td></tr>
+<tr><td>
+	  <table cellSpacing=0 cellPadding=0>
+
+	   <tr id="option_radio_2787_container"><td class=answer><input type="radio" value="2787" name="option_1217" id="option_1217"  onclick="Check_Survey_Conditions()" ><span class="textEdit" id="optionName_2_1217_2787">是</span></td></tr>
+	   <tr id="option_radio_2788_container"><td class=answer><input type="radio" value="2788" name="option_1217" id="option_1217"  onclick="Check_Survey_Conditions()" ><span class="textEdit" id="optionName_2_1217_2788">否</span></td></tr>
+	   
+	  </table>
+</td></tr>
+<!--该调查问卷由科维能动EnableQ在线问卷调查引擎系统生成 -->
+
+  <tr><td height=5 class="surveyclear">&nbsp;</td></tr>
+  </table>
+ <table width="100%" style="display:block;" class="pertable" id="question_1130" onactivate="this.style.backgroundColor='#dff7ff'" ondeactivate="this.style.backgroundColor='#ffffff'">
+ <tr><td height=25 class="question" valign=center>&nbsp;<span class=red>*</span><span class="textEdit" id="questionName_1130">该部手机在该店是否完成了维修？</span>&nbsp;<span class=notes></span></td></tr>
+<tr><td class="tips"><span class="textEdit" id="questionNotes_1130"></span></td></tr>
+<tr><td>
+	  <table cellSpacing=0 cellPadding=0>
+	   <tr>
+	   <td class="answer"><input onclick="Check_Survey_Conditions()" type="radio" value="31" name="option_1130" id="option_1130" >是</td></tr><tr>
+	   <td class="answer"><input onclick="Check_Survey_Conditions()" type="radio" value="32" name="option_1130" id="option_1130" >否</td></tr><tr></tr>
+	   </table>
+</td></tr>
+  <tr><td height=5 class="surveyclear">&nbsp;</td></tr>
+  </table>
+ <table width="100%" style="display:none;" class="pertable" id="question_1306" onactivate="this.style.backgroundColor='#dff7ff'" ondeactivate="this.style.backgroundColor='#ffffff'">
+ <!--该调查问卷由科维能动EnableQ在线问卷调查引擎系统生成 -->
+
+<tr><td height=25 class="question" valign=center>&nbsp;<span class=red>*</span><span class="textEdit" id="questionName_1306">维修方法是什么？</span>&nbsp;<span class=notes></span></td></tr>
+<tr><td class="tips"><span class="textEdit" id="questionNotes_1306"></span></td></tr>
+<tr><td>
+	  <table cellSpacing=0 cellPadding=0>
+	   <tr>
+
+		<td class="answer" align="left">
+		  <table cellSpacing=0 cellPadding=0>
+		  <tr id="option_radio_3020_container"><td class=answer><input type="radio" value="3020" name="option_1306" id="option_1306"  onclick="Check_Survey_Conditions()" ><span class="textEdit" id="optionName_2_1306_3020">刷机</span></td></tr>
+		  </table>
+		</td>
+		<td class="answer" align="left">
+		  <table cellSpacing=0 cellPadding=0>
+		  <tr id="option_radio_3021_container"><td class=answer><input type="radio" value="3021" name="option_1306" id="option_1306"  onclick="Check_Survey_Conditions()" ><span class="textEdit" id="optionName_2_1306_3021">维修主板</span></td></tr>
+		  </table>
+		</td>
+		<td class="answer" align="left">
+		  <table cellSpacing=0 cellPadding=0>
+		  <tr id="option_radio_3022_container"><td class=answer><input type="radio" value="3022" name="option_1306" id="option_1306"  onclick="Check_Survey_Conditions()" ><span class="textEdit" id="optionName_2_1306_3022">更换主板</span></td></tr>
+		  </table>
+		</td>
+		<td class="answer" align="left">
+		  <table cellSpacing=0 cellPadding=0>
+		  <tr id="option_radio_3023_container"><td class=answer><input type="radio" value="3023" name="option_1306" id="option_1306"  onclick="Check_Survey_Conditions()" ><span class="textEdit" id="optionName_2_1306_3023">维修清理扬声器</span></td></tr>
+		  </table>
+		</td>
+		<td class="answer" align="left">
+		  <table cellSpacing=0 cellPadding=0>
+		  <tr id="option_radio_3024_container"><td class=answer><input type="radio" value="3024" name="option_1306" id="option_1306"  onclick="Check_Survey_Conditions()" ><span class="textEdit" id="optionName_2_1306_3024">更换扬声器</span></td></tr>
+		  </table>
+		</td></tr><tr>
+		<td class="answer" align="left">
+		  <table cellSpacing=0 cellPadding=0>
+		  <tr id="option_radio_3025_container"><td class=answer><input type="radio" value="3025" name="option_1306" id="option_1306"  onclick="Check_Survey_Conditions()" ><span class="textEdit" id="optionName_2_1306_3025">维修清理摄像头</span></td></tr>
+		  </table>
+		</td>
+		<td class="answer" align="left">
+		  <table cellSpacing=0 cellPadding=0>
+		  <tr id="option_radio_3026_container"><td class=answer><input type="radio" value="3026" name="option_1306" id="option_1306"  onclick="Check_Survey_Conditions()" ><span class="textEdit" id="optionName_2_1306_3026">更换摄像头</span></td></tr>
+		  </table>
+		</td>
+		<td class="answer" align="left">
+		  <table cellSpacing=0 cellPadding=0>
+		  <tr id="option_radio_3027_container"><td class=answer><input type="radio" value="3027" name="option_1306" id="option_1306"  onclick="Check_Survey_Conditions()" ><span class="textEdit" id="optionName_2_1306_3027">更换听筒</span></td></tr>
+		  </table>
+		</td>
+		<td class="answer" align="left">
+		  <table cellSpacing=0 cellPadding=0>
+		  <tr id="option_radio_3028_container"><td class=answer><input type="radio" value="3028" name="option_1306" id="option_1306"  onclick="Check_Survey_Conditions()" ><span class="textEdit" id="optionName_2_1306_3028">更换耳机接口</span></td></tr>
+		  </table>
+		</td>
+		<td class="answer" align="left">
+		  <table cellSpacing=0 cellPadding=0>
+		  <tr id="option_radio_3029_container"><td class=answer><input type="radio" value="3029" name="option_1306" id="option_1306"  onclick="Check_Survey_Conditions()" ><span class="textEdit" id="optionName_2_1306_3029">更换显示屏</span></td></tr>
+		  </table>
+		</td></tr><tr>
+	   </tr>
+	   
+	   <tr style="display:"><td colspan=20>
+	     <table cellSpacing=0 cellPadding=0>
+		  <tr style="display:"><td class="answer"><input onclick="Check_Survey_Conditions()" type="radio" value="0" name="option_1306" id="option_1306" ><span class="textEdit" id="optionName_2_1306_0">其他方法</span>：<input name="TextOtherValue_1306" type="text" size="50" id="TextOtherValue_1306" value="" onblur="Check_Survey_Conditions();" >&nbsp;&nbsp;(请说明)</td></tr>
+	   </table></td></tr>
+	   
+	  </table>
+</td></tr>
+<!--该调查问卷由科维能动EnableQ在线问卷调查引擎系统生成 -->
+
+  <tr><td height=5 class="surveyclear">&nbsp;</td></tr>
+  </table>
+ <table width="100%" style="display:none;" class="pertable" id="question_1304" onactivate="this.style.backgroundColor='#dff7ff'" ondeactivate="this.style.backgroundColor='#ffffff'">
+ <!--该调查问卷由科维能动EnableQ在线问卷调查引擎系统生成 -->
+
+<tr><td height=25 class="question" valign=center>&nbsp;<span class=red>*</span><span class="textEdit" id="questionName_1304">维修费用是多少？</span>&nbsp;<span class=notes></span></td></tr>
+<tr><td class="tips"><span class="textEdit" id="questionNotes_1304"></span></td></tr>
+<tr><td>
+	  <table cellSpacing=0 cellPadding=0>
+	   <tr>
+
+		<td class="answer" align="left">
+		  <table cellSpacing=0 cellPadding=0>
+		  <tr id="option_radio_3006_container"><td class=answer><input type="radio" value="3006" name="option_1304" id="option_1304"  onclick="Check_Survey_Conditions()" ><span class="textEdit" id="optionName_2_1304_3006">保内免费维修</span></td></tr>
+		  </table>
+		</td>
+	   </tr>
+	   
+	   <tr style="display:"><td colspan=20>
+	     <table cellSpacing=0 cellPadding=0>
+		  <tr style="display:"><td class="answer"><input onclick="Check_Survey_Conditions()" type="radio" value="0" name="option_1304" id="option_1304" ><span class="textEdit" id="optionName_2_1304_0">维修费用（元）</span>：<input name="TextOtherValue_1304" type="text" size="50" id="TextOtherValue_1304" value="" onblur="Check_Survey_Conditions();" >&nbsp;&nbsp;(请说明)</td></tr>
+	   </table></td></tr>
+	   
+	  </table>
+</td></tr>
+<!--该调查问卷由科维能动EnableQ在线问卷调查引擎系统生成 -->
+
+  <tr><td height=5 class="surveyclear">&nbsp;</td></tr>
+  </table>
+ <table width="100%" style="display:none;" class="pertable" id="question_1131" onactivate="this.style.backgroundColor='#dff7ff'" ondeactivate="this.style.backgroundColor='#ffffff'">
+ <!--该调查问卷由科维能动EnableQ在线问卷调查引擎系统生成 -->
+
+<tr><td height=25 class="question" valign=center>&nbsp;<span class="textEdit" id="questionName_1131">如果最终没有完成维修，请记录原因。</span>&nbsp;<span class=notes></span></td></tr>
+<tr><td class="tips"><span class="textEdit" id="questionNotes_1131">神秘顾客注意：如服务网点要求手机送厂维修，应当场拒绝，坚持由该网点维修，如网点拒绝维修，则取回手机；并了解网点拒修的原因和网点判断手机故障依据，事后在问卷中详细记录；如服务网点要求出示发票或保修卡，神秘顾客以未携带为由坚持要求网点维修。如服务网点仍拒绝维修，则放弃暗访，事后在问卷中详细记录。</span></td></tr>
+<tr><td>
+	  <table cellSpacing=0 cellPadding=0>
+	   <tr>
+
+		<td class="answer" align="left">
+		  <table cellSpacing=0 cellPadding=0>
+		  <tr id="option_radio_2584_container"><td class=answer><input type="radio" value="2584" name="option_1131" id="option_1131"  onclick="Check_Survey_Conditions()" ><span class="textEdit" id="optionName_2_1131_2584">经检测没有故障</span></td></tr>
+		  </table>
+		</td>
+		<td class="answer" align="left">
+		  <table cellSpacing=0 cellPadding=0>
+		  <tr id="option_radio_2585_container"><td class=answer><input type="radio" value="2585" name="option_1131" id="option_1131"  onclick="Check_Survey_Conditions()" ><span class="textEdit" id="optionName_2_1131_2585">店内当日没有配件，无法维修</span></td></tr>
+		  </table>
+		</td></tr><tr>
+		<td class="answer" align="left">
+		  <table cellSpacing=0 cellPadding=0>
+		  <tr id="option_radio_2586_container"><td class=answer><input type="radio" value="2586" name="option_1131" id="option_1131"  onclick="Check_Survey_Conditions()" ><span class="textEdit" id="optionName_2_1131_2586">返厂维修或留机</span></td></tr>
+		  </table>
+		</td>
+		<td class="answer" align="left">
+		  <table cellSpacing=0 cellPadding=0>
+		  <tr id="option_radio_2587_container"><td class=answer><input type="radio" value="2587" name="option_1131" id="option_1131"  onclick="Check_Survey_Conditions()" ><span class="textEdit" id="optionName_2_1131_2587">要求出示凭证否则不予维修</span></td></tr>
+		  </table>
+		</td></tr><tr>
+		<td class="answer" align="left">
+		  <table cellSpacing=0 cellPadding=0>
+		  <tr id="option_radio_2588_container"><td class=answer><input type="radio" value="2588" name="option_1131" id="option_1131"  onclick="Check_Survey_Conditions()" ><span class="textEdit" id="optionName_2_1131_2588">我送修的手机属于保外，维修需要收费</span></td></tr>
+		  </table>
+		</td>
+	   </tr>
+	   
+	   <tr style="display:"><td colspan=20>
+	     <table cellSpacing=0 cellPadding=0>
+		  <tr style="display:"><td class="answer"><input onclick="Check_Survey_Conditions()" type="radio" value="0" name="option_1131" id="option_1131" ><span class="textEdit" id="optionName_2_1131_0">其他</span>：<input name="TextOtherValue_1131" type="text" size="60" id="TextOtherValue_1131" value="" onblur="Check_Survey_Conditions();" >&nbsp;&nbsp;(请说明)</td></tr>
+	   </table></td></tr>
+	   
+	  </table>
+</td></tr>
+<!--该调查问卷由科维能动EnableQ在线问卷调查引擎系统生成 -->
+
+  <tr><td height=5 class="surveyclear">&nbsp;</td></tr>
+  </table>
+ <table width="100%" style="display:block;" class="pertable" id="question_1132" onactivate="this.style.backgroundColor='#dff7ff'" ondeactivate="this.style.backgroundColor='#ffffff'">
+ 
+<tr><td height=25 class="question" valign=center>&nbsp;<span class=red>*</span><span class="textEdit" id="questionName_1132">是否在附近发现有小米售后山寨店或疑似山寨店。</span>&nbsp;<span class=notes></span></td></tr>
+<tr><td class="tips"><span class="textEdit" id="questionNotes_1132">请在说明框里备注该店店名，并回传一张该店门头照给督导。</span></td></tr>
+<tr><td>
+	<table cellSpacing=0 cellPadding=0>
+
+	   <tr id="option_radio_2589_container"><td width=8></td>
+	       <td><input onclick="Check_Survey_Conditions()" type="radio" value="2589" name="option_1132" id="option_1132" ></td>
+	       <td class="answer"><span class="textEdit" id="optionName_24_1132_2589">是的，附近有山寨或疑似山寨店</span></td>
+		   <td width=8></td>
+	       <td style="display:"><input name="TextOtherValue_1132_2589" type="text" size="60" id="TextOtherValue_1132_2589" value="" onblur="Check_Survey_Conditions();" >&nbsp;&nbsp;</td></tr>
+	   <tr id="option_radio_2590_container"><td width=8></td>
+	       <td><input onclick="Check_Survey_Conditions()" type="radio" value="2590" name="option_1132" id="option_1132" ></td>
+	       <td class="answer"><span class="textEdit" id="optionName_24_1132_2590">本次没有发现</span></td>
+		   <td width=8></td>
+	       <td style="display:none"><input name="TextOtherValue_1132_2590" type="text" size="0" id="TextOtherValue_1132_2590" value="" onblur="Check_Survey_Conditions();" >&nbsp;&nbsp;</td></tr>
+	</table>
+</td></tr>
+  <tr><td height=5 class="surveyclear">&nbsp;</td></tr>
+  </table>
+ <table width="100%" style="display:block;" class="pertable" id="question_1215" onactivate="this.style.backgroundColor='#dff7ff'" ondeactivate="this.style.backgroundColor='#ffffff'">
+ <!--该调查问卷由科维能动EnableQ在线问卷调查引擎系统生成 -->
+
+<tr><td height=25 class="question" valign=center>&nbsp;<span class=red>*</span><span class="textEdit" id="questionName_1215">小米近日米4换屏价格新政策——“米4换屏价格由原来的890元降至540元”。我们需要了解门店是否在执行米4换屏新价格。请按如下话术询问店内人员：“米4换屏多少钱？”</span>&nbsp;<span class=notes></span></td></tr>
+<tr><td class="tips"><span class="textEdit" id="questionNotes_1215">调查员注意：请不要直接问“米4换屏是否降至540？”，要让店员自己说出价格来</span></td></tr>
+<tr><td>
+	  <table cellSpacing=0 cellPadding=0>
+	   <tr>
+
+		<td class="answer" align="left">
+		  <table cellSpacing=0 cellPadding=0>
+		  <tr id="option_radio_2783_container"><td class=answer><input type="radio" value="2783" name="option_1215" id="option_1215"  onclick="Check_Survey_Conditions()" ><span class="textEdit" id="optionName_2_1215_2783">米4换屏已经执行新价格540元</span></td></tr>
+		  </table>
+		</td>
+		<td class="answer" align="left">
+		  <table cellSpacing=0 cellPadding=0>
+		  <tr id="option_radio_2784_container"><td class=answer><input type="radio" value="2784" name="option_1215" id="option_1215"  onclick="Check_Survey_Conditions()" ><span class="textEdit" id="optionName_2_1215_2784">米4换屏仍旧执行老价格890元</span></td></tr>
+		  </table>
+		</td></tr><tr>
+	   </tr>
+	   
+	  </table>
+</td></tr>
+<!--该调查问卷由科维能动EnableQ在线问卷调查引擎系统生成 -->
+
+  <tr><td height=5 class="surveyclear">&nbsp;</td></tr>
+  </table>
+ <table width="100%" style="display:block;" class="pertable" id="question_1216" onactivate="this.style.backgroundColor='#dff7ff'" ondeactivate="this.style.backgroundColor='#ffffff'">
+ <!--该调查问卷由科维能动EnableQ在线问卷调查引擎系统生成 -->
+
+<tr><td height=25 class="question" valign=center>&nbsp;<span class=red>*</span><span class="textEdit" id="questionName_1216">我如果自己换了一个不是小米手机原装的屏，以后要是再修，你们这里能给换吗？</span>&nbsp;<span class=notes></span></td></tr>
+<tr><td class="tips"><span class="textEdit" id="questionNotes_1216">在离店前或店员较忙时候，故意随口一问</span></td></tr>
+<tr><td>
+	  <table cellSpacing=0 cellPadding=0>
+	   <tr>
+
+		<td class="answer" align="left">
+		  <table cellSpacing=0 cellPadding=0>
+		  <tr id="option_radio_2785_container"><td class=answer><input type="radio" value="2785" name="option_1216" id="option_1216"  onclick="Check_Survey_Conditions()" ><span class="textEdit" id="optionName_2_1216_2785">可以</span></td></tr>
+		  </table>
+		</td>
+		<td class="answer" align="left">
+		  <table cellSpacing=0 cellPadding=0>
+		  <tr id="option_radio_2786_container"><td class=answer><input type="radio" value="2786" name="option_1216" id="option_1216"  onclick="Check_Survey_Conditions()" ><span class="textEdit" id="optionName_2_1216_2786">不可以</span></td></tr>
+		  </table>
+		</td></tr><tr>
+	   </tr>
+	   
+	  </table>
+</td></tr>
+<!--该调查问卷由科维能动EnableQ在线问卷调查引擎系统生成 -->
+
+  <tr><td height=5 class="surveyclear">&nbsp;</td></tr>
+  </table>
+ 
+  </td></tr>
+  <tr><td height=5></td></tr>
+  <tr align="center"> 
+     <td>
+        <input name="thisFields" type="hidden" id="thisFields" value="b3B0aW9uXzEwNDZ8b3B0aW9uXzEwNDd8b3B0aW9uXzEwNDh8b3B0aW9uXzEwNDl8b3B0aW9uXzEwNTB8b3B0aW9uXzEwNTF8b3B0aW9uXzEwNTJ8b3B0aW9uXzEwNTN8b3B0aW9uXzEwNTR8b3B0aW9uXzEwNTV8b3B0aW9uXzEwNTZ8b3B0aW9uXzEwNTd8b3B0aW9uXzEwNTh8b3B0aW9uXzEwNTl8b3B0aW9uXzEwNjB8b3B0aW9uXzEwNjF8b3B0aW9uXzEwNjN8VGV4dE90aGVyVmFsdWVfMTA2M18yNDY1fG9wdGlvbl8xMDY0fFRleHRPdGhlclZhbHVlXzEwNjRfMjQ2N3xvcHRpb25fMTA2NXxUZXh0T3RoZXJWYWx1ZV8xMDY1XzI0Njl8b3B0aW9uXzEwNjZ8VGV4dE90aGVyVmFsdWVfMTA2Nl8yNDcxfG9wdGlvbl8xMDY3fFRleHRPdGhlclZhbHVlXzEwNjdfMjQ3M3xvcHRpb25fMTA2OHxUZXh0T3RoZXJWYWx1ZV8xMDY4XzI0NzV8b3B0aW9uXzEwNjl8VGV4dE90aGVyVmFsdWVfMTA2OV8yNDc3fG9wdGlvbl8xMDcwfFRleHRPdGhlclZhbHVlXzEwNzBfMjQ3OXxvcHRpb25fMTA3MXxUZXh0T3RoZXJWYWx1ZV8xMDcxXzI0ODF8b3B0aW9uXzEwNzJ8VGV4dE90aGVyVmFsdWVfMTA3Ml8yNDgzfG9wdGlvbl8xMDczfFRleHRPdGhlclZhbHVlXzEwNzNfMjQ4NXxvcHRpb25fMTA3NHxUZXh0T3RoZXJWYWx1ZV8xMDc0XzI0ODd8b3B0aW9uXzEwNzV8VGV4dE90aGVyVmFsdWVfMTA3NV8yNDg5fG9wdGlvbl8xMDc2fFRleHRPdGhlclZhbHVlXzEwNzZfMjQ5MXxvcHRpb25fMTA3N3xUZXh0T3RoZXJWYWx1ZV8xMDc3XzI0OTN8b3B0aW9uXzEwOTR8VGV4dE90aGVyVmFsdWVfMTA5NF8yNTIxfG9wdGlvbl8xMDk1fFRleHRPdGhlclZhbHVlXzEwOTVfMjUyM3xvcHRpb25fMTA5OXxUZXh0T3RoZXJWYWx1ZV8xMDk5XzI1Mjl8b3B0aW9uXzExMDB8VGV4dE90aGVyVmFsdWVfMTEwMF8yNTMxfG9wdGlvbl8xMTAxfFRleHRPdGhlclZhbHVlXzExMDFfMjUzM3xvcHRpb25fMTEwMnxUZXh0T3RoZXJWYWx1ZV8xMTAyXzI1MzV8b3B0aW9uXzExMDN8VGV4dE90aGVyVmFsdWVfMTEwM18yNTM3fG9wdGlvbl8xMTA0fFRleHRPdGhlclZhbHVlXzExMDRfMjUzOXxvcHRpb25fMTEwNXxUZXh0T3RoZXJWYWx1ZV8xMTA1XzI1NDF8b3B0aW9uXzExMDZ8VGV4dE90aGVyVmFsdWVfMTEwNl8yNTQzfG9wdGlvbl8xMTA3fFRleHRPdGhlclZhbHVlXzExMDdfMjU0NXxvcHRpb25fMTEwOHxUZXh0T3RoZXJWYWx1ZV8xMTA4XzI1NDd8b3B0aW9uXzExMDl8VGV4dE90aGVyVmFsdWVfMTEwOV8yNTQ5fG9wdGlvbl8xMTEwfFRleHRPdGhlclZhbHVlXzExMTBfMjU1MXxvcHRpb25fMTExMXxUZXh0T3RoZXJWYWx1ZV8xMTExXzI1NTN8b3B0aW9uXzExMTJ8VGV4dE90aGVyVmFsdWVfMTExMl8yNTU1fG9wdGlvbl8xMTEzfFRleHRPdGhlclZhbHVlXzExMTNfMjU1N3xvcHRpb25fMTExNHxUZXh0T3RoZXJWYWx1ZV8xMTE0XzI1NTl8b3B0aW9uXzExMTV8VGV4dE90aGVyVmFsdWVfMTExNV8yNTYxfG9wdGlvbl8xMTE2fFRleHRPdGhlclZhbHVlXzExMTZfMjU2M3xvcHRpb25fMTExN3xUZXh0T3RoZXJWYWx1ZV8xMTE3XzI1NjV8b3B0aW9uXzExMTh8VGV4dE90aGVyVmFsdWVfMTExOF8yNTY3fG9wdGlvbl8xMTI5XzI4fFRleHRPdGhlclZhbHVlXzExMjlfMjh8b3B0aW9uXzExMjlfMjl8VGV4dE90aGVyVmFsdWVfMTEyOV8yOXxvcHRpb25fMTEyOV8zNHxUZXh0T3RoZXJWYWx1ZV8xMTI5XzM0fG9wdGlvbl8xMTI5XzM1fFRleHRPdGhlclZhbHVlXzExMjlfMzV8b3B0aW9uXzExMjlfMzZ8VGV4dE90aGVyVmFsdWVfMTEyOV8zNnxvcHRpb25fMTIxN3xvcHRpb25fMTEzMHxvcHRpb25fMTMwNnxUZXh0T3RoZXJWYWx1ZV8xMzA2fG9wdGlvbl8xMzA0fFRleHRPdGhlclZhbHVlXzEzMDR8b3B0aW9uXzExMzF8VGV4dE90aGVyVmFsdWVfMTEzMXxvcHRpb25fMTEzMnxUZXh0T3RoZXJWYWx1ZV8xMTMyXzI1ODl8b3B0aW9uXzEyMTV8b3B0aW9uXzEyMTZ8">
+        <input name="thisFiles" type="hidden" id="thisFiles" value="">
+        <input name="thisSizes" type="hidden" id="thisSizes" value="">
+        <input name="thisHidden" type="hidden" id="thisHidden" value="">
+        <input name="allHidden" type="hidden" id="allHidden" value="">
+        <input name="allFields" type="hidden" id="allFields" value="b3B0aW9uXzEwNDZ8b3B0aW9uXzEwNDd8b3B0aW9uXzEwNDh8b3B0aW9uXzEwNDl8b3B0aW9uXzEwNTB8b3B0aW9uXzEwNTF8b3B0aW9uXzEwNTJ8b3B0aW9uXzEwNTN8b3B0aW9uXzEwNTR8b3B0aW9uXzEwNTV8b3B0aW9uXzEwNTZ8b3B0aW9uXzEwNTd8b3B0aW9uXzEwNTh8b3B0aW9uXzEwNTl8b3B0aW9uXzEwNjB8b3B0aW9uXzEwNjF8b3B0aW9uXzEwNjN8VGV4dE90aGVyVmFsdWVfMTA2M18yNDY1fG9wdGlvbl8xMDY0fFRleHRPdGhlclZhbHVlXzEwNjRfMjQ2N3xvcHRpb25fMTA2NXxUZXh0T3RoZXJWYWx1ZV8xMDY1XzI0Njl8b3B0aW9uXzEwNjZ8VGV4dE90aGVyVmFsdWVfMTA2Nl8yNDcxfG9wdGlvbl8xMDY3fFRleHRPdGhlclZhbHVlXzEwNjdfMjQ3M3xvcHRpb25fMTA2OHxUZXh0T3RoZXJWYWx1ZV8xMDY4XzI0NzV8b3B0aW9uXzEwNjl8VGV4dE90aGVyVmFsdWVfMTA2OV8yNDc3fG9wdGlvbl8xMDcwfFRleHRPdGhlclZhbHVlXzEwNzBfMjQ3OXxvcHRpb25fMTA3MXxUZXh0T3RoZXJWYWx1ZV8xMDcxXzI0ODF8b3B0aW9uXzEwNzJ8VGV4dE90aGVyVmFsdWVfMTA3Ml8yNDgzfG9wdGlvbl8xMDczfFRleHRPdGhlclZhbHVlXzEwNzNfMjQ4NXxvcHRpb25fMTA3NHxUZXh0T3RoZXJWYWx1ZV8xMDc0XzI0ODd8b3B0aW9uXzEwNzV8VGV4dE90aGVyVmFsdWVfMTA3NV8yNDg5fG9wdGlvbl8xMDc2fFRleHRPdGhlclZhbHVlXzEwNzZfMjQ5MXxvcHRpb25fMTA3N3xUZXh0T3RoZXJWYWx1ZV8xMDc3XzI0OTN8b3B0aW9uXzEwOTR8VGV4dE90aGVyVmFsdWVfMTA5NF8yNTIxfG9wdGlvbl8xMDk1fFRleHRPdGhlclZhbHVlXzEwOTVfMjUyM3xvcHRpb25fMTA5OXxUZXh0T3RoZXJWYWx1ZV8xMDk5XzI1Mjl8b3B0aW9uXzExMDB8VGV4dE90aGVyVmFsdWVfMTEwMF8yNTMxfG9wdGlvbl8xMTAxfFRleHRPdGhlclZhbHVlXzExMDFfMjUzM3xvcHRpb25fMTEwMnxUZXh0T3RoZXJWYWx1ZV8xMTAyXzI1MzV8b3B0aW9uXzExMDN8VGV4dE90aGVyVmFsdWVfMTEwM18yNTM3fG9wdGlvbl8xMTA0fFRleHRPdGhlclZhbHVlXzExMDRfMjUzOXxvcHRpb25fMTEwNXxUZXh0T3RoZXJWYWx1ZV8xMTA1XzI1NDF8b3B0aW9uXzExMDZ8VGV4dE90aGVyVmFsdWVfMTEwNl8yNTQzfG9wdGlvbl8xMTA3fFRleHRPdGhlclZhbHVlXzExMDdfMjU0NXxvcHRpb25fMTEwOHxUZXh0T3RoZXJWYWx1ZV8xMTA4XzI1NDd8b3B0aW9uXzExMDl8VGV4dE90aGVyVmFsdWVfMTEwOV8yNTQ5fG9wdGlvbl8xMTEwfFRleHRPdGhlclZhbHVlXzExMTBfMjU1MXxvcHRpb25fMTExMXxUZXh0T3RoZXJWYWx1ZV8xMTExXzI1NTN8b3B0aW9uXzExMTJ8VGV4dE90aGVyVmFsdWVfMTExMl8yNTU1fG9wdGlvbl8xMTEzfFRleHRPdGhlclZhbHVlXzExMTNfMjU1N3xvcHRpb25fMTExNHxUZXh0T3RoZXJWYWx1ZV8xMTE0XzI1NTl8b3B0aW9uXzExMTV8VGV4dE90aGVyVmFsdWVfMTExNV8yNTYxfG9wdGlvbl8xMTE2fFRleHRPdGhlclZhbHVlXzExMTZfMjU2M3xvcHRpb25fMTExN3xUZXh0T3RoZXJWYWx1ZV8xMTE3XzI1NjV8b3B0aW9uXzExMTh8VGV4dE90aGVyVmFsdWVfMTExOF8yNTY3fG9wdGlvbl8xMTI5XzI4fFRleHRPdGhlclZhbHVlXzExMjlfMjh8b3B0aW9uXzExMjlfMjl8VGV4dE90aGVyVmFsdWVfMTEyOV8yOXxvcHRpb25fMTEyOV8zNHxUZXh0T3RoZXJWYWx1ZV8xMTI5XzM0fG9wdGlvbl8xMTI5XzM1fFRleHRPdGhlclZhbHVlXzExMjlfMzV8b3B0aW9uXzExMjlfMzZ8VGV4dE90aGVyVmFsdWVfMTEyOV8zNnxvcHRpb25fMTIxN3xvcHRpb25fMTEzMHxvcHRpb25fMTMwNnxUZXh0T3RoZXJWYWx1ZV8xMzA2fG9wdGlvbl8xMzA0fFRleHRPdGhlclZhbHVlXzEzMDR8b3B0aW9uXzExMzF8VGV4dE90aGVyVmFsdWVfMTEzMXxvcHRpb25fMTEzMnxUZXh0T3RoZXJWYWx1ZV8xMTMyXzI1ODl8b3B0aW9uXzEyMTV8b3B0aW9uXzEyMTZ8">
+		<input name="thisCheck" type="hidden" id="thisCheck" value="">
+		<input name="thisStep" type="hidden" id="thisStep" value="0">
+		<input name="surveyID" type="hidden" value="17">
+		<input name="isPublic" type="hidden" value="1">
+		<input name="passPortType" type="hidden" value="1">
+		<input name="surveyQuotaFlag" id="surveyQuotaFlag" type="hidden">
+		<input name="screeningFlag" id="screeningFlag" type="hidden">
+		<input name="surveyQuotaId" id="surveyQuotaId" type="hidden">
+		<input name="isCheckCode" id="isCheckCode" value="0" type="hidden">
+		<input name="GpsInfo" id="GpsInfo" type="hidden">
+		<input type="hidden" name="isHTMLPage" id="isHTMLPage" value="1">
+		<input name="Action" type="hidden" id="Action">
+		<input class=btn type=button value=" 提交问卷 " name="SurveyOverSubmit" id="SurveyOverSubmit" onclick="javascript:document.Survey_Form.Action.value = 'SurveyOverSubmit';Survey_Form_Submit();">
+     </td>
+   </tr>
+  </form>
+</table>
+</div></div></div>
+<script>Init();</script>
+<!--该调查问卷由科维能动EnableQ在线问卷调查引擎系统生成 -->
+
+</td></tr></table>
+</body></html>

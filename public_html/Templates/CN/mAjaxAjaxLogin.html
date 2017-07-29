@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv=content-type content="text/html; charset=gbk">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<title>{surveyTitle}</title>
+	<link href="CSS/LoginUI.css" rel="stylesheet" type="text/css"/>
+	<script type="text/javascript" src="JS/Jquery.min.js.php"></script>
+	<script type="text/javascript" src="JS/Jquery.notification.js.php"></script>
+	<link type="text/css" rel="stylesheet" href="CSS/Notification.css" />
+	<script src="JS/CheckQuestion.js.php"></script>
+	<script src="JS/AjaxLogin.js.php"></script>
+	<script src="JS/Base64.js.php"></script>
+	<script src="JS/Md5.js.php"></script>
+	<script language=javascript>
+	function AJAX_Login_Form_Validator()
+	{
+		if (!CheckNotNull(document.AJAXLoginForm.username, "用户名")) {return false;}
+		if (!CheckNotNull(document.AJAXLoginForm.password, "密码")) {return false;}
+	}
+
+	function Login_Form_Submit()
+	{
+		if( AJAX_Login_Form_Validator() != false)
+		{
+			var username = Trim(document.AJAXLoginForm.username.value);
+			var password = Trim(document.AJAXLoginForm.password.value); 
+			if( {is_post_method} == 1 ) //POST
+			{
+				if( {isMd5Pass} == 1 )
+				{
+					password = hex_md5(password);
+				}
+				AjaxLoginSubmitPostRequest('WebAPI/AjaxAjaxLogin.php','task=check&surveyID={surveyID}&username='+username+'&password='+password);
+			}
+			else
+			{
+				if( {isMd5Pass} == 1 )
+				{
+					password = hex_md5(password);
+				}
+				AjaxLoginSubmitRequest('WebAPI/AjaxAjaxLogin.php?task=check&surveyID={surveyID}&username='+username+'&password='+password);
+			}
+		}
+	}
+</script>
+</head>
+<body style="padding-bottom:50px;">
+	<header class="iheader">
+		<div class="theader">会员登录</div>
+	</header>
+	<div class="content">
+		<form name="AJAXLoginForm" id="AJAXLoginForm" action="" method="post">
+		<ul class="unstyled">
+		<li>
+			<div class="topic_input">
+				<div class="topic_bel"> <i class="ico_u"></i></div>
+				<div class="topic_ipt">
+					<input id="username" type="text" name="username" placeholder="用户名" />
+				</div>
+			</div>
+		</li>
+		<li>
+			<div class="topic_input">
+				<div class="topic_bel"> <i class="ico_p"></i></div>
+				<div class="topic_ipt">
+					<input id="password" type="password" name="password" placeholder="密码" />
+				</div>
+			</div>
+		</li>
+		</ul>
+		<a href="javascript:Login_Form_Submit();" class="button blue">登 录</a>
+		  <input type="hidden" name="ajaxRtnValue" id="ajaxRtnValue">
+		  <input type="hidden" name="Action" value="PassPortSubmit">
+		  <input type="hidden" name="isPublic" value="0">
+		  <input type="hidden" name="isUseOriPassport" value="2">
+	  </form>
+	</div>
+</body>
+</html>

@@ -1,0 +1,184 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Member's Passport Registration</title>
+<meta http-equiv="Content-Type" content="text/html; charset=gbk" />
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7">
+<link rel="stylesheet" type="text/css" href="CSS/UIBase.css" />
+<link rel="stylesheet" type="text/css" href="CSS/Index.css" />
+<script type="text/javascript" src="JS/Jquery.min.js.php"></script>
+<script type="text/javascript" src="JS/Jquery.notification.js.php"></script>
+<link type="text/css" rel="stylesheet" href="CSS/Notification.css" />
+<script language=javascript src="JS/CheckQuestion.en.php"></script>
+<script language=javascript>
+function Check_Form_Validator()
+{
+	if (!CheckNotNull(document.Check_Form.administrators_Name, "Username")) {return false;}
+	if (!CheckEmail(document.Check_Form.administrators_Name,"Username")) {return false;}
+	if (!CheckNotNull(document.Check_Form.nickName, "Nickname")) {return false;}
+	<!-- CHECK PASSWORD -->
+	if (!CheckNotNull(document.Check_Form.passWord, "Password")) {return false;}
+	if (!CheckStringLength(document.Check_Form.passWord, "Password",6,20)) {return false;}
+	if (document.Check_Form.passWord.value != document.Check_Form.passWord2.value) {document.Check_Form.passWord2.focus();$.notification("The password you input twice is not the same");return false;}
+	<!-- END PASSWORD -->
+	if (!CheckNotNull(document.Check_Form.answerPass,"The answers of the security questions")) {return false;}
+	{optionCheckInput}
+}
+var http_request = false;
+function AjaxRequest(url,type)
+{
+	http_request = false;
+	if(window.ActiveXObject)
+	{
+		try  // IE
+		{
+			http_request = new ActiveXObject("Msxml2.XMLHTTP");
+		}
+		catch (e)
+		{
+			try
+			{
+				http_request = new ActiveXObject("Microsoft.XMLHTTP");
+			}
+			catch (e) {}
+		}
+	}
+	else if(window.XMLHttpRequest)
+	{
+		// Mozilla, Safari,...
+		http_request = new XMLHttpRequest();
+		if (http_request.overrideMimeType)
+		{
+			http_request.overrideMimeType('text/xml');
+		}
+	}
+	
+	if (!http_request)
+	{
+		$.notification("Cannot create an XMLHTTP instance");
+		return false;
+	}
+	http_request.onreadystatechange = AjaxNameContents;
+	http_request.open('GET', url, true);
+	http_request.send(null);
+}
+
+function AjaxNameContents()
+{
+	if (http_request.readyState == 4)
+	{
+		if(http_request.status == 200)
+		{
+			if(http_request.responseText == "false")
+			   document.getElementById("userNameInfo").innerHTML="<img src=Images/check_no.gif border=0> <span class=red>The username input has been registered</span>";
+			else if(http_request.responseText == "true")
+			   document.getElementById("userNameInfo").innerHTML="<img src=Images/check_yes.gif border=0> <span class=green>The username input can be registered</span>";
+			else if(http_request.responseText == "null") 
+			   document.getElementById("userNameInfo").innerHTML="<img src=Images/check_no.gif border=0> <span class=red>The username input is null</span>";
+			else if(http_request.responseText == "noemail") 
+			   document.getElementById("userNameInfo").innerHTML="<img src=Images/check_no.gif border=0> <span class=red>The format of the Email is wrong</span>";
+		}
+		else
+		{
+			$.notification('网络传输问题');
+		}
+	}
+}
+$(document).ready(function(){ 
+	jQuery("#administrators_Name").blur(function(){
+		AjaxRequest('System/AjaxCheckName.php?type=1&name='+this.value,1);
+	});
+});
+</script>
+<style>
+	input[type=text],input[type=password] {border:1px solid #cacaca;height:18px;font-family: Calibri,"宋体",sans-serif;line-height:18px;vertical-align: middle;}
+	textarea {border:1px solid #cacaca;font-family: Calibri,"宋体",sans-serif;line-height:18px;}
+	select {border:1px solid #cacaca;font-family: Calibri,"宋体",sans-serif;vertical-align: middle;height:20px;line-height:20px}
+    .d_table tr:hover{background-color:transparent}
+	.nav a {width:80px}
+	.inputsubmit{line-height:10px}
+</style>
+</head>
+<body>
+
+	<div class="container clearfix">
+	   <div class="main">
+		    <div class="nav">
+				<a href="r.php?qlang={qlang}&qid={qid}" class="cur">Registration</a>
+				<a href="g.php?qlang={qlang}&qid={qid}">Get Password</a>
+			</div>			
+			<div class="content">
+			<div class="content_tit">
+				<div class="clearfix">
+				<h1>Member's Passport Registration</h1>
+				<span class="total ml10"></span>
+				<span class="btn ml10"></span>
+				</div>
+				<p class="fc_grey">Member's Passport Registration</p>
+			</div>
+			<div class="content_main" style="margin-top:10px">
+				<form name="Check_Form" id="Check_Form" onsubmit="return Check_Form_Validator(this)" method="post" action="">
+				<table class="d_table">
+				  <tr><th align=left colspan=2><b>&nbsp;General Information</b></th></tr>
+				  <tr> 
+					 <td width="16%"><SPAN class=red>*</SPAN> Username:</td>
+					 <td width="84%"><input id="administrators_Name" name="administrators_Name" type="text" size=40>&nbsp;&nbsp;<span id="userNameInfo"></span></td>
+				  </tr>
+				  <tr> 
+					   <td height="25"><SPAN class=red>*</SPAN> Nickname:</td>
+					   <td><input name="nickName" type="text" id="nickName" size="30" maxlength="30">&nbsp;<span id="niceNameInfo"></span></td>
+				  </tr>
+				  <!-- INPUT INPUTPASSWORD -->
+				  <tr> 
+					  <td height="23"><SPAN class=red>*</SPAN> Password:</td>
+					  <td><input name="passWord" type="password" id="passWord" size="30" maxlength="30"></td>
+				  </tr>
+				  <tr> 
+					  <td height="25"><SPAN class=red>*</SPAN> Confirm Password:</td>
+					  <td><input name="passWord2" type="password" id="passWord2" size="30" maxlength="30"></td>
+				  </tr>
+				   <!-- END INPUTPASSWORD -->
+				  <tr> 
+					   <td height="25"><SPAN class=red>*</SPAN> Security questions:</td>
+					   <td><SELECT id=hintPass name=hintPass> 
+								<option value=1>What's the pet's name do you like best?</option> 
+								<option value=2>What's the name of the film do you like best?</option> 
+								<option value=3>What's the name of the song do you like best?</option> 
+								<option value=4>What's your darling's name?</option> 
+								<option value=5>What's your father's name?</option>
+								<option value=6>What's the name of your first hign school? </option> 
+								<option value=7>What's the pet name of your first child?</option> 
+								<option value=8>What's the brand of your first mobile telephone?</option> 
+								<option value=9>What's the item of sports do you like best?</option> 
+								<option value=10>What's the team of sports do you like best?</option>
+								<option value=11>What's the number of your ID card?</option>
+								<option value=12>What's the number of your ID card?</option>
+								<option value=13>What's the number of your driving licence?</option>
+								<option value=14>What's the number of your employee's card?</option>
+								<option value=15>What's the date of taking part in a work?</option>
+								<option value=16>What's the date of your birthday?</option>
+							</SELECT></td>
+				   </tr>
+				   <tr> 
+					   <td height="25"><SPAN class=red>*</SPAN> The answers:</td>
+					   <td><input type="text" id=answerPass name=answerPass></td>
+				   </tr>
+				  <tr><th align=left colspan=2><b>&nbsp;Subsidiary Information</b></th></tr>
+				  {optionList}
+				  </table>
+				  <table width=99% style="border:0px">
+				  <tr><td style="border:0px"> 
+					  <input type="hidden" name="Action" value="MemberAddSubmit"> 
+					  <input class=inputsubmit type="submit" name="submit" value="Register">
+					  <input class=inputsubmit name="submit2" type="reset" value="Reset"> 
+					  <input type="hidden" name="qid" id="qid" value="{qid}">
+					</td>
+				  </tr>
+			  </form>
+			 </table>
+			 </div>
+		   </div>
+	   </div>
+    </div>
+</body>
+</html>

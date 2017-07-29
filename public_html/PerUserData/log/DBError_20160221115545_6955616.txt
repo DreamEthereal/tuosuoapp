@@ -1,0 +1,2 @@
+2016-02-21 11:55:45     <b>Bad SQL Query</b>:  SELECT * FROM eq_response_19 b  WHERE a_long_name_file_not_exist  ORDER BY responseID DESC <br><b>Unknown column 'a_long_name_file_not_exist' in 'where clause'</b>
+

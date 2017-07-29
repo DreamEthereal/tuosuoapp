@@ -1,0 +1,125 @@
+<html>
+<head>
+<meta http-equiv=content-language content=zh-cn>
+<meta http-equiv=content-type content="text/html; charset=gbk">
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7">
+<link href="../CSS/Base.css" rel=stylesheet>
+<script language=javascript src="../JS/HighLight.js.php"></script>
+<script type="text/javascript" src="../JS/Jquery.min.js.php"></script>
+<script type="text/javascript" src="../JS/Jquery.notification.js.php"></script>
+<link type="text/css" rel="stylesheet" href="../CSS/Notification.css" />
+<script language=javascript src="../JS/CheckQuestion.js.php"></script>
+<script type="text/javascript" src="../JS/Calendar.js.php"></script>
+<style>
+ td { padding:2px 5px 2px 5px;}
+ #jquery-notification-message {width:100%;}
+</style>
+<script language=javascript>
+function Check_Form_Validator()
+{
+	if (!CheckNotNull(document.Check_Form.planDay, "日期")) {return false;}
+	if (!CheckDate(document.Check_Form.planDay, "日期")) {return false;}
+	var re = /\//g;
+	if (!CompareTime('{beginTime}',document.Check_Form.planDay.value.replace(re,'-'),1)) {
+		document.Check_Form.planDay.focus();
+	    $.notification("日期必须在问卷开始时间{beginTime}之后");
+		return false;
+	}
+	if (!CompareTime('{nowTime}',document.Check_Form.planDay.value.replace(re,'-'),1)) {
+		document.Check_Form.planDay.focus();
+	    $.notification("日期必须在问卷当前时间{nowTime}之后");
+		return false;
+	}
+	if (!CompareTime(document.Check_Form.planDay.value.replace(re,'-'),'{endTime}',2)) {
+		document.Check_Form.planDay.focus();
+	    $.notification("日期必须在问卷结束时间{endTime}之前");
+		return false;
+	}
+	if (!CheckNotNull(document.Check_Form.planNum, "计划回复量")) {return false;}
+	if (!CheckNumber(document.Check_Form.planNum, "计划回复量",1,500000)) {return false;}
+}
+function CompareTime(a,b,c) {
+   var arr = a.split("-");
+   var starttime = new Date(arr[0],arr[1],arr[2]);
+   var starttimes = starttime.getTime();
+   var arrs = b.split("-");
+   var endtime = new Date(arrs[0],arrs[1],arrs[2]);
+   var endtimes = endtime.getTime();
+   if( c == 1 )
+   {
+	   if (starttimes > endtimes)//开始大于结束
+	   {
+		   return false;
+	   }
+	   else
+	   {
+		   return true;
+	   }
+   }
+   else
+   {
+	   if (starttimes >= endtimes)//开始大于结束
+	   {
+		   return false;
+	   }
+	   else
+	   {
+		   return true;
+	   }
+   }
+}
+function submitForm()
+{
+	if( Check_Form_Validator() != false )
+	{
+		document.getElementById('submitBtn').disabled = true;
+		disabledStyle(document.getElementById('submitBtn'));
+		document.getElementById('close').disabled = true;
+		disabledStyle(document.getElementById('close'));
+		document.Check_Form.submit();
+	}
+}
+</script>
+<meta content="mshtml 6.00.3790.0" name=generator></head>
+<body oncontextmenu="return false">
+ <form action="" method="post" name="Check_Form" id="Check_Form" onsubmit="return false;" >
+  <table class=datatable style="line-height: 150%;border-collapse:collapse;" cellspacing=0 cellpadding=0 bordercolor=#cacaca border=1 width=100%>
+     <div class=position>位置：&nbsp; 我的问卷 &raquo; 调整问卷回复计划</div>
+      <tr><td bgcolor="#f9f9f9" colspan=2><b>调整问卷回复计划</b></td></tr>
+      <tr>
+        <td align=right colspan=2><SPAN style="PADDING-RIGHT: 16px">注：以下带“<SPAN  class=red>*</SPAN>”的为必填项</SPAN></td></tr>
+	  <tr><td>&nbsp;&nbsp;&nbsp;问卷开始时间：</td>
+	      <td>{beginTime}</td>
+	  </tr>
+	  <tr><td>&nbsp;&nbsp;&nbsp;问卷结束时间：</td>
+	      <td>{endTime}</td>
+	  </tr>
+      <tr> 
+         <td width="26%"><SPAN class=red>*</SPAN> 日期：</td>
+         <td width="74%"><input name="planDay" type="text"  id="planDay" size="20" maxlength="40" value="{planDay}" {isEdit} onfocus="if(this.value=='0000-00-00') this.value=''" onclick="javascript:SelectDate(this,'yyyy-MM-dd')"></td>
+      </tr>
+      <tr> 
+           <td height="25"><SPAN class=red>*</SPAN> 计划回复量：</td>
+           <td><input name="planNum" type="text" id="planNum" size="10" maxlength="30" value="{planNum}" {isEdit}></td>
+      </tr>
+      <tr> 
+          <td height="23">&nbsp;&nbsp;&nbsp;关于计划量的说明：</td>
+          <td><textarea id="planDesc" name="planDesc" rows=5 cols=64 {isEdit}>{planDesc}</textarea></td>
+      </tr>
+	 </table><table width=100%>
+     <tr><td width=26%></td> 
+          <td>
+ 		  <input name="planID" type="hidden" value="{planID}"> 
+ 		  <input name="surveyID" type="hidden" value="{surveyID}"> 
+ 		  <input name="surveyTitle" type="hidden" value="{surveyTitle}"> 
+ 		  <input name="Action" type="hidden" id="Action" value="{Action}"> 
+ 		  <input name="beginTime" type="hidden" id="beginTime" value="{beginTime}"> 
+ 		  <input name="endTime" type="hidden" id="endTime" value="{endTime}"> 
+		  <input class=inputsubmit type="button" name="submitBtn" id="submitBtn" value="确定" onclick="javascript:submitForm();"> 
+		  <input class=inputsubmit type="button" name="close" id="close" value="关闭" onClick="javascript:parent.hidePopWin();">
+          </td>
+       </tr>
+      </form>       
+   </table>
+   <script type="text/javascript">initInputHighlightScript();</script> 
+</body></html>

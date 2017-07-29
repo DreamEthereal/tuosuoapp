@@ -1,0 +1,28 @@
+{dateIncludeFile}
+<tr><td height=25 class="question" valign=center>&nbsp;{questionRequire}<span class="textEdit" id="questionName_{questionID}">{questionName}</span>&nbsp;<span class=notes>{questionNotes}</span></td></tr>
+<tr><td class="tips"><span class="textEdit" id="questionNotes_{questionID}">{questionTips}</span></td></tr>
+<tr><td>
+	  <table cellSpacing=0 cellPadding=0>
+	   <tr>
+       <!-- BEGIN OPTION -->
+	   <td class="answer" align="left">
+		  <table cellSpacing=0 cellPadding=0>
+		  {optionList}
+		  </table>
+	   </td>{perLine}
+	   <!-- END OPTION -->
+	   </tr>
+	   <!--DELETE_OTHER_CHECKBOX_BEGIN-->
+	   <tr style="display:{isHaveOther}"><td colspan=20>
+	   	 <table cellSpacing=0 cellPadding=0>
+		  <tr style="display:{isHaveOther}"><td class="answer"><input onclick="Check_Survey_Conditions()" type="checkbox" value="0" name="{optionID}[]" id="{optionID}" {isCheck0}><span class="textEdit" id="optionName_3_{questionID}_0">{otherText}</span>£º<input name="TextOtherValue_{questionID}" type="text" size="{length}" id="TextOtherValue_{questionID}" value="{value}" onblur="Check_Survey_Conditions();" {dateTextAction}>&nbsp;{unitText}&nbsp;</td></tr>
+	   </table></td></tr>
+	   <!--DELETE_OTHER_CHECKBOX_END-->
+	   <!--DELETE_NEG_CHECKBOX_BEGIN-->
+	   <tr style="display:{isHaveNeg}"><td colspan=20>
+	   	 <table cellSpacing=0 cellPadding=0>
+		  <tr style="display:{isHaveNeg}"><td class="answer"><input onclick="Check_Survey_Conditions()" type="checkbox" value="99999" name="{optionID}[]" id="{optionID}" {isCheck99999}><span class="textEdit" id="optionName_3_{questionID}_99999">{negText}</span></td></tr>
+	   </table></td></tr>
+	   <!--DELETE_NEG_CHECKBOX_END-->
+	  </table>
+</td></tr>

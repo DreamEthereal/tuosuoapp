@@ -1,0 +1,2 @@
+2015-08-16 18:37:39     <b>Bad SQL Query</b>:  SHOW COLUMNS FROM eq_response_43 <br><b>Incorrect key file for table '/tmp/#sql_1ee6d4_0.MYI'; try to repair it</b>
+

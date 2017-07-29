@@ -1,0 +1,778 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=gbk" />
+
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" />
+
+<title>调整问卷用户权限 - Eclear在线问卷调查引擎</title>
+
+<link rel="shortcut icon" href="../Images/enableq.ico" type="image/x-icon" />
+
+<link rel="stylesheet" type="text/css" href="../CSS/UIBase.css" />
+
+<link rel="stylesheet" type="text/css" href="../CSS/Index.css" />
+
+<script type="text/javascript" src="../JS/Calendar.js.php"></script>
+
+<link href="../CSS/Window.css" type="text/css" rel=stylesheet>
+
+<script type="text/javascript" src="../JS/Common.js.php"></script>
+
+<script type="text/javascript" src="../JS/Window.js.php"></script>
+
+<script type="text/javascript" src="../JS/Jquery.min.js.php"></script>
+
+<script type="text/javascript" src="../JS/Jquery.notification.js.php"></script>
+
+<link type="text/css" rel="stylesheet" href="../CSS/Notification.css" />
+
+<script language=javascript src="../JS/CheckQuestion.js.php"></script>
+
+<script>
+
+function gId(_sId){
+
+	return document.getElementById(_sId);
+
+}
+
+function Check_Form_Validator()
+
+{
+
+	if (IsInCheckBox(document.Check_Form.projectType,1 ))
+
+	{
+
+		if (!CheckNotNull(document.Check_Form.projectOwner, "关联客户对象")) {return false;}
+
+	}
+
+	if (!CheckPhone(document.Check_Form.custTel, "项目客户服务电话")) {return false;}
+
+}
+
+function changeProjectType()
+
+{
+
+	if (IsInCheckBox(document.Check_Form.projectType,1 ))
+
+	{
+
+		gId('projectOwner_cont').style.display = '';
+
+		gId('appeal_cont_0').style.display = '';
+
+		gId('appeal_cont_1').style.display = '';
+
+		gId('appeal_cont_2').style.display = '';
+
+	}
+
+	else
+
+	{
+
+		gId('projectOwner_cont').style.display = 'none';
+
+		gId('appeal_cont_0').style.display = 'none';
+
+		gId('appeal_cont_1').style.display = 'none';
+
+		gId('appeal_cont_2').style.display = 'none';
+
+	}
+
+}
+
+function refreshParent() {
+
+   //window.location.replace(window.location.href);
+
+   window.location.reload(true);
+
+}
+
+function CheckExt(obj)
+
+{
+
+   	var AllowExt = ".png|.jpg|.gif|.jpeg|";
+
+	FileExt = obj.value.substr(obj.value.lastIndexOf(".")).toLowerCase();
+
+	if( AllowExt.indexOf(FileExt + "|") == -1) 
+
+	{
+
+		document.getElementById("submitBtn").disabled = true;
+
+	    $.notification("Logo图片文件扩展名仅支持.png|.jpg|.gif|.jpeg|");
+
+		return false;
+
+	}
+
+	else
+
+	{
+
+		document.getElementById("submitBtn").disabled = false;
+
+		return true;
+
+    }    
+
+}
+
+function submitForm()
+
+{
+
+	if( Check_Form_Validator() != false )
+
+	{
+
+		document.getElementById('submitBtn').disabled = true;
+
+		disabledStyle(document.getElementById('submitBtn'));
+
+		document.getElementById('rtnBtn').disabled = true;
+
+		disabledStyle(document.getElementById('rtnBtn'));
+
+		document.Check_Form.submit();
+
+	}
+
+}
+
+function checkValid()
+
+{
+
+	if (event.keyCode<48 || event.keyCode>126)
+
+	{
+
+		event.keyCode=0;
+
+	}
+
+}
+
+var http_request = false;
+
+function AjaxRequest(url)
+
+{
+
+	http_request = false;
+
+	if(window.ActiveXObject){
+
+		try{
+
+			http_request = new ActiveXObject("Msxml2.XMLHTTP");
+
+		}
+
+		catch (e){
+
+			try{
+
+				http_request = new ActiveXObject("Microsoft.XMLHTTP");
+
+			}
+
+			catch (e) {}
+
+		}
+
+	}
+
+	else if(window.XMLHttpRequest){
+
+		http_request = new XMLHttpRequest();
+
+		if (http_request.overrideMimeType){
+
+			http_request.overrideMimeType('text/xml');
+
+		}
+
+	}
+
+	
+
+	if (!http_request){
+
+		$.notification("Cannot create an XMLHTTP instance");
+
+		return false;
+
+	}
+
+	http_request.onreadystatechange = NotesContents;
+
+	http_request.open('GET', url, true);
+
+	http_request.send(null);
+
+}
+
+function NotesContents()
+
+{
+
+	if (http_request.readyState == 4){
+
+		if(http_request.status == 200){
+
+			if(http_request.responseText == "false")
+
+			   document.getElementById("dataPathInfo").innerHTML="<img src=../Images/check_no.gif border=0> <span class=red>输入的路径名已存在&nbsp;</span>";
+
+			else if(http_request.responseText == "true")
+
+			   document.getElementById("dataPathInfo").innerHTML="<img src=../Images/check_yes.gif border=0> <span class=green>输入的路径名可使用&nbsp;</span>";
+
+			//else if(http_request.responseText == "null") 
+
+			   //document.getElementById("dataPathInfo").innerHTML="<img src=../Images/check_no.gif border=0> <span class=red>输入的路径名为空&nbsp;</span>";
+
+		}
+
+		else{
+
+			$.notification('网络传输问题');
+
+		}
+
+	}
+
+}
+
+</script>
+
+<style>
+
+	input[type=text] {border:1px solid #cacaca;height:20px;font-family: Calibri,"宋体",sans-serif;line-height:20px;vertical-align: middle;}
+
+	input[type=file] {border:1px solid #cacaca;height:22px;font-family: Calibri,"宋体",sans-serif;line-height:22px;vertical-align: middle;}
+
+	select {border:1px solid #cacaca;font-family: Calibri,"宋体",sans-serif;vertical-align: middle;height:20px;line-height:20px;}
+
+	input[type=checkbox]{vertical-align: middle;margin-right:5px}
+
+	input[type=radio]{vertical-align: middle;margin-right:5px}
+
+	textarea{height:80px;border:1px solid #cacaca;font-family: Calibri,"宋体",sans-serif;}
+
+	.clssel{height:20px}
+
+	select,img {vertical-align: middle;}
+
+    .d_table tr:hover{background-color:transparent;}
+
+</style>
+
+
+
+</head>
+
+<body oncontextmenu="return false" onload="javascript:changeProjectType();">
+
+ 	<div class="header">
+
+		<h1 class="logo">Eclear</h1>
+
+		<div class="header_menu">
+
+			<div class="header_m_1">
+
+				<a href="../System/ShowMain.php">欢迎您，<font color="#e45857" id="nick_Name_cont"></font></a>
+
+				<span class="head_menu_icon"></span>
+
+				<ul class="head_menu_list">
+
+					<span class="head_menu_top"></span>
+
+					<li><a href="../System/MyProfile.php">我的账户信息</a></li>
+
+					<li class="last"><a href="../System/ChangePass.php">修改我的密码</a></li>
+
+				</ul>
+
+			</div>
+
+			<div class="header_m_6" style="margin-left:50px">
+
+				<a href="../System/ShowMain.php">首页</a>
+
+			</div>
+
+			<div class="header_m_2" id="mySetting">
+
+			</div>
+
+			<div class="header_m_3" style="margin-left:50px">
+
+				<a href="../Help/Downs.php">帮助</a>
+
+				<span class="head_menu_icon"></span>
+
+				<ul class="head_menu_list">
+
+					<span class="head_menu_top"></span>
+
+					<li><a href="../Help/Downs.php">帮助文件下载</a></li>
+
+					<li><a href="http://doc.itenable.com.cn" target=_blank>在线帮助文档</a></li>
+
+					<li><a href="http://i.enableq.com" target=_blank>在线讨论社区</a></li>
+
+					<li class="last"><a href="../System/AdministratorsLogs.php">系统操作日志</a></li>
+
+				</ul>
+
+			</div>
+
+			<div class="header_m_4" style="margin-left:50px">
+
+				<a href="javascript:void(0);" onclick="javascript:showPopWin('../License/AboutEnableQ.php', 500, 400, null, null,'关于...')">关于</a>
+
+			</div>
+
+			<div class="header_m_5">
+
+				<a href="../System/Logout.php?loginOutURL=../index.php" target=_top>退出</a>
+
+			</div>
+
+		</div>
+
+	</div><!--end of header-->
+
+	<script type="text/javascript" src="../JS/MySetting.js.php"></script>
+
+
+
+	<div class="container clearfix">
+
+	   <div class="main">
+
+		<div class="nav">
+
+			    <a href="ShowSurveyList.php?Action=Edit&surveyID={surveyID}" style="display:{isAdmin6}">属性</a>
+
+				<a href="TrackCode.php?surveyID={surveyID}" style="display:{isTrackCode}">追踪</a>
+
+				<a href="GetSurveyCode.php?surveyID={surveyID}" style="display:{isDeployStat}">分发</a>
+
+				<a href="ShowSurveyList.php?Action=EditUser&surveyID={surveyID}" class="cur">用户</a>
+
+				<a href="{taskURL}" style="display:{haveTask}">任务</a>
+
+				<a href="{planURL}" style="display:{havePlan}">计划</a>
+
+		</div>		
+
+	    <div class="content">
+
+			<div class="content_tit">
+
+				<div class="clearfix">
+
+				<h1><span class=redtitle>[{surveyTitle}]</span>问卷用户权限</h1>
+
+				<span class="total ml10"></span>
+
+				<span class="btn ml10"></span>
+
+				</div>
+
+				<p class="fc_grey">调配调查问卷的用户权限，建立问卷和系统用户之间的权限关联关系</p>
+
+			</div>
+
+		   <div class="content_main" style="margin-top:10px;">
+
+		   <form name="Check_Form" id="Check_Form" method="post" enctype="multipart/form-data" action="" onsubmit="return false;">
+
+			<table class="d_table">
+
+			  <tr class=coltitle><th colspan=2 align=left>调查问卷所属项目类型&nbsp;<img src="../Images/info.gif" border=0></td></tr>
+
+			  <tr style="height:25px;line-height:25px">
+
+				  <td height="25"><SPAN class=red>*</SPAN> 所属项目类型：</td>
+
+				  <td><input type="radio" name="projectType" value=1 onclick="javascript:changeProjectType();" {projectType_1}>神秘客/暗访/明检等调研对象清楚的调研项目&nbsp;<a onmouseover="this.T_WIDTH=530;this.T_PADDING=0;this.T_BGCOLOR='#ffffff'; return escape('&nbsp;1) 需要先指定项目的关联客户对象，即“用户”树“客户”节点的次级节点<br/>&nbsp;2) 系统将会使用该关联客户对象下无子孙节点的节点信息作为数据录入员的任务可分配清单<br/>&nbsp;3) 系统将会使用该关联客户对象下的用户身份作为申诉允许的可分配用户<br/>&nbsp;4) 该项目的数据查看和审核权限其一依赖“单位”树节点的从属关系，即查看员和审核员可查看<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;或审核本节点与下属节点数据录入员录入的数据，其二依据任务和录入员的对应关系以及“客<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;户”树节点的从属关系，来决定“客户”树下某用户的数据查看权限')" href="javascript:void(0);"><font color=red><b>[帮助]</font></a></b><br/>
+
+					  <input type="radio" name="projectType" value=2 onclick="javascript:changeProjectType();" {projectType_2}>面访/街访/网络调查等随机调研对象的调研项目&nbsp;<a onmouseover="this.T_WIDTH=530;this.T_PADDING=0;this.T_BGCOLOR='#ffffff'; return escape('&nbsp;1) 本类型项目“用户”树“客户”节点下属所有用户身份对其无任何数据权限<br/>&nbsp;2) 若要为该项目的业主创建数据查看员账户，需要将其创建在“单位”树对应节点位置<br/>&nbsp;3) 该项目的数据查看和审核权限依赖“单位”树节点的从属关系，即查看员和审核员可查看或审<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;核本节点与下属节点数据录入员录入的数据')" href="javascript:void(0);"><font color=red><b>[帮助]</font></a></b><br/>
+
+<input type="radio" name="projectType" value=3 onclick="javascript:changeProjectType();" {projectType_3}>app会员调研项目&nbsp;<a onmouseover="this.T_WIDTH=530;this.T_PADDING=0;this.T_BGCOLOR='#ffffff'; return escape('&nbsp;1) 本类型项目“用户”树“客户”节点下属所有用户身份对其无任何数据权限<br/>&nbsp;2) 若要为该项目的业主创建数据查看员账户，需要将其创建在“单位”树对应节点位置<br/>&nbsp;3) 该项目的数据查看和审核权限依赖“单位”树节点的从属关系，即查看员和审核员可查看或审<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;核本节点与下属节点数据录入员录入的数据')" href="javascript:void(0);"><font color=red><b>[帮助]</font></a></b><br/>
+
+
+
+				  </td>
+
+			  </tr>
+
+			  <tr style="height:25px;line-height:20px">
+
+				  <td height="25" align=left>&nbsp;&nbsp;&nbsp;自定义<br/>&nbsp;&nbsp;&nbsp;附属文件存储路径：</td>
+
+				  <td style="padding-top:5px">{absPath}PerUserData/user/<input name="custDataPath" type="text" id="custDataPath" size=26 value="{custDataPath}" onkeypress="checkValid()"  style="ime-mode:disabled" onPaste="return false;" onKeyUp="AjaxRequest('AjaxCheckDataPath.php?custDataPath='+this.value+'&oldName={custDataPath}');" {isAdminRole6}>&nbsp;&nbsp;<span id="dataPathInfo"></span><br/>
+
+					  <span class=red>*</span>&nbsp;指定义回复数据包含的照片、录音、录像等文件的物理存储路径<br/>
+
+					  <span class=red>*</span>&nbsp;该值为空表示采用系统默认存储<br/>
+
+					  <span class=red>*</span>&nbsp;使用汉语拼音或者英文名称<br/><input type="hidden" name="oriDataPath" id="oriDataPath" value="{custDataPath}">
+
+				  </td>
+
+			  </tr>
+
+			  <tr id="projectOwner_cont">
+
+				  <td height="25"><SPAN class=red>*</SPAN> 关联客户对象：</td>
+
+				  <td><select name="projectOwner" id="projectOwner" style="width:432px;*width:442px">
+
+					   <option value=''>请选择...</option>
+
+					   {projectOwnerList}
+
+					  </select>
+
+				  </td>
+
+			  </tr>
+
+			  <tr style="height:25px;line-height:20px"><td height="25">&nbsp;&nbsp;&nbsp;上传客户Logo：</td>
+
+				  <td style="padding-top:5px"><input name="custLogo" type="file" id="custLogo" size=70 onchange="CheckExt(this)"><br/>
+
+					  <span class=red>*</span>&nbsp;建议Logo图片的宽度少于480px<br/>
+
+					  <span class=red>*</span>&nbsp;建议项目客户的登录系统地址：<a href="{loginURL}" target=_blank><font color=red>{loginURL}</font></a><br/>
+
+					  <span class=red>*</span>&nbsp;查看现有Logo：{custLogoFile}，上传新文件将覆盖旧文件<br/>
+
+					  <span class=red>*</span>&nbsp;需要Eclear系统“项目登录界面Logo自定义”扩展许可证
+
+				  </td>
+
+			  </tr>	  
+
+			  <tr><td height="25">&nbsp;&nbsp;&nbsp;项目客户服务电话：</td>
+
+				  <td><input name="custTel" type="text" id="custTel" size=26 value="{custTel}"></td>
+
+			  </tr>	  
+
+			  <tr class=coltitle><th colspan=2 align=left>调查问卷用户权限&nbsp;<img src="../Images/info.gif" border=0></td></tr>
+
+			  <tr style="height:25px;line-height:25px">
+
+				  <td height="25"><SPAN class=red>*</SPAN> 问卷管理用户：</td>
+
+				  <td><b>问卷创建者：</b>{ownerUser}<br/><b>系统管理员：</b>{adminUsers}<br/><b>超级问卷员：</b>{superUsers}</td>
+
+			  </tr>
+
+			  <tr>
+
+				  <td height="25"><SPAN class=red>*</SPAN> 数据录入用户：</td>
+
+				  <td valign=top>
+
+				    <table cellspacing=0 cellpadding=0 style="border:0px;" width=100%>
+
+					 <tr style="border:0px;"><td style="margin:0px;padding:0px;border:0px;"><input class=stnsubmit name="inputRight" type="button" id="inputRight" value="调整" onclick="javascript:showPopWin('?Action=EditInputUser&surveyID={surveyID}', 800, 480,refreshParent, null,'调整问卷数据录入用户')">&nbsp;<input class=stnsubmit name="inputImport" type="button" id="inputImport" value="导入" onclick="javascript:showPopWin('?Action=ImportInputUser&surveyID={surveyID}', 630, 240,refreshParent, null,'从CSV文件导入数据录入用户');">
+
+					 </td></tr>
+
+					</table>
+
+
+
+				   <table cellspacing=0 cellpadding=0 style="padding:0px;margin:0px;border:0px;border-top:#cacaca 1px solid" width=100%>
+
+				   <tr style="border:0px;height:20px;line-height:20px"><td style="margin:0px;padding:0px;border:0px" valign=top height=100><b>数据录入员：</b>{inputUserList}</td></tr></table>
+
+
+
+				   <table cellspacing=0 cellpadding=0 style="padding:0px;margin:0px;border:0px;border-top:#cacaca 1px solid" width=100%>
+
+				   <tr style="border:0px;height:25px;line-height:25px">
+
+				       <td style="padding:0px;margin:0px;border:0px" width=52%><input type=checkbox name="isImportData" id="isImportData" value="1" {isImportData}>禁止数据录入员自CSV导入问卷回复数据</td>
+
+					   <td style="padding:0px;margin:0px;border:0px" width=48%><input type=checkbox name="isOneData" id="isOneData" value="1" {isOneData}>仅允许数据录入员录入单份回复数据(仅适用面访类型项目PC端)</td>
+
+				   </tr>
+
+				   <tr style="border:0px;height:25px;line-height:25px">
+
+				       <td style="padding:0px;margin:0px;border:0px" width=52%><input type=checkbox name="isModiData" id="isModiData" value="1" {isModiData}>禁止数据录入员修改问卷已录入数据(仅适用在线端)</td>
+
+					   <td style="padding:0px;margin:0px;border:0px" width=48%><input type=checkbox name="isDeleteData" id="isDeleteData" value="1" {isDeleteData}>禁止数据录入员删除问卷已录入数据(仅适用在线端)</td>
+
+				   </tr>
+
+				   </table>
+
+				  </td>
+
+			  </tr>   
+
+			  <tr>
+
+				  <td height="25" width=16%><SPAN class=red>*</SPAN> 数据查看用户：</td>
+
+				  <td valign=top>
+
+				    <table cellspacing=0 cellpadding=0 style="border:0px;" width=100%>
+
+					 <tr style="border:0px;"><td style="margin:0px;padding:0px;border:0px;"><input class=stnsubmit name="viewRight" type="button" id="viewRight" value="调整" onclick="javascript:showPopWin('?Action=EditViewUser&surveyID={surveyID}',800, 480,refreshParent, null,'调整问卷数据查看用户')">&nbsp;<input class=stnsubmit name="viewImport" type="button" id="viewImport" value="导入" onclick="javascript:showPopWin('?Action=ImportViewUser&surveyID={surveyID}', 630, 240,refreshParent, null,'从CSV文件导入数据查看用户');">
+
+					 </td></tr>
+
+					</table>
+
+
+
+					<table cellspacing=0 cellpadding=0 style="padding:0px;margin:0px;border:0px;border-top:#cacaca 1px solid" width=100%>
+
+					 <tr style="border:0px;height:20px;line-height:20px"><td style="margin:0px;padding:0px;border:0px" valign=top height=100><b>数据查看员：</b>{viewUserList}</td></tr>
+
+					</table>
+
+
+
+					<table cellspacing=0 cellpadding=0 style="padding:0px;margin:0px;border:0px;border-top:#cacaca 1px solid" width=100%>
+
+					<tr style="border:0px;height:25px;line-height:25px">
+
+					    <td style="padding:0px;margin:0px;border:0px"><input type=checkbox name="isOnline0View" id="isOnline0View" value="1" {isOnline0View}>允许数据查看员查看所有<font color=#335ea8>网调数据</font></td>
+
+						<td style="padding:0px;margin:0px;border:0px"><input type=checkbox name="isViewAuthInfo" id="isViewAuthInfo" value="1" {isViewAuthInfo}>允许数据查看员查看所有<font color=#335ea8>审核信息明细</font></td>
+
+					</tr>
+
+					<tr style="border:0px;height:25px;line-height:25px"><td style="padding:0px;margin:0px;border:0px" width=52%><input type=checkbox name="isViewAuthData" id="isViewAuthData" value="1" {isViewAuthData}>数据查看员仅能查看<font color=#335ea8>审核通过</font>的回复数据</td>
+
+						<td style="padding:0px;margin:0px;border:0px" width=48%><input type=checkbox name="isExportData" id="isExportData" value="1" {isExportData}>禁止数据查看员导出问卷回复数据明细</td>	
+
+					</tr>
+
+				  </table>
+
+				  </td>
+
+			  </tr>
+
+
+
+			  <tr>
+
+				  <td height="25" width=16%><SPAN class=red>*</SPAN> 数据审核用户：</td>
+
+				  <td valign=top>
+
+				    <table cellspacing=0 cellpadding=0 style="border:0px;" width=100%>
+
+					 <tr style="border:0px;"><td style="margin:0px;padding:0px;border:0px;"><input class=stnsubmit name="authRight" type="button" id="authRight" value="调整" onclick="javascript:showPopWin('?Action=EditAuthUser&surveyID={surveyID}',800, 480,refreshParent, null,'调整问卷数据审核用户')">&nbsp;<input class=stnsubmit name="authImport" type="button" id="authImport" value="导入" onclick="javascript:showPopWin('?Action=ImportAuthUser&surveyID={surveyID}', 630, 240,refreshParent, null,'从CSV文件导入数据审核用户');">
+
+					 </td></tr>
+
+					</table>
+
+
+
+					<table cellspacing=0 cellpadding=0 style="padding:0px;margin:0px;border:0px;border-top:#cacaca 1px solid" width=100%>
+
+						<tr style="border:0px;height:20px;line-height:20px"><td style="margin:0px;padding:0px;border:0px" valign=top height=100><b>数据审核员：</b>{authUserList}</td></tr>
+
+					</table>
+
+					
+
+					<table cellspacing=0 cellpadding=0 style="padding:0px;margin:0px;border:0px;border-top:#cacaca 1px solid" width=100%>
+
+					<tr style="border:0px">
+
+					    <td style="padding:0px;margin:0px;border:0px" width=52%><input type=checkbox name="isOnline0Auth" id="isOnline0Auth" value="1" {isOnline0Auth}>允许数据审核员审核所有<font color=#335ea8>网调数据</font></td>
+
+						<td style="padding:0px;margin:0px;border:0px" width=48%><input type=checkbox name="isFailReApp" id="isFailReApp" value="1" {isFailReApp}>允许用户申诉被驳回后可再行发起申诉</td>
+
+					</tr>
+
+				  </table>
+
+				  </td>
+
+			  </tr>
+
+
+
+			  <tr class=coltitle id="appeal_cont_0"><th colspan=2 align=left>神秘客/暗访/明检等调研项目的申诉设定&nbsp;<img src="../Images/info.gif" border=0></td></tr>
+
+			  <tr id="appeal_cont_1">
+
+				  <td height="25"><SPAN class=red>*</SPAN> 申诉允许用户：</td>
+
+				  <td valign=top>
+
+				    <table cellspacing=0 cellpadding=0 style="border:0px;" width=100%>
+
+					 <tr style="border:0px;"><td style="margin:0px;padding:0px;border:0px;"><input class=stnsubmit name="appRight" type="button" id="appRight" value="调整" onclick="javascript:goEditAppealUser();">&nbsp;<input class=stnsubmit name="appImport" type="button" id="appImport" value="导入" onclick="javascript:goImportAppealUser();">
+
+					 </td></tr>
+
+					</table>
+
+
+
+					<table cellspacing=0 cellpadding=0 style="padding:0px;margin:0px;border:0px;border-top:#cacaca 1px solid" width=100%>
+
+					<tr style="border:0px;height:20px;line-height:20px"><td style="margin:0px;padding:0px;border:0px" valign=top height=100><b>申诉允许用户：</b>{appealUserList}</td></tr></table>
+
+				  </td>
+
+			  </tr>
+
+			  <script>
+
+					function goEditAppealUser()
+
+					{
+
+						//var projectOwner = getRadioCheckBoxValue(getID('projectOwner'));
+
+						var projectOwner = {projectOwner};
+
+						if( projectOwner == 0 )
+
+						{
+
+							getID('projectOwner').focus();
+
+							$.notification("必须先指定项目的“关联客户对象”，或者须先提交项目的“关联客户对象”数据!");
+
+						}
+
+						else
+
+						{
+
+							showPopWin('?Action=EditAppealUser&surveyID={surveyID}&projectOwner='+projectOwner, 800, 500,refreshParent, null,'调整问卷申诉允许用户');
+
+						}
+
+					}
+
+					function goImportAppealUser()
+
+					{
+
+						var projectOwner = {projectOwner};
+
+						if( projectOwner == 0 )
+
+						{
+
+							getID('projectOwner').focus();
+
+							$.notification("必须先指定项目的“关联客户对象”，或者须先提交项目的“关联客户对象”数据!");
+
+						}
+
+						else
+
+						{
+
+							showPopWin('?Action=ImportAppealUser&surveyID={surveyID}&projectOwner='+projectOwner, 630, 240,refreshParent, null,'从CSV文件导入申诉允许用户');
+
+						}
+
+					}
+
+			  </script>
+
+			  <tr id="appeal_cont_2">
+
+				  <td height="25"><SPAN class=red>*</SPAN> 申诉处理用户：</td>
+
+				  <td valign=top>
+
+				    <table cellspacing=0 cellpadding=0 style="border:0px;" width=100%>
+
+					 <tr style="border:0px;"><td style="margin:0px;padding:0px;border:0px;"><input class=stnsubmit name="appauthRight" type="button" id="appauthRight" value="调整" onclick="javascript:showPopWin('?Action=EditAppealAuthUser&surveyID={surveyID}',800, 480,refreshParent, null,'调整问卷申诉处理用户')">&nbsp;<input class=stnsubmit name="appauthImport" type="button" id="appauthImport" value="导入" onclick="javascript:showPopWin('?Action=ImportAppealAuthUser&surveyID={surveyID}', 630, 240,refreshParent, null,'从CSV文件导入申诉处理用户');">
+
+					 </td></tr>
+
+					</table>
+
+
+
+					<table cellspacing=0 cellpadding=0 style="padding:0px;margin:0px;border:0px;border-top:#cacaca 1px solid" width=100%>
+
+				    <tr style="border:0px;height:20px;line-height:20px"><td style="margin:0px;padding:0px;border:0px" valign=top height=100><b>申诉处理用户：</b>{appealAuthUserList}</td></tr></table>
+
+				  </td>
+
+			  </tr> 
+
+			</table>
+
+			  
+
+			<table width=100% style="margin-bottom:15px">
+
+			  <tr><td height="23" style="border:0px">
+
+				  <input name="surveyID" type="hidden" value="{surveyID}"> 
+
+				  <input name="surveyTitle" type="hidden" value="{surveyTitle}">
+
+				  <input name="ori_projectOwner" type="hidden" value="{projectOwner}">
+
+				  <input name="ori_custLogo" type="hidden" value="{custLogo}">
+
+				  <input name="Action" type="hidden" id="Action" value="EditUserSubmit"> 
+
+				 <input class=inputsubmit type="button" name="submitBtn" id="submitBtn" value="确定" onclick="javascript:submitForm();"> 
+
+				 <input class=inputsubmit type="button" name="rtnBtn" id="rtnBtn" value="返回"  onClick="javascript:window.location.href='{surveyListURL}'">
+
+			 </td></tr></table>
+
+		   </form>
+
+			</div><!--end of content_main-->
+
+		   </div><!--end of content-->
+
+	   </div><!--end of main-->
+
+    </div><!--end of container-->
+
+	<!--popmenu -->
+
+	<script type="text/javascript" src="../JS/PopMenu.js.php"></script>
+
+	<script language=javascript src="../JS/Example.js.php"></script>
+
+</body></html>
+

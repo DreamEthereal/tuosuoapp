@@ -1,0 +1,57 @@
+<script type="text/javascript" src="JS/CheckRank.js.php"></script>
+<tr><td height=25 class="question" valign=center>&nbsp;{questionRequire}<span class="textEdit" id="questionName_{questionID}">{questionName}</span>&nbsp;<span class=notes>{questionNotes}</span></td></tr>
+<tr><td class="tips"><span class="textEdit" id="questionNotes_{questionID}">{questionTips}</span></td></tr>
+<tr><td>
+	 <table cellSpacing=0 cellPadding=0 width=100% id="qtn_table_{questionID}">
+       <!-- BEGIN OPTION -->
+	   <tr id="range_rank_{rankID}_container">
+	   <td class="answer tdheight optcont" align="left" valign=center nowrap>
+	      <input type="hidden" name="{optionID}" id="{optionID}" value="{value}" class="sortinput"><span class="sortnum"></span>&nbsp;<span class="textEdit" id="optionName_10_{questionID}_{rankID}">{optionName}</span>
+	   </td></tr>
+	   <!-- END OPTION -->
+	   <tr style="display:{isHaveOther}" id="range_rank_{questionID}_0_container" class=tdheight>
+	    <td class="answer optcont" valign=center nowrap>
+	     <input type="hidden" name="{other_OptionID}" id="{other_OptionID}" value="{other_value}" class="sortinput"><span class="sortnum"></span>&nbsp;<span class="textEdit" id="optionName_10_{questionID}_0">{otherText}</span>：
+	     <input name="TextOtherValue_{questionID}" type="text" id="TextOtherValue_{questionID}" value="{TextOtherValue}">&nbsp;(请说明)</td></tr>
+	   <tr style="display:{isHaveWhy}" class="no_color_tr"><td class="answer">请问为什么这么排序?<br/><textarea rows=5 cols=80 name="TextWhyValue_{questionID}" id="TextWhyValue_{questionID}">{TextWhyValue}</textarea></td></tr>
+	  </table>
+</td></tr>
+
+<script>
+//回显原值
+$("#qtn_table_{questionID}").find("td.optcont").each(function(){
+	var v = $(this).find("input.sortinput").val();
+	if(	v != '' ){
+		$(this).find("span.sortnum").html(v).addClass("sortnum-chk");
+		$(this).attr("check","1");		
+	}
+});
+$("#qtn_table_{questionID} td.optcont").bind("click",function(v){
+		if(!$(this).attr("check")){
+			var u = $("#qtn_table_{questionID}").find("td[check='1']").length+1;
+			//回显
+			$(this).find("span.sortnum").html(u).addClass("sortnum-chk");
+			//赋值
+			$(this).find("input.sortinput").val(u);
+			$(this).attr("check","1");
+		}
+		else{
+			var u = $(this).find("span.sortnum").html();
+			$("#qtn_table_{questionID}").find("td[check='1']").each(function(){
+				var w = $(this).find("span.sortnum").html();
+				if( w-u > 0){
+					//回显
+					$(this).find("span.sortnum").html(w-1);
+					//赋值
+					$(this).find("input.sortinput").val(w-1);
+				}
+			});
+			//回显
+			$(this).find("span.sortnum").html("").removeClass("sortnum-chk");
+			//赋值
+			$(this).find("input.sortinput").val('');
+			$(this).attr("check","");
+		}
+		Check_Survey_Conditions();
+});
+</script>

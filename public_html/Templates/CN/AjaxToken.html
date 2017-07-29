@@ -1,0 +1,40 @@
+<script type="text/javascript" src="JS/Jquery.min.js.php"></script>
+<script type="text/javascript" src="JS/Jquery.notification.js.php"></script>
+<link type="text/css" rel="stylesheet" href="CSS/Notification.css" />
+<script type="text/javascript" src="JS/CheckQuestion.js.php"></script>
+<script language=javascript>
+function Token_Form_Validator()
+{
+	if (!CheckNotNull(document.TokenForm.tokenCode, "问卷控制令牌")) {return false;}
+}
+</script>
+<LINK href="CSS/LoginBox.css" rel=stylesheet>
+<LINK href="CSS/Base.css" rel=stylesheet>
+<style>
+	#loginTitle {font-family: "Microsoft YaHei","微软雅黑","黑体";font-size: 26px; color: #0CF;}
+</style>
+
+<table width=100% cellpadding="0" cellspacing="0"><tr><td align=center>
+<div id="menu-div" class="menu-div" style="display:block;text-align:center;padding-top:15px">
+<div id="loginForm">
+    <form name="TokenForm" id="TokenForm" action="" method="post" onsubmit="return Token_Form_Validator()">
+    <table width="100%" border="0" cellspacing="2" cellpadding="0">
+     <tr><td colspan=2 id="loginTitle"><b>问卷令牌认证&nbsp;<img src="Images/info.gif" border=0></b></td></tr>
+ 	 <tr><td colspan=2 height=5></td></tr>
+     <tr><td colspan=2>该问卷需要您输入控制令牌方可进行提交，请联系您的系统管理员以得到该问卷的控制令牌</td></tr>
+     <tr><td colspan=2 height=10></td></tr>
+     <tr><td nowrap="nowrap"><label for="tokenCode" class="redfont"><b>控制令牌：</b></label></td>
+         <td nowrap><input name="tokenCode" type="text" class="text" id="tokenCode" size=20/></td>
+     </tr>
+     <tr><td colspan=2 height=5></td></tr>
+     <tr><td></td>
+         <td>
+		 <input type="hidden" name="Action" value="PassPortSubmit">
+		 <input type="submit" value="&nbsp;&nbsp;确&nbsp;&nbsp;定&nbsp;&nbsp;" name=Submit>
+		 <input type="hidden" name="isPublic" value="2">
+	     </td>
+      </tr>
+    </table></form>
+</div>
+</div>
+</td></tr></table>

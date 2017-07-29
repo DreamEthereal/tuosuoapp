@@ -1,0 +1,74 @@
+<html>
+<head>
+<meta http-equiv=content-language content=zh-cn>
+<meta http-equiv=content-type content="text/html; charset=gbk">
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7">
+<script type="text/javascript" src="../JS/Jquery.min.js.php"></script>
+<script type="text/javascript" src="../JS/Jquery.notification.js.php"></script>
+<link type="text/css" rel="stylesheet" href="../CSS/Notification.css" />
+<style>
+ td { padding:2px 5px 2px 5px;}
+</style>
+<script language=javascript>
+function Check_Form_Validator()
+{
+	if ( !isIP(document.Check_Form.ipAddress.value) )
+	{
+		document.Check_Form.ipAddress.focus();
+		$.notification('请输入合法的IP地址!');
+		return false;
+	}
+}
+function isIP(strIP) 
+{ 
+	if (Trim(strIP) == '' ) return false;
+	var re=/^(\d+)\.(\d+)\.(\d+)\.(\d+)$/g //匹配IP地址的正则表达式
+	if(re.test(strIP))
+	{
+		if( RegExp.$1 <256 && RegExp.$2<256 && RegExp.$3<256 && RegExp.$4<256) return true;
+	}
+	return false; 
+} 
+//去除字符串左端空格
+function LTrim(str) {
+  return str.replace(/^\s*/, '');
+}
+
+//去除字符串右端空格
+function RTrim(str) {
+  return str.replace(/\s*$/, '');
+}
+
+//去除字符串两端空格
+function Trim(str) {
+  return LTrim(RTrim(str));
+}
+</script>
+<link href="../CSS/Base.css" rel=stylesheet>
+<meta content="mshtml 6.00.3790.0" name=generator></head>
+<body oncontextmenu="return false">
+   <form name="Check_Form" onsubmit="return Check_Form_Validator()" method="post" action="">
+  <table class=datatable style="line-height: 150%;border-collapse:collapse;" cellspacing=0 cellpadding=0 bordercolor=#cacaca border=1 width=100%>
+     <div class=position>位置：&nbsp; 我的问卷 &raquo; IP地址黑名单 &raquo; 新增IP地址黑名单</div>
+      <tr> 
+         <td colspan="2" bgcolor="#f9f9f9"><b>新增IP地址黑名单</b></td>
+      </tr>
+      <tr> 
+         <td width="26%" height="25" >&nbsp;黑名单IP地址：</td>
+         <td> <input name="ipAddress" type="text" id="ipAddress" size=30></td>
+      </tr></table>
+	 <table width=100%>
+     <tr><td width=26%></td>
+         <td>
+		    <input type="hidden" name="Action" value="IPLockAddSubmit"> 
+            <input class=inputsubmit type="submit" name="submit" value="确定">&nbsp;<input class=inputsubmit type="button" name="close" value="关闭" onClick="javascript:parent.hidePopWin();"> 
+        </td>
+     </tr>
+  </form></table>
+
+  <table width="100%">
+      <tr> 
+        <td style="padding-left:0px"><img src="../Images/clerk.gif"><b>：</b>将IP地址加入黑名单将会使其对应用户可能不能使用Eclear系统</td>
+      </tr>
+  </table>
+</body></html>

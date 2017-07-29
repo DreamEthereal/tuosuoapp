@@ -1,0 +1,146 @@
+<html>
+<head>
+<meta http-equiv=content-language content=zh-cn>
+<meta http-equiv=content-type content="text/html; charset=gbk">
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7">
+<script type="text/javascript" src="../JS/Jquery.min.js.php"></script>
+<script type="text/javascript" src="../JS/Jquery.notification.js.php"></script>
+<link type="text/css" rel="stylesheet" href="../CSS/Notification.css" />
+<style>
+ td { padding:2px 5px 2px 5px;}
+ table {margin-bottom:4px;}
+ #jquery-notification-message {width:100%;}
+</style>
+<LINK href="../CSS/Base.css" rel=stylesheet>
+<script language="javascript"> 
+function checkall(form) 
+{
+	if( form.all.checked)
+	{
+		for(var i = 0;i < form.elements.length-1; i++) 
+		{
+			var e = form.elements[i];
+			e.checked = true;
+		}
+	}
+	else
+	{
+		for(var i = 0;i < form.elements.length-1; i++) 
+		{
+			var e = form.elements[i];
+			e.checked = false;
+		}
+    }
+}
+function Check_Form_Validator()
+{
+	if ( !isIP(document.Check_Form.startIP_new.value) )
+	{
+		document.Check_Form.startIP_new.focus();
+		$.notification('请输入合法的开始IP地址!');
+		return false;
+	}
+	if ( !isIP(document.Check_Form.endIP_new.value) )
+    {
+		document.Check_Form.endIP_new.focus();
+		$.notification('请输入合法的结束IP地址!');
+		return false;
+	}
+}
+function isIP(strIP) 
+{ 
+	if (Trim(strIP) == '' ) return true;
+	var re= /^(\d+)\.(\d+)\.(\d+)\.(\d+)$/g //匹配IP地址的正则表达式
+	if( re.test(strIP) )
+	{
+		if( RegExp.$1 <256 && RegExp.$2<256 && RegExp.$3<256 && RegExp.$4<256) return true;
+	}
+	return false; 
+} 
+//去除字符串左端空格
+function LTrim(str) {
+  return str.replace(/^\s*/, '');
+}
+
+//去除字符串右端空格
+function RTrim(str) {
+  return str.replace(/\s*$/, '');
+}
+
+//去除字符串两端空格
+function Trim(str) {
+  return LTrim(RTrim(str));
+}
+</script> 
+<META content="MSHTML 6.00.3790.0" name=GENERATOR></HEAD>
+<BODY oncontextmenu="return false">
+  <form name="Check_Form" method="post" action="" onsubmit="return Check_Form_Validator(this)">
+  <table class=datatable style="line-height: 150%;border-collapse:collapse;" cellspacing=0 cellpadding=0 bordercolor=#cacaca border=1 width=100%>
+     <div class=position>位置：&nbsp; 我的问卷 &raquo; {surveyTitle}</div>
+     <tr><td bgcolor="#f9f9f9"><b>开启访问问卷IP地址段的黑白名单</b></td></tr>
+     <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;开启访问问卷IP地址段的黑白名单：
+		  <SELECT name="isAllowIP" id="isAllowIP" onChange="checkLoginSelectIP();">
+		   <OPTION value="0">否</OPTION>
+		   <OPTION value="1" {isAllowIP}>是</OPTION>
+	</td></tr>
+    <script LANGUAGE="JAVASCRIPT">		
+			function checkLoginSelectIP()
+			{ 
+				if (document.Check_Form.isAllowIP.value == "0")
+				{
+					document.getElementById("SettingIP_ID").style.display  =  'none';
+				} 
+				else
+				{
+					document.getElementById("SettingIP_ID").style.display  =  '';
+				}	
+			}
+		</script>
+	</table>
+	<div id="SettingIP_ID" style="display:{isAllowIP_Add}">
+	<table style="LINE-HEIGHT: 150%;border-collapse:collapse;" cellSpacing=0 cellPadding=0 width="100%" borderColor=#cacaca border=1>
+       <tr><td bgcolor="#f9f9f9"><b>设置访问问卷IP地址段的工作模式</b></td></tr>
+       <tr><td><input type=radio name="isAllowIPMode" id="isAllowIPMode" value="2" {isAllowIPMode_2}> 黑名单模式&nbsp;&nbsp;<input type=radio name="isAllowIPMode" id="isAllowIPMode" value="1" {isAllowIPMode_1}> 白名单模式</td></tr>
+	</table>
+
+	<table style="LINE-HEIGHT: 150%;border-collapse:collapse;" cellSpacing=0 cellPadding=0 width="100%" borderColor=#cacaca border=1>
+		<tr><td bgcolor="#f9f9f9" colspan=3>&nbsp;<b>IP地址段设置</b>&nbsp;&nbsp;[ <span class=red>{recNum}</span> 记录 ]</td></tr>
+        <tr> 
+             <td width=10% align=center noWrap><input name="all" type="checkbox" id="all" value="all" onclick="checkall(this.form)" style="background:#FFFFFF"><b>删除</b>&nbsp;</td>
+             <td width=40% noWrap><b>&nbsp;IP地址段开始</b></td>
+		     <td><b>&nbsp;IP地址段结束</b></td>
+        </tr>
+
+         <!-- BEGIN LOGINIP -->
+         <tr> 
+              <td align=center><input name="ID[]" type="checkbox" id="ID[]" value="{ID}"></td>
+              <td>&nbsp;<input name="startIP[{ID}]" type="text" id="startIP[{ID}]" value="{startIP}" size=30></td>
+			  <td width=*>&nbsp;<input name="endIP[{ID}]" type="text" id="endIP[{ID}]" value="{endIP}" size=30></td>
+          </tr>
+          <!-- END LOGINIP -->
+
+		  <tr> 
+             <td width=10% noWrap>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>新增</b></td>
+             <td width=40% noWrap>&nbsp;<input name="startIP_new" id="startIP_new" type="text" size=30></td>
+		     <td>&nbsp;<input name="endIP_new" type="text" size=30></td>
+          </tr>
+		  </table></div><table width=100% style="border:0px;">
+            <tr align="center"> 
+              <td height="15"> 
+			    <input type="hidden" name="surveyID" value="{surveyID}">
+			    <input name="UpdateSubmit" type="submit" id="UpdateSubmit" class=inputsubmit value="确定">
+                <input name="backTopic" type="button" class=inputsubmit value="关闭" onClick="javascript:parent.hidePopWin();">
+			 </td>
+     </tr>
+    </form>
+  </table>
+  <table width="100%">
+      <tr> 
+        <td style="padding-left:0px">
+		<img src="../Images/clerk.gif"><b>：</b>指定IP地址段后，白名单模式指不在系统指定地址段内的IP地址将不能访问该问卷；<br>
+		<img src="../Images/clerk.gif"><b>：</b>黑名单模式指在系统指定地址段内的IP地址将不能访问该问卷；<br>
+		<IMG SRC="../Images/notes.gif">：注意“IP地址段开始”前的选择框，选中后点击“数据提交”表明删除该条记录；<br>
+		<IMG SRC="../Images/notes.gif">：数据的修改和新增只需要在对应的输入框直接修改或输入，完毕后点击“数据提交”即可。</td>
+      </tr>
+  </table>
+</body></html>

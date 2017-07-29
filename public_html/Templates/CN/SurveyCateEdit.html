@@ -1,0 +1,204 @@
+<html>
+<head>
+<meta http-equiv=content-language content=zh-cn>
+<meta http-equiv=content-type content="text/html; charset=gbk">
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7">
+<style>
+ td { padding:2px 5px 2px 5px;}
+</style>
+<link href="../CSS/Base.css" rel=stylesheet>
+<script type="text/javascript" src="../JS/Jquery.min.js.php"></script>
+<script type="text/javascript" src="../JS/Jquery.notification.js.php"></script>
+<link type="text/css" rel="stylesheet" href="../CSS/Notification.css" />
+<script language=javascript src="../JS/CheckQuestion.js.php"></script>
+<script language=javascript src="../JS/HighLight.js.php"></script>
+<script language=javascript>
+function CheckSpecicalChar(objField, strText)
+{
+	var strErr = "“" + strText + "”不能包含单引、双引、反斜线等非法字符！";
+	var Re = /[\x22\x27\x5C]+/ig;
+	if ( Re.test(objField.value))
+	{
+        objField.focus();
+		$.notification(strErr);
+		return false;
+	}
+	return true;
+}
+function checkValid()
+{
+	if (event.keyCode<48 || event.keyCode>126)
+	{
+		  event.keyCode=0;
+	}
+}
+function Check_Form_Validator()
+{
+	if (!CheckNotNull(document.Check_Form.cateTag, "分类标识名")) {return false;}
+	if (!CheckNoChinese(document.Check_Form.cateTag, "分类标识名")) {return false;}
+	if (!CheckSpecicalChar(document.Check_Form.cateTag, "分类标识名")) {return false;}
+	if (!CheckNotNull(document.Check_Form.cateName, "分类名称")) {return false;}
+	if (!CheckSpecicalChar(document.Check_Form.cateName, "分类名称")) {return false;}
+    var theObj = document.getElementById("cateSurveyList");
+    for(c = 0; c < theObj.options.length; c++) {
+	    theObj.options[c].selected = true;
+    }
+}
+var http_request = false;
+function AjaxRequest(url)
+{
+	http_request = false;
+	if(window.ActiveXObject)
+	{
+		try  // IE
+		{
+			http_request = new ActiveXObject("Msxml2.XMLHTTP");
+		}
+		catch (e)
+		{
+			try
+			{
+				http_request = new ActiveXObject("Microsoft.XMLHTTP");
+			}
+			catch (e) {}
+		}
+	}
+	else if(window.XMLHttpRequest)
+	{
+		// Mozilla, Safari,...
+		http_request = new XMLHttpRequest();
+		if (http_request.overrideMimeType)
+		{
+			http_request.overrideMimeType('text/xml');
+		}
+	}
+	
+	if (!http_request)
+	{
+		$.notification("Cannot create an XMLHTTP instance");
+		return false;
+	}
+	http_request.onreadystatechange = AjaxContents;
+	http_request.open('GET', url, true);
+	http_request.send(null);
+}
+
+function AjaxContents()
+{
+	if (http_request.readyState == 4)
+	{
+		if(http_request.status == 200)
+		{
+			if(http_request.responseText == "false")
+			   document.getElementById("surveyCateInfo").innerHTML="<img src=../Images/check_no.gif border=0> <span class=red>输入的分类标识名已存在&nbsp;</span>";
+			else if(http_request.responseText == "true")
+			   document.getElementById("surveyCateInfo").innerHTML="<img src=../Images/check_yes.gif border=0> <span class=green>输入的分类标识名可使用&nbsp;</span>";
+			else if(http_request.responseText == "null") 
+			   document.getElementById("surveyCateInfo").innerHTML="<img src=../Images/check_no.gif border=0> <span class=red>输入的分类标识名为空&nbsp;</span>";
+		}
+		else
+		{
+			$.notification('网络传输问题');
+		}
+	}
+}
+function gId(_sId){
+	return document.getElementById(_sId);
+}
+function move(fbox, tbox) {
+	var arrFbox = new Array();
+	var arrTbox = new Array();
+	var arrLookup = new Array();
+	var i;
+	for (i = 0; i < tbox.options.length; i++) {
+		arrLookup[tbox.options[i].text] = tbox.options[i].value;
+		arrTbox[i] = tbox.options[i].text;
+	}
+	var fLength = 0;
+	var tLength = arrTbox.length;
+	for(i = 0; i < fbox.options.length; i++) {
+		arrLookup[fbox.options[i].text] = fbox.options[i].value;
+		if (fbox.options[i].selected && fbox.options[i].value != "") {
+			arrTbox[tLength] = fbox.options[i].text;
+			tLength++;
+		}
+		else {
+			arrFbox[fLength] = fbox.options[i].text;
+			fLength++;
+		}
+	}
+	//arrFbox.sort();
+	//arrTbox.sort();
+	fbox.length = 0;
+	tbox.length = 0;
+	var c;
+	for(c = 0; c < arrFbox.length; c++) {
+		var no = new Option();
+		no.value = arrLookup[arrFbox[c]];
+		no.text = arrFbox[c];
+		fbox[c] = no;
+	}
+	for(c = 0; c < arrTbox.length; c++) {
+		var no = new Option();
+		no.value = arrLookup[arrTbox[c]];
+		no.text = arrTbox[c];
+		tbox[c] = no;
+	}
+}
+function submitForm()
+{
+	if( Check_Form_Validator() != false )
+	{
+		document.getElementById('submitBtn').disabled = true;
+		disabledStyle(document.getElementById('submitBtn'));
+		document.getElementById('rtnBtn').disabled = true;
+		disabledStyle(document.getElementById('rtnBtn'));
+		document.Check_Form.submit();
+	}
+}
+</script>
+<meta content="mshtml 6.00.3790.0" name=generator></head>
+<body oncontextmenu="return false">
+ <form action="" method="post" name="Check_Form" id="Check_Form" onsubmit="return false;">
+  <table class=datatable style="line-height: 150%;border-collapse:collapse;" cellspacing=0 cellpadding=0 bordercolor=#cacaca border=1 width=100%>
+     <div class=position>位置：&nbsp; 我的问卷 &raquo; 调查问卷分类 &raquo; 编辑问卷分类属性</div>
+     <tr><td colspan="2" bgcolor="#f9f9f9" height="25"><b>编辑调查问卷分类</b></td></tr>
+     <tr>
+        <td align=right colspan=2><SPAN style="PADDING-RIGHT: 16px">注：以下带“<SPAN  class=red>*</SPAN>”的为必填项</SPAN></td></tr>
+	<tr> 
+        <td width="12%" height="25"><span class=red>*</span> 分类标识名：</td>
+        <td width="88%">
+	  	 <span style="float:left"><input class="textInput" name="cateTag" type="text" id="cateTag" size="20" onkeypress="checkValid()" style="ime-mode:disabled" onPaste="return false;" onKeyUp="AjaxRequest('AjaxCheckSurveyCate.php?cateTag='+this.value+'&oldName={cateTag}');" value="{cateTag}">&nbsp;<span class=red>*</span> 使用汉语拼音或者英文名称</span>
+		 <span id="surveyCateInfo" style="float:right;padding-right:230px;"></span>
+　　　</td>
+   </tr>
+   <tr> 
+       <td height="25"><SPAN class=red>*</SPAN> 分类名称：</td>
+       <td><input class="textInput" name="cateName" type="text" id="cateName" size="50" maxlength="200" value="{cateName}"></td>
+   </tr>
+   <tr><td colspan="2" bgcolor="#f9f9f9" height="25"><span style="float:left"><b>可选择的调查问卷列表</b></span><span style="float:right"><b>本分类下的调查问卷</b></td></tr>
+   <tr><td align=left colspan=2 style="margin:0px;padding:0px">
+      <table cellspacing=0 cellpadding=0><tr><td style="margin:0px;padding:0px">
+		 <select multiple name="surveyNameList[]" id="surveyNameList" size=16 style="width:410px">
+			   {surveyNameList}
+		 </select></td>
+		 <td style="margin:0px 2px 0px 2px;padding:0px 2px 0px 2px"><input type="button" class=inputsubmit onClick="move(this.form.surveyNameList,this.form.cateSurveyList)" value=">" style="margin-bottom:2px;"><br/>
+		 <input type="button" class=inputsubmit onClick="move(this.form.cateSurveyList,this.form.surveyNameList)" value="<"></td>
+		 <td style="margin:0px;padding:0px">
+		 <select name="cateSurveyList[]" id="cateSurveyList" multiple size="16" style="width:410px">
+			  {cateSurveyList}
+		 </select></td></tr></table>
+   </td></tr></table>
+   <table width=100%>
+   <tr><td height="15">
+		 <input name="Action" type="hidden" value="SurveyCateEditSubmit">
+		 <input name="cateID" type="hidden" value="{cateID}">
+		 <input name="ori_cateTag" type="hidden" value="{cateTag}">
+ 		 <input class=inputsubmit type="button" name="submitBtn" id="submitBtn" value="确定" onclick="javascript:submitForm();"> 
+		 <input class=inputsubmit type="button" name="rtnBtn" id="rtnBtn" value="返回"  onClick="javascript:window.location.href='ShowSurveyCate.php'">
+      </td>
+    </tr>
+  </form>
+ </table>
+ <script type="text/javascript">initInputHighlightScript();</script> 
+</body></html>

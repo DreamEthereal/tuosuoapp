@@ -1,0 +1,249 @@
+<?php
+//dezend by http://www.yunlu99.com/
+function get_php_setting($val)
+{
+	$_obf_OQ__ = (ini_get($val) == '1' ? 1 : 0);
+	return $_obf_OQ__ ? _CHECKUP_ON : _CHECKUP_OFF;
+}
+
+function enableq_run_query($sql, $dblangtype)
+{
+	global $DB;
+	$ret = array();
+	$num = 0;
+	$sql = str_replace("\r\n", "\n", $sql);
+
+	foreach (explode(';' . "\n" . '', trim($sql)) as $query) {
+		$queries = explode("\n", trim($query));
+
+		foreach ($queries as $query) {
+			$ret[$num] .= (($query[0] == '#') || (($query[0] . $query[1]) == '--') ? '' : $query);
+		}
+
+		$num++;
+	}
+
+	unset($sql);
+
+	foreach ($ret as $query) {
+		$query = trim($query);
+
+		if ($query) {
+			if (substr($query, 0, 12) == 'CREATE TABLE') {
+				$name = preg_replace('/CREATE TABLE IF NOT EXISTS ([a-z0-9_]+) .*/is', '\\1', $query);
+				$lang .= '创建系统表： ' . $name . ' ... <font color="#0000EE">成功</font><br>&nbsp;&nbsp;';
+				$DB->query(enableq_create_table($query, $dblangtype));
+			}
+			else {
+				$name = preg_replace('/ALTER TABLE `([a-z0-9_]+)` .*/is', '\\1', $query);
+				$lang .= '修订系统表： ' . $name . ' ... <font color="#0000EE">成功</font><br>&nbsp;&nbsp;';
+				$DB->query($query);
+			}
+		}
+	}
+
+	return $lang;
+}
+
+function enableq_create_table($sql, $dblangtype)
+{
+	global $Config;
+	$_obf_LeS8hw__ = strtoupper(preg_replace('/^\\s*CREATE TABLE\\s+.+\\s+\\(.+?\\).*(ENGINE|TYPE)\\s*=\\s*([a-z]+?).*$/isU', '\\2', $sql));
+
+	if ($Config['is_mysql_cluster'] == 1) {
+		$_obf_LeS8hw__ = 'ndbcluster';
+		return preg_replace('/^\\s*(CREATE TABLE\\s+.+\\s+\\(.+?\\)).*$/isU', '\\1', $sql) . ' ENGINE=' . $_obf_LeS8hw__ . ' DEFAULT CHARSET=' . $dblangtype . ' ';
+	}
+	else {
+		$_obf_LeS8hw__ = (in_array($_obf_LeS8hw__, array('MYISAM', 'HEAP')) ? $_obf_LeS8hw__ : 'MYISAM');
+		return preg_replace('/^\\s*(CREATE TABLE\\s+.+\\s+\\(.+?\\)).*$/isU', '\\1', $sql) . ('4.1' <= mysql_get_server_info() ? ' ENGINE=' . $_obf_LeS8hw__ . ' DEFAULT CHARSET=' . $dblangtype . ' ' : ' TYPE=' . $_obf_LeS8hw__);
+	}
+}
+
+function dir_wriable($file)
+{
+	if (is_dir($file)) {
+		$_obf_Fwl1 = $file;
+
+		if ($_obf_YBY_ = @fopen($_obf_Fwl1 . '/test.txt', 'w')) {
+			@fclose($_obf_YBY_);
+			@unlink($_obf_Fwl1 . '/test.txt');
+			$_obf_uqZhtc5bmtrM = 1;
+		}
+		else {
+			$_obf_uqZhtc5bmtrM = 0;
+		}
+	}
+	else if ($_obf_YBY_ = @fopen($file, 'a+')) {
+		@fclose($_obf_YBY_);
+		$_obf_uqZhtc5bmtrM = 1;
+	}
+	else {
+		$_obf_uqZhtc5bmtrM = 0;
+	}
+
+	return $_obf_uqZhtc5bmtrM;
+}
+
+define('ROOT_PATH', '../');
+require_once ROOT_PATH . 'Entry/Global.free.php';
+$thisProg = 'Upgrade_530_540.php';
+$EnableQCoreClass->set_dirpath(ROOT_PATH . 'Templates/Upgrade/');
+
+if ($_GET['Step'] == '4') {
+	@rename('Upgrade_530_540.php', 'Upgrade_530_540.lock');
+	_showsucceed('EnableQ系统升级安装', '../index.php');
+}
+
+if ($_GET['Step'] == '3') {
+	include '../Config/config.php';
+	@set_time_limit(1200);
+	$sqlfile = '../Install/Upgrade_530_540.sql';
+	$fp = fopen($sqlfile, 'rb');
+	$sql = fread($fp, filesize($sqlfile));
+	fclose($fp);
+	$dataCreateInfo = enableq_run_query($sql, $DB_lang);
+	$EnableQCoreClass->setTemplateFile('Step3File', 'Step3.html');
+	$EnableQCoreClass->replace('dataCreateInfo', $dataCreateInfo);
+	$EnableQCoreClass->parse('Step3', 'Step3File');
+	$EnableQCoreClass->output('Step3', false);
+}
+
+if ($_GET['Step'] == 2) {
+	define('_CHECKUP_YES', 'Yes');
+	define('_CHECKUP_NO', 'No');
+	define('_CHECKUP_ON', 'On');
+	define('_CHECKUP_OFF', 'Off');
+	$allSettings[] = array('label' => 'PHP version >= 5.2.0', 'state' => version_compare(phpversion(), '5.2.0', '>=') ? _CHECKUP_YES : _CHECKUP_NO);
+	$allSettings[] = array('label' => '- GD2 extension support', 'state' => extension_loaded('gd') ? _CHECKUP_YES : _CHECKUP_NO);
+	$allSettings[] = array('label' => '- MySQL support', 'state' => function_exists('mysql_connect') ? _CHECKUP_YES : _CHECKUP_NO);
+	$recommendedSettings = array(
+		array('y2k_compliance', 'y2k_compliance', _CHECKUP_ON),
+		array('display_errors', 'display_errors', _CHECKUP_ON),
+		array('register_globals', 'register_globals', _CHECKUP_OFF),
+		array('magic_quotes_gpc', 'magic_quotes_gpc', _CHECKUP_ON),
+		array('file_uploads', 'file_uploads', _CHECKUP_ON),
+		array('allow_url_fopen', 'allow_url_fopen', _CHECKUP_ON),
+		array('session.use_cookies', 'session.use_cookies', _CHECKUP_ON),
+		array('session.auto_start', 'session.auto_start', _CHECKUP_OFF),
+		array('session.use_trans_sid', 'session.use_trans_sid', _CHECKUP_OFF)
+		);
+
+	foreach ($recommendedSettings as $setting) {
+		$phpSettings[] = array('label' => $setting[0], 'setting' => $setting[2], 'actual' => get_php_setting($setting[1]), 'state' => get_php_setting($setting[1]) == $setting[2] ? _CHECKUP_YES : _CHECKUP_NO);
+	}
+
+	$phpSettings[] = array('label' => 'Image Support', 'setting' => _CHECKUP_ON, 'actual' => function_exists('imagecreatetruecolor'), 'state' => function_exists('imagecreatetruecolor') ? _CHECKUP_YES : _CHECKUP_NO);
+	$phpSettings[] = array('label' => 'JPEG Support', 'setting' => _CHECKUP_ON, 'actual' => function_exists('imagejpeg') && function_exists('imagecreatefromjpeg'), 'state' => function_exists('imagejpeg') && function_exists('imagecreatefromjpeg') ? _CHECKUP_YES : _CHECKUP_NO);
+	$phpSettings[] = array('label' => 'ICONV Support', 'setting' => _CHECKUP_ON, 'actual' => function_exists('iconv'), 'state' => function_exists('iconv') ? _CHECKUP_YES : _CHECKUP_NO);
+	$phpSettings[] = array('label' => 'BCMATH Enabled', 'setting' => _CHECKUP_ON, 'actual' => function_exists('bcmod'), 'state' => function_exists('bcmod') ? _CHECKUP_YES : _CHECKUP_NO);
+	$phpSettings[] = array('label' => 'Zlib Support', 'setting' => _CHECKUP_ON, 'actual' => function_exists('gzcompress'), 'state' => function_exists('gzcompress') ? _CHECKUP_YES : _CHECKUP_NO);
+	$phpSettings[] = array('label' => 'LDAP Support(connect to Active Directory)', 'setting' => _CHECKUP_ON, 'actual' => function_exists('ldap_connect'), 'state' => function_exists('ldap_connect') ? _CHECKUP_YES : _CHECKUP_NO);
+	$phpSettings[] = array('label' => 'Apache Header', 'setting' => _CHECKUP_ON, 'actual' => function_exists('apache_request_headers'), 'state' => function_exists('apache_request_headers') ? _CHECKUP_YES : _CHECKUP_NO);
+	$EnableQCoreClass->setTemplateFile('Step2File', 'Step2.html');
+	$EnableQCoreClass->set_CycBlock('Step2File', 'SYSCHECK', 'syscheck');
+	$EnableQCoreClass->replace('syscheck', '');
+
+	foreach ($allSettings as $setting) {
+		$cssClass = ($setting['state'] == _CHECKUP_NO ? 'checkupFailure' : 'checkupSuccess');
+		$EnableQCoreClass->replace('check_title', $setting['label']);
+		$EnableQCoreClass->replace('cssClass', $cssClass);
+		$EnableQCoreClass->replace('check_state', $setting['state']);
+		$EnableQCoreClass->parse('syscheck', 'SYSCHECK', true);
+	}
+
+	$EnableQCoreClass->set_CycBlock('Step2File', 'PHPCHECK', 'phpcheck');
+	$EnableQCoreClass->replace('phpcheck', '');
+
+	foreach ($phpSettings as $setting) {
+		$cssClass = ($setting['state'] == _CHECKUP_NO ? 'checkupFailure' : 'checkupSuccess');
+		$EnableQCoreClass->replace('php_check_title', $setting['label']);
+		$EnableQCoreClass->replace('php_rem_setting', $setting['setting']);
+		$EnableQCoreClass->replace('php_cssClass', $cssClass);
+		$EnableQCoreClass->replace('php_check_state', $setting['state']);
+		$EnableQCoreClass->parse('phpcheck', 'PHPCHECK', true);
+	}
+
+	if (is_writable('../Config/config.php')) {
+		$EnableQCoreClass->replace('file_cssClass', 'checkupSuccess');
+		$EnableQCoreClass->replace('file_check_state', _CHECKUP_YES);
+	}
+	else {
+		$EnableQCoreClass->replace('file_cssClass', 'checkupFailure');
+		$EnableQCoreClass->replace('file_check_state', _CHECKUP_NO);
+	}
+
+	if (dir_wriable('../PerUserData/')) {
+		$EnableQCoreClass->replace('dir1_cssClass', 'checkupSuccess');
+		$EnableQCoreClass->replace('dir1_check_state', _CHECKUP_YES);
+	}
+	else {
+		$EnableQCoreClass->replace('dir1_cssClass', 'checkupFailure');
+		$EnableQCoreClass->replace('dir1_check_state', _CHECKUP_NO);
+	}
+
+	if (dir_wriable('../Templates/CN/')) {
+		$EnableQCoreClass->replace('dir2_cssClass', 'checkupSuccess');
+		$EnableQCoreClass->replace('dir2_check_state', _CHECKUP_YES);
+	}
+	else {
+		$EnableQCoreClass->replace('dir2_cssClass', 'checkupFailure');
+		$EnableQCoreClass->replace('dir2_check_state', _CHECKUP_NO);
+	}
+
+	if (dir_wriable('../License/')) {
+		$EnableQCoreClass->replace('dir3_cssClass', 'checkupSuccess');
+		$EnableQCoreClass->replace('dir3_check_state', _CHECKUP_YES);
+	}
+	else {
+		$EnableQCoreClass->replace('dir3_cssClass', 'checkupFailure');
+		$EnableQCoreClass->replace('dir3_check_state', _CHECKUP_NO);
+	}
+
+	if (dir_wriable('../' . $Config['cacheDirectory'] . '/')) {
+		$EnableQCoreClass->replace('dir4_cssClass', 'checkupSuccess');
+		$EnableQCoreClass->replace('dir4_check_state', _CHECKUP_YES);
+	}
+	else {
+		$EnableQCoreClass->replace('dir4_cssClass', 'checkupFailure');
+		$EnableQCoreClass->replace('dir4_check_state', _CHECKUP_NO);
+	}
+
+	ob_start();
+	phpinfo(INFO_GENERAL);
+	$string = ob_get_contents();
+	ob_end_clean();
+	$pieces = explode('<h2', $string);
+	$settings = array();
+
+	foreach ($pieces as $val) {
+		preg_match('/<a name="module_([^<>]*)">/', $val, $sub_key);
+		preg_match_all('/<tr[^>]*>' . "\r\n" . '									   <td[^>]*>(.*)<\\/td>' . "\r\n" . '									   <td[^>]*>(.*)<\\/td>/Ux', $val, $sub);
+		preg_match_all('/<tr[^>]*>' . "\r\n" . '									   <td[^>]*>(.*)<\\/td>' . "\r\n" . '									   <td[^>]*>(.*)<\\/td>' . "\r\n" . '									   <td[^>]*>(.*)<\\/td>/Ux', $val, $sub_ext);
+
+		foreach ($sub[0] as $key => $val) {
+			if (preg_match('/Configuration File \\(php.ini\\) Path /', $val)) {
+				$val = preg_replace('/Configuration File \\(php.ini\\) Path /', '', $val);
+				$phpini = strip_tags($val);
+			}
+		}
+	}
+
+	$EnableQCoreClass->replace('phpini_local', $phpini);
+	$EnableQCoreClass->parse('Step2', 'Step2File');
+	$EnableQCoreClass->output('Step2', false);
+}
+
+if ($_GET['Step'] == 1) {
+	$EnableQCoreClass->setTemplateFile('Step1File', 'Step1.html');
+	$EnableQCoreClass->replace('startQ', '5.30');
+	$EnableQCoreClass->replace('endQ', '5.40');
+	$EnableQCoreClass->parse('Step1', 'Step1File');
+	$EnableQCoreClass->output('Step1', false);
+}
+
+$EnableQCoreClass->setTemplateFile('Step0File', 'Step0.html');
+$EnableQCoreClass->parse('Step0', 'Step0File');
+$EnableQCoreClass->output('Step0', false);
+
+?>

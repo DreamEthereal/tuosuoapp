@@ -1,0 +1,118 @@
+    body { font-size: 12px; padding: 0px; color: #000000; font-family: Calibri,"宋体",sans-serif; background-color: #ffffff;}
+    body { *margin:0px 0px 0px 5px;}
+    table {	padding: 0px;}
+    td { font-size: 12px; font-family: Calibri,"宋体",sans-serif;line-height: 20px;}
+    p {	font-size: 12px; font-family: Calibri,"宋体",sans-serif;margin:0px;}
+    img {border-top-style: none; border-right-style: none; border-left-style: none; border-bottom-style: none;}
+    br { font-size: 12px; color: #000000}
+    input {	font-size: 12px; color: #000000; font-family: Calibri,"宋体",sans-serif; background-color: #ffffff;padding-top:2px;}
+    radio {	font-size: 12px; color: #000000;background-color: #ffffff;}
+    checkbox { font-size: 12px; color: #000000;background-color: #ffffff;}
+    select { border-right: #a5ac95 1px solid; border-top: #a5ac95 1px solid; font-size: 12px; border-left: #a5ac95 1px solid; color: #000000; border-bottom: #a5ac95 1px solid; font-family: Calibri,"宋体",sans-serif; background-color: #ffffff;}
+    option { font-size:12px; color: #000000; font-family: Calibri,"宋体",sans-serif; background-color: #ffffff }
+    textarea { font-size:12px; color: #000000; font-family: Calibri,"宋体",sans-serif; background-color: #ffffff; resize: none;}
+    from {padding:0px;margin:0px;}
+    .red{ color: #cf1100;font-weight: bold;}
+    .green{ color: green;font-weight: bold;}
+
+    .button { padding: 0 2px; height: 22px; border: 1px solid; border-color: #eee #999 #999 #eee; background: #ddd; color: #333; line-height: 20px; cursor: pointer; margin-left:2px; }
+    .submit { padding: 0 10px; height: 22px; border: 1px solid; border-color: #ddd #264f6e #264f6e #ddd; background: #2782d6; color: #fff; line-height: 20px; letter-spacing: 1px; cursor: pointer; }
+
+    .inputsubmit{background-color:#e45857;border:1px solid #c14142;padding:2px 6px;color:#fff;border-radius: 4px; }
+    .inputsubmit {
+        height: 24px;
+        font-size: 12px;
+        padding:3px 20px;
+        *padding: 3px 10px;
+        border: 1px solid #3b5888;
+        background-color: #3b5888;
+        color: #fff;
+        line-height: 16px;
+        cursor: pointer;
+        text-align: center;
+        text-decoration: none;
+        font-family: verdana;
+        border-radius: 4px; 
+        font-weight:normal;
+    }
+    .inputsubmit:hover{
+        color:#fff;
+        background:#E45857;
+        border: 1px solid #C14142;
+    }
+    .stnsubmit {
+        height: 24px;
+        font-size: 12px;
+        padding: 3px 16px;
+        *padding: 3px 0px 2px 0px;
+        border: 1px solid #3b5888;
+        background-color: #3b5888;
+        color: #fff;
+        line-height: 16px;
+        cursor: pointer;
+        text-align: center;
+        text-decoration: none;
+        font-family: verdana;
+        border-radius: 4px;
+        font-weight:normal;
+    }
+    .stnsubmit:hover{
+        color:#fff;
+        background:#E45857;
+        border: 1px solid #C14142;
+    }
+    .qtnbutton {
+        height: 24px;
+        font-size: 12px;
+        padding:3px 10px;
+        *padding: 3px 10px;
+        border: 1px solid #3b5888;
+        background-color: #3b5888;
+        color: #fff;
+        line-height: 16px;
+        cursor: pointer;
+        text-align: center;
+        text-decoration: none;
+        font-family: verdana;
+        border-radius: 4px; 
+        font-weight:normal;
+    }
+    .qtnbutton:hover{
+        color:#fff;
+        background:#E45857;
+        border: 1px solid #C14142;
+    }
+
+    .textinput{ 
+      background-color:#ffffff;
+    }
+
+    .inputhighlighted{  
+      background-color:#dbedb5;
+      color:#000;
+    } 
+    input[disabled] {
+	     border: 1px solid #DDD;
+	     background-color: #F5F5F5;
+	     color:#3b5888;
+    }
+
+    .question {	font-weight: bold; font-size: 14px; color: #00568f; font-family: Calibri,"宋体",sans-serif;}
+    .answer { font-weight: normal; font-size: 12px; color: #000000; font-family: Calibri,"宋体",sans-serif;}
+    .option { font-weight: normal; font-size: 13px; color: #000000; font-family: Calibri,"宋体",sans-serif;}
+
+    .position {width:100%;padding-left:5px;margin-top:5px;margin-bottom:2px;text-align:left;left:0px;}
+
+    //链接
+    a {text-decoration: none;}
+    a:link {text-decoration: none}
+    a:visited {	color: #4899d5;text-decoration: none}
+    a:hover {color: #ff7700; text-decoration: underline}
+    a:active { color: #f7941c; text-decoration: none }
+
+    .tablerollovereffect{
+      background-color:#deefff;
+    }
+    .tablerowclickeffect{
+      background-color:#dbedb5;
+    }

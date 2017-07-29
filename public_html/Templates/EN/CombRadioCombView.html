@@ -1,0 +1,40 @@
+<tr>
+    <td height=25 class="question" valign=center>{questionName}</td>
+</tr>
+<tr>
+   <td>
+	 <table style="border:1px solid #cacaca;">
+		<tr><td>&nbsp;N:</td>
+			<td colspan=5><b>&nbsp;{totalResponseNum}</b></td>
+		</tr>
+		<tr><td>&nbsp;Valid:</td>
+			<td>&nbsp;<b>{rep_answerNum}</b></td>
+			<td>&nbsp;Percent:</td>
+			<td nowrap width=170><img height=10 src="{imagePath}Images/bar.gif" width="{rep_optionPercent}%"></span></td>
+			<td align=center>&nbsp;{rep_optionPercent} %</td>
+			<td>&nbsp;</td>
+		</tr>
+		<tr><td>&nbsp;Missing:</td>
+			<td>&nbsp;{skip_answerNum}</td>
+			<td>&nbsp;Percent:</td>
+			<td nowrap width=170><img height=10 src="{imagePath}Images/bar.gif" width="{skip_optionPercent}%"></td>
+			<td align=center>&nbsp;{skip_optionPercent} %</td>
+			<td>&nbsp;</td>
+		</tr>
+		<tr style="color:white;background-color:#e4e0ea"><td bgcolor=#cf1100>&nbsp;<b>Answers</b></td>
+			<td bgcolor=#cf1100 align=center>&nbsp;<b>Frequency</b></td>
+			<td bgcolor=#cf1100 colspan=2>&nbsp;<b>Percent</b></td>
+			<td bgcolor=#cf1100 colspan=2>&nbsp;<b>Valid Percent</b></td>
+		</tr>
+		<!-- BEGIN OPTION -->
+		<tr style="background-color:#e4e0ea;border-bottom:1px solid #cacaca"><td nowrap>&nbsp;{optionName}</td>
+			<td nowrap align=center>&nbsp;<b>{answerNum}</b></td>
+			<td nowrap align=center>&nbsp;{optionPercent} %</td>
+			<td nowrap width=170><img height=10 src="{imagePath}Images/bar.gif" width="{optionPercent}%"></td>
+			<td align=center>&nbsp;{optionValidPercent} %</td>
+			<td nowrap width=170><img height=10 src="{imagePath}Images/bar.gif" width="{optionValidPercent}%"></td>
+		</tr>
+		<!-- END OPTION -->
+	  </table>
+  </td>
+</tr>

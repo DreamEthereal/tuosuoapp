@@ -1,0 +1,42 @@
+<!-- BEGIN OPTION -->
+<table width="100%">
+<tr>
+    <td height=25 class="question" valign=center>{questionName}</td>
+</tr>
+<tr>
+   <td>
+	 <table style="border:1px solid #cacaca;">
+		<tr style="color:white;"><td valign=center align=center bgcolor=#cf1100>&nbsp;</td>
+		  <!-- BEGIN COLS -->
+		  <td align=center valign=center bgcolor=#cf1100 colspan=2 nowrap><b>{colName}</b></td>
+		  <!-- END COLS -->
+		  <td align=center valign=center bgcolor=#cf1100 colspan=2><b>合计</b></td>
+		</tr>
+		<!-- BEGIN ROWS -->
+		<tr style="background-color:#e4e0ea;border-bottom:1px solid #cacaca">
+		  <td valign=center nowrap>&nbsp;{rowName}</td>
+		  <!-- BEGIN CELL -->
+		  <td align=center valign=center width=60><b>{cellNum}</b></td>
+		  <td align=center valign=center width=60><b>{cellPercent}%</b></td>
+		  <!-- END CELL -->
+		  <td align=center valign=center width=60><b>{rowTotalNum}</b></td>
+		  <td align=center valign=center width=60><b>{rowTotalPercent}%</b></td>
+		</tr>
+		<!-- END ROWS -->
+		<tr style="background-color:#e4e0ea;border-bottom:1px solid #cacaca"> 
+		  <td valign=center><b>合计</b></td>
+		  <!-- BEGIN TOTAL -->
+		  <td align=center valign=center width=60><b>{colTotalNum}</b></td>
+		  <td align=center valign=center width=60><b>{colTotalPercent}</b></td>
+		  <!-- END TOTAL -->
+		  <td align=center valign=center width=60><b>{repTotalAnswerNum}</b></td>
+		  <td align=center valign=center width=60><b id="totalPercent">{totalPercent}%</b></td>
+		</tr>
+	  </table>
+	  <table style="margin:0px;padding:0px;margin-bottom:10px">
+		<tr>
+		  <td align=right nowrap><b>X平方：{ChiSqObt}&nbsp;&nbsp;&nbsp;自由度DF：{dfValue}&nbsp;&nbsp;&nbsp;概率：{ChiSqProb}&nbsp;&nbsp;&nbsp;临界值：{ChiSqCrit}&nbsp;&nbsp;&nbsp;</b></td>
+		</tr>
+	  </table>
+</td></tr></table>
+<!-- END OPTION -->

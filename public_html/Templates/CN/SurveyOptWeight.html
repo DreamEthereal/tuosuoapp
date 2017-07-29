@@ -1,0 +1,199 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gbk" />
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" />
+<title>设定选项分值 - Eclear在线问卷调查引擎</title>
+<link rel="shortcut icon" href="../Images/enableq.ico" type="image/x-icon" />
+<link rel="stylesheet" type="text/css" href="../CSS/UIBase.css" />
+<link href="../CSS/Window.css" type="text/css" rel=stylesheet>
+<script type="text/javascript" src="../JS/Common.js.php"></script>
+<script type="text/javascript" src="../JS/Window.js.php"></script>
+<script type="text/javascript" src="../JS/Jquery.min.js.php"></script>
+<script type="text/javascript" src="../JS/Jquery.notification.js.php"></script>
+<link type="text/css" rel="stylesheet" href="../CSS/Notification.css" />
+<script language=javascript>
+function gId(_sId){
+	return document.getElementById(_sId);
+}
+function Check_Form_Validator()
+{
+	{check_form_list}
+}
+//检查字符串是否出现中文
+function CheckNoFloat(objField, strText) {
+    var objValue = objField.value;
+    if (objValue=="") return true;
+	var strErr = "“" + strText + "”不是正确的分值数据格式！";
+	var reg=/^-?\d+\.?\d*$/;
+	if (!reg.test(objValue)) {
+        objField.focus();
+		$.notification(strErr);
+		return false;
+	}
+	return true;
+}
+function submitForm()
+{
+	if( Check_Form_Validator() != false )
+	{
+		document.getElementById('submitBtn1').disabled = true;
+		disabledStyle(document.getElementById('submitBtn1'));
+		document.getElementById('reset1').disabled = true;
+		disabledStyle(document.getElementById('reset1'));
+		document.getElementById('submitBtn2').disabled = true;
+		disabledStyle(document.getElementById('submitBtn2'));
+		document.getElementById('reset2').disabled = true;
+		disabledStyle(document.getElementById('reset2'));
+		document.Check_Form.submit();
+	}
+}
+function disabledStyle(obj)
+{
+	obj.style.border = '1px solid #DDD';
+	obj.style.backgroundColor = '#F5F5F5';
+	obj.style.color = '#3b5888';
+}
+function checkNaChecked(rangType,questionID,qtnID,optionID)
+{
+	switch(rangType)
+	{
+		case 1:  //yesno
+		case 2:  //radio
+		case 3:  //checkbox
+		case 6:  //range
+		case 7:  //multi
+		case 17: //auto
+		case 18: //cond
+		case 19: //autorange
+		case 24: //combradio
+		case 25: //combcheckbox
+		case 26: //combrange
+		case 28: //automulti
+			var theValueObj = eval("document.getElementById('option_"+rangType+"_"+questionID+"_"+optionID+"')");
+			var obj = eval("document.getElementById('na_"+rangType+"_"+questionID+"_"+optionID+"')");
+			if( obj != null ){
+				if( obj.checked ){
+					if( theValueObj != null ){
+						theValueObj.disabled = true;
+					}
+				}
+				else{
+					if( theValueObj != null ){
+						theValueObj.disabled = false;
+					}
+				}
+			}
+		break;
+	}
+}	
+function Init()
+{
+	{init_func_list}
+}
+</script>
+<style>
+	input[type=text] {border:1px solid #cacaca;height:18px;font-family: Calibri,"宋体",sans-serif;line-height:18px;vertical-align: middle;width:50px;text-align:center}
+	select {border:1px solid #cacaca;height:20px;font-family: Calibri,"宋体",sans-serif;vertical-align: middle;}
+    .t_table{width:99%;border:1px solid #cacaca;margin-bottom:5px;}
+    .t_table tr{height:34px;color:#5d5d5d;}
+    .t_table tr th{background-color: #f9f9f9;padding:0 5px;}
+    .t_table tr td{padding:0 5px;}
+    .t_table tr th{font-weight:bold;}
+    .t_table tr th.title,.d_table tr td.title{text-align:left;}    
+    .t_table tr td a{color:#3b5888;}
+    .t_table tr td a:hover{color:#ff7700;}
+    .t_table tr:hover{background-color:transparent}
+	.t_table table{line-height:20px;}
+	.question {height:34px;line-height:20px;border-right:1px solid #cacaca;border-bottom:1px solid #cacaca;+border-bottom:1px solid #cacaca;color:#5d5d5d;background-color: #f9f9f9;padding:0 5px;border-top:1px solid #cacaca;+border-top:1px solid #cacaca;color:#5d5d5d;}
+	input[type=checkbox]{vertical-align: middle;margin-right:5px}
+	input[type=radio]{vertical-align: middle;margin-right:5px}
+</style>
+</head>
+
+<body oncontextmenu="return false" onload="javascript:Init();fnLoad(103);" onunload="javascript:fnUnload(103);">
+ 	<div class="header">
+		<h1 class="logo">Eclear</h1>
+		<div class="header_menu">
+			<div class="header_m_1">
+				<a href="../System/ShowMain.php">欢迎您，<font color="#e45857" id="nick_Name_cont"></font></a>
+				<span class="head_menu_icon"></span>
+				<ul class="head_menu_list">
+					<span class="head_menu_top"></span>
+					<li><a href="../System/MyProfile.php">我的账户信息</a></li>
+					<li class="last"><a href="../System/ChangePass.php">修改我的密码</a></li>
+				</ul>
+			</div>
+			<div class="header_m_6" style="margin-left:50px">
+				<a href="../System/ShowMain.php">首页</a>
+			</div>
+			<div class="header_m_2" id="mySetting">
+			</div>
+			<div class="header_m_3" style="margin-left:50px">
+				<a href="../Help/Downs.php">帮助</a>
+				<span class="head_menu_icon"></span>
+				<ul class="head_menu_list">
+					<span class="head_menu_top"></span>
+					<li><a href="../Help/Downs.php">帮助文件下载</a></li>
+					<li><a href="http://doc.itenable.com.cn" target=_blank>在线帮助文档</a></li>
+					<li><a href="http://i.enableq.com" target=_blank>在线讨论社区</a></li>
+					<li class="last"><a href="../System/AdministratorsLogs.php">系统操作日志</a></li>
+				</ul>
+			</div>
+			<div class="header_m_4" style="margin-left:50px">
+				<a href="javascript:void(0);" onclick="javascript:showPopWin('../License/AboutEnableQ.php', 500, 400, null, null,'关于...')">关于</a>
+			</div>
+			<div class="header_m_5">
+				<a href="../System/Logout.php?loginOutURL=../index.php" target=_top>退出</a>
+			</div>
+		</div>
+	</div><!--end of header-->
+
+			{navActionList}
+			<div class="content_tit">
+				<div class="clearfix">
+				<h1><span class=redtitle>[{surveyTitle}]</span>设定选项分值</h1>
+				<span class="total ml10"></span>
+				<span class="btn ml10"></span>
+				</div>
+				<p class="fc_grey">选项分值是系统指标分析、评分量表计算等定量分析和计算的基础数据</p>
+			</div>
+		    <form name="Check_Form" id="Check_Form" method="post" action="" onsubmit="return false;">
+			<div class="content_main" style="font-size:12px;margin-bottom:5px;margin-top:8px;"><input type="button" class=inputsubmit name="submitBtn1" id="submitBtn1" value="确定" onclick="javascript:submitForm();" style="vertical-align: middle;" {isViewUserAction}>&nbsp;<input name="reset1" id="reset1" class=inputsubmit type="reset" value="重置" style="vertical-align: middle;" {isViewUserAction}></div>
+			<div class="content_main" style="margin-top:10px">
+			<table class="t_table">
+			   <tr><th colspan=4 align=left class="question"><b>&nbsp;关于...</b>&nbsp;<img src="../Images/info.gif" border=0></th></tr>   
+			   <tr><td colspan=4>选项分值是系统指标分析、评分量表计算等定量分析和计算的基础数据。<br/>对于问卷中单选、多选、矩阵单选、矩阵多选等定性变量参与这些分析或计算时，依赖于设定的选项分值将其转换成定量变量后计算。<br/>对于未设定分值的问题选项，参与这些分析或计算时，将默认取值零。</td></tr>
+			   <tr><th colspan=4 align=left class="question"><b>&nbsp;参与计分计算的问题题型(15种)...</b>&nbsp;<img src="../Images/info.gif" border=0></th></tr>   
+			   <tr><td colspan=4>是非、(复合、自动)单选、(复合、自动)多选、数值填空、(自动、复合)矩阵单选、(自动)矩阵多选、(自动)评分</td></tr>
+			   <tr><th colspan=4 align=left class="question"><b>&nbsp;关于问题计分的计算规则...</b>&nbsp;<img src="../Images/info.gif" border=0></th></tr>   
+			   <tr><td colspan=4>当(子)问题回复跳过时[空值]，按照设定(子)问题的“空值填充”模式计算得分。填充模式为<font color=red>“不适用”</font>时，参照关于<font color=red>“不适用”</font>的说明。<br/>当(子)问题“计分模式”为“得分”时，计算回复选项分值的和为当前问题的得分，并受“分值阀值”设定规则的限制。<br/>当(子)问题“计分模式”为“扣分”时，计算回复选项分值的和，并加上当前(子)问题的“满分”，即为当前(子)问题的得分，并受“分值阀值”设定规则的限制。<br/>注意，<font color=red>当(子)问题“计分模式”为“扣分”时，设置其所属问题选项的分值为负值</font>。</td></tr>
+			   <tr><th colspan=4 align=left class="question"><b>&nbsp;关于矩阵题的计分模式适用...</b>&nbsp;<img src="../Images/info.gif" border=0></th></tr>   
+			   <tr><td colspan=4><font color=red>矩阵问题上构建的计分模式规则，适用于矩阵子问题，即满分是子问题的满分，不是整个问题的满分，以此类推。</font><br/>如果矩阵上部分问题与整体构建的计分模式规则不一致，目前建议您把问题拆分成两个或多个问题。</td></tr>
+			   <tr><th colspan=4 align=left class="question"><b>&nbsp;关于“不适用”选项...</b>&nbsp;<img src="../Images/info.gif" border=0></th></tr>   
+			   <tr><td colspan=4>若(子)问题的回复值为定义成<font color=red>“不适用”</font>的问题选项，那么该(子)问题的满分将会复权计算给所属二级指标的得分。<br/>若某二级指标的全部问题的回复值均为<font color=red>“不适用”</font>，那么该二级指标的满分将会复权计算给所属一级指标的得分。<br/>若某一级指标的全部二级指标均为<font color=red>“不适用”</font>，那么该一级指标的满分将会复权计算给总分。<br/>在复权计算中，(子)问题、指标的满分将非常重要，请确保其不为空值，并且其值等于其所属指标或者(子)问题的满分之和。</td></tr>
+			   <!-- BEGIN QUESTION -->
+			   {questionList}
+				<!-- END QUESTION -->
+			   </table>
+			   <table width=99% style="border:0px;margin-bottom:15px">
+			   <tr><td colspan="4">
+					 <input name="surveyID" type="hidden" id="surveyID" value="{surveyID}"> 
+					 <input name="Action" type="hidden" id="Action" value="SettingCoeffSubmit"> 
+					 <input name="this_fields_list" type="hidden" id="this_fields_list" value="{this_fields_list}"> 
+					 <input name="questionIDList" type="hidden" id="questionIDList" value="{questionIDList}"> 
+					 <input type="button" class=inputsubmit name="submitBtn2" id="submitBtn2" value="确定" onclick="javascript:submitForm();" style="vertical-align: middle;" {isViewUserAction}>
+					 <input name="reset2" id="reset2" class=inputsubmit type="reset" value="重置" style="vertical-align: middle;" {isViewUserAction}>
+				  </td>
+				</tr>
+			  </form>
+			 </table>
+			</div><!--end of content_main-->
+		   </div><!--end of content-->
+	   </div><!--end of main-->
+    </div><!--end of container-->
+	<!--popmenu -->
+	<script type="text/javascript" src="../JS/MySetting.js.php?surveyID={surveyID}"></script>
+	<script type="text/javascript" src="../JS/PopMenu.js.php"></script>
+	<script type="text/javascript" src="../JS/Position.js.php"></script>
+</body></html>

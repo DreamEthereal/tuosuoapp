@@ -1,0 +1,433 @@
+<html>
+<head>
+<meta http-equiv=content-type content="text/html; charset=gbk">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<link rel="stylesheet" type="text/css" href="resources/android.css">
+<script type="text/javascript" src="script/user.js"></script>
+<script type="text/javascript" src="script/animation.js"></script>
+<script type="text/javascript" src="common/smart-2.11.min.js"></script>
+<script type="text/javascript" src="common/string.js"></script>
+<script type="text/javascript" src="common/page.js"></script>
+<script type="text/javascript" src="common/jquery-1.6.2.min.js"></script>
+<script type="text/javascript" src="common/gpsconfig.js"></script>
+<script type="text/javascript" src="common/gps.js"></script>
+<script language="javascript"> 
+	var img = 0;
+	if( ! rexseeDatabase.tableExists('eq_font','rexsee:enableq.db') )
+	{
+		var ftsql = "CREATE TABLE eq_font (id int(1) NOT NULL default '1',fontId int(1) NOT NULL default '1');";
+		rexseeDatabase.exec(ftsql,'rexsee:enableq.db');
+		ftsql = " INSERT INTO eq_font (id,fontId) values ('1','1');";
+		rexseeDatabase.exec(ftsql,'rexsee:enableq.db');
+		if( rexseeScreen.getScreenHeight() < 500 || rexseeScreen.getScreenWidth() < 500 )
+		{
+			rexseeScreen.setScreenOrientation('landscape');
+			document.write('<LINK href="resources/minipad.css" type=text/css rel=stylesheet>');
+			img = 0;
+		}
+		else
+		{
+			document.write('<LINK href="resources/pad10.css" type=text/css rel=stylesheet>');
+			img = 1;
+		}
+	}
+	else
+	{
+		var ftsql = " SELECT fontId FROM eq_font WHERE id='1';";
+		var ftRow = eval('('+getDbRows(ftsql,'rexsee:enableq.db')+')');
+		if( parseInt(ftRow.rows[0][0] ) == 1)  //大字体
+		{
+			document.write('<LINK href="resources/pad10.css" type=text/css rel=stylesheet>');
+			img = 1;
+		}
+		else
+		{
+			document.write('<LINK href="resources/minipad.css" type=text/css rel=stylesheet>');
+			img = 0;
+		}
+	}
+
+	rexseeSpecialKey.enableBackKeyListener(false);
+	rexseeMenu.setOptionsMenuId("mainOptionsMenu1");
+	rexseeScreen.setFullScreen(true);
+
+	function checkall() 
+	{
+		if( typeof document.Ajax_Form.responseID != 'undefined' )
+		{
+			if( document.Ajax_Form.responseID.length == null )
+			{
+				if(document.Ajax_Form.responseID.disabled != true)
+				document.Ajax_Form.responseID.checked = true;
+			}
+			else
+			{
+				for(var i = 0;i < document.Ajax_Form.responseID.length; i++) 
+				{
+					if(document.Ajax_Form.responseID[i].disabled != true)
+					document.Ajax_Form.responseID[i].checked = true;
+				}
+			}
+		}
+	}
+	function nocheckall()
+	{
+		if( typeof document.Ajax_Form.responseID != 'undefined' )
+		{
+			if( document.Ajax_Form.responseID.length == null )
+			{
+				if(document.Ajax_Form.responseID.disabled != true)
+				document.Ajax_Form.responseID.checked = false;
+			}
+			else
+			{
+				for(var i = 0;i < document.Ajax_Form.responseID.length; i++) 
+				{
+					if(document.Ajax_Form.responseID[i].disabled != true)
+					document.Ajax_Form.responseID[i].checked = false;
+				}
+			}
+		}
+	}
+	window.onException = function(className, message){
+		//alert(unescape(message));
+		var theLogFilePath = rexseeStorage.getRoot()+'enableq_offline/logs/';
+		if( ! rexseeFile.exists(theLogFilePath) )
+		{
+			rexseeFile.newDir(theLogFilePath);
+		}
+		var theLogFile = theLogFilePath +'error.txt';
+		if( !rexseeFile.exists(theLogFile) )
+		{
+			rexseeFile.newFile(theLogFile);
+		}
+		else
+		{
+			if( rexseeFile.size(theLogFile) > 102400 )
+			{
+				rexseeFile.remove(theLogFile);
+				rexseeFile.newFile(theLogFile);
+			}
+		}
+		var theOriFileContent = rexseeFile.getContent(theLogFile,'GBK');
+		rexseeFile.putContent(theLogFile,theOriFileContent+"Error("+date('Y-m-d H:i:s',time())+"):"+className+":"+unescape(message)+"\r\n",'GBK');
+	}
+</script>
+<body oncontextmenu="return false" style="background:#e5e5e5;color:#666;margin:0px;padding:0px;overflow:hidden;">
+
+<script>
+ if(img == 0 ) 
+ {
+	document.write('<div class="titlebar"><table width=100%><tr><td width=51 style="padding:0px"><a href=javascript:animationLoad("index.html");><img src="resources/back.png" border=0 width=51></a></td><td align=center width=* class="pageTitle">调查数据</td><td width=51 style="padding:0px"><a href=javascript:animationLoad("datacount.html");><img src="resources/count.png" border=0 width=51></a></td></tr></table></div>');
+ }
+ else
+ {
+	document.write('<div class="titlebar"><table width=100%><tr><td width=75 style="padding:0px"><a href=javascript:animationLoad("index.html");><img src="resources/hback.png" border=0 width=75></a></td><td align=center width=* class="pageTitle">调查数据</td><td width=75 style="padding:0px"><a href=javascript:animationLoad("datacount.html");><img src="resources/hcount.png" border=0 width=75></a></td></tr></table></div>');
+ }
+</script>
+<script>
+	var qid = rexseeHashMap.get('enableq','qid');
+	var thisPage = ( rexseeHashMap.get('enableq','thisPage') == '' ) ? 1 : rexseeHashMap.get('enableq','thisPage');
+	var sql = " SELECT surveyTitle,beginTime,endTime,fields,uploadlist,isRecord,isOfflineModi,isOfflineDele FROM eq_survey_list WHERE surveyID = '"+qid+"';";
+	var surveyRow = eval('('+getDbRows(sql,'rexsee:enableq.db')+')');
+
+	//展示数据
+	var datas ="{ surveyTitle:'"+surveyRow.rows[0][0] +"',";
+	var datasRow = eval('('+getDbRows('SELECT COUNT(*) as totalResponseNum FROM eq_response_'+qid,'rexsee:enableq.db')+')');
+	datas += " totalResponseNum:'"+datasRow.rows[0][0] +"',";
+	datas += " thisdata: [ ";
+
+	var offset = (thisPage-1)*20;
+	var dataListRow = eval('('+getDbRows('SELECT responseID,ipAddress,joinTime,overFlag,authStat,administratorsName FROM eq_response_'+qid+' ORDER BY responseID DESC LIMIT 20 OFFSET '+offset,'rexsee:enableq.db')+')');
+	if( count(dataListRow.rows) != 0 )
+	{
+		for( var tmp in dataListRow.rows )
+		{
+			datas += " { ";
+			datas += " responseID:'"+dataListRow.rows[tmp][0]+"',";
+			datas += " ipAddress:'"+dataListRow.rows[tmp][1]+"',";
+			var joinTime = date('Y-m-d H:i:s',dataListRow.rows[tmp][2]);
+			if( qhtmlspecialchars(dataListRow.rows[tmp][5])  != '' )
+			{
+				joinTime += "<br/><span style=\"font-size:14px\">("+qJsonCharFilter(dataListRow.rows[tmp][5])+")</span>";
+			}
+			datas += " joinTime:'"+joinTime+"',";
+			datas += " overFlag:'"+dataListRow.rows[tmp][3]+"',";
+			datas += " createDate:'"+dataListRow.rows[tmp][2]+"',";
+			switch( parseInt(dataListRow.rows[tmp][3]) )  //overFlag
+			{
+				case 0:
+				default:
+					datas += " noHaveAll:'#ffe000',";
+					datas += " stat:'未完成',";
+				break;
+				case 1:
+					datas += " noHaveAll:'#ffffff',";
+					datas += " stat:'完成',";
+				break;
+				case 2:
+					datas += " noHaveAll:'#cc0000',";
+					datas += " stat:'无效回复',";
+				break;
+				case 3:
+					datas += " noHaveAll:'#339933',";
+					datas += " stat:'导入数据',";
+				break;
+			}
+			/*switch( parseInt(dataListRow.rows[tmp][4]) )  //authStat
+			{
+				case 0:
+					datas += " authColor:'#ffffff',";
+					datas += " authStat:'未处理',";
+				break;
+				case 1:
+					datas += " authColor:'#339933',";
+					datas += " authStat:'通过',";
+				break;
+				case 2:
+					datas += " authColor:'#cc0000',";
+					datas += " authStat:'未通过',";
+				break;
+			}*/
+			switch( parseInt(dataListRow.rows[tmp][3]) )
+			{
+				case 0:
+					var action = ''
+					if( parseInt(surveyRow.rows[0][6]) == 1 )
+					{
+						action += "<a href='javascript:modiData("+qid+","+dataListRow.rows[tmp][0]+")'>继续访问</a>";
+					}
+					action += "&nbsp;&nbsp;&nbsp;<a href='javascript:viewData("+dataListRow.rows[tmp][0]+")'>数据详细</a>";
+				break;
+				case 1:
+					var action = "<a href='javascript:viewData("+dataListRow.rows[tmp][0]+")'>数据详细</a>";
+					if( parseInt(surveyRow.rows[0][6]) == 1 )
+					{
+						action += "&nbsp;&nbsp;&nbsp;<a href='javascript:modiData("+qid+","+dataListRow.rows[tmp][0]+")'>修改数据</a>";
+					}
+				break;
+				case 2:
+					var action = "<a href='javascript:viewData("+dataListRow.rows[tmp][0]+")'>数据详细</a>";
+				break;
+			}
+
+			//if( parseInt(dataListRow.rows[tmp][4]) != 1 )  //authStat
+			if( parseInt(surveyRow.rows[0][7]) != 1 ) //删除
+			{
+				datas += " isDelete:'',";
+				datas += " isDeleAllowed:'',";
+				datas += " deleteURL:'javascript:deleteData("+dataListRow.rows[tmp][0]+")',";
+			}
+			else
+			{
+				datas += " isDelete:'none',";
+				datas += " isDeleAllowed:'none',";
+				datas += " deleteURL:'',";
+			}
+			datas += " action:'"+qJsonCharFilter(action)+"' },";
+		}
+		datas = datas.substr(0,datas.length-1)+"] }";
+	}
+	else //无数据
+	{
+		datas += "] }";
+	}
+</script>
+<script id="main_list_tpl" type="text/x-jsmart-tmpl">
+<div class="notesInfo">&nbsp;列出问卷数据：{$surveyTitle} (<font color=red>{$totalResponseNum}</font>)</div>
+
+<div id="androidList" style="padding-top:5px;background: #e5e5e5;" class="contentPadding">
+
+<form name="Ajax_Form" id="Ajax_Form" method="post" action="">
+{foreach $thisdata as $i => $data}
+<table width=100% style="border:#d9d9d9 2px solid;margin-bottom:5px;background:#ffffff">
+   <tr>
+      <td height=50 width=* valign=center class="actiontitle">{$data.joinTime}</td>
+	  <td width=70 align=center valign=center style="border-bottom:#ddd 1px solid"><input name="responseID" type="checkbox" id="responseID" value="{$data.responseID}" {$data.isDeleAllowed}>&nbsp;<input name="overFlag" type="hidden" id="overFlag" value="{$data.responseID}_{$data.overFlag}"><input name="createDate" type="hidden" id="createDate" value="{$data.responseID}_{$data.createDate}"></td>
+   </tr>
+   <tr>
+      <td height=30 width=* align=left class="actioninfo">{$data.action}&nbsp;&nbsp;&nbsp;<a href="{$data.deleteURL}" onclick="return window.confirm('您真的想删除该数据吗？本操作不可恢复！?')" style="display:{$data.isDelete}">删除数据</a></td>
+      <td align=center valign=center width=70 nowrap bgcolor="{$data.noHaveAll}">{$data.stat}</td>
+	  </tr>
+ </table>
+{/foreach}
+</script>
+<script>
+   var tplText = document.getElementById('main_list_tpl').innerHTML;
+   var tpl = new jSmart( tplText );
+   var jsondatas = eval('('+datas+')');
+   var res = tpl.fetch( jsondatas );
+   document.write( res );
+</script>
+<table width=100% style="border:#d9d9d9 2px solid;margin-bottom:10px;background:#ffffff">
+   <tr>
+     <td height=45 width=* align=left style="padding-left:20px"><input class=btn name="DeleteSubmit" type="submit" id="DeleteSubmit" value="选定删除" onclick="if(window.confirm('您真的想删除这些数据吗？本操作不可恢复！')) {deleteBatch();}"></td>
+	 <td align=center valign=center width=100><a href="javascript:checkall();" class="batchacion">全选</a>&nbsp;&nbsp;<a href="javascript:nocheckall();" class="batchacion">全不选</a></td>
+   </tr>
+</table>
+<div id=pager></div>
+<script>
+//禁止删除
+if( parseInt(surveyRow.rows[0][7]) != 1 ) //删除
+{
+	document.getElementById('DeleteSubmit').disabled = false;
+}
+else
+{
+	document.getElementById('DeleteSubmit').disabled = true;
+}
+
+//分页
+new PagerB({  
+	recordCount:parseInt(datasRow.rows[0][0]),   
+	pageContainer:"pager",  
+	funPageSearch:function(currentPage){ 
+	   rexseeHashMap.remove('enableq','thisPage');
+	   rexseeHashMap.add('enableq','thisPage',currentPage);
+	   location="showdata.html";  
+	},  
+	pageSize:20,
+	currentPage:thisPage,
+	pageNum:10,  
+	sync:false  
+});
+</script>
+</div>
+<script>
+    function viewData(rid)
+	{
+	    rexseeHashMap.remove('enableq','rid');
+		rexseeHashMap.add('enableq','rid',rid);
+		animationLoad('viewdata.html');
+	}
+	function modiData(qid,rid)
+	{
+		rexseeHashMap.remove('enableq','qid');
+		rexseeHashMap.add('enableq','qid',qid);
+	    rexseeHashMap.remove('enableq','rid');
+		rexseeHashMap.add('enableq','rid',rid);
+		animationLoad('modidata.html');
+	}
+	function deleteData(rid)
+	{
+		//删除数据文件
+		if( surveyRow.rows[0][4] != '' )
+		{
+			var theTmpFilePath = rexseeStorage.getRoot()+'enableq_offline/files/'+qid+'/';
+			var dsql = " SELECT recordFile,"+surveyRow.rows[0][4]+ " FROM eq_response_"+qid+" WHERE responseID = "+rid;
+			var ddataRow = eval('('+getDbRows(dsql,'rexsee:enableq.db')+')');
+			for(var k=0;k<ddataRow.rows[0].length;k++)
+			{
+				if( ddataRow.rows[0][k] != '' )
+				{
+					if( rexseeFile.exists(theTmpFilePath+ddataRow.rows[0][k]) )
+					{
+						rexseeFile.remove(theTmpFilePath+ddataRow.rows[0][k]);
+					}
+				}
+			}
+		}
+		else
+		{
+			var theTmpFilePath = rexseeStorage.getRoot()+'enableq_offline/files/'+qid+'/';
+			var dsql = " SELECT recordFile FROM eq_response_"+qid+" WHERE responseID = "+rid;
+			var ddataRow = eval('('+getDbRows(dsql,'rexsee:enableq.db')+')');
+			if( ddataRow.rows[0][0] != '' )
+			{
+				if( rexseeFile.exists(theTmpFilePath+ddataRow.rows[0][0]) )
+				{
+					rexseeFile.remove(theTmpFilePath+ddataRow.rows[0][0]);
+				}
+			}
+		}
+		
+		var sql = 'DELETE FROM eq_response_'+qid+' WHERE responseID = '+rid;
+		rexseeDatabase.exec(sql,'rexsee:enableq.db');
+		var sql = 'DELETE FROM eq_gps_trace_upload WHERE surveyID = '+qid+' AND responseID = '+rid;
+		rexseeDatabase.exec(sql,'rexsee:enableq.db');
+
+		rexseeChronometer.show('label:数据删除，正在努力为您删除问卷数据...;align:left;background-color:transparent;color:#000000;border-width:0;window-style:light;',3,'javascript:window.location.href = "showdata.html"');
+	}
+	function deleteBatch()
+	{
+		if( document.getElementById('responseID') != null )
+		{
+			if( ! checkSelectData() ) { return false }
+			else
+			{
+				var tmp ='';
+				$('input[id='+responseID+']:checked').each(function(){
+				tmp += $(this).val() + ",";
+				});
+				var thisDatas = substr(tmp,0,-1).split(',');
+				for( var i in thisDatas )
+				{
+					var rid = thisDatas[i];
+					//删除数据文件
+					if( surveyRow.rows[0][4] != '' )
+					{
+						var theTmpFilePath = rexseeStorage.getRoot()+'enableq_offline/files/'+qid+'/';
+						var dsql = " SELECT recordFile,"+surveyRow.rows[0][4]+ " FROM eq_response_"+qid+" WHERE responseID = "+rid;
+						var ddataRow = eval('('+getDbRows(dsql,'rexsee:enableq.db')+')');
+						for(var k=0;k<ddataRow.rows[0].length;k++)
+						{
+							if( ddataRow.rows[0][k] != '' )
+							{
+								if( rexseeFile.exists(theTmpFilePath+ddataRow.rows[0][k]) )
+								{
+									rexseeFile.remove(theTmpFilePath+ddataRow.rows[0][k]);
+								}
+							}
+						}
+					}
+					else
+					{
+						var theTmpFilePath = rexseeStorage.getRoot()+'enableq_offline/files/'+qid+'/';
+						var dsql = " SELECT recordFile FROM eq_response_"+qid+" WHERE responseID = "+rid;
+						var ddataRow = eval('('+getDbRows(dsql,'rexsee:enableq.db')+')');
+						if( ddataRow.rows[0][0] != '' )
+						{
+							if( rexseeFile.exists(theTmpFilePath+ddataRow.rows[0][0]) )
+							{
+								rexseeFile.remove(theTmpFilePath+ddataRow.rows[0][0]);
+							}
+						}
+					}
+					var sql = 'DELETE FROM eq_response_'+qid+' WHERE responseID = '+rid;
+					rexseeDatabase.exec(sql,'rexsee:enableq.db');
+					var sql = 'DELETE FROM eq_gps_trace_upload WHERE surveyID = '+qid+' AND responseID = '+rid;
+					rexseeDatabase.exec(sql,'rexsee:enableq.db');
+				}
+				rexseeChronometer.show('label:数据批量删除，正在努力为您删除问卷数据...;align:left;background-color:transparent;color:#000000;border-width:0;window-style:light;',3,'javascript:window.location.href = "showdata.html"');
+			}
+		}
+	}
+	function checkSelectData()
+	{
+		var strErr = "操作要求必须先选择一条或多条数据！";
+		objField = document.Ajax_Form.responseID;
+		if( objField.length == null )
+		{
+			if (objField.checked) return true;
+			else
+			{
+				objField.focus();
+				rexseeDialog.toast(strErr);
+				return false;
+			}
+		}
+		else
+		{
+			for (i=0;i<objField.length;i++){
+				if (objField[i].checked) return true;
+			}
+			objField[0].focus();
+			rexseeDialog.toast(strErr);
+			return false;
+		}
+	}
+</script>
+</form>
+<script>scroll(0, 0);</script>
+</body>
+</html>

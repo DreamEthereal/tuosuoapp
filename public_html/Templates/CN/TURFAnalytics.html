@@ -1,0 +1,26 @@
+<table width="100%">
+<tr>
+    <td height=25 class="question" valign=center>{questionName}</td>
+</tr>
+<tr>
+   <td>
+	 <table style="border:1px solid #cacaca;">
+		<tr><td colspan=4 nowrap>&nbsp;样本数：&nbsp;<b>&nbsp;{totalRepAnswerNum}</b></td></tr>
+		<tr><td colspan=4 nowrap>&nbsp;有效分析样本：&nbsp;<b>&nbsp;{repAnswerNum}</b> (&nbsp;{repAnswerPercent} % )</td></tr>
+		<tr style="color:white;">
+		    <td bgcolor=#cf1100>&nbsp;<b>序号</b></td>
+		    <td bgcolor=#cf1100>&nbsp;<b>模拟组合(Combo Simulation)</b></td>
+			<td bgcolor=#cf1100 align=center>&nbsp;<b>不重复频数(Unduplicated Frequency)</b></td>
+			<td bgcolor=#cf1100 align=center>&nbsp;<b>到达率(% Reach)</b></td>
+		</tr>
+		<!-- BEGIN OPTION -->
+		<tr style="background-color:#e4e0ea;border-bottom:1px solid #cacaca">
+		    <td nowrap>&nbsp;{orderNo}</td>
+		    <td nowrap>&nbsp;{comboName}</td>
+			<td nowrap align=center>&nbsp;<b>{answerNum}</b></td>
+			<td nowrap align=center>&nbsp;{optionPercent} %</td>
+		</tr>
+		<!-- END OPTION -->
+	  </table>
+  </td>
+</tr></table>
