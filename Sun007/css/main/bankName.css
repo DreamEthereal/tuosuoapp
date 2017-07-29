@@ -1,0 +1,93 @@
+html{
+	font-size: 100px;
+}
+body{
+	font-size: 16px;
+	background: #efefef;
+	line-height: normal;
+}
+li{
+	list-style: none;
+}
+.bank-header{
+	box-shadow: none;
+	background: #063875;
+	height: 1.28rem;
+}
+#bank-back{
+	color: #fff;
+	margin-top: .4rem;
+}
+#bank-title{
+	color: #fff;
+	margin-top: .4rem;
+	font-size: .34rem;
+}
+.bank-title{
+	font-size: .3rem;
+	margin: 0;
+	color: #333;
+}
+#bank-content{
+	padding-top: 1.28rem;
+}
+.mui-col-xs-4 {
+    width: 50%;
+    position: fixed;
+    z-index: 12;
+    top: 2.07rem;
+}
+.mui-control-item{
+	color: #333;
+}
+.mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active{
+	color: #063875;
+}
+.mui-segmented-control.mui-segmented-control-inverted~.mui-slider-progress-bar{
+	background: #063875;
+}
+.bank-zhifubao,.bank-card{
+	background: #fff;
+	padding: 0 .25rem;
+	margin: .2rem 0 0;
+}
+.bank-zhifubao li,.bank-card li{
+	height: .8rem;
+	line-height: .8rem;
+	color: #333;
+	font-size: .3rem;
+	border-bottom: 1px solid #eee;
+}
+.bank-zhifubao li input,.bank-card li input{
+	color: #999;
+	font-size: .24rem;
+	width: 50%;
+	height: .8rem;
+	outline: none;
+	border: none;
+	text-align: right;
+	float: right;
+	margin: 0;
+	padding: 0;
+}
+#sliderSegmentedControl{
+	height: .76rem;
+}
+#sliderSegmentedControl a{
+	line-height: .8rem;
+	font-size: .28rem;
+	margin: 0;
+	padding: 0;
+}
+#btn{
+	width: 100%;
+	height: .8rem;
+	background: #9bafc8;
+	font-size: .3rem;
+	margin: 0 .06rem;
+	color: #fff;
+}
+.sure{
+	margin-top: .8rem;
+	padding: 0 .25rem;
+}

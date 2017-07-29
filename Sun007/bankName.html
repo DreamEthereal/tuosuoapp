@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="HandheldFriendly" content="true" />
+		<meta name="MobileOptimized" content="320" />
+		<title>提现账号</title>
+		<link rel="stylesheet" href="css/mui.min.css" />
+		<link rel="stylesheet" href="css/main/bankName.css" />
+	</head>
+	<body>
+		<header class="mui-bar mui-bar-nav bank-header">
+		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" id="bank-back"></a>
+		    <h1 class="mui-title" id="bank-title">提现账号</h1>
+		</header>
+		<div class="mui-content" id="bank-content">
+			<div id="slider" class="mui-slider"> 
+			<div id="sliderSegmentedControl" class="mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+				<a class="mui-control-item mui-active" href="#item1mobile">
+					提现到支付宝
+				</a>
+				<a class="mui-control-item" href="#item2mobile">
+					提现到银行卡
+				</a>
+			</div>
+			<div id="sliderProgressBar" class="mui-slider-progress-bar mui-col-xs-4"></div>
+				<div class="mui-slider-group">
+					<div id="item1mobile" class="mui-slider-item mui-control-content mui-active">
+						<ul class="bank-zhifubao">
+							<li>支付宝实名<input type="text" value="王丽琴" id="name"></input></li>
+							<li>支付宝账户<input type="text" value="188888888888" id="account"></input></li>					
+						</ul>				
+					</div>
+					<div id="item2mobile" class="mui-slider-item mui-control-content">
+						<ul class="bank-card">
+							<li>帐户名<input type="text" value="王丽琴" id="name1"></input></li>
+							<li>发卡银行<input type="text" id="account1" value="北京招商银行"></input></li>					
+							<li>卡号<input type="text" value="6121 1212 1212 1221" id="account"></span></li>					
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div class="sure">
+				<button type="button" class="mui-btn" id="btn">确认 </button>
+			</div>
+			
+		</div>
+	</body>
+	<script type="text/javascript" src="js/rem.js"></script>
+	<script src="js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/help/inCome.js" type="text/javascript" charset="utf-8"></script>
+	
+</html>

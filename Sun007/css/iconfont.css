@@ -1,0 +1,32 @@
+
+@font-face {font-family: "iconfont";
+  src: url('../fonts/iconfont.ttf') format('truetype'); /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+}
+
+.iconfont {
+  font-family:"iconfont" !important;
+  font-size:16px;
+  font-style:normal;
+  -webkit-font-smoothing: antialiased;
+}
+
+.icon-bianji:before { content: "\e642"; }
+
+.icon-wo:before { content: "\e60f"; }
+
+.icon-fujin:before { content: "\e628"; }
+
+.icon-xiangmu:before { content: "\e67a"; }
+
+.icon-shouye:before { content: "\e604"; }
+
+.icon-fenxiang:before { content: "\e675"; }
+
+.icon-juli:before { content: "\e62c"; }
+
+.icon-renwu:before { content: "\e60e"; }
+
+.icon-kehu:before { content: "\e634"; }
+
+.icon-daijiesuan:before { content: "\e67b"; }
+

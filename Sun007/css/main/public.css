@@ -1,0 +1,52 @@
+html{
+	font-size: 100px;
+}
+body{
+	font-size: 16px;
+	background: #efefef;
+}
+.public-header{
+	box-shadow: none;
+	background: #063875;
+	height: 1.28rem;
+}
+#public-back{
+	color: #fff;
+	margin-top: .4rem;
+}
+#public-title{
+	color: #fff;
+	margin-top: .4rem;
+	font-size: .34rem;
+}
+#public-content{
+	padding-top: 1.28rem;
+}
+.public-list{
+	height: 1.92rem;
+	padding: .23rem .22rem 0;
+	border-bottom: 1px solid #dfdfdf;
+	background: #fff;
+}
+.public-list img{
+	width: 2.22rem;
+	height: 1.48rem;
+	float: left;
+	margin-right: .20rem;
+}
+.public-list h2{
+	padding: 0;
+	margin: 0;
+	font-size: .3rem;
+	letter-spacing: .03rem;
+}
+.public-list p{
+	margin: .15rem 0 0;
+	font-size: .22rem;
+	line-height: .35rem;
+	color: #b6b6b6;
+}
+.public-list span{
+	color: #ccc;
+	font-size: .18rem;
+}

@@ -1,0 +1,107 @@
+html{
+	font-size: 100px;
+}
+body{
+	font-size: 16px;
+	background: #efefef;
+}
+.user-header{
+	box-shadow: none;
+	background: #063875;
+	height: 1.28rem;
+	padding: 0 .25rem;
+}
+#user-back{
+	color: #fff;
+	margin: .4rem 0 0 ;
+	padding: 0;
+	font-size: .3rem;
+	line-height: .88rem;
+}
+#user-title{
+	color: #fff;
+	margin: .4rem 0 0 ;
+	font-size: .34rem;
+	padding: 0;
+	line-height: .88rem;
+}
+#user-content{
+	padding-top: 1.28rem;
+}
+#title-text{
+	line-height: 5;
+	color: #000;
+	font-size: .3rem;
+}
+.common{
+	margin-right: .4rem;
+}
+.common a{
+	color: #999;
+}
+.common2{
+	border: none;
+	color: #b6b6b6;
+	background-color: #fff;
+}
+.common3{
+	background-image: url(../../images/common.png);
+	background-repeat: no-repeat;
+	background-position: 7.04rem .28rem;
+	background-size: .15rem .26rem;
+}
+#user-sex{
+	height: 1rem;
+}
+#user-touxiang{
+	height: 1.7rem;
+}
+#user-touxiang .tou-margin{
+	margin-top: .05rem;
+}
+#user-ul1 .user-li1,#user-ul2 .user-li1{
+	height: .81rem;
+	font-size: .3rem;
+	padding: .22rem .3rem;
+}
+#user-ul1 .user-li1 span,#user-ul2 .user-li1 span{
+	font-size: .26rem;
+}
+#user-touxiang .common{
+	max-width: 2.4rem;
+	max-height: 2.4rem;
+	width: 1.2rem;
+	height: 1.2rem;
+	margin-top: .05rem;
+}
+#user-touxiang .common3{
+	background-position: 7.04rem .6rem;
+	height: 1.3rem;
+	padding: 0 .3rem;
+}
+.mui-table-view-cell:after {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 15px;
+    height: 1px;
+    content: '';
+    -webkit-transform: scaleY(.5);
+    transform: scaleY(.5);
+    background-color: #eee;
+}
+
+.user-footer{
+	height: 2rem;
+
+}
+.user-sure{
+	width: 6.9rem;
+	height: .8rem;
+	text-align: center;
+	margin: .8rem .3rem .4rem;
+	font-size: .3rem;
+}
+#ed-val,#marry-val,#income-val,#hc-val{
+	color: #b6b6b6;
+}

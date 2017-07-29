@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="HandheldFriendly" content="true" />
+		<meta name="MobileOptimized" content="320" />
+		<title>注册</title>
+		
+		<link rel="stylesheet" type="text/css" href="css/mui.min.css"/>
+		<link rel="stylesheet" href="css/main/chooseId.css" />
+	</head>
+	<body>
+		<header class="mui-bar mui-bar-nav chooseID-header">
+		    <h1 class="mui-title" id="chooseID-title"></h1>
+		</header>
+		<div class="mui-content" id="chooseID-content">
+		    <div class="chooseID-title">
+		    	<h2>选择您的身份</h2>
+		    </div>
+		    <div class="chooseID-main">
+		    	<div class="chooseID-left">
+		    		<a href="register.html"><img src="images/chooseID-left.png" alt="" /></a>
+		    		<h3>会员注册</h3>
+		    		<p>只能在本平台上接非神秘客户相关任务</p>
+		    	</div>
+		    	<div class="chooseID-right">
+		    		<a href="register.html"><img src="images/chooseID-right.png"/></a>
+		    		<h3>访员注册</h3>
+		    		<p>需要相关的专业技能认证，需要管理审核</p>
+		    	</div>
+		    </div>
+		</div>
+	</body>
+	<script type="text/javascript" src="js/mui.min.js"></script>
+	<script type="text/javascript" src="js/rem.js"></script>
+	<script type="text/javascript">
+		mui("body").on("tap",'a',function(){
+			document.location.href = this.href;
+		})
+	</script>
+</html>

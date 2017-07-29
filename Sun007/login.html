@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="HandheldFriendly" content="true" />
+		<meta name="MobileOptimized" content="320" />
+		<title>登陆</title>
+		
+		<link rel="stylesheet" type="text/css" href="css/mui.min.css"/>
+		<link rel="stylesheet" type="text/css" href="css/main/login.css"/>
+		<link rel="stylesheet" href="css/common.css" />
+	</head>
+	<body>
+		<header class="mui-bar mui-bar-nav login-header">
+		    <h1 class="mui-title" id="login-title">登陆</h1>
+		</header>
+		<div class="mui-content" id="login-content">
+		    <div class="login-touxiang">
+		    	<img class="login-img" src="images/touxiang.png"/>
+		    </div>
+		    <div class="login-phone">
+		    	<span>手机号</span>
+		    	<input type="text" name="" id="mobile" placeholder="" />
+		    </div>
+		    <div class="login-password">
+		    	<span>密码</span>
+		    	<input type="password" name="" id="passwd" placeholder="" />
+		    </div>
+		    <div class="login-btn">
+		    	<button type="button" class="mui-btn">登陆</button>
+		    </div>		    
+		</div>
+		<div class="login-footer">
+			<ul>
+				<li><a href="findPassword.html">忘记密码</a></li>
+				<li>|</li>
+				<li id="margin0"><a href="chooseId.html">快速注册</a></li>
+			</ul>
+		</div>
+	</body>
+	<script type="text/javascript" src="js/mui.min.js"></script>
+	<script type="text/javascript" src="js/rem.js"></script>
+	<script type="text/javascript" src="js/zepto.min.js"></script>
+	<script type="text/javascript" charset="utf-8">
+		$(".login-btn button").on("tap",function(){
+			var reg = /^1[3|4|5|8][0-9]\d{4,8}$/i;
+			var reg1 = /^[\@A-Za-z0-9\!\#\$\%\^\&\*\.\~]{6,22}$/;
+			if($("#mobile").val() == ""){
+				mui.alert("请输入手机号");
+			}else if($("#mobile").val().length < 11){
+				mui.alert("请输入正确的手机号")
+			}else if(!reg.test($("#mobile").val())){
+				mui.alert("用户名不正确")
+			}else{
+				if($("#passwd").val() == ""){
+					mui.alert("请输入密码")
+				}else if(!reg1.test($("#passwd").val())){
+					mui.alert("密码为6~12位的数字、字母或特殊字符")
+				}else{
+					var isAdmin = 8;
+					var username = $("#mobile").val();
+					var password = $("#passwd").val();
+	//						var phone_code = $("#test").val();
+					var repassword = $("#repasswd").val();
+					var data = {username,password};
+
+				    $.ajax({
+				        type: 'POST',
+				        url: 'http://app_yg007.yinglian360.com/Home/User/login',
+				        dataType: 'json',
+				        data: data,
+				        success: function(msg){                
+				            msg.username = username;
+				            msg.password = password;
+//				            msg.repassword = repassword;
+//	//					            msg.phone_code = phone_code;
+//				            msg.isAdmin = isAdmin;
+				            console.log(msg)
+				        }
+				    })
+					
+					
+					
+					
+					
+				}
+			}
+		})
+	</script>
+</html>

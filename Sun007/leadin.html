@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="HandheldFriendly" content="true" />
+		<meta name="MobileOptimized" content="320" />
+		<title>任务导入</title>
+		<link rel="stylesheet" href="css/mui.min.css" />
+		<link rel="stylesheet" href="css/main/leadin.css" />
+		<link rel="stylesheet" href="css/iconfont.css" />
+	</head>
+	<body>
+		<header class="mui-bar mui-bar-nav leadin-header">
+		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" id="leadin-back"></a>
+		    <h1 class="mui-title" id="leadin-title">任务导入</h1>
+		</header>
+		<div class="mui-content" id="leadin-content">
+		    <div class="leadin-sign">
+		    	<div class="leadin-name">
+		    		<h2>门店名称： 小米清河店</h2>
+		    	</div>
+		    	<div class="leadin-deg">
+		    		<div class="deg-left">
+		    			<p>任务编号： <span> 3102361</span></p>
+		    			<p>详细地址： <span> 北京市朝阳区百子湾路18号</span></p>
+		    			<p>培训教程： <a href="#"> 查看详情</a></p>
+		    		</div>
+		    		<button type="button" class="mui-btn" id="leadin-btn">签到</button>
+		    	</div>
+			    <div class="leadin-tab">
+			    	<ul>
+						<li>
+							<img src="images/leadin1.png" alt="" />
+							<p>拍照</p>
+						</li>
+						<li>
+							<img src="images/leadin2.png" alt="" />							
+							<p>录制视频</p>
+						</li>
+						<li>
+							<img src="images/leadin3.png" alt="" />							
+							<p>录音</p>
+						</li>
+						<li>
+							<img src="images/leadin4.png" alt="" />						
+							<p>填写问卷</p>
+						</li>
+					</ul>
+			    </div>		    
+		    </div>
+		    <div class="leadin-data">
+		    	<div class="leadin-data-title">
+		    		<h2>状态</h2>
+		    	</div>
+		    	<div class="leadin-data-main">
+		    		<div class="leadin-shu">
+		    			<img src="images/shu.png"/>
+		    		</div>
+		    		<div class="sign-in">
+		    			<h4>签到</h4>
+		    			<div class="change-signIn">
+		    				<img src="images/sign1.png"/>
+		    				<span>未签到</span>
+		    			</div>
+		    		</div>
+		    		<div class="sign-out margin-sign">
+		    			<h4>签退</h4>
+		    			<div class="change-signOut">
+		    				<img src="images/sign0.png"/>
+		    				<span>已签退</span>
+		    			</div>
+		    		</div>
+		    		<div class="sign-photo">
+		    			<div class="photo-title">
+		    				<h4>照片</h4>
+		    				<p>
+		    					<i class="mui-icon iconfont icon-bianji"></i>
+		    					<span>编辑</span>
+		    				</p>
+		    			</div>
+		    			<ul class="photo-sign">
+		    				<li class="margin0">
+		    					<img class="img1" src="images/signphoto1.png" alt="" />
+		    					<img class="img2" src="images/delete.png"/>
+		    				</li>
+		    				<li>
+		    					<img class="img1" src="images/signphoto2.png" alt="" />
+		    					<img class="img2" src="images/delete.png"/>
+		    				</li>
+		    				<li>
+		    					<img class="img1" src="images/signphoto3.png" alt="" />
+		    					<img class="img2" src="images/delete.png"/>
+		    				</li>
+		    			</ul>
+		    		</div>
+		    	</div>
+		    </div>
+		</div>
+	</body>
+	<script type="text/javascript" src="js/rem.js"></script>
+	<script type="text/javascript" src="js/mui.min.js"></script>
+	<script type="text/javascript">
+		mui("body").on("tap",'a',function(){
+			document.location.href = this.href;
+		})
+	</script>
+</html>

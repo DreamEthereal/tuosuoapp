@@ -1,0 +1,249 @@
+html{
+	font-size: 100px;
+}
+body{
+	font-size: 16px;
+	background: #fff;
+	line-height: normal;
+}
+li{
+	list-style: none;
+}
+.myts-header{
+	box-shadow: none;
+	background: #063875;
+	height: 1.28rem;
+}
+#myts-back{
+	color: #fff;
+	margin-top: .4rem;
+}
+#myts-title{
+	color: #fff;
+	margin-top: .4rem;
+	font-size: .34rem;
+}
+.myts-title{
+	font-size: .3rem;
+	margin: 0;
+	color: #333;
+}
+#myts-content{
+	padding-top: 1.28rem;
+}
+.myts-tab{
+	height: 1.74rem;
+	margin-top: .82rem;
+	padding: 0 .25rem;
+	position: fixed;
+	top: 1.28rem;
+	background: #fff;
+	width: 100%;
+	border-bottom: 1px solid #efefef;
+	z-index: 20;
+}
+.myts-tab ul{
+	margin: 0;
+	padding: 0;
+}
+.myts-tab li{
+	float: left;
+	width: 25%;
+	text-align: center;
+	padding-top: .4rem;
+}
+.myts-tab li img{
+	width: .56rem;
+	height: .56rem;
+}
+.myts-tab li p{
+	margin: 0;
+	font-size: .26rem;
+	color: #666;
+}
+#slider{
+	height: 13.4rem;
+	overflow: inherit;	
+}
+.mui-control-content {
+	background-color: white;
+	min-height: 2.15rem;
+}
+.mui-control-content .mui-loading {
+	margin-top: .5rem;
+}
+.mui-col-xs-4 {
+    width: 50%;
+    position: fixed;
+    z-index: 12;
+    top: 2.04rem;
+}
+.mui-bar~.mui-pull-top-tips {
+	top: .24rem;
+}
+.mui-pull-top-tips.mui-transitioning {
+	-webkit-transition-duration: 200ms;
+	transition-duration: 200ms;
+}
+.mui-pull-top-tips {
+	position: absolute;
+	top: -20px;
+	left: 50%;
+	margin-left: -25px;
+	width: 40px;
+	height: 40px;
+	border-radius: 100%;
+	z-index: 12;
+}
+.mui-pull-top-tips.mui-transitioning {
+	-webkit-transition-duration: 200ms;
+	transition-duration: 200ms;
+}
+.mui-pull-bottom-tips {
+	text-align: center;
+	background-color: #efeff4;
+	font-size: 15px;
+	line-height: 40px;
+	color: #777;
+}
+.mui-pull-top-canvas {
+	overflow: hidden;
+	background-color: rgba(255,255,255,0.1);
+	border-radius: 40px;
+	box-shadow: 0 4px 10px #bbb;
+	width: 40px;
+	height: 40px;
+	margin: 0 auto;
+}
+.mui-pull-top-canvas canvas {
+	width: 40px;
+}
+.mui-slider-indicator.mui-segmented-control {
+	background-color: #efeff4;
+}
+.mui-slider-group{
+	height: 100%;
+}
+.mui-table-view-cell{
+	height: 3rem;
+	padding: .3rem .24rem 0;
+}
+#sliderSegmentedControl{
+	top: 1.28rem;
+}
+#sliderSegmentedControl .mui-control-item{
+	height: .8rem;
+	line-height: .8rem;
+}
+.mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active{
+	color: #063875;
+	border-color: #063875;
+}
+.mui-slider-indicator.mui-segmented-control{
+	position: fixed;
+	z-index: 12;
+	border-bottom: 1px solid #ddd;
+}
+.mui-table-view{
+	margin-top: 2.6rem;
+}
+#sliderSegmentedControl a{
+	font-size: .28rem;
+}
+.mui-slider-indicator.mui-segmented-control{
+	background: #fff;
+}
+
+.list-img{
+	width: 2.22rem;
+	height: 1.48rem;
+	max-width: 2.22rem;
+	float: left;
+	margin-right: .2rem;
+}
+.list-title{
+	font-size: .3rem;	
+}
+.mui-table-view-cell:after{
+	left: 0;
+}
+.list-li .p-list{
+	font-size: .24rem;
+	line-height: .4rem;
+}
+.mui-slider .mui-slider-group{
+	margin-top: -1px;
+}
+.income-over{
+	clear: both;
+	height: .9rem;
+	margin-top: .5rem;
+	font-size: .3rem;
+	color: #999;
+	padding-top: .3rem;
+	border-top: 1px solid #eee;
+}
+.mui-control-content .mui-loading{
+	margin-top: 1.1rem;
+}
+.for-task{
+	height: 2.26rem;
+	padding: 0 .25rem;
+	background-color: #fff;
+	padding-top: .3rem;
+	border-bottom: 1px solid #dfdfdf;
+}
+.task-title{
+	font-size: .3rem;
+	margin: 0;
+	color: #333;
+}
+.pos-ul{
+	margin: 0;
+	padding: 0;
+	margin-top: .2rem;
+	color: #999;
+	border-bottom: 1px solid #eee;
+	height: .54rem;
+}
+.pos-ul li{
+	float: left;
+	font-size: .22rem;
+}
+.fengexian{
+	margin: 0 .2rem;
+}
+.task-distance{
+	color: #15447d;
+}
+.task-distance i{
+	font-size: .24rem;
+}
+.task-distance span{
+	font-size: .18rem;
+}
+.money-ul{
+	margin: 0;
+	padding: 0;
+	margin-top: .2rem;
+}
+.task-money{
+	float: left;
+	color: #e84a55;
+	font-size: .28rem;
+}
+.task-main{
+	float: right;
+}
+.task-main a{
+	display: block;
+	width: 1.24rem;
+	height: .52rem;
+	border: 1px solid #063875;
+	color: #063875;
+	background-color: #fff;
+	text-align: center;
+	line-height: .52rem;
+	font-size: .22rem;
+	border-radius: .1rem;
+}

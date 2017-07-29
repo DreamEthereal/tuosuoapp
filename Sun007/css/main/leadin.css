@@ -1,0 +1,196 @@
+html{
+	font-size: 100px;
+}
+body{
+	font-size: 16px;
+	background: #fff;
+	line-height: normal;
+}
+li{
+	list-style: none;
+}
+.leadin-header{
+	box-shadow: none;
+	background: #063875;
+	height: 1.28rem;
+}
+#leadin-back{
+	color: #fff;
+	margin-top: .4rem;
+}
+#leadin-title{
+	color: #fff;
+	margin-top: .4rem;
+	font-size: .34rem;
+}
+.leadin-title{
+	font-size: .3rem;
+	margin: 0;
+	color: #333;
+}
+#leadin-content{
+	padding-top: 1.28rem;
+}
+.leadin-sign{
+	height: 4.04rem;
+}
+.leadin-name h2{
+	margin: 0;
+	height: .7rem;
+	padding: 0 .25rem;
+	line-height: .7rem;
+	font-size: .3rem;
+	border-bottom: 1px solid #eee;
+}
+.leadin-deg{
+	height: 1.58rem;
+	padding: 0 .25rem;
+	border-bottom: 1px solid #dfdfdf;
+}
+.deg-left{
+	float: left;
+}
+.deg-left p{
+	margin: 0;
+	margin-top: .14rem;
+	font-size: .18rem;
+}
+.deg-left p a{
+	font-size: .26rem;
+	color: #063875;
+}
+#leadin-btn{
+	float: right;
+	background: #063875;
+	color: #fff;
+	border-radius: .1rem;
+	width: .9rem;
+	height: .5rem;
+	margin-top: .54rem;
+	font-size: .22rem;
+	text-align: center;
+	padding: 0;
+	line-height: .5rem;
+}
+.leadin-tab{
+	height: 1.74rem;
+	padding: 0 .25rem;
+	background: #fff;
+	width: 100%;
+	border-bottom: 1px solid #dfdfdf;
+}
+.leadin-tab ul{
+	margin: 0;
+	padding: 0;
+}
+.leadin-tab li{
+	float: left;
+	width: 25%;
+	text-align: center;
+	padding-top: .4rem;
+}
+.leadin-tab li img{
+	width: .56rem;
+	height: .56rem;
+}
+.leadin-tab li p{
+	margin: 0;
+	font-size: .26rem;
+	color: #666;
+}
+.leadin-data{
+	background: #efefef;
+	padding: 0 .25rem;
+}
+.leadin-data-title h2{
+	margin: 0;
+	padding: 0;
+	line-height: .8rem;
+	font-size: .3rem;
+	color: #666;
+}
+.leadin-shu img{
+	float: left;
+	margin-top: .55rem;
+	height: 3rem;
+	width: .16rem;
+}
+.sign-in,.sign-out{
+	height: 1.24rem;
+	background: #fff;
+	border-radius: .1rem;
+	margin-left: .36rem;
+	padding: .26rem 0 0 .35rem;	
+	border: 1px solid #e1e1e1;
+}
+.sign-in h4,.sign-out h4{
+	font-size: .26rem;
+	margin: 0;
+	font-weight: normal;
+}
+.change-signIn,.change-signOut{
+	margin-top: .2rem;
+}
+.change-signIn img,.change-signOut img{
+	width: .3rem;
+	height: .3rem;
+	vertical-align: middle;
+}
+.change-signIn span{
+	font-size: .26rem;
+	color: #e94e59;
+}
+.change-signOut span{
+	font-size: .26rem;
+	color: #063875;
+}
+.margin-sign{
+	margin-top: .2rem;
+}
+.sign-photo{
+	margin: .6rem .36rem 0 .35rem;
+}
+.photo-title {
+	height: .62rem;
+}
+.photo-title h4{
+	font-size: .26rem;
+	color: #333;
+	font-weight: normal;
+	float: left;
+	margin: 0;
+}
+.photo-title p{
+	float: right;
+	margin: 0;
+	padding: 0;
+	font-size: .26rem;
+	color: #063875;
+}
+.photo-title p i{
+	font-size: .32rem;
+}
+.photo-sign{
+	margin: 0;
+	padding: 0;
+	height: auto;
+}
+.photo-sign li{
+	float: left;
+	margin-left: .2rem;
+	position: relative;
+}
+.photo-sign .img1{
+	width: 1.96rem;
+	height: 1.3rem;
+}
+.photo-sign .margin0{
+	margin: 0;
+}
+.img2{
+	width: .32rem;
+	height: .32rem;
+	position: absolute;
+	top: -.16rem;
+	right: -.16rem;
+}

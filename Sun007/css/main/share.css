@@ -1,0 +1,55 @@
+html{
+	font-size: 100px;
+}
+body{
+	font-size: 16px;
+}
+.share-header{
+	box-shadow: none;
+	background: #063875;
+	height: 1.28rem;
+}
+#share-back{
+	color: #fff;
+	margin-top: .4rem;
+	font-size: .34rem;
+}
+#share-title{
+	color: #fff;
+	margin-top: .4rem;
+	font-size: .34rem;
+}
+#share-content{
+	padding: 1.28rem .25rem 0;
+	background: #efefef;
+	text-align: center;
+}
+#share-icon{
+	margin-top: .4rem;
+	font-size: .34rem;
+	color: #fff;
+}
+.erweima{
+	margin-top: 1rem;
+	width: 3.04rem;
+	height: 3.04rem;
+}
+.main-title{
+	margin-top: .4rem;
+	font-weight: normal;
+	font-size: .34rem;
+	color: #333;
+	letter-spacing: .05rem;
+}
+.main p{
+	font-size: .22rem;
+	color: #666;
+}
+#down-btn{
+	width: 2.8rem;
+	height: .8rem;
+	background: #063875;
+	color: #fff;
+	font-size: .3rem;
+	border-radius: .1rem;
+}

@@ -1,0 +1,210 @@
+html {
+	font-size: 100px;
+}
+
+body {
+	font-size: 16px;
+}
+
+li {
+	list-style: none;
+}
+
+.city-header {
+	background: #063875;
+	padding: .4rem .24rem 0;
+	height: 1.28rem;
+}
+
+.mui-bar {
+	z-index: 10000;
+}
+
+#city-title input {
+	width: 6.3rem;
+	height: .58rem;
+	background: #fff;
+	border-radius: .5rem;
+	color: #000;
+	position: relative;
+}
+
+.mui-focusin>.mui-bar-nav {
+	position: fixed;
+}
+
+#city-back {
+	font-size: .26rem;
+	color: #fff;
+	line-height: .88rem;
+	margin-left: .2rem;
+}
+
+.mui-search .mui-placeholder {
+	line-height: .88rem;
+	font-size: .22rem;
+}
+
+.mui-search .mui-placeholder .mui-icon {
+	font-size: .28rem;
+}
+
+#city-content {
+	padding-top: 4.28rem;
+}
+
+.city-a {
+	padding: 0 .25rem;
+	height: 2.9rem;
+	background: #efefef;
+	position: fixed;
+	top: 1.28rem;
+	z-index: 10000;
+}
+
+.city-a ul {
+	height: inherit;
+	margin: 0;
+	padding: 0;
+}
+
+.city-a ul li {
+	width: .82rem;
+	height: .5rem;
+	float: left;
+	border: 1px solid #063875;
+	text-align: center;
+	line-height: .5rem;
+	color: #063875;
+	font-size: .22rem;
+	background: #fff;
+	border-radius: .05rem;
+	margin: .2rem 0 0 .2rem;
+}
+
+.city-a ul li a {
+	color: #063875;
+}
+
+.city-a ul .margin0 {
+	margin-left: 0;
+}
+
+.loan_jm1 {
+	width: 94%;
+	margin: 0 auto;
+}
+
+.loan_jm_spa1 {
+	width: 39%;
+	height: 40px;
+	line-height: 40px;
+	font-size: 1em;
+	color: #666;
+	display: block;
+	float: left;
+}
+
+.loan_jm_l1 {
+	margin-top: 10px;
+	margin-bottom: 15px;
+	height: 40px;
+}
+
+.wbk_srn {
+	width: 57%;
+	height: 40px;
+	border: 1px solid #ccc;
+	background: #FFF;
+	float: left;
+	padding-left: 3%;
+	line-height: 40px;
+	color: #ADADAD;
+	font-size: 1.1em;
+	background-size: 45%;
+	background-position: center;
+	background: #fff;
+}
+
+.wbk_srn b {
+	width: 30px;
+	height: 40px;
+	border: 1px solid #ccc;
+	background: #FFF;
+	float: left;
+	padding-left: 3%;
+	line-height: 40px;
+	color: #ADADAD;
+	font-size: 1.1em;
+	background-size: 45%;
+	background-position: center;
+	background: url(../img/xl.png) right 5px no-repeat;
+}
+
+
+/*城市弹层*/
+
+.container {
+	width: 100%;
+	position: absolute;
+	top: 4.15rem;
+	left: 0;
+	background-color: #ffffff;
+	z-index: 10;
+}
+
+.letter {
+	overflow: hidden;
+	line-height: .4rem;
+	font-size: 16px;
+	position: fixed;
+	top: 4rem;
+	right: 10px;
+	text-align: center;
+	z-index: 1000000000000
+}
+
+.letter ul {
+	list-style-type: none;
+}
+
+.letter ul li a {
+	text-decoration: none;
+	color: #333;
+	font-size: .16rem;
+}
+
+.city {
+	width: 90%;
+	overflow: hidden;
+}
+
+.city-list {
+	width: 100%;
+	overflow: hidden;
+}
+
+.city-list .city-letter {
+	color: #6e6e6e;
+	font-size: 16px;
+	display: inline-block;
+	padding-top: 15px;
+	padding-bottom: 5px;
+	border-bottom: 1px solid #e8ecf1;
+	width: 100%;
+}
+
+.city-list p {
+	color: #333;
+	width: 95%;
+	height: .8rem;
+	line-height: .8rem;
+	border-bottom: 1px solid #eee;
+	cursor: pointer;
+	margin-left: .25rem;
+	font-size: .3rem
+}
+
+.UISelect {
+	margin-top: 5px
+}

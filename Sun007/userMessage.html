@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="HandheldFriendly" content="true" />
+		<meta name="MobileOptimized" content="320" />
+		<title>完善个人资料</title>
+
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="css/main/userMessage.css" />
+		<link rel="stylesheet" type="text/css" href="css/iconfont.css" />
+		<link rel="stylesheet" href="css/app.css" />
+		<link rel="stylesheet" href="css/mui.picker.css" />
+		<link rel="stylesheet" type="text/css" href="css/mui.poppicker.css"/>
+		<link rel="stylesheet" type="text/css" href="css/mui.picker.min.css"/>
+		
+	</head>
+
+	<body>
+		<div class="mui-bar mui-bar-nav user-header">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" id="user-back"></a>
+			<h1 class="mui-title" id="user-title">访问完善个人资料</h1>
+		</div>
+		<div class="mui-content" id="user-content">
+			<div id="dialogDemo">
+				<ul class="mui-table-view" id="user-ul1">
+					<li class="mui-table-view-cell mui-media" id="user-touxiang">
+						<a class="tou-margin common3" href="javascript:;">
+							<div id="fileImg" class="">
+								<img id="img" class="mui-media-object mui-pull-right common" src="images/touxiang.png" />
+							</div>
+							<div class="mui-media-body">
+								<p class='mui-ellipsis' id="title-text">头像</p>
+							</div>
+						</a>
+					</li>
+					<li class="mui-table-view-cell user-li1" id="indexName">昵称
+						<span class="mui-badge mui-badge-success common2" id="name">北海以南</span>
+					</li>
+					<li class="mui-table-view-cell user-li1">手机
+						<span class="mui-badge common2" id="phone">18888888888</span>
+					</li>
+					<li class="mui-table-view-cell user-li1 common3" id="indexSex">性别
+						<span class="mui-badge common2 common" id="sex">女</span>
+					</li>
+					<li class="mui-table-view-cell user-li1 common3">出生年月
+						<span class="mui-badge common common2" id="beginTime" data-options='{"value":"1992-02-14","type":"date","beginYear":1900,"endYear":2016}'>1988-01-01</span>
+					</li>
+				</ul>
+
+				<ul class="mui-table-view" id="user-ul2">
+					<li class="mui-table-view-cell user-li1">邮箱
+						<span class="mui-badge common2" id="email">xuerlong@126.com</span>
+					</li>
+					<li class="mui-table-view-cell user-li1 common3">学历
+						<span class="mui-badge common2 common "><a href="#eduction" id="ed-val">本科</a></span>
+					</li>
+					<li class="mui-table-view-cell user-li1">职业
+						<span class="mui-badge common2" id="job">前端开发工程师</span>
+					</li>
+				</ul>
+
+				<ul class="mui-table-view" id="user-ul2">
+					<li class="mui-table-view-cell user-li1">姓名
+						<span class="mui-badge common2" id="userName">王丽琴</span>
+					</li>
+					<li class="mui-table-view-cell user-li1">身份证号码
+						<span class="mui-badge common2" id="idCard">123456789123456789</span>
+					</li>
+					<li class="mui-table-view-cell user-li1 common3">证件信息
+						<span class="mui-badge common2 common"><a href="idCard.html">添加</a></span>
+					</li>
+					<li class="mui-table-view-cell user-li1 common3">提现账号
+						<span class="mui-badge common2 common" id="outMoney">支付宝账号</span>
+					</li>
+				</ul>
+				<ul class="mui-table-view" id="user-ul2">
+					<li class="mui-table-view-cell user-li1 common3">婚姻状态
+						<span class="mui-badge common2 common"><a href="#marry" id="marry-val">未婚</a></span>
+					</li>
+					<li class="mui-table-view-cell user-li1 common3">收入
+						<span class="mui-badge common2 common"><a href="#income" id="income-val">10000以上</a></span>
+					</li>
+					<li class="mui-table-view-cell user-li1 common3">是否有孩子
+						<span class="mui-badge common2 common"><a href="#hasChild" id="hc-val">无</a></span>
+					</li>
+					<li class="mui-table-view-cell user-li1 common3">地区
+						<span class="mui-badge common2 common" id="addChoose">北京 海淀</span>
+					</li>
+				</ul>
+				<ul class="mui-table-view" id="user-ul2">
+					<li class="mui-table-view-cell user-li1" id="one">详细地址
+						<span class="mui-badge common2" id="address">北京 海淀</span>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="user-footer">
+			<button type="button" id="btn" class="mui-btn mui-btn-primary user-sure">保存</button>
+		</div>
+		
+		
+		<!--学历选择-->
+		<div id="eduction" class="mui-popover mui-popover-action mui-popover-bottom">
+			<ul class="mui-table-view">
+				<li class="mui-table-view-cell">
+					<a href="#">博士</a>
+				</li>
+				<li class="mui-table-view-cell">
+					<a href="#">硕士</a>
+				</li>
+				<li class="mui-table-view-cell">
+					<a href="#">本科/大专</a>
+				</li>
+				<li class="mui-table-view-cell">
+					<a href="#">高中及以下学历</a>
+				</li>
+			</ul>
+		</div>
+		<!--婚姻状态-->
+		<div id="marry" class="mui-popover mui-popover-action mui-popover-bottom">
+			<ul class="mui-table-view">
+				<li class="mui-table-view-cell">
+					<a href="#">未婚</a>
+				</li>
+				<li class="mui-table-view-cell">
+					<a href="#">已婚</a>
+				</li>
+				<li class="mui-table-view-cell">
+					<a href="#">离异</a>
+				</li>
+			</ul>
+		</div>
+		<!--收入-->
+		<div id="income" class="mui-popover mui-popover-action mui-popover-bottom">
+			<ul class="mui-table-view">
+				<li class="mui-table-view-cell">
+					<a href="#">2000-5000元</a>
+				</li>
+				<li class="mui-table-view-cell">
+					<a href="#">5001-8000元</a>
+				</li>
+				<li class="mui-table-view-cell">
+					<a href="#">8001-10000元</a>
+				</li>
+				<li class="mui-table-view-cell">
+					<a href="#">10000元以上</a>
+				</li>
+			</ul>
+		</div>
+		<!--是否有孩子-->
+		<div id="hasChild" class="mui-popover mui-popover-action mui-popover-bottom">
+			<ul class="mui-table-view">
+				<li class="mui-table-view-cell">
+					<a href="#">有</a>
+				</li>
+				<li class="mui-table-view-cell">
+					<a href="#">无</a>
+				</li>
+			</ul>
+		</div>
+		
+	</body>
+	<script type="text/javascript" src="js/rem.js"></script>
+	<script type="text/javascript" src="js/mui.min.js"></script>
+	<script type="text/javascript" src="js/help/test.js"></script>
+	<script type="text/javascript" src="js/common.js"></script>
+	<script src="js/zepto.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/src/mui.picker.js"></script>
+	<script src="js/src/mui.poppicker.js"></script>
+	<script type="text/javascript" src="js/src/mui.picker.min.js"></script>
+	<script src="js/src/city.data.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/src/city.data-3.js" type="text/javascript" charset="utf-8"></script>
+
+	<script type="text/javascript">
+		// H5 plus事件处理
+		function plusReady(){
+		}
+		if(window.plus){
+			plusReady();
+		}else{
+			document.addEventListener("plusready",plusReady,false);
+		}
+		
+		function appendByGallery(){
+			plus.gallery.pick(function(p){
+		        appendFile(p);
+		    });
+		}
+		// 选择图片更换头像
+		function appendFile(p){
+			var n=p.substr(0);
+			$("#img").attr('src',n);
+		}
+		$("#fileImg").on("tap",function(){
+			appendByGallery();
+		})
+	</script>
+	<script type="text/javascript">
+		$("#btn").on("click",function(){
+			var administratorsName = $("#name").html();
+			var phone = $("#phone").html();
+			
+			
+			var data = {administratorsName,phone}
+			$.ajax({
+		        type: 'POST',
+		        url: 'http://app_yg007.yinglian360.com/Home/User/perfect_userinfo',
+		        dataType: 'json',
+		        data: data,
+		        success: function(msg){                
+		            msg.administratorsName = administratorsName;
+		            msg.phone = phone;
+		            console.log(msg)
+		        }
+		    })
+		})
+		$("#outMoney").on("click",function(){
+			window.location.href = 'bankName.html';
+		})
+	</script>
+	<script type="text/javascript">
+		(function($, doc) {
+			$.ready(function() {
+				var _getParam = function(obj, param) {
+						return obj[param] || '';
+					};
+				var cityPicker3 = new $.PopPicker({
+					layer: 3
+				});
+				cityPicker3.setData(cityData3);
+				var address = doc.getElementById('addChoose');
+				address.addEventListener('tap', function(event) {
+					cityPicker3.show(function(items) {
+						address.innerText = _getParam(items[0], 'text') + " " + _getParam(items[1], 'text') + " " + _getParam(items[2], 'text');
+						//返回 false 可以阻止选择框的关闭
+						//return false;
+					});
+				}, false);
+			});
+		})(mui, document);
+	</script>
+	<script>
+		(function($) {
+			$.init();
+			$('#beginTime').each(function(i, btn) {
+				btn.addEventListener('tap', function() {
+					var optionsJson = this.getAttribute('data-options') || '{}';
+					var options = JSON.parse(optionsJson);
+					var id = document.getElementById("beginTime");
+
+					var picker = new $.DtPicker(options);
+					picker.show(function(rs) {
+						id.innerHTML = rs.text;
+						picker.dispose();
+					});
+				}, false);
+			});
+		})(mui);
+	</script>
+	<script>
+		mui.init({
+			swipeBack:true //启用右滑关闭功能
+		});
+		mui('body').on('shown', '.mui-popover', function(e) {
+		});
+		mui('body').on('hidden', '.mui-popover', function(e) {
+		});
+		//学历选择
+		mui('body').on('tap', '#eduction li>a', function() {
+			var edVal = document.getElementById("ed-val");
+			var a = this,
+				parent;
+			for (parent = a.parentNode; parent != document.body; parent = parent.parentNode) {
+				if (parent.classList.contains('mui-popover-action')) {
+					break;
+				}
+			}
+			mui('#' + parent.id).popover('toggle');
+			edVal.innerHTML = a.innerHTML ;
+		})	
+		//婚否选择
+		mui('body').on('tap', '#marry li>a', function() {
+			var marryVal = document.getElementById("marry-val");
+			var a = this,
+				parent;
+			for (parent = a.parentNode; parent != document.body; parent = parent.parentNode) {
+				if (parent.classList.contains('mui-popover-action')) {
+					break;
+				}
+			}
+			mui('#' + parent.id).popover('toggle');
+			marryVal.innerHTML = a.innerHTML ;
+		})
+		//收入情况
+		mui('body').on('tap', '#income li>a', function() {
+			var incomeVal = document.getElementById("income-val");
+			var a = this,
+				parent;
+			for (parent = a.parentNode; parent != document.body; parent = parent.parentNode) {
+				if (parent.classList.contains('mui-popover-action')) {
+					break;
+				}
+			}
+			mui('#' + parent.id).popover('toggle');
+			incomeVal.innerHTML = a.innerHTML ;
+		})
+		//是否有孩子
+		mui('body').on('tap', '#hasChild li>a', function() {
+			var hasChild = document.getElementById("hc-val");
+			var a = this,
+				parent;
+			for (parent = a.parentNode; parent != document.body; parent = parent.parentNode) {
+				if (parent.classList.contains('mui-popover-action')) {
+					break;
+				}
+			}
+			mui('#' + parent.id).popover('toggle');
+			hasChild.innerHTML = a.innerHTML ;
+		})
+	</script>
+	<script type="text/javascript">
+		mui("body").on("tap",'a',function(){
+			document.location.href = this.href;
+		})
+	</script>
+		
+</html>

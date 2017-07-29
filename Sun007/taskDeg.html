@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="HandheldFriendly" content="true" />
+		<meta name="MobileOptimized" content="320" />
+		<title>任务详情</title>
+		
+		<link rel="stylesheet" type="text/css" href="css/mui.min.css"/>
+		<link rel="stylesheet" href="css/main/taskDeg.css" />
+		<link rel="stylesheet" href="css/iconfont.css" />
+	</head>
+	<body>
+		<header class="mui-bar mui-bar-nav task-header">
+		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" id="task-back"></a>
+		    <h1 class="mui-title" id="task-title">任务详情</h1>
+		</header>
+		<div class="mui-content" id="task-content">
+		    <div class="for-task">
+				<h3 class="task-title">北京市勤和汽车销售有限公司服务质量考核</h3>
+				<ul class="pos-ul">
+					<li class="task-distance">
+						<i class="mui-icon iconfont icon-juli"></i>
+						<span>6.2km</span>
+					</li>
+					<li class="fengexian">|</li>
+					<li>北京市朝阳区大屯路东地铁口</li>
+				</ul>
+				<div class="money-task">
+					<div class="money-left">
+						<p class="task-num">任务编号： <span>3102361</span></p>
+						<p class="task-time">领取后<span>8</span>小时内完成</p>
+					</div>					
+					<p class="task-gift">酬劳： <span>200元</span></p>
+				</div>
+				<div class="enter-task">
+					<a href="#">进入项目</a>
+				</div>
+			</div>
+			<div class="task-state">
+				<div class="task-exp">
+					任务说明
+				</div>
+				<div class="task-tar">
+					<h2>任务目标</h2>
+					<p class="task-tar-txt">查验门店是否真的存在、口碑物料在线下门店的覆盖情况、覆盖点位等；查验门店是否真的存在、口碑物料在线下门店的覆盖情况、覆盖点位等、覆盖点位等；</p>
+				</div>
+				<div class="task-ask">
+					<h2>服务要求</h2>
+					<p class="ask-one">一、	到达指定查验门店是否真的存在、口碑物料在线下门店的覆盖情况、覆盖点位等；盖点位等盖点位等盖点位等</p>
+					<p class="ask-one">注1：查验门店是否真的存在、口碑物料在线下门店的覆盖情况、覆盖点位等；查验门店是否真的存在、口碑物料在线下门店的覆盖情况、覆盖点位等；盖点位等盖点位等盖点位等盖点位等</p>
+					<p class="ask-one"></p>
+				</div>
+				<button type="button" class="mui-btn" id="start">开始任务</button>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="js/rem.js"></script>
+	<script type="text/javascript" src="js/mui.min.js"></script>
+	<script type="text/javascript">
+		mui("body").on("tap",'a',function(){
+			document.location.href = this.href;
+		})
+	</script>
+</html>

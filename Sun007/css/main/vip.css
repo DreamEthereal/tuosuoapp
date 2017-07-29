@@ -1,0 +1,112 @@
+html{
+	font-size: 100px;
+}
+body{
+	font-size: 16px;
+}
+.vip-header{
+	box-shadow: none;
+	background: #063875;
+	height: 1.28rem;
+}
+#vip-title{
+	color: #fff;
+	margin-top: .4rem;
+	font-size: .34rem;
+}
+.mui-content .vip-box{
+	width: 7.5rem;
+	height: 1.7rem;
+	padding: .25rem;
+	background: #fff;
+}
+#vip-content{
+	padding-top: 1.28rem;
+	height: 13.3rem;
+}
+.vip-img{
+	float: left;
+	width: 1.2rem;
+	height: 1.2rem;
+	border: 1px solid #ddd;
+	border-radius: 20%;	
+	margin-right: .25rem;
+	position: relative;
+	z-index: 9;
+}
+.vip-img img{
+	width: 1.16rem;
+	height: 1.16rem;
+}
+.vip-name{
+	font-size: .3rem;
+	font-weight: 500;
+	position: relative;
+}
+.vip-who{
+	font-size: .22rem;
+	background: #ee9b3a;
+	color: #fff;
+	padding: .07rem .15rem;
+	border-radius: .1rem;
+	margin-left: .2rem;
+	position: absolute;
+	top: -0.04rem;
+}
+#vip-message{
+	margin-top: .25rem;
+}
+#vip-username{
+	font-size: .3rem;
+	float: left;
+	margin-top: .1rem;
+}
+.vip-self{
+	float: right;
+	color: #ddd;
+	margin-top: -0.35rem;
+	font-size: .4rem;
+}
+
+.vip-use{
+	width: 7.5rem;
+}
+.vip-use ul{
+	height: 4.24rem;
+	padding: .24rem 0;
+}
+.vip-use ul li{
+	height: 1rem;
+	line-height: 1rem;
+}
+.mui-table-view-cell img{
+	width: .4rem;
+	height: .4rem;
+	margin-top: .3rem;
+	float: left;
+}
+.mui-table-view-cell:after{
+	background: #fff;
+}
+.mui-navigate-right:after, .mui-push-left:after, .mui-push-right:after{
+	right: 0;
+}
+.mui-table-view-cell>a:not(.mui-btn){
+	font-size: .3rem;
+}
+
+.mui-bar-tab{
+	height: 1rem;
+	font-size: .24rem;
+}
+.mui-bar-tab .mui-tab-item .mui-icon{
+	font-size: .4rem;
+	top: .06rem;
+    width: .48rem;
+    height: .48rem;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+.mui-bar-tab .mui-tab-item .mui-icon~.mui-tab-label{
+	font-size: .22rem;
+}

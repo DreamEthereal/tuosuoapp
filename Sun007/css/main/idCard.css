@@ -1,0 +1,74 @@
+html{
+	font-size: 100px;
+}
+body{
+	font-size: 16px;
+	background: #efefef;
+}
+.idCard-header{
+	box-shadow: none;
+	background: #063875;
+	height: 1.28rem;
+	padding: 0 .25rem;
+}
+#idCard-back{
+	color: #fff;
+	margin: .4rem 0 0 ;
+	padding: 0;
+	font-size: .3rem;
+	line-height: .88rem;
+}
+#idCard-title{
+	color: #fff;
+	margin: .4rem 0 0 ;
+	font-size: .34rem;
+	padding: 0;
+	line-height: .88rem;
+}
+#idCard-content{
+	padding: 1.28rem .25rem 0;
+}
+.idCard-msg{
+	font-size: .26rem;
+	text-align: center;
+	padding-top: .5rem;
+	margin: 0;
+	letter-spacing: .02rem;
+	color: #333;
+}
+.idCard-msg span{
+	color: #063875;
+}
+.idCard-up{
+	margin-top: .4rem;
+	text-align: center;
+	position: relative;
+}
+.card-f,.card-b{
+	width: 4.84rem;
+	height: 2.42rem;
+}
+.card-pos{
+	width: .88rem;
+	height: .88rem;
+	background-color: rgba(53,94,145,1);
+	border-radius: 50%;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin: -.44rem 0 0 -.44rem;
+	padding: .2rem;
+}
+.card-pos img{
+	width: .48rem;
+	height: .48rem;
+	border-radius: 50%;
+}
+#btn{
+	margin: .8rem .06rem 0;  
+	width: 100%;
+	height: .8rem;
+	background: #9bafc8;
+	color: #fff;
+	border-radius: .1rem;
+}

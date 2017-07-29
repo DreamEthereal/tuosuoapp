@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="HandheldFriendly" content="true" />
+		<meta name="MobileOptimized" content="320" />
+		<title>公告列表</title>
+		
+		<link rel="stylesheet" type="text/css" href="css/mui.min.css"/>
+		<link rel="stylesheet" href="css/main/public.css" />
+	</head>
+	<body>
+		<header class="mui-bar mui-bar-nav public-header">
+		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" id="public-back"></a>
+		    <h1 class="mui-title" id="public-title">公告列表</h1>
+		</header>
+		<div class="mui-content" id="public-content">
+		    <div class="public-list">
+		    	<img src="images/list.png"/>
+		    	<h2>董明珠举债投资银隆</h2>
+		    	<p>“我董明珠是举债投资银隆，有人骂我疯了，但我觉得新能源是未来...</p>
+		    	<span>2017-03-25 &nbsp; 09:25</span>
+		    </div>
+		    <div class="public-list">
+		    	<img src="images/list.png"/>
+		    	<h2>董明珠举债投资银隆</h2>
+		    	<p>“我董明珠是举债投资银隆，有人骂我疯了，但我觉得新能源是未来...</p>
+		    	<span>2017-03-25 &nbsp; 09:25</span>
+		    </div>
+		    <div class="public-list">
+		    	
+		    	<h2>董明珠举债投资银隆</h2>
+		    	<p>“我董明珠是举债投资银隆，有人骂我疯了，但我觉得新能源是未来...</p>
+		    	<span>2017-03-25 &nbsp; 09:25</span>
+		    </div>
+		</div>
+	</body>
+	<script type="text/javascript" src="js/rem.js"></script>
+	<script type="text/javascript" src="js/mui.js"></script>
+	<script type="text/javascript">
+		mui("body").on("tap",'a',function(){
+			document.location.href = this.href;
+		})
+	</script>
+</html>

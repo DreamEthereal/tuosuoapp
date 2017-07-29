@@ -1,0 +1,147 @@
+html{
+	font-size: 100px;
+}
+body{
+	font-size: 16px;
+	background: #fff;
+	line-height: normal;
+}
+li{
+	list-style: none;
+}
+.task-header{
+	box-shadow: none;
+	background: #063875;
+	height: 1.28rem;
+}
+#task-back{
+	color: #fff;
+	margin-top: .4rem;
+}
+#task-title{
+	color: #fff;
+	margin-top: .4rem;
+	font-size: .34rem;
+}
+
+#task-content{
+	padding-top: 1.28rem;
+}
+.for-task{
+	height: 3rem;
+	padding: 0 .25rem;
+	background-color: #fff;
+	padding-top: .2rem;
+	border-bottom: 1px solid #dfdfdf;
+}
+.task-title{
+	font-size: .3rem;
+	margin: 0;
+	color: #333;
+}
+.pos-ul{
+	margin: 0;
+	padding: 0;
+	margin-top: .2rem;
+	color: #999;
+	border-bottom: 1px solid #eee;
+	height: .44rem;
+}
+.pos-ul li{
+	float: left;
+	font-size: .22rem;
+}
+.fengexian{
+	margin: 0 .2rem;
+}
+.task-distance{
+	color: #15447d;
+}
+.task-distance i{
+	font-size: .24rem;
+}
+.task-distance span{
+	font-size: .18rem;
+}
+.money-task{
+	height: 1.1rem;
+	border-bottom: 1px solid #eee;
+}
+.money-task p{
+	padding: 0;
+	margin: 0;
+	color: #959595;
+	font-size: .2rem;
+}
+.money-left{
+	padding-top: .2rem;
+	float: left;
+}
+.task-gift{
+	float: right;
+	line-height: 1.1rem;
+}
+.money-task .task-time{
+	margin-top: .1rem;
+	font-size: .2rem;
+}
+.task-gift span{
+	font-size: .36rem;
+	color: #e84a55;
+}
+.enter-task{
+	width: inherit;
+	font-size: .26rem;
+	height: .74rem;
+	line-height: .74rem;
+	text-align: center;
+	clear: both;
+}
+.enter-task a{
+	color: #063875;
+	font-size: .28rem;
+}
+.task-state{
+	padding: 0 .25rem;
+}
+.task-exp{
+	height: .5rem;
+	background: #efefef;
+	font-size: .22rem;
+	line-height: .5rem;
+	color: #adadad;
+}
+.task-tar{
+	padding-top: .2rem;
+}
+.task-tar h2,.task-ask h2{
+	margin: 0;
+	font-size: .3rem;
+	color: #333;
+	font-weight: 600;
+	letter-spacing: .01rem;
+}
+.task-tar-txt{
+	margin: .2rem 0;
+	font-size: .3rem;
+	color: #333;
+	line-height: .5rem;
+}
+.task-ask{
+	padding-top: .2rem;
+}
+.ask-one{
+	margin: .2rem 0 0;
+	font-size: .3rem;
+	color: #333;
+	line-height: .5rem;
+}
+#start{
+	width: 100%;
+	height: .8rem;
+	background: #063875;
+	color: #fff;
+	border-radius: .15rem;
+	font-size: .3rem;
+	margin: 0 .03rem 0 .06rem;
+}

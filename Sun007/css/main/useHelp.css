@@ -1,0 +1,40 @@
+html{
+	font-size: 100px;
+}
+body{
+	font-size: 16px;
+	background: #efefef;
+}
+.help-header{
+	box-shadow: none;
+	background: #063875;
+	height: 1.28rem;
+}
+#help-back{
+	color: #fff;
+	margin-top: .4rem;
+	font-size: .3rem;
+}
+#help-title{
+	color: #fff;
+	margin-top: .4rem;
+	font-size: .34rem;
+}
+#help-content{
+	padding: 1.28rem 0rem 0;
+	background: #efefef;
+}
+#main{
+	margin-top: .2rem;
+	border-top: none;
+	background: #fff;
+}
+.mui-table-view:before,.mui-table-view:after{
+	background: #fff;
+}
+.mui-table-view-cell{
+	height: .8rem;
+}
+.mui-navigate-right{
+	font-size: .3rem;
+}

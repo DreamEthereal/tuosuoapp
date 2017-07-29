@@ -1,0 +1,68 @@
+html{
+	font-size: 100px;
+}
+body{
+	font-size: 16px;
+	background: #fff;
+}
+.chooseID-header{
+	box-shadow: none;
+	background: #063875;
+	height: 1.28rem;
+}
+#chooseID-title{
+	margin-top: .4rem;
+	color: #fff;
+}
+#chooseID-content{
+	padding-top: 1.28rem;
+	background: #fff;
+}
+.chooseID-title{
+	width: 7.5rem;
+	height: 1.8rem;
+	background: #fff;
+	padding: 0 .25rem;
+}
+.chooseID-title h2{
+	margin: 0;
+	height: 1.8rem;
+	line-height: 1.8rem;
+	text-align: center;
+	font-size: .46rem;
+	font-weight: normal;
+	color: #333;
+}
+.chooseID-main{
+	width: 7.5rem;
+	height: 5rem;
+	padding: 0 .25rem;
+	padding-top: 1.26rem;
+	background: #fff;
+}
+.chooseID-left,.chooseID-right{
+	width: 2.4rem;
+	height: 5rem;
+	float: left;
+	text-align: center;
+	margin-left: .59rem;
+}
+.chooseID-left img,.chooseID-right img{
+	width: 1.82rem;
+	height: 1.82rem;
+}
+.chooseID-left h3,.chooseID-right h3{
+	margin: 0;
+	font-size: .3rem;
+	margin-top: .4rem;
+	color: #666;
+}
+.chooseID-left p,.chooseID-right p{
+	font-size: .22rem;
+	margin-top: .21rem;
+	color: #999;
+	line-height: .32rem;
+}
+.chooseID-right{
+	margin-left: 1.1rem;
+}

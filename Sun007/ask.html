@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="HandheldFriendly" content="true" />
+		<meta name="MobileOptimized" content="320" />
+		<title>问卷调查</title>
+
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="css/main/ask.css" />
+		<link rel="stylesheet" type="text/css" href="css/iconfont.css"/>
+	</head>
+
+	<body>
+		<div class="mui-bar mui-bar-nav ask-header">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" id="ask-back"></a>
+			<h1 class="mui-title" id="ask-title">填写问卷</h1>
+		</div>
+		<div id="ask-content" class="mui-content">
+			<h2 class="ask-h2">问卷</h2>
+			<div class="ask1">
+				<h3 class="ask-h3">1、店员服务态度？</h3>
+				<p class="radio-txt">[单选]</p>
+				<div class="mui-card">
+					<form class="mui-input-group">
+						<div class="mui-input-row mui-radio mui-left">
+							<label>热情</label>
+							<input name="radio1" type="radio" checked />
+						</div>
+						<div class="mui-input-row mui-radio mui-left">
+							<label>冷淡</label>
+							<input name="radio1" type="radio" />
+						</div>
+						<div class="mui-input-row mui-radio mui-left">
+							<label>不理会</label>
+							<input name="radio1" type="radio" />
+						</div>
+					</form>
+				</div>
+			</div>
+			<div class="ask1">
+				<h3 class="ask-h3">2、店员是否提供两种饮料供您选择？</h3>
+				<p class="radio-txt">[单选]</p>
+				<div class="mui-card">
+					<form class="mui-input-group">
+						<div class="mui-input-row mui-radio mui-left">
+							<label>一种</label>
+							<input name="radio1" type="radio" checked />
+						</div>
+						<div class="mui-input-row mui-radio mui-left">
+							<label>两种</label>
+							<input name="radio1" type="radio" />
+						</div>
+						<div class="mui-input-row mui-radio mui-left">
+							<label>无茶水</label>
+							<input name="radio1" type="radio" />
+						</div>
+					</form>
+				</div>				
+			</div>
+			<div class="ask3">
+				<h3 class="ask-h3">3、提出您的建议？</h3>
+				<input type="text" placeholder="请输入您的建议" />
+			</div>
+			<div class="ask4">
+				<h3 class="ask-h3">4、假设满分100分，请给以下方面的评分。</h3>
+				<p class="radio-txt">[多选]</p>
+				<div class="mui-card">
+					<form class="mui-input-group">
+						<div class="mui-input-row mui-checkbox mui-left">
+							<label>产品界面（20分）</label>
+							<input name="checkbox1" type="checkbox" checked />
+						</div>
+						<div class="mui-input-row mui-checkbox mui-left">
+							<label>问卷的设计与浏览（20分）</label>
+							<input name="checkbox1" type="checkbox" />
+						</div>
+						<div class="mui-input-row mui-checkbox mui-left">
+							<label>问卷的前端数据控制（20分）</label>
+							<input name="checkbox1" type="checkbox" />
+						</div>
+						<div class="mui-input-row mui-checkbox mui-left">
+							<label>数据统计和表现（10分）</label>
+							<input name="checkbox1" type="checkbox" />
+						</div>
+						<div class="mui-input-row mui-checkbox mui-left">
+							<label>条件式数据过滤（10分）</label>
+							<input name="checkbox1" type="checkbox" />
+						</div>
+						<div class="mui-input-row mui-checkbox mui-left">
+							<label>其他系统通行证接口（20分）</label>
+							<input name="checkbox1" type="checkbox" />
+						</div>
+					</form>
+				</div>				
+			</div>
+			
+			<div class="sign-photo">
+    			<div class="photo-title">
+    				<h4>图片</h4>
+    				<p>
+    					<i class="mui-icon iconfont icon-bianji"></i>
+    					<span>编辑</span>
+    				</p>
+    			</div>
+    			<ul class="photo-sign">
+    				<li class="margin0">
+    					<img class="img1" src="images/signphoto1.png" alt="" />
+    					<img class="img2" src="images/delete.png"/>
+    				</li>
+    				<li>
+    					<img class="img1" src="images/signphoto2.png" alt="" />
+    					<img class="img2" src="images/delete.png"/>
+    				</li>
+    				<li>
+    					<img class="img1" src="images/signphoto3.png" alt="" />
+    					<img class="img2" src="images/delete.png"/>
+    				</li>
+    				<li class="addImg">
+    					+
+    				</li>
+    			</ul>
+    		</div>
+    		<button type="button" class="mui-btn" id="btn">开始任务</button>
+		</div>
+	</body>
+	<script src="js/rem.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+
+</html>

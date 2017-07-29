@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="HandheldFriendly" content="true" />
+		<meta name="MobileOptimized" content="320" />
+		<title>我的收入</title>
+		<link rel="stylesheet" href="css/mui.min.css" />
+		<link rel="stylesheet" href="css/main/inCome.css" />
+		<link rel="stylesheet" href="css/iconfont.css" />
+	</head>
+	<body>
+		<header class="mui-bar mui-bar-nav income-header">
+		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" id="income-back"></a>
+		    <h1 class="mui-title" id="income-title">我的收入</h1>
+		</header>
+		<div class="income-banner">
+	    	<div>
+	    		<p class="income-totle">累计收入（元）</p>
+	    	</div>		    	
+	    	<div class="income-num">
+	    		<span>3000</span>
+	    	</div>
+	    	<div class="income-close">
+	    		<div class="income-close-box">
+	    			<i class="mui-icon iconfont icon-daijiesuan"></i>
+	    			<span>待结算</span>
+	    			<img src="images/arrowDown.png" alt="" />
+	    		</div>		    	
+	    	</div>
+	    </div>
+		<div class="mui-content" id="income-content">
+		    
+			<div id="slider" class="mui-slider">
+				<div id="sliderSegmentedControl" class="mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+					<a class="mui-control-item" href="#item1mobile">
+						指派任务
+					</a>
+					<a class="mui-control-item" href="#item2mobile">
+						公开任务
+					</a>
+				</div>
+				<div id="sliderProgressBar" class="mui-slider-progress-bar mui-col-xs-4"></div>
+				<div class="mui-slider-group">
+					<div id="item1mobile" class="mui-slider-item mui-control-content mui-active">
+						<div id="scroll1" class="mui-scroll-wrapper">
+							<div class="mui-scroll">
+								<ul class="mui-table-view">
+									<li class="mui-table-view-cell list-li">
+										<img src="images/list.png" class="list-img"/>
+										<h2 class="list-title">【别克 4S 店】 店铺服务考核</h2>
+										<p class="p-list">任务范围: 北京市朝阳区所有4S店</p>
+										<p class="p-list">任务目标: 考核 4S店人员的服务态度</p>
+										<div class="income-over">
+											待结算
+										</div>
+									</li>
+									<li class="mui-table-view-cell list-li">
+										<img src="images/list.png" class="list-img"/>
+										<h2 class="list-title">【别克 4S 店】 店铺服务考核</h2>
+										<p class="p-list">任务范围: 北京市朝阳区所有4S店</p>
+										<p class="p-list">任务目标: 考核 4S店人员的服务态度</p>
+										<div class="income-over">
+											待结算
+										</div>
+									</li>
+									<li class="mui-table-view-cell list-li">
+										<img src="images/list.png" class="list-img"/>
+										<h2 class="list-title">【别克 4S 店】 店铺服务考核</h2>
+										<p class="p-list">任务范围: 北京市朝阳区所有4S店</p>
+										<p class="p-list">任务目标: 考核 4S店人员的服务态度</p>
+										<div class="income-over">
+											待结算
+										</div>
+									</li>
+									<li class="mui-table-view-cell list-li">
+										<img src="images/list.png" class="list-img"/>
+										<h2 class="list-title">【别克 4S 店】 店铺服务考核</h2>
+										<p class="p-list">任务范围: 北京市朝阳区所有4S店</p>
+										<p class="p-list">任务目标: 考核 4S店人员的服务态度</p>
+										<div class="income-over">
+											待结算
+										</div>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+					<div id="item2mobile" class="mui-slider-item mui-control-content">
+						<div id="scroll2" class="mui-scroll-wrapper">
+							<div class="mui-scroll">
+								<div class="mui-loading">
+									<div class="mui-spinner">
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="js/mui.min.js"></script>
+	<script src="js/rem.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/src/mui.pullToRefresh.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/src/mui.pullToRefresh.material.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/help/inCome.js" type="text/javascript" charset="utf-8"></script>
+	<script>
+		mui.init({
+			swipeBack: false
+		});
+		mui("body").on("tap",'a',function(){
+			document.location.href = this.href;
+		})
+	</script>
+</html>

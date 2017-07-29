@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>会员中心</title>
+    <script src="js/mui.min.js"></script>
+    <link href="css/mui.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="css/main/vip.css" />
+    <link rel="stylesheet" type="text/css" href="css/iconfont.css"/>
+</head>
+<body>
+
+	<div class="mui-bar mui-bar-nav vip-header">
+	    <h1 class="mui-title" id="vip-title">会员中心</h1>
+	</div>
+	<div class="mui-content" id="vip-content">
+	    <div class="mui-card-header mui-card-media vip-box">
+	    	<div class="vip-img">
+	    		<img alt="" src="images/touxiang.png" />
+	    	</div>			
+			<div class="mui-media-body" id="vip-message">				
+				<h4 class="vip-name">
+					北海以南
+					<span class="vip-who">访员</span>
+				</h4>				
+				<p id="vip-username">账号：<span>18001339994</span></p>
+			</div>
+			<div class="mui-icon mui-icon-arrowright vip-self">
+				<a href="#"></a>
+			</div>
+		</div>
+		<div class="vip-use">
+			<ul class="mui-table-view">
+			    <li class="mui-table-view-cell">
+			    	<img src="images/vip01.png" alt="" />
+			        <a class="mui-navigate-right" href="inCome.html">我的收入</a>
+			    </li>
+			    <li class="mui-table-view-cell">
+			    	<img src="images/vip02.png" alt="" />			    	
+			        <a class="mui-navigate-right" href="message.html">通知</a>
+			    </li>
+				<li class="mui-table-view-cell">
+			    	<img src="images/vip03.png" alt="" />
+			        <a class="mui-navigate-right" href="#myTask">我的任务</a>
+			    </li>
+			    <li class="mui-table-view-cell">
+			    	<img src="images/vip04.png" alt="" />
+			        <a class="mui-navigate-right" href="findPassword.html">修改密码</a>
+			    </li>
+			</ul>
+			<ul class="mui-table-view">
+			    <li class="mui-table-view-cell">
+			    	<img src="images/vip05.png" alt="" />
+			        <a class="mui-navigate-right" href="useHelp.html">使用帮助</a>
+			    </li>
+			    <li class="mui-table-view-cell">
+			    	<img src="images/vip06.png" alt="" />			    	
+			        <a class="mui-navigate-right">关于我们</a>
+			    </li>
+				<li class="mui-table-view-cell">
+			    	<img src="images/vip07.png" alt="" />
+			        <a class="mui-navigate-right">版本更新</a>
+			    </li>
+			    <li class="mui-table-view-cell">
+			    	<img src="images/vip08.png" alt="" />
+			        <a class="mui-navigate-right" href="share.html">APP分享</a>
+			    </li>
+			</ul>
+		</div>
+		
+	</div>
+	<nav class="mui-bar mui-bar-tab">
+	    <a class="mui-tab-item mui-active" href="index.html">
+	        <span class="mui-icon iconfont icon-shouye"></span>
+	        <span class="mui-tab-label">首页</span>
+	    </a>
+	    <a class="mui-tab-item" href="taskList.html">
+	        <span class="mui-icon iconfont icon-renwu"></span>
+	        <span class="mui-tab-label">任务</span>
+	    </a>
+	    <a class="mui-tab-item">
+	        <span class="mui-icon iconfont icon-xiangmu"></span>
+	        <span class="mui-tab-label">项目</span>
+	    </a>
+	    <a class="mui-tab-item">
+	        <span class="mui-icon iconfont icon-daijiesuan"></span>
+	        <span class="mui-tab-label">我的</span>
+	    </a>
+	</nav>
+</body>
+<script type="text/javascript" src="js/rem.js"></script>
+<script src="js/zepto.min.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript" charset="utf-8">
+  	mui.init();
+	mui("body").on("tap",'a',function(){
+		document.location.href = this.href;
+	})
+</script>
+
+</html>

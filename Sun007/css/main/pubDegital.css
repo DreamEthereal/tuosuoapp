@@ -1,0 +1,47 @@
+html{
+	font-size: 100px;
+}
+body{
+	font-size: 16px;
+	background: #efefef;
+}
+.public-header{
+	box-shadow: none;
+	background: #063875;
+	height: 1.28rem;
+}
+#public-back{
+	color: #fff;
+	margin-top: .4rem;
+}
+#public-title{
+	color: #fff;
+	margin-top: .4rem;
+	font-size: .34rem;
+}
+#deg-content{
+	padding: 1.28rem 0.25rem 0; 
+}
+.degTitle{
+	margin: .21rem 0 0;
+	font-size: .34rem;
+	color: #333;
+}
+.degTime{
+	margin-top: .12rem;
+	font-size: .2rem;
+	color: #b6b6b6;
+}
+.degImg{
+	margin: 0;
+	padding: 0;
+	width: 7.02rem;
+	height: 4rem;
+}
+.degText{
+	font-size: .3rem;
+	line-height: .5rem;
+	letter-spacing: .02rem;
+	margin: 0;
+	text-align: justify;
+}

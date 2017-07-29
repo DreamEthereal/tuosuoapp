@@ -1,0 +1,221 @@
+html{
+	font-size: 100px;
+}
+body{
+	font-size: 16px;
+	line-height: normal;
+	background: #fff;
+}
+.ask-header{
+	box-shadow: none;
+	background: #063875;
+	height: 1.28rem;
+	padding: 0 .25rem;
+}
+#ask-back{
+	color: #fff;
+	margin: .4rem 0 0 ;
+	padding: 0;
+	font-size: .3rem;
+	line-height: .88rem;
+}
+#ask-title{
+	color: #fff;
+	margin: .4rem 0 0 ;
+	font-size: .34rem;
+	padding: 0;
+	line-height: .88rem;
+}
+#ask-content{
+	padding: 1.28rem .25rem 0;
+}
+.ask-h2{
+	font-size: .34rem;
+	color: #333;
+	padding: .3rem 0 0;
+	margin: 0;
+	font-weight: normal;
+}
+.ask1{
+	margin-top: .24rem;
+}
+.ask-h3{
+	font-size: .3rem;
+	margin: 0;
+	padding: 0;
+	color: #333;
+	font-weight: normal;
+}
+.radio-txt{
+	margin: .2rem 0 0 ;
+	padding: 0;
+	letter-spacing: .04rem;
+	font-size: .3rem;
+}
+div.mui-card{
+	box-shadow: 0 0 0 ;
+	margin: .16rem 0 0;	
+}
+form.mui-input-group{
+	border: 1px solid #dfdfdf;
+}
+.mui-input-group .mui-input-row:after{
+	left: 0;
+}
+.mui-input-group .mui-input-row{
+	height: 1.04rem;
+}
+.mui-checkbox.mui-left label, .mui-radio.mui-left label{
+	padding: 0 .3rem 0 1.16rem;
+    line-height: 1.05rem;
+    font-size: .3rem;
+}
+.mui-radio.mui-left input[type=radio]{
+	margin: 0;
+	padding: 0;
+	width: .36rem;
+	height: .36rem;
+	left: .2rem;
+    top: 50%;
+    margin-top: -.18rem;
+    font-weight: bold;
+    color: #d7dcde;
+}
+
+.mui-radio input[type=radio]:before{
+	font-size: .36rem;
+}
+.radio-input{
+	position: relative;
+	padding-left: .8rem;
+}
+
+.mui-input-row label{
+	height: 1.04rem;
+	line-height: 1.04rem;
+	margin: 0;
+	padding: .22rem .3rem;
+	font-size: .3rem;
+
+}
+.mui-radio input[type=radio]:checked:before{
+	font-size: .36rem;
+	font-weight: bold;
+	color: #063875;
+}
+.ask3{
+	margin-top: .4rem;
+}
+.ask3 input{
+	margin: .2rem 0 0;
+	height: .8rem;
+	color: #999;
+	font-size: .3rem;
+	background: #f7fafc;
+}	
+.ask4{
+	margin-top: .4rem;
+}
+.mui-checkbox.mui-left input[type=checkbox]{
+	margin: 0;
+	padding: 0;
+	width: .36rem;
+	height: .36rem;
+	left: .2rem;
+    top: 50%;
+    margin-top: -.18rem;
+    font-weight: bold;
+    color: #d7dcde;
+    border-radius: 0;
+}
+.mui-checkbox input[type=checkbox]:checked:before{
+	content: '\e443';
+	color: #063875;
+	border-radius: 0;
+	border: 0;
+	width: .36rem;
+   	height: .36rem;
+   	font-size: .36rem;
+   	background: none;
+}
+.mui-checkbox input[type=checkbox]:before {
+	content: '';
+	display: block;
+   	font-size: .36rem;
+   	border-radius: 0;
+   	width: .32rem;
+   	height: .32rem;
+   	border: 1px solid #d7dcde;
+   	background: #d7dcde;
+   	border-radius: .06rem;
+}
+.sign-photo{
+	margin-top: .6rem;
+}
+.photo-title {
+	height: .62rem;
+}
+.photo-title h4{
+	font-size: .3rem;
+	color: #333;
+	font-weight: normal;
+	float: left;
+	margin: 0;
+}
+.photo-title p{
+	float: right;
+	margin: 0;
+	padding: 0;
+	font-size: .26rem;
+	color: #063875;
+}
+.photo-title p i{
+	font-size: .32rem;
+}
+.photo-sign{
+	margin: 0;
+	padding: 0;
+	height: auto;
+}
+.photo-sign li{
+	height: 1.6rem;
+	float: left;
+	margin-left: .2rem;
+	position: relative;
+}
+.photo-sign .img1{
+	width: 1.6rem;
+	height: 1.6rem;
+}
+.photo-sign .margin0{
+	margin: 0;
+}
+.img2{
+	width: .32rem;
+	height: .32rem;
+	position: absolute;
+	top: -.16rem;
+	right: -.16rem;
+}
+.addImg{
+	width: 1.6rem;
+	height: 1.6rem;
+	border: 1px solid #dfdfdf;
+	text-align: center;
+	font-size: .82rem;
+	line-height: 1.6rem;
+	color: #dfdfdf;
+}
+li{
+	list-style: none;
+}
+#btn{
+	width: 100%;
+	height: .8rem;
+	background: #063575;
+	color: #fff;
+	border-radius: .1rem;
+	margin-top: .8rem;
+	margin-bottom: .4rem;
+	font-size: .3rem;
+}

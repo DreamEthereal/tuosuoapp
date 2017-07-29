@@ -1,0 +1,60 @@
+html{
+	font-size: 100px;
+}
+body{
+	font-size: 16px;
+	background: #efefef;
+}
+.message-header{
+	box-shadow: none;
+	background: #063875;
+	height: 1.28rem;
+	padding: 0 .25rem;
+}
+#message-back{
+	color: #fff;
+	margin: .4rem 0 0 ;
+	padding: 0;
+	font-size: .3rem;
+	line-height: .88rem;
+}
+#message-title{
+	color: #fff;
+	margin: .4rem 0 0 ;
+	font-size: .34rem;
+	padding: 0;
+	line-height: .88rem;
+}
+#message-content{
+	padding: 1.28rem .25rem 0;
+}
+.main{
+	height: 2.07rem;
+	border: 1px solid #dfdfdf;
+	margin-top: .3rem;
+	border-radius: .2rem;
+	padding: 0 .24rem;
+	background: #fff;
+}
+.main-top{
+	height: .45rem;
+}
+.top-title{
+	font-size: .26rem;
+	font-weight: normal;
+	margin: .2rem 0 0;
+	color: #666;
+	float: left;
+}
+.top-time{
+	float: right;
+	margin: .2rem 0 0 ;
+	font-size: .18rem;
+	color: #666;
+	line-height: .38rem;
+}
+.main-bot{
+	clear: both;
+	height: 1.13rem;
+	margin-top: .39rem;
+}

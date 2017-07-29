@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="HandheldFriendly" content="true" />
+		<meta name="MobileOptimized" content="320" />
+		<title>注册</title>
+		
+		<link rel="stylesheet" type="text/css" href="css/mui.min.css"/>
+		<link rel="stylesheet" href="css/main/register.css" />
+	</head>
+	<body>
+		<header class="mui-bar mui-bar-nav register-header">
+		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" id="register-back"></a>
+		    <h1 class="mui-title" id="register-title">快速注册</h1>
+		</header>
+		<div class="mui-content" id="register-content">
+		    <div class="register-phone">
+		    	<span>手机号</span>
+		    	<input type="text" name="" id="phone" placeholder="" />
+		    </div>
+		    <div class="register-test">
+		    	<span>验证码</span>
+		    	<input type="text" name="" id="test" placeholder="" />
+		    	<!--<span onclick="settime(this)">发送验证码</span>-->
+		    	<input type="button" id="send" value="发送验证码"/> 
+		    </div>
+		    <div class="register-password">
+		    	<span>密码</span>
+		    	<input type="password" name="" id="passwd" placeholder="" />
+		    </div>
+		    <div class="register-password">
+		    	<span>确认密码</span>
+		    	<input type="password" name="" id="repasswd" placeholder="" />
+		    </div>
+		    <div class="register-btn">
+		    	<button type="button" class="mui-btn" id="btn-register">注册</button>
+		    </div>	
+		</div>
+	</body>
+	<script type="text/javascript" src="js/mui.min.js"></script>
+	<script type="text/javascript" src="js/rem.js"></script>
+	<script type="text/javascript" src="js/zepto.min.js"></script>
+	<script type="text/javascript" src="js/mui.js"></script>
+	<script type="text/javascript" src="js/src/ajaxapi.js"></script>
+	<script type="text/javascript">  		
+		var countdown=60;   
+		function settime(obj) {   
+		    if (countdown < 0) {   
+		        obj.removeAttribute("disabled");      
+		        obj.innerHTML="免费获取验证码";   
+		        countdown = 60;   
+		        return;  
+		    } else {   
+		        obj.setAttribute("disabled", true);   
+		        obj.value="重新发送(" + countdown + ")";   
+		        countdown--;   
+		    }   
+		setTimeout(function() {   
+		    settime(obj) }  
+		    ,1000)   
+		}  
+
+		$("#btn-register").on("click",function(){
+			var reg = /^1[3|4|5|8][0-9]\d{4,8}$/i;
+			var reg1 = /^[\@A-Za-z0-9\!\#\$\%\^\&\*\.\~]{6,22}$/;
+			if($("#phone").val() == ""){
+				mui.alert("请输入手机号");
+			}else if(!reg.test($("#phone").val())){
+				mui.alert("手机号不正确")
+			}else{
+				if($("#passwd").val() == ""){
+					mui.alert("请输入密码")
+				}else if(!reg1.test($("#passwd").val())){
+					mui.alert("密码为6~12位的数字、字母或特殊字符")
+				}else{
+					if($("#repasswd").val() == ""){
+						mui.alert("请输入确认密码")
+					}else if($("#repasswd").val() !== $("#passwd").val()){
+						mui.alert("两次密码不一致")
+					}else{
+						var isAdmin = 8;
+						var username = $("#phone").val();
+						var password = $("#passwd").val();
+//						var phone_code = $("#test").val();
+						var repassword = $("#repasswd").val();
+						var data = {username,password,repassword,isAdmin};
+		//				var url = 'https://app.toursforfun.com/config/index/v1';
+		//				var url = 'http://app_yg007.yinglian360.com/Home/User/register';
+		//				
+		//				var result = base64_encode(pass);
+		//				postData(url,data,function(data){
+		//					console.log(data)
+		//				},function(data){
+		//					console.log(data)
+		//				},false)
+					    $.ajax({
+					        type: 'POST',
+					        url: 'http://app_yg007.yinglian360.com/Home/User/register',
+					        dataType: 'json',
+					        data: data,
+					        success: function(msg){                
+					            msg.username = username;
+					            msg.password = password;
+					            msg.repassword = repassword;
+//					            msg.phone_code = phone_code;
+					            msg.isAdmin = isAdmin;
+					            console.log(msg)
+					        }
+					    })
+					}
+					
+				}
+			}
+		})
+//  	$("#send").on("click",function(){     			
+//			var reg = /^1[3|4|5|8][0-9]\d{4,8}$/i;			
+//			if($("#phone").val() == ""){
+//				mui.alert("请输入手机号");
+//			}else if(!reg.test($("#phone").val())){
+//				mui.alert("手机号不正确")
+//			}else{
+//				settime(this);
+//				var mobile = $("#phone").val();
+//				var password = $("#passwd").val();
+//				var repassword = $("#repasswd").val();
+//				var data = {mobile,password,repassword};
+////				var url = 'https://app.toursforfun.com/config/index/v1';
+////				var url = 'http://app_yg007.yinglian360.com/Home/User/register';
+////				
+////				var result = base64_encode(pass);
+////				postData(url,data,function(data){
+////					console.log(data)
+////				},function(data){
+////					console.log(data)
+////				},false)
+//			    $.ajax({
+//			        type: 'POST',
+//			        url: 'http://app_yg007.yinglian360.com/Home/User/checkusername',
+//			        dataType: 'json',
+//			        data: data,
+//			        success: function(msg){                
+//			            msg.mobile = mobile;
+//			            msg.password = password;
+//			            
+//			            console.log(msg)
+//			        }
+//			    })
+//			}				
+// 		})
+
+
+    	
+    	
+    </script>
+    
+</html>
